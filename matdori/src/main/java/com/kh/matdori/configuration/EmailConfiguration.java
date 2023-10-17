@@ -8,15 +8,12 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 
-//JavaMailSenderImpl을 스프링에 등록해두기 위한 설정
-//-Bean 등록을 하는 설정파일은 상속이 필요하지 않다
 @Configuration
 public class EmailConfiguration {
 	
 	@Autowired
 	private EmailProperties emailProperties;
 	
-	//객체를 생성하여 반환하는 메소드를 만들고 상단에 @Bean추가
 	@Bean
 	public JavaMailSender sender() {
 		//전송도구 - 업체와 계정관련 정보 설정
