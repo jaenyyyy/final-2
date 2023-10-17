@@ -1,4 +1,4 @@
-package matdori;
+package com.kh.matdori;
 
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
