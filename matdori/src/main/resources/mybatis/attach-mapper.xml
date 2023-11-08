@@ -7,6 +7,21 @@
 	<!-- 등록 -->
 	<insert id="insert">
 		insert into attach(attach_no, attach_name, attach_size, attach_type) 
-			values ()
+			values (attach_seq.nextval, #{attach_name}, #{attach_size}, #{attach_type})
 	</insert>
+	
+	<!-- 삭제 -->
+	<delete id="remove">
+		delete attach where attach_no = #{attachNo}
+	</delete>
+	
+	<!-- 조회 -->
+	<select id="list" resultType="AttachDto">
+		select * from attach order by attach_no desc
+	</select>
+	
+	<!-- 상세 -->
+	<select id="detail" resultType="AttachDto">
+		select * from attach where attach_no = #{attachNo}
+	</select>
 </mapper>

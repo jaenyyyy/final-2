@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+
+<mapper namespace="notice">
+
+	<!-- 등록 -->
+	<select id="write" resultType="NoticeDto">
+		insert into notice(
+			notice_no, notice_writer, notice_title, notice_content
+		)
+		values (
+			notice_seq.nextval, #{noticeWriter}, #{noticeTitle}, #{noticeContent}
+		)
+	</select>
+	
+	
+	<!-- 조회 -->
+	<select id="list" resultType="NoticeDto">
+		select * from notice order by notice_no asc
+	</select>
+	
+	
+	<!-- 상세 -->
+	<select id="detail" resultType="NoticeDto">
+		select * from notice where notice_no = #{noticeNo}
+	</select>
+	
+	
+	<!-- 삭제 -->
+	<delete id="delete">
+		delete notice where notice_no = #{noticeNo}
+	</delete>
+	
+	
+	<!-- 수정 -->
+	<update id="change">
+		update notice
+		<set>
+			<if test="noticeDto.noticeTitle != null">
+				notice_title = #{noticeDto.noticeTitle},
+			</if>
+			<if test="noticeDto.noticeContent != null">
+				notice_content =#{noticeDto.noticeContent},
+			</if>
+		</set>
+		where notice_no = #{noticeNo}
+	</update>
+	
+	
+	<!-- 검색 -->
+	<select id="search" resultType="NoticeDto">
+		select * from notice where instr(notice_title, #{noticeTitle}) > 0
+	</select>
+	
+	
+	<!-- 페이징 -->
+	<select id="page" resultType="NoticeDto">
+		select * from (
+			select rownum rn, TMP.* from (
+				select * from notice order by notice_no asc
+			)TMP
+		) where rn between #{begin} and #{end}
+	</select>
+	
+</mapper>
