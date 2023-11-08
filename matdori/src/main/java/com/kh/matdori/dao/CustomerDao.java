@@ -12,9 +12,6 @@ public interface CustomerDao {
 	// 삭제 
 	boolean delete(String customerId);
 	
-	
-	boolean updateCustomerInfo(CustomerDto customerDto);
-	
 	// 이용자 정보 수정 
 	void edit(String customerId, CustomerDto customerDto);
 	
@@ -23,5 +20,9 @@ public interface CustomerDao {
 	
 	// 이용자 정보 모두 조회 
 	List<CustomerDto> selectList();
+	
+	// true가 반환되면 비번변경 성공 
+	// false면 비번 변경 실패 
+	boolean updateCustomerPw(String customerId, String changePw);
 	
 }

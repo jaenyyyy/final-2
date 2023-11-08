@@ -11,50 +11,44 @@
         </div>
         <div class="row left">
             <label>
-            	닉네임 
-				<i class="fa-solid fa-asterisk red"></i>
+              	이름 : ${customerDto.customerName}
 			</label>
-            <input type="text" name="memberNickname" class="form-input w-100"
-					value="${memberDto.memberNickname}" required>
         </div>
+        
         <div class="row left">
-            <label>이메일</label>
-            <input type="email" name="memberEmail" class="form-input w-100"
-					value="${memberDto.memberEmail}" placeholder="testuser@kh.com">
+        비밀번호 : 
+            <input type="email" name="customerEmail" class="form-input w-100"
+					value="${customerDto.customerEmail}" placeholder="testuser@kh.com">
         </div>
+        
         <div class="row left">
-            <label>연락처</label>
+        연락처 : 
             <input type="tel" name="memberContact" class="form-input w-100"
 					value="${memberDto.memberContact}" placeholder="- 제외하고 입력">
         </div>
+        
         <div class="row left">
-            <label>생년월일</label>
-            <input type="date" name="memberBirth" class="form-input w-100"
-							value="${memberDto.memberBirth}">
+        생년월일 : 
+            <input type="date" name="customerBirth" class="form-input w-100"
+							value="${customeDto.customeBirth}">
         </div>
-        <div class="row left">
-            <label class="mb-10" style="display: block;">주소</label>
-            <input type="text" class="form-input" name="memberPost" placeholder="우편번호" style="width:8em;" value="${memberDto.memberPost}">
-            <button type="button" class="btn">우편번호 찾기</button>
-            <input type="text" class="form-input w-100 mt-10" name="memberAddr1" placeholder="기본주소" value="${memberDto.memberAddr1}">
-            <input type="text" class="form-input w-100 mt-10" name="memberAddr2" placeholder="상세주소" value="${memberDto.memberAddr2}">
-        </div>
-        <div class="row left">
-        	<label>
-        		비밀번호 확인
-				<i class="fa-solid fa-asterisk red"></i>
-			</label>
-        	<input type="password" name="memberPw" required class="form-input w-100">
+        
+        
+        <div>
+        비밀번호 확인 : 
+        	<input type="password" name="customerPw" required class="form-input w-100">
         </div>
         <div class="row">
             <button type="submit" class="btn btn-positive w-100">정보변경</button>
         </div>
+        
         <c:if test="${param.error != null}">
         <div class="row red">
 			<h3>입력하신 비밀번호가 일치하지 않습니다</h3>
 		</div>
 		</c:if>
     </div>
+    
     
 </form>
 

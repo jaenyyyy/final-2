@@ -58,6 +58,19 @@
 			
 		</set>
 	</update>
+	
+	<!--  비밀번호 변경   -->
+	<update id="updateCustomerPw">
+        update customer
+        set customer_pw = #{changePw}, customer_change = sysdate
+        where customer_id = #{customerId}
+    </update>
+	
+	    <!-- 삭제 -->
+   	 	<delete id="delete">
+    	 	delete customer where customer_id = #{customerId}
+    	</delete>
+    
     
     
     
