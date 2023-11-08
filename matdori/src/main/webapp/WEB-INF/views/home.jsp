@@ -14,8 +14,10 @@
 <a href="customer/logout">로그아웃</a>
 <br>
 <a href="customer/join"> 회원가입하기 </a>
-
+<br>
 <a href="customer/change">정보변경</a>
+<br>
+<a href="exit">회원 탈퇴</a>
 
 
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>

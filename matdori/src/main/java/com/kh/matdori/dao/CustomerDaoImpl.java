@@ -33,11 +33,6 @@ public class CustomerDaoImpl implements CustomerDao {
 		return false;
 	}
 
-	@Override
-	public boolean updateCustomerInfo(CustomerDto customerDto) {
-		// TODO Auto-generated method stub
-		return false;
-	}
 
 	@Override
 	public CustomerDto selectOne(String customerId) {
@@ -56,7 +51,19 @@ public class CustomerDaoImpl implements CustomerDao {
 	    Map<String, Object> param = Map.of("customerId", customerId, "customerDto", customerDto);
 	    int result = sqlSession.update("customer.edit", param);
 	    if(result == 0) throw new NoTargetException();
+	    
 	}
+	
+	@Override
+	public boolean updateCustomerPw(String customerId, String changePw) {
+	    Map<String, Object> param = Map.of("customerId", customerId, "changePw", changePw);
+	    int result = sqlSession.update("customer.updateCustomerPw", param);
+	    if (result == 0) {
+	        throw new NoTargetException();
+	    }
+	    return true;
+	}
+
 
 
 }

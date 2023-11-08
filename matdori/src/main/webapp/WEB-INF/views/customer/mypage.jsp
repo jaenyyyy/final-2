@@ -35,13 +35,11 @@
 			</tr>
 			
 			<a href="logout"> 로그아웃 </a>
+			<a href="password"> 비밀번호 변경 </a>
+			<a href="change"> 개인정보 변경 </a>
+			<a href="exit">회원 탈퇴</a>
 			
-				<div class="row">
-		<a class="btn w-100" href="change">
-			<i class="fa-solid fa-user"></i>
-			개인정보 변경
-		</a>
-	</div>
+	
 		</table>
 	</div>
 	

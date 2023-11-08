@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.kh.matdori.dao.CustomerDao;
 import com.kh.matdori.dto.CustomerDto;
@@ -23,6 +24,8 @@ public class CustomerController {
 	@Autowired
 	private CustomerDao customerDao;
 	
+	
+	// 회원가입 ok
 	@GetMapping("/join")
 	public String join() {
 		return "customer/join";
@@ -34,13 +37,14 @@ public class CustomerController {
 		return "redirect:joinFinish";
 	}
 	
+	// 회원가입 완료 
 	@RequestMapping("/joinFinish")
 	public String joinFinish() {
 		return "customer/joinFinish";
 	}
 	
 	
-	
+	// 로그인 ok
 	@GetMapping("/login")
 	public String login() {
 		return "customer/login";
@@ -63,7 +67,7 @@ public class CustomerController {
 	}
 	
 	
-	
+	// 로그아웃 ok
 	@RequestMapping("/logout")
 	public String logout(HttpSession session) {
 		session.removeAttribute("name");
@@ -72,7 +76,7 @@ public class CustomerController {
 	}
 
 	
-	
+	// 마이페이지 ok
 	@RequestMapping("/mypage")
 	public String mypage(HttpSession session, Model model) {
 		String customerId = (String) session.getAttribute("name");
@@ -84,6 +88,39 @@ public class CustomerController {
 	}
 	
 	
+	
+	// changePw x 
+	
+//	@GetMapping("/password")
+//	public String password() {
+//		return "customer/password";
+//	}
+//	
+//	@PostMapping("/password")
+//	public String password(HttpSession session,
+//									@RequestParam String originPw,
+//									@RequestParam String changePw) {
+//		String customerId = (String) session.getAttribute("name");
+//		CustomerDto customerDto = customerDao.selectOne(customerId);
+//		
+//		if(customerDto.getCustomerPw().equals(originPw)) {
+//			customerDao.updateCustomerPw(customerId, changePw);
+//			return "redirect:passwordFinish";
+//		}
+//		else {
+//			return "redirect:password?error";
+//		}
+//	}
+//	
+//	@RequestMapping("/passwordFinish")
+//	public String passwordFinish() {
+//		return "customer/passwordFinish";
+//	}
+//	
+	
+	
+	
+	// 변경 ok
 	@GetMapping("/change")
 	public String change(HttpSession session, Model model) {
 		String customerId = (String)session.getAttribute("name");
@@ -105,5 +142,28 @@ public class CustomerController {
 	    }
 	}
 	
+	
+	
+	@GetMapping("/exit")
+	public String exit(HttpSession session, @RequestParam String customerPw) {
+		String customerId = (String) session.getAttribute("name");
+		CustomerDto customerDto = customerDao.selectOne(customerId);
+		if(customerDto.getCustomerPw().equals(customerPw)) {
+			customerDao.delete(customerId);
+			session.removeAttribute("name");
+			return "redirect:exitFinish";
+		}
+		else {
+			return "redirect:exit?error";
+		}
+	}
+		
+	@RequestMapping("/exitFinish")
+	public String exitFinish() {
+		return "customer/exitFinish.jsp";
+		}
+	}
+	
+	
 
-}
+

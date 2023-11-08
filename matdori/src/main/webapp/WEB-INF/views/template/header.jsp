@@ -36,7 +36,9 @@
         </div>
         <div class="col text-end me-4" style="margin-top: 70px;">
         	<a href="#" class="me-4">사업체</a>
-            <a href="customer/login">로그인</a>
+            <c:if test="${sessionScope.name == null}">
+                <a href="customer/login">로그인</a>
+            </c:if>
         </div>
      </div>
         
