@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+
+<mapper namespace="business">
+
+	<!-- 비즈니스 테이블의 CRUD -->
+
+	<!-- 사용자 등록 (가입) -->
+	<insert id="busJoin" parameterType="business">
+		INSERT INTO business (bus_id, bus_pw, bus_reg_no, bus_name, bus_tel,
+		bus_email, bus_post, bus_addr1, bus_addr2, bus_reg_date)
+		VALUES (#{busId}, #{busPw}, #{busRegNo}, #{busName}, #{busTel},
+		#{busEmail}, #{busPost}, #{busAddr1}, #{busAddr2},
+		#{busRegDate})
+	</insert>
+
+	<!-- 사용자 정보 읽기 (ID로 조회) -->
+	<select id="busSelectOne"
+		resultType="business">
+		SELECT * FROM business WHERE bus_id = #{busId}
+	</select>
+
+	<!-- 사용자 정보 수정 (비밀번호 변경) -->
+	<update id="busUpdatePw"
+		parameterType="business">
+		UPDATE business SET bus_pw = #{busPw} WHERE bus_id = #{busId}
+	</update>
+
+	<!-- 사용자 정보 수정 (비밀번호 제외) -->
+	<update id="busUpdateInfo"
+		parameterType="business">
+		UPDATE business SET
+		bus_tel = #{busTel},
+		bus_email = #{busEmail},
+		bus_post = #{busPost},
+		bus_addr1 = #{busAddr1},
+		bus_addr2 = #{busAddr2}
+		WHERE bus_id = #{busId}
+	</update>
+
+
+	<!-- 사용자 삭제 (예: ID로 삭제) -->
+	<delete id="busDelete">
+		DELETE FROM business WHERE bus_id = #{busId}
+	</delete>
+
+</mapper>
