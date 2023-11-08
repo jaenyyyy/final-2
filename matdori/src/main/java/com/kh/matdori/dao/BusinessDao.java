@@ -5,5 +5,6 @@ import com.kh.matdori.dto.BusinessDto;
 public interface BusinessDao {
 
 	void insert(BusinessDto businessDto);
+	BusinessDto selectOne(String busId);
 
 }
