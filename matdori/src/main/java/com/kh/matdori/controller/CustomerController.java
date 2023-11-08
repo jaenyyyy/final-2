@@ -83,4 +83,27 @@ public class CustomerController {
 		return "customer/mypage";
 	}
 	
+	
+	@GetMapping("/change")
+	public String change(HttpSession session, Model model) {
+		String customerId = (String)session.getAttribute("name");
+		CustomerDto customerDto = customerDao.selectOne(customerId);
+		model.addAttribute("customerDto", customerDto);
+		return "customer/change";
+	}
+	
+	@PostMapping("/change")
+	public String change(@ModelAttribute CustomerDto inputDto, HttpSession session) {
+	    String customerId = (String) session.getAttribute("name");
+	    CustomerDto findDto = customerDao.selectOne(customerId);
+	    if (inputDto.getCustomerPw().equals(findDto.getCustomerPw())) {
+	        inputDto.setCustomerId(customerId);
+	        customerDao.edit(customerId, inputDto);
+	        return "redirect:mypage";
+	    } else {
+	        return "redirect:change?error";
+	    }
+	}
+	
+
 }

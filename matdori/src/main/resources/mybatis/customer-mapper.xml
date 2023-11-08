@@ -29,6 +29,40 @@
     	select * from customer where customer_id = #{customerId}
     </select>
     
+
+        <!-- 이용자 정보 수정  -->
+   	<update id="edit">
+		update customer
+		<set> 
+		
+		<if test="customerDto.customerPw != null">
+    	customer_pw = #{customerPw},
+		</if>
+		
+		<if test="customerDto.customerEmail != null">
+    	customer_email = #{customerEmail},
+		</if>
+		
+		<if test="customerDto.customerContact  != null">
+	    customer_contact = #{customerContact},
+		</if>
+		
+		<if test="customerDto.customerBirth != null">
+ 	    customer_birth = #{customerBirth},
+		</if>
+		
+		<if test="customerDto.customerGender != null">
+	    customer_gender = #{customerGender},
+		</if>
+			where customer_id = #{customerId}
+			
+		</set>
+	</update>
+    
+    
+    
+   
+    
     
 
     </mapper>

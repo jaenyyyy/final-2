@@ -12,12 +12,84 @@
      <!-- 아이콘 사용을 위한 font awesome 6 cdn-->
      <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 
-	 <!-- 구글 웹 폰트 사용을 위한 CDN -->
+    <!-- 구글 웹 폰트 사용을 위한 CDN -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">
      
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/5.3.2/sandstone/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/5.3.2/united/bootstrap.min.css" rel="stylesheet">
 
 </head>
+
+
+
+<div class="container-fluid">
+
+    <div class="row mt-3">
+       <div class="col ms-4" style="margin-top: 70px;"> 
+            <a href="#">북마크</a>
+        </div>
+        <div class="col text-center">
+           <img src="/images/logo.png" style="width:250px;">
+        </div>
+        <div class="col text-end me-4" style="margin-top: 70px;">
+           <a href="#" class="me-4">사업체</a>
+           
+           
+            <a href="customer/login">로그인</a>
+            
+        </div>
+     </div>
+        
+        
+        
+      <!-- 메뉴바 -->
+   <div class="row">
+        <div class="col-md-12 offset mt-4">
+         <nav class="navbar navbar-expand-lg bg-warning" data-bs-theme="light">
+           <div class="container-fluid">
+             <a class="navbar-brand" href="#">맛도리</a>
+             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor03" aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
+               <span class="navbar-toggler-icon"></span>
+             </button>
+             <div class="collapse navbar-collapse" id="navbarColor03">
+               <ul class="navbar-nav me-auto">
+                 <li class="nav-item">
+                   <a class="nav-link active" href="/">집
+                     <span class="visually-hidden">(current)</span>
+                   </a>
+                 </li>
+                 <li class="nav-item">
+                   <a class="nav-link" href="#">메뉴1</a>
+                 </li>
+                 <li class="nav-item">
+                   <a class="nav-link" href="#">메뉴2</a>
+                 </li>
+                 <li class="nav-item">
+                   <a class="nav-link" href="#">메뉴3</a>
+                 </li>
+                 <li class="nav-item dropdown">
+                   <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Dropdown</a>
+                   <div class="dropdown-menu">
+                     <a class="dropdown-item" href="#">Action</a>
+                     <a class="dropdown-item" href="#">Another action</a>
+                     <a class="dropdown-item" href="#">Something else here</a>
+                     <div class="dropdown-divider"></div>
+                     <a class="dropdown-item" href="#">Separated link</a>
+                   </div>
+                 </li>
+               </ul>
+               <form class="d-flex">
+                 <input class="form-control me-sm-2" type="search" placeholder="검색어를 입력하세요">
+                 <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
+               </form>
+             </div>
+           </div>
+         </nav>
+        </div>
+    </div>
+    
+    
+    
+</div>
