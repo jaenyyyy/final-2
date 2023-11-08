@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -30,7 +31,7 @@ public class BusinessRestController {
 	}
 	
 	//사업자 마이페이지 조회
-	@GetMapping("/mypage/{busId}")
+	@GetMapping("/mypage/busId/{busId}")
 	public ResponseEntity<BusinessDto> find(@PathVariable String busId){
 		BusinessDto businessDto = businessDao.selectOne(busId);
 		if(businessDto != null) {
@@ -42,10 +43,10 @@ public class BusinessRestController {
 	}
 	
 	//사업자 정보 수정
-	@PutMapping("/changeInfo/{busId}")
+	@PutMapping("/changeInfo/busId/{busId}")
 	public ResponseEntity<String> edit(
-			@PathVariable String busId, @RequestBody BusinessDto businessDto){
-		boolean result = businessDao.edit(busId, businessDto);
+				@PathVariable String busId, @RequestBody BusinessDto businessDto){
+		boolean result = businessDao.update(busId, businessDto);
 		return result ? ResponseEntity.ok().build() : ResponseEntity.notFound().build();
 	}
 	
@@ -60,5 +61,8 @@ public class BusinessRestController {
 			return ResponseEntity.status(404).build();
 		}
 	}
+	
+	//사업자 비밀번호 변경
+	//아이디 배우고 고민해봅시다
 	
 }
