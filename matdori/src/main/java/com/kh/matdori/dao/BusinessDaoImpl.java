@@ -17,6 +17,6 @@ public class BusinessDaoImpl implements BusinessDao {
 	
 	@Override
 	public void insert(BusinessDto businessDto) {
-		sqlSession.insert("business.join", businessDto);
+		sqlSession.insert("business.busJoin", businessDto);
 	}
 }
