@@ -16,26 +16,39 @@
         </div>
         
         <div class="row left">
-        비밀번호 : 
+        <label>
+        	비밀번호 : ${customerDto.customerPw}
+        </label>
+        	
+        </div>
+        
+        <div class="row left">
+        <label>이메일 : </label> 
             <input type="email" name="customerEmail" class="form-input w-100"
 					value="${customerDto.customerEmail}" placeholder="testuser@kh.com">
         </div>
         
         <div class="row left">
-        연락처 : 
-            <input type="tel" name="memberContact" class="form-input w-100"
-					value="${memberDto.memberContact}" placeholder="- 제외하고 입력">
+        <label>연락처 : </label>
+            <input type="tel" name="customerContact" class="form-input w-100"
+					value="${customerDto.customerContact}" placeholder="- 제외하고 입력">
         </div>
         
         <div class="row left">
-        생년월일 : 
+        <label>생년월일 : </label>
             <input type="date" name="customerBirth" class="form-input w-100"
 							value="${customeDto.customeBirth}">
         </div>
         
+        <div class="row left">
+       	<label>성별 : </label>
+        	<input type="text" name="customerGender" class="form-input w-100"
+        		value ="${customerDto.customerGender}">
+        </div>
+        
         
         <div>
-        비밀번호 확인 : 
+        <label>비밀번호 확인 : </label>
         	<input type="password" name="customerPw" required class="form-input w-100">
         </div>
         <div class="row">

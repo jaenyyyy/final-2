@@ -89,7 +89,7 @@ public class CustomerController {
 	
 	
 	
-	// changePw x 
+
 	
 //	@GetMapping("/password")
 //	public String password() {
@@ -98,8 +98,8 @@ public class CustomerController {
 //	
 //	@PostMapping("/password")
 //	public String password(HttpSession session,
-//									@RequestParam String originPw,
-//									@RequestParam String changePw) {
+//								@RequestParam String originPw,
+//								@RequestParam String changePw) {
 //		String customerId = (String) session.getAttribute("name");
 //		CustomerDto customerDto = customerDao.selectOne(customerId);
 //		
@@ -130,21 +130,27 @@ public class CustomerController {
 	}
 	
 	@PostMapping("/change")
-	public String change(@ModelAttribute CustomerDto inputDto, HttpSession session) {
+	public String change(@ModelAttribute CustomerDto inputDto,
+										HttpSession session) {
 	    String customerId = (String) session.getAttribute("name");
 	    CustomerDto findDto = customerDao.selectOne(customerId);
 	    if (inputDto.getCustomerPw().equals(findDto.getCustomerPw())) {
 	        inputDto.setCustomerId(customerId);
-	        customerDao.edit(customerId, inputDto);
+	        customerDao.edit(inputDto);
 	        return "redirect:mypage";
-	    } else {
+	    } 
+	    else {
 	        return "redirect:change?error";
 	    }
 	}
 	
-	
-	
 	@GetMapping("/exit")
+	public String exit() {
+		return "customer/exit";
+	}
+	
+	
+	@PostMapping("/exit")
 	public String exit(HttpSession session, @RequestParam String customerPw) {
 		String customerId = (String) session.getAttribute("name");
 		CustomerDto customerDto = customerDao.selectOne(customerId);
@@ -160,7 +166,7 @@ public class CustomerController {
 		
 	@RequestMapping("/exitFinish")
 	public String exitFinish() {
-		return "customer/exitFinish.jsp";
+		return "customer/exitFinish";
 		}
 	}
 	

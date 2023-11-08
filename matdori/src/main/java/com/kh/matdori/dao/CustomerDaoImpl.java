@@ -55,6 +55,12 @@ public class CustomerDaoImpl implements CustomerDao {
 	}
 	
 	@Override
+	public void edit(CustomerDto customerDto) {
+		sqlSession.insert("customer.edit", customerDto);
+	}
+	
+	
+	@Override
 	public boolean updateCustomerPw(String customerId, String changePw) {
 	    Map<String, Object> param = Map.of("customerId", customerId, "changePw", changePw);
 	    int result = sqlSession.update("customer.updateCustomerPw", param);
