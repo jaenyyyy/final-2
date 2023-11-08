@@ -8,12 +8,19 @@
 	<div class="row">
 		<div class="col">
 			아이디 : <input type="text" name="customerId">
+			<br>
 			비밀번호 : <input type="password" name="customerPw">
+			<br>
 			이름 : <input type="text" name="customerName">
+			<br>
 			이메일 : <input type="text" name="customerEmail">
-			연락처 : <input type="number" name="customerContact">
+			<br>
+			연락처 : <input type="tel" name="customerContact">
+			<br>
 			생년월일 : <input type="date" name="customerBirth">
+			<br>
 			성별 : <input type="text" name="customerGender">
+			<br>
 		</div>
 		
 		<div class="col">

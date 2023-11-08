@@ -41,7 +41,7 @@ public class CustomerDaoImpl implements CustomerDao {
 
 	@Override
 	public CustomerDto selectOne(String customerId) {
-		CustomerDto customerDto = sqlSession.selectOne("customer.selectById", customerId);
+		CustomerDto customerDto = sqlSession.selectOne("customer.detail", customerId);
 		if(customerDto == null) throw new NoTargetException();
 		return customerDto;
 	}
