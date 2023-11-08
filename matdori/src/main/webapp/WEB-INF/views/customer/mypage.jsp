@@ -36,6 +36,12 @@
 			
 			<a href="logout"> 로그아웃 </a>
 			
+				<div class="row">
+		<a class="btn w-100" href="change">
+			<i class="fa-solid fa-user"></i>
+			개인정보 변경
+		</a>
+	</div>
 		</table>
 	</div>
 	

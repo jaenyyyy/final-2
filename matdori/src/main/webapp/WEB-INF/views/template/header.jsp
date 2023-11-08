@@ -12,7 +12,7 @@
      <!-- 아이콘 사용을 위한 font awesome 6 cdn-->
      <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 
-	 <!-- 구글 웹 폰트 사용을 위한 CDN -->
+    <!-- 구글 웹 폰트 사용을 위한 CDN -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">
@@ -27,6 +27,7 @@
 <div class="container-fluid">
 
     <div class="row mt-3">
+
     	<div class="col ms-4" style="margin-top: 70px;"> 
             <a href="#">북마크</a>
         </div>
@@ -84,6 +85,7 @@
 			    </div>
 			  </div>
 			</nav>
+
         </div>
     </div>
     
