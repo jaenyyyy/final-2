@@ -32,7 +32,7 @@ public class RestaurantRestController {
 		restaurantDao.delete(resNo);
 	}
 
-	@PutMapping("/[resNo}")
+	@PutMapping("/{resNo}")
 	public void update(@RequestBody RestaurantDto restaurantDto, @PathVariable int resNo) {
 		restaurantDao.edit(resNo, restaurantDto);
 	}
