@@ -19,10 +19,21 @@
     delete restaurant where res_no =#{resNo}
     </delete>
     
-    <!-- 전체조회 -->
-    <select id="findAll" resultType="RestaurantDto">
-    select * from restaurant order by res_no asc
+    <!-- 조회 -->
+    <select id="find" resultType="RestaurantDto">
+    select * from restaurant where res_no = #{resNo}
     </select>
+    
+    <!-- 정보 수정 (사업자번호 제외) -->
+	<update id="editResInfo">
+		UPDATE restaurant SET
+		res_name = #{resName},
+		res_tel = #{resTel},
+		res_post = #{resPost},
+		res_addr1 = #{resAddr1},
+		res_addr2 = #{resAddr2}
+		WHERE res_no = #{resNo}
+	</update>
     
     
     
