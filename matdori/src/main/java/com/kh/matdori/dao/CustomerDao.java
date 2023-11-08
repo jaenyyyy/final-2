@@ -5,9 +5,23 @@ import java.util.List;
 import com.kh.matdori.dto.CustomerDto;
 
 public interface CustomerDao {
+	
+	// 등록 
 	void insert(CustomerDto customerDto);
-//	boolean delete(String customerId);
+	
+	// 삭제 
+	boolean delete(String customerId);
+	
+	
 	boolean updateCustomerInfo(CustomerDto customerDto);
+	
+	// 이용자 정보 수정 
+	void edit(String customerId, CustomerDto customerDto);
+	
+	// 이용자 아이디로 조회 
 	CustomerDto selectOne(String CustomerId);
+	
+	// 이용자 정보 모두 조회 
 	List<CustomerDto> selectList();
+	
 }

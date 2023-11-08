@@ -7,33 +7,75 @@
     
     <mapper namespace = "customer">
     
+    
+    <!--  등록  -->
     <insert id="insert">
    		 insert into customer
     		(customer_id, customer_pw, customer_name, customer_email, customer_contact,
-    	  	 customer_birth, customer_gender, customer_level, customer_point)
+    	  	 customer_birth, customer_gender)
 		 values (
 			#{customerId}, #{customerPw}, #{customerName}, #{customerEmail},
-			#{customerContact}, #{customerBirth}, #{customerGender},  #{customerLevel}, #{customerPoint}
+			#{customerContact}, #{customerBirth}, #{customerGender}
     		)
     </insert>
     
     
+    	
+    <!-- 삭제 -->
     <delete id="delete">
     	 delete customer where customer_id = #{customerId}
     </delete>
     
     
-    <!-- 전체조회 -->
-    <select id="selectAll" resultType="CustomerDto">
+  
+    
+    
+    
+    <!-- 이용자 아이디 조회 -->
+    <select id="selectById" resultType="CustomerDto">
     	select * from customer order by customer_id asc
     </select>
     
     
-    <!-- 회원명 검색  -->
+    
+    <!-- 이용자 정보 수정  -->
+   <update id="change">
+		update customer
+		<set> 
+		
+		<if test="customerDto.customerPw != null">
+    	customer_pw = #{customerPw},
+		</if>
+		
+		<if test="customerDto.customerEmail != null">
+    	customer_email = #{customerEmail},
+		</if>
+		
+		<if test="customerDto.customerContact  != null">
+	    customer_contact = #{customerContact},
+		</if>
+		
+		<if test="customerDto.customerBirth != null">
+ 	    customer_birth = #{customerBirth},
+		</if>
+		
+		<if test="customerDto.customerGender != null">
+	    customer_gender = #{customerGender},
+		</if>
+			where customer_id = #{customerId}
+			
+		</set>
+	</update>
+    
+    
+    
+    
+    
+    <!-- 회원명 검색  
     <select id="selectByCustomerName" resultType="CustomerDto">
     	select * from customer where instr(customer_name, #{customerName}) 
     </select>
-
+	-->
 
 
     </mapper>
