@@ -14,9 +14,15 @@
     			#{resAddr1}, #{resAddr2}, #{resOpenTime}, #{resRegDate})
     </insert>
     
+    <!-- 삭제 -->
     <delete id="deleteByResNo">
     delete restaurant where res_no =#{resNo}
     </delete>
+    
+    <!-- 전체조회 -->
+    <select id="findAll" resultType="RestaurantDto">
+    select * from restaurant order by res_no asc
+    </select>
     
     
     
