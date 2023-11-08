@@ -14,6 +14,7 @@ public interface CustomerDao {
 	
 	// 이용자 정보 수정 
 	void edit(String customerId, CustomerDto customerDto);
+	void edit(CustomerDto customerDto);
 	
 	// 이용자 아이디로 조회 
 	CustomerDto selectOne(String CustomerId);
