@@ -8,4 +8,8 @@ public interface RestaurantDao {
 
 	void delete(int resNo);
 
+	void edit(int resNo, RestaurantDto restaurantDto);
+
+	RestaurantDto selectOne(int resNo);
+
 }
