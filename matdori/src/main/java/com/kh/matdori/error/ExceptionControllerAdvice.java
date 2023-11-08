@@ -14,19 +14,19 @@ public class ExceptionControllerAdvice {
 	@ExceptionHandler(Exception.class)
 	public String error(Exception e) {
 		log.error("오류", e);
-		return "/WEB-INF/views/error/500.jsp";
+		return "error/500";
 	}
 	
 
 	@ExceptionHandler(NoTargetException.class)
 	public String noTarget(NoTargetException e) {
-		return "/WEB-INF/views/error/noTarget.jsp";
+		return "error/noTarget";
 	}
 	
 	@ExceptionHandler(AuthorityException.class)
 	public String authority(AuthorityException e) {
 		e.printStackTrace();
-		return "/WEB-INF/views/error/authority.jsp";
+		return "error/authority";
 	}
 }
 
