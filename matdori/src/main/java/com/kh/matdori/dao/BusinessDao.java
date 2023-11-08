@@ -7,4 +7,6 @@ public interface BusinessDao {
 	void insert(BusinessDto businessDto);
 	BusinessDto selectOne(String busId);
 
+	boolean update(String busId, BusinessDto businessDto);
+	void delete(String busId);
 }
