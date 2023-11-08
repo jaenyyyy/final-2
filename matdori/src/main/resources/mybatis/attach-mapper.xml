@@ -5,5 +5,8 @@
     
 <mapper namespace="attach">
 	<!-- 등록 -->
-	
+	<insert id="insert">
+		insert into attach(attach_no, attach_name, attach_size, attach_type) 
+			values ()
+	</insert>
 </mapper>
