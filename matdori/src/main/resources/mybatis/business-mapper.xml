@@ -11,7 +11,7 @@
 	<!-- 비즈니스 테이블의 CRUD -->
 
 	<!-- 사용자 등록 (가입) -->
-	<insert id="join" parameterType="business">
+	<insert id="busJoin" parameterType="business">
 		INSERT INTO business (bus_id, bus_pw, bus_reg_no, bus_name, bus_tel,
 		bus_email, bus_post, bus_addr1, bus_addr2, bus_reg_date)
 		VALUES (#{busId}, #{busPw}, #{busRegNo}, #{busName}, #{busTel},
@@ -20,19 +20,19 @@
 	</insert>
 
 	<!-- 사용자 정보 읽기 (ID로 조회) -->
-	<select id="selectOne"
+	<select id="busSelectOne"
 		resultType="business">
 		SELECT * FROM business WHERE bus_id = #{busId}
 	</select>
 
 	<!-- 사용자 정보 수정 (비밀번호 변경) -->
-	<update id="updatePw"
+	<update id="busUpdatePw"
 		parameterType="business">
 		UPDATE business SET bus_pw = #{busPw} WHERE bus_id = #{busId}
 	</update>
 
 	<!-- 사용자 정보 수정 (비밀번호 제외) -->
-	<update id="updateInfo"
+	<update id="busUpdateInfo"
 		parameterType="business">
 		UPDATE business SET
 		bus_tel = #{busTel},
@@ -45,7 +45,7 @@
 
 
 	<!-- 사용자 삭제 (예: ID로 삭제) -->
-	<delete id="deleteBusinessById">
+	<delete id="busDelete">
 		DELETE FROM business WHERE bus_id = #{busId}
 	</delete>
 
