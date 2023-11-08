@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+    <mapper namespace ="restaurant">
+    
+    <!-- 등록 -->
+    <insert id ="save">
+    insert into restaurant
+    (res_no, bus_id, res_reg_no, res_name, res_tel, res_post, res_addr1, res_addr2, res_open_time, res_reg_date) 
+    values(restaurant_seq.nextval, #{busId}, #{resRegNo}, #{resName}, #{resTel}, #{resPost}, 
+    			#{resAddr1}, #{resAddr2}, #{resOpenTime}, #{resRegDate})
+    </insert>
+    
+    <!-- 삭제 -->
+    <delete id="deleteByResNo">
+    delete restaurant where res_no =#{resNo}
+    </delete>
+    
+    <!-- 조회 -->
+    <select id="find" resultType="RestaurantDto">
+    select * from restaurant where res_no = #{resNo}
+    </select>
+    
+    <!-- 정보 수정 (사업자번호 제외) -->
+	<update id="editResInfo">
+		UPDATE restaurant SET
+		res_name = #{resName},
+		res_tel = #{resTel},
+		res_post = #{resPost},
+		res_addr1 = #{resAddr1},
+		res_addr2 = #{resAddr2}
+		WHERE res_no = #{resNo}
+	</update>
+    
+    
+    
+    </mapper>

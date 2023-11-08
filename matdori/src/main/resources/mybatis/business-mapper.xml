@@ -24,6 +24,7 @@
 		resultType="BusinessDto">
 		SELECT * FROM business WHERE bus_id = #{busId}
 	</select>
+	
 
 	<!-- 사용자 정보 수정 (비밀번호 변경) -->
 	<update id="busUpdatePw">
@@ -33,6 +34,7 @@
 	<!-- 사용자 정보 수정 (비밀번호 제외) -->
 	<update id="busUpdateInfo">
 		UPDATE business SET
+		bus_name = #{busName},
 		bus_tel = #{busTel},
 		bus_email = #{busEmail},
 		bus_post = #{busPost},
