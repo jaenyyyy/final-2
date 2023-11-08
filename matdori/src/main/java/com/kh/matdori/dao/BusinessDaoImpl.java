@@ -22,21 +22,34 @@ public class BusinessDaoImpl implements BusinessDao {
 	}
 
 	@Override
-	public void delete(String busId) {
-		int result = sqlSession.delete("business.busDelete", busId);
-		if(result == 0) throw new NoTargetException();
+	public BusinessDto selectOne(String busId) {
+	    return sqlSession.selectOne("business.busSelectOne", busId);
 	}
 
 	@Override
-	public boolean update(String busId, BusinessDto businessDto) {
-		// TODO Auto-generated method stub
-		return false; 
+	public boolean delete(String busId) {
+	    int result = sqlSession.delete("business.busDelete", busId);
+	    return result > 0; // result가 0보다 크면 삭제가 성공한 것으로 간주
 	}
 
-//	@Override
-//	public boolean update(BusinessDto businessDto) {
-//		int result = sqlSession.update("business.busUpdateInfo", businessDto);
-//		if(result == 0) throw new NoTargetException();
-//		return result > 0 ;
-//	}
+	
+	@Override
+	public boolean update(String busId, BusinessDto businessDto) {
+	    businessDto.setBusId(busId); // busId를 BusinessDto에 설정
+	    int result = sqlSession.update("business.busUpdateInfo", businessDto);
+	    if (result == 0) {throw new NoTargetException();
+	    }
+	    return result > 0;
+	}
+
+	@Override
+	public boolean updatePw(String busId, BusinessDto businessDto) {
+	    businessDto.setBusId(busId);
+	    int result = sqlSession.update("business.busUpdatePw", businessDto);
+	    if (result == 0) {throw new NoTargetException();
+	    }
+	    return result > 0;
+	}
+
+
 }
