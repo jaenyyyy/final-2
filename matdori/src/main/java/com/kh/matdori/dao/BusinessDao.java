@@ -10,4 +10,6 @@ public interface BusinessDao {
 	boolean updatePw(String busId, BusinessDto businessDto);
 	boolean update(String busId, BusinessDto businessDto);
 	boolean delete(String busId);
+	
+	BusinessDto getBusinessDetails(String userId);
 }
