@@ -35,10 +35,6 @@
 		update customer
 		<set> 
 		
-		<if test="customerDto.customerPw != null">
-    	customer_pw = #{customerPw},
-		</if>
-		
 		<if test="customerDto.customerEmail != null">
     	customer_email = #{customerEmail},
 		</if>
@@ -54,10 +50,11 @@
 		<if test="customerDto.customerGender != null">
 	    customer_gender = #{customerGender},
 		</if>
-			where customer_id = #{customerId}
 			
 		</set>
+		where customer_id = #{customerId}
 	</update>
+	
 	
 	<!--  비밀번호 변경   -->
 	<update id="updateCustomerPw">
