@@ -30,34 +30,26 @@
     <div class="row mt-3">
 
     	<div class="col ms-4" style="margin-top: 70px;"> 
-            <a href="#">
-	       		<button type="button" class="btn btn-outline-warning">
-	       			북마크
-	       		</button>
+            <a href="#" class="btn btn-outline-warning">
+       			북마크
       		</a>
         </div>
         <div class="col text-center">
            <img src="/images/logo.png" style="width:250px;">
         </div>
         <div class="col text-end me-4" style="margin-top: 70px;">
-        	<a href="http://localhost:8080/customer/logout" class="me-4">
-	       		<button type="button" class="btn btn-outline-warning">
-	           			사업체
-	           	</button>
-	      		</a>
+        	<a href="#" class="btn btn-outline-warning me-4">
+				사업체
+	      	</a>
         	<c:choose>
 	        	<c:when test="${sessionScope.name != null}">
-	        		<a href="http://localhost:8080/customer/logout">
-		        		<button type="button" class="btn btn-outline-warning">
-			           		로그아웃
-			           	</button>
+	        		<a href="http://localhost:8080/customer/logout" class="btn btn-outline-warning"> 
+	        			로그아웃
 	        		</a>
 	        	</c:when>
 	            <c:otherwise>
-	           		<a href="http://localhost:8080/customer/login">
-		           		<button type="button" class="btn btn-outline-warning">
-		           			로그인
-		           		</button>
+	           		<a href="http://localhost:8080/customer/login" class="btn btn-outline-warning">
+		           		로그인
 	           		</a>
 	            </c:otherwise>
             </c:choose>
