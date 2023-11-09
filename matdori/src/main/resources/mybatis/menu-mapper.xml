@@ -16,8 +16,11 @@
     delete menu where menu_no=#{menuNo}
     </delete>
     
-    <select id="list" resultType="MenuDto">
-    select *from menu order by menu_no asc
+  <select id="menuListByResNo" resultType="MenuDto">
+   select m.menu_no, m.menu_name, m.menu_price, m.menu_content, r.res_name
+FROM menu m
+LEFT OUTER JOIN restaurant r ON m.res_no = r.res_no
+WHERE m.res_no = #{resNo}
     </select>
     
     <select id = "findByMenuNo" resultType="MenuDto">
