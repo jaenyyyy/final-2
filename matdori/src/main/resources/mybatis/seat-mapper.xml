@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="seat">
+	<!-- 좌석 등록 -->
+	<insert id = "insert">
+		insert into seat
+		(seat_no, seat_res_no, seat_name, seat_count) 
+		values(seat_seq.nextval, #{seatResNo}, #{seatName}, #{seatCount})
+	</insert>
+	
+	<!-- 좌석 삭제 -->
+	<delete id="remove">
+		delete seat where seat_no = #{seatNo}
+	</delete>
+	
+	<!-- 좌석 수정 -->
+	<update id="edit">
+		update seat
+		set 
+		<if test="seatDto.seatNo > 0">
+		seat_no=#{seatDto.seatNo}, 
+		</if>
+		<if test="seatDto.seatName != null">
+		seat_name=#{seatDto.seatName}, 
+		</if>
+		<if test="seatDto.seatCount > 0">
+		seat_count=#{seatDto.seatCount} 
+		</if>
+		where seat_no=#{seatNo}
+	</update>
+</mapper>
