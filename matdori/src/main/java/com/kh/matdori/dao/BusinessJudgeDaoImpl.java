@@ -1,6 +1,7 @@
 package com.kh.matdori.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,18 @@ public class BusinessJudgeDaoImpl implements BusinessJudgeDao {
     public List<BusinessJudgeListDto> getAllBusinessJudge() {
         return sqlSession.selectList("admin.getList");
     }
+
+
+    @Override
+    public void updateBusinessJudge(BusinessJudgeDto judgeDto) {
+        sqlSession.update("admin.updateJudge", judgeDto);
+    }
+
+
+
+
+
+
 
 
 }

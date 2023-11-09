@@ -7,10 +7,12 @@
 
 	<!-- 두 테이블을 조인하고 필요한 필드를 검색하는 SQL 문을 정의 -->
 	<select id="getList" resultType="BusinessJudgeListDto">
-		SELECT bj.bus_judge_no, b.bus_id, b.bus_reg_date, b.bus_name, b.bus_reg_no,
+		SELECT bj.bus_judge_no,
+		b.bus_id, b.bus_reg_date, b.bus_name, b.bus_reg_no,
 		bj.bus_judge_status, bj.bus_judge_date
 		FROM business_judge bj
-		LEFT JOIN business b ON bj.bus_id = b.bus_id ORDER BY bj.bus_judge_date DESC
+		LEFT JOIN
+		business b ON bj.bus_id = b.bus_id ORDER BY bj.bus_judge_date DESC
 	</select>
 
 	<!-- 매퍼에서 해당 아이디의 사업자 테이블 정보를 가져오는 SQL 쿼리 -->
@@ -28,5 +30,13 @@
 		WHERE bus_id = #{busId}
 	</select>
 
+	<!-- 심사완료하면 업데이트 되는 코드 -->
+	<update id="updateJudge" parameterType="map">
+		UPDATE business_judge
+		SET bus_judge_status = #{busJudgeStatus},
+		bus_judge_date = SYSDATE,
+		bus_judge_comment = #{busJudgeComment}
+		WHERE bus_id = #{busId}
+	</update>
 
 </mapper>
