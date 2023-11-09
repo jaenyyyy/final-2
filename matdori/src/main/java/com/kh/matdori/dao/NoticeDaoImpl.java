@@ -17,6 +17,11 @@ public class NoticeDaoImpl implements NoticeDao{
 	private SqlSession sqlSession;
 
 	@Override
+	public int sequence() {
+		return sqlSession.selectOne("notice.sequence");
+	}
+	
+	@Override
 	public void insert(NoticeDto noticeDto) {
 		sqlSession.insert("notice.write", noticeDto);
 	}

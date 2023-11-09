@@ -5,6 +5,8 @@ import java.util.List;
 import com.kh.matdori.dto.NoticeDto;
 
 public interface NoticeDao {
+	
+	int sequence(); //시퀀스 등록
 	void insert(NoticeDto noticeDto); //등록
 	List<NoticeDto> selectList(); //조회
 	NoticeDto selectOne(int noticeNo); //상세
