@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="admin">
+
+	<!-- 두 테이블을 조인하고 필요한 필드를 검색하는 SQL 문을 정의 -->
+	<select id="getList" resultType="BusinessJudgeListDto">
+		SELECT bj.bus_judge_no, b.bus_id, b.bus_reg_date, b.bus_name, b.bus_reg_no,
+		bj.bus_judge_status, bj.bus_judge_date
+		FROM business_judge bj
+		LEFT JOIN business b ON bj.bus_id = b.bus_id ORDER BY bj.bus_judge_date DESC
+	</select>
+
+	<!-- 매퍼에서 해당 아이디의 사업자 테이블 정보를 가져오는 SQL 쿼리 -->
+	<select id="getDetails" resultType="BusinessDto">
+		SELECT
+		bus_id,
+		bus_reg_no,
+		bus_name,
+		bus_tel,
+		bus_email,
+		bus_post,
+		bus_addr1,
+		bus_addr2
+		FROM business
+		WHERE bus_id = #{busId}
+	</select>
+
+
+</mapper>

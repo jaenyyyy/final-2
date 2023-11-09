@@ -51,5 +51,10 @@ public class BusinessDaoImpl implements BusinessDao {
 	    return result > 0;
 	}
 
+    @Override
+    public BusinessDto getBusinessDetails(String userId) {
+        return sqlSession.selectOne("admin.getDetails", userId);
+    }
+
 
 }
