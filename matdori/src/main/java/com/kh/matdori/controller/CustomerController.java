@@ -136,7 +136,7 @@ public class CustomerController {
 	    CustomerDto findDto = customerDao.selectOne(customerId);
 	    if (inputDto.getCustomerPw().equals(findDto.getCustomerPw())) {
 	        inputDto.setCustomerId(customerId);
-	        customerDao.edit(inputDto);
+	        customerDao.edit(customerId, inputDto);
 	        return "redirect:mypage";
 	    } 
 	    else {

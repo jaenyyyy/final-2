@@ -51,15 +51,14 @@ public class CustomerDaoImpl implements CustomerDao {
 	    Map<String, Object> param = Map.of("customerId", customerId, "customerDto", customerDto);
 	    int result = sqlSession.update("customer.edit", param);
 	    if(result == 0) throw new NoTargetException();
-	    
 	}
 	
-	@Override
-	public void edit(CustomerDto customerDto) {
-		sqlSession.insert("customer.edit", customerDto);
-	}
-	
-	
+//	@Override
+//	public void edit(CustomerDto customerDto) {
+//		sqlSession.insert("customer.edit", customerDto);
+//	}
+//	
+
 	@Override
 	public boolean updateCustomerPw(String customerId, String changePw) {
 	    Map<String, Object> param = Map.of("customerId", customerId, "changePw", changePw);
