@@ -38,7 +38,6 @@ public class NoticeDaoImpl implements NoticeDao{
 		Map<String, Object> param = Map.of("noticeNo", noticeNo, "noticeDto", noticeDto);
 		int result = sqlSession.update("notice.change", param);
 		if(result == 0) throw new NoTargetException();
-		sqlSession.update("notice.change", param);
 	}
 
 	@Override
