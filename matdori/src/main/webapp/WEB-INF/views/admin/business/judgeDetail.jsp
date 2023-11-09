@@ -74,7 +74,7 @@
 	
 <form id="judgeForm" action="/admin/business/details/{userId}" method="post">
     <input type="hidden" name="busId" value="${business.busId}">
-    <input type="hidden" name="judgeStatus" id="judgeStatus" value="">
+
     <div class="row mt-2">
         <div class="col-4">심사코멘트</div>
     </div>
