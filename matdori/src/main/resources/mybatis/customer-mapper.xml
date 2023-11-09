@@ -31,29 +31,21 @@
     
 
         <!-- 이용자 정보 수정  -->
-   	<update id="edit">
-		update customer
-		<set> 
-		
-		<if test="customerDto.customerEmail != null">
-    	customer_email = #{customerEmail},
-		</if>
-		
-		<if test="customerDto.customerContact  != null">
-	    customer_contact = #{customerContact},
-		</if>
-		
-		<if test="customerDto.customerBirth != null">
- 	    customer_birth = #{customerBirth},
-		</if>
-		
-		<if test="customerDto.customerGender != null">
-	    customer_gender = #{customerGender},
-		</if>
-			
-		</set>
-		where customer_id = #{customerId}
-	</update>
+   	<update id="edit" parameterType="map">
+    update customer
+    <set> 
+        <if test="customerDto.customerEmail != null">
+            customer_email = #{customerDto.customerEmail},
+        </if>
+        
+        <if test="customerDto.customerContact != null">
+            customer_contact = #{customerDto.customerContact},
+        </if>
+        
+    </set>
+    where customer_id = #{customerId}
+</update>
+
 	
 	
 	<!--  비밀번호 변경   -->
