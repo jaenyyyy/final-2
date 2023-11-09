@@ -33,32 +33,22 @@
             <input type="tel" name="customerContact" class="form-input w-100"
 					value="${customerDto.customerContact}" placeholder="- 제외하고 입력">
         </div>
-        
-        <div class="row left">
-        <label>생년월일 : </label>
-            <input type="date" name="customerBirth" class="form-input w-100"
-							value="${customeDto.customeBirth}">
-        </div>
-        
-        <div class="row left">
-       	<label>성별 : </label>
-        	<input type="text" name="customerGender" class="form-input w-100"
-        		value ="${customerDto.customerGender}">
-        </div>
+       
         
         
         <div>
-        <label>비밀번호 확인 : </label>
+        	<label>비밀번호 확인 : </label>
         	<input type="password" name="customerPw" required class="form-input w-100">
         </div>
+        
         <div class="row">
             <button type="submit" class="btn btn-positive w-100">정보변경</button>
         </div>
         
         <c:if test="${param.error != null}">
-        <div class="row red">
-			<h3>입력하신 비밀번호가 일치하지 않습니다</h3>
-		</div>
+	        <div class="row red">
+				<h3>입력하신 비밀번호가 일치하지 않습니다</h3>
+			</div>
 		</c:if>
     </div>
     
