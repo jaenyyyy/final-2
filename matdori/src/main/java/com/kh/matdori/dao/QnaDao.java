@@ -5,6 +5,8 @@ import java.util.List;
 import com.kh.matdori.dto.QnaDto;
 
 public interface QnaDao {
+	
+	int sequence();
 	void insert(QnaDto qnaDto); //등록
 	List<QnaDto> selectList(); //조회
 	QnaDto selectOne(int qnaNo); //상세

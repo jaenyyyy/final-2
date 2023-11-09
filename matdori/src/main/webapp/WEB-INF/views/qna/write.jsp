@@ -5,6 +5,7 @@
  <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
  
 <form action="write" method="post" autocomplete="off">
+
 <div class="container w-600">
    
 	<div>
@@ -20,7 +21,7 @@
       <input type="text" name="qnaTitle" placeholder="제목을 입력해주세요.">
    </div>
    <div>
-      <textarea name="qnaContent"rows="15" style="resize:none;" placeholder="내용을 입력해주세요."></textarea>
+      <textarea name="qnaAnswer"rows="15" style="resize:none;" placeholder="내용을 입력해주세요."></textarea>
 
    </div>
    <div class="right mt-10">

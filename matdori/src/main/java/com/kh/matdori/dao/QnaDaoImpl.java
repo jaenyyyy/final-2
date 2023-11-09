@@ -17,7 +17,11 @@ public class QnaDaoImpl implements QnaDao{
 	@Autowired
 	private SqlSession sqlSession;
 	
-
+	@Override
+	public int sequence() {
+		return sqlSession.selectOne("qna.sequence");
+	}
+	
 	@Override
 	public void insert(QnaDto qnaDto) {
 		sqlSession.insert("qna.write", qnaDto);
