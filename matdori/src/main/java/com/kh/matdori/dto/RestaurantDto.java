@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 public class RestaurantDto {
 	private int resNo;
 	private String busId;
+	private int resRegionNo;
 	private String resRegNo;
 	private String resName;
 	private String resTel;

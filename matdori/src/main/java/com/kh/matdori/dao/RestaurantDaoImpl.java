@@ -34,8 +34,8 @@ public class RestaurantDaoImpl implements RestaurantDao {
 	//기본정보수정
 	@Override
 	public void edit(int resNo, RestaurantDto restaurantDto) {
-		Map<String, Object> param = Map.of("resNo",resNo,"restaurantDto",restaurantDto);
-		int result = sqlSession.update("restaurant.editResInfo", param);
+		restaurantDto.setResNo(resNo);
+		int result = sqlSession.update("restaurant.editResInfo", restaurantDto);
 		if(result ==0) 	throw new NoTargetException();		
 	}
 	//상세조회

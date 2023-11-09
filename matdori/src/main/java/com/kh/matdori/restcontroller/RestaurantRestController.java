@@ -22,7 +22,7 @@ public class RestaurantRestController {
 	@Autowired
 	private RestaurantDao restaurantDao;
 
-	@PostMapping("/")
+	@PostMapping("/save")
 	public void insert(@RequestBody RestaurantDto restaurantDto) {
 		restaurantDao.insert(restaurantDto);
 	}
@@ -34,6 +34,7 @@ public class RestaurantRestController {
 
 	@PutMapping("/{resNo}")
 	public void update(@RequestBody RestaurantDto restaurantDto, @PathVariable int resNo) {
+		restaurantDto.setResNo(resNo); // resNo 설정 추가
 		restaurantDao.edit(resNo, restaurantDto);
 	}
 
