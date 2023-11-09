@@ -40,7 +40,6 @@ public class QnaDaoImpl implements QnaDao{
 		Map<String, Object> param = Map.of("qnaNo", qnaNo, "qnaDto", qnaDto);
 		int result = sqlSession.update("qna.change", param);
 		if(result == 0) throw new NoTargetException();
-		sqlSession.update("qna.change", param);
 	}
 
 	@Override
