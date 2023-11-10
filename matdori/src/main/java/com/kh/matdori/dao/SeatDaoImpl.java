@@ -1,5 +1,6 @@
 package com.kh.matdori.dao;
 
+import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.matdori.dto.SeatDto;
 import com.kh.matdori.error.NoTargetException;
+import com.kh.matdori.vo.SeatListByResVO;
 
 @Repository
 public class SeatDaoImpl implements SeatDao{
@@ -28,8 +30,13 @@ public class SeatDaoImpl implements SeatDao{
 
 	@Override
 	public void delete(int seatNo) {
-		int result = sqlSession.delete("book.remove", seatNo);
+		int result = sqlSession.delete("seat.remove", seatNo);
 		if(result == 0) throw new NoTargetException();
+	}
+	
+	@Override
+	public List<SeatListByResVO> selectList() {
+		return sqlSession.selectList("seat.seatListByResNo");
 	}
 
 }
