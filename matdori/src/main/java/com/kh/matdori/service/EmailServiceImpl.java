@@ -45,7 +45,7 @@ import lombok.extern.slf4j.Slf4j;
 			//주소를 현재 상황에 맞게 생성하는 도구 사용
 			String href = ServletUriComponentsBuilder
 														.fromCurrentContextPath()//현재의 context path에서
-														.path("/secure/login")//세부 경로를 더하고
+														.path("/customer/login")//세부 경로를 더하고
 														.build()//만든다음
 														.toUriString();//문자열로 바꿔라
 			link.attr("href", href);

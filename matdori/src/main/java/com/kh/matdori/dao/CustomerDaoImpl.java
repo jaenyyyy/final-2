@@ -26,7 +26,15 @@ public class CustomerDaoImpl implements CustomerDao {
 	
 	@Override
 	public void insert(CustomerDto customerDto) {
-		sqlSession.insert("customer.insert", customerDto);
+		String orgin = customerDto.getCustomerPw();
+		String encrypt = encoder.encode(orgin);
+		customerDto.setCustomerPw(encrypt);
+		
+		 // 확인을 위해 로그로 출력
+	    System.out.println("Encrypted Password: " + encrypt);
+
+	    sqlSession.insert("customer.insert", customerDto);
+		
 	}
 	
 	
@@ -81,25 +89,24 @@ public class CustomerDaoImpl implements CustomerDao {
 	
 	@Override
 	public CustomerDto login(CustomerDto dto) {
-		CustomerDto target = sqlSession.selectOne("customer.secureFind", dto.getCustomerId());
+		CustomerDto target = sqlSession.selectOne("customer.detail", dto.getCustomerId());
 		
 		if(target != null) { // 아이디가 존재한다면
-			boolean result = encoder.matches(dto.getCustomerPw(), target.getCustomerPw());
-		if(result == true) { // 비밀번호가 암호화 도구에 의해 맞다고 판정되면 
+			boolean passwordMatches = encoder.matches(dto.getCustomerPw(), target.getCustomerPw());
+		if(passwordMatches) { // 비밀번호가 암호화 도구에 의해 맞다고 판정되면 
 			return target;
 		}
 	}	
 		return null;
 	}
 
-	
 	@Override
 	public void secureInsert(CustomerDto dto) {
-		String origin = dto.getCustomerPw();
-		String encrypt = encoder.encode(origin);
-		dto.setCustomerPw(encrypt);
-		
-		sqlSession.insert("customer.insert", dto);
+	    String origin = dto.getCustomerPw();
+	    String encrypt = encoder.encode(origin);
+	    dto.setCustomerPw(encrypt);
+
+	    sqlSession.insert("customer.insert", dto);
 	}
 
 	@Override

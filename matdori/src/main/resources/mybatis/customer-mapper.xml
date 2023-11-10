@@ -29,10 +29,7 @@
     	select * from customer where customer_id = #{customerId}
     </select>
     
-    <!--  이메일 인증  -->
-    <select id="secureFind" resultType="CustomerDto"> 
-	select * from customer where customer_id = #{customerId} 
-	</select>
+    
 
         <!-- 이용자 정보 수정  -->
    	<update id="edit" parameterType="map">

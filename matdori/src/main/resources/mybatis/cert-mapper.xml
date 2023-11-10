@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+
+<mapper namespace="cert">
+
+    <!-- 삽입 -->
+    <insert id="insert">
+        insert into cert
+         (cert_email, cert_number, cert_time)
+        values (
+        #{certEmail}, #{certNumber}, #{certTime}
+        )
+    </insert>
+    
+
+    <!-- 10분 이내 조회 -->
+    <select id="selectIn10min" resultType="CertDto" parameterType="String">
+        select * from cert
+        where cert_email = #{certEmail}
+        and cert_time between sysdate-10/24/60 and sysdate
+    </select>
+
+
+    <delete id="deleteOver10min">
+    <![CDATA[
+        delete from cert where cert_time < SYSDATE - (10 / (24 * 60))
+    	]]>
+	</delete>
+
+    
+
+    <!-- 단일 항목 조회 -->
+    <select id="selectOne" resultType="CertDto" parameterType="String">
+        select * from cert
+        where cert_email = #{certEmail}
+    </select>
+
+</mapper>
