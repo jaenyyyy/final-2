@@ -32,4 +32,12 @@
 		</if>
 		where seat_no=#{seatNo}
 	</update>
+	
+	<!-- 매장별 좌석 조회 -->
+	<select id="seatListByResNo" resultType="seatListByResVO">
+		select r.res_no, r.res_name, 
+			   s.seat_no, s.seat_res_no, s.seat_name, s.seat_count  
+		from seat s 
+		left outer join restaurant r on s.seat_res_no = r.res_no
+	</select>
 </mapper>
