@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="ok">
+	<!-- 예약 가능 시간/좌석 등록 -->
+	<insert id = "insert">
+		insert into ok 
+		(ok_no, clock_no, seat_no) 
+		values(ok_seq.nextval, #{clockNo}, #{seatNo})
+	</insert>
+	
+	<!-- 예약 가능 시간/좌석 삭제 -->
+	<delete id="remove">
+		delete ok where ok_no = #{okNo}
+	</delete>
+	
+	<!-- 예약 가능 시간/좌석 수정 -->
+	<update id="edit">
+		update ok
+		set 
+		<if test="okDto.okNo > 0">
+		ok_no=#{okDto.okNo}, 
+		</if>
+		<if test="okDto.clockNo > 0">
+		clock_no=#{okDto.clockNo}, 
+		</if>
+		<if test="okDto.seatNo > 0">
+		seat_no=#{okDto.seatNo}, 
+		</if>
+		ok_status=#{okStatus} 
+		where ok_no=#{okNo}
+	</update>
+	
+	<!-- 예약 가능 시간/좌석 조회 -->
+	<select id="seatListByclockNo" resultType="okDto">
+		select *  
+		from ok 
+		left outer join clock c on ok.clock_no = c.clock_no
+		left outer join seat s on ok.seat_no = s.seat_no 
+		order by clock_no asc
+	</select>
+</mapper>
