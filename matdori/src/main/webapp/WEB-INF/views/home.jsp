@@ -18,6 +18,8 @@
 <a href="customer/change">정보변경</a>
 <br>
 <a href="exit">회원 탈퇴</a>
+<br>
+<a href="findPw">비밀번호 찾기</a>
 
 
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>

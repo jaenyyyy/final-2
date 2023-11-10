@@ -1,8 +1,15 @@
+
 package com.kh.matdori.controller;
 
+import java.io.IOException;
+
+import javax.mail.MessagingException;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,6 +20,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.kh.matdori.dao.CustomerDao;
 import com.kh.matdori.dto.CustomerDto;
+import com.kh.matdori.service.EmailService;
+
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -20,9 +29,19 @@ import lombok.extern.slf4j.Slf4j;
 @Controller
 @RequestMapping("/customer")
 public class CustomerController {
-	 
+	
 	@Autowired
 	private CustomerDao customerDao;
+	
+	@Autowired
+	private JavaMailSender sender;
+	
+	@Autowired
+	private EmailService emailService;
+	
+	@Autowired
+	private BCryptPasswordEncoder encoder;
+	
 	
 	
 	// 회원가입 ok
@@ -32,8 +51,10 @@ public class CustomerController {
 	}
 	
 	@PostMapping("/join")
-	public String join(@ModelAttribute CustomerDto customerDto) {
-		customerDao.insert(customerDto);
+	public String join(
+			@ModelAttribute CustomerDto customerDto) throws MessagingException, IOException {
+		customerDao.secureInsert(customerDto);
+		emailService.sendCelebration(customerDto.getCustomerId());
 		return "redirect:joinFinish";
 	}
 	
@@ -51,19 +72,15 @@ public class CustomerController {
 	}
 	
 	@PostMapping("/login")
-	public String login(@ModelAttribute CustomerDto inputDto, HttpSession session) {
-	    CustomerDto findDto = customerDao.selectOne(inputDto.getCustomerId());
-	    if (findDto == null) {
-	        return "redirect:login?error";
-	    }
-	    boolean isCorrectPw = inputDto.getCustomerPw().equals(findDto.getCustomerPw());
-
-	    if (isCorrectPw) {
-	        session.setAttribute("name", findDto.getCustomerId());
-	        return "redirect:/";
-	    } else {
-	        return "redirect:login?error";
-	    }
+	public String login(@ModelAttribute CustomerDto dto) {
+		CustomerDto target = customerDao.login(dto);
+		if(target == null) {
+			return "redirect:login?error";
+		}
+		else {
+			//세션 정보 설정...후 메인페이지 혹은 기존페이지로 이동
+			return "redirect:login?success";
+		}
 	}
 	
 	
@@ -90,33 +107,32 @@ public class CustomerController {
 	
 	
 
+	@GetMapping("/password")
+	public String password() {
+		return "customer/password";
+	}
 	
-//	@GetMapping("/password")
-//	public String password() {
-//		return "customer/password";
-//	}
-//	
-//	@PostMapping("/password")
-//	public String password(HttpSession session,
-//								@RequestParam String originPw,
-//								@RequestParam String changePw) {
-//		String customerId = (String) session.getAttribute("name");
-//		CustomerDto customerDto = customerDao.selectOne(customerId);
-//		
-//		if(customerDto.getCustomerPw().equals(originPw)) {
-//			customerDao.updateCustomerPw(customerId, changePw);
-//			return "redirect:passwordFinish";
-//		}
-//		else {
-//			return "redirect:password?error";
-//		}
-//	}
-//	
-//	@RequestMapping("/passwordFinish")
-//	public String passwordFinish() {
-//		return "customer/passwordFinish";
-//	}
-//	
+	@PostMapping("/password")
+	public String password(HttpSession session,
+								@RequestParam String originPw,
+								@RequestParam String changePw) {
+		String customerId = (String) session.getAttribute("name");
+		CustomerDto customerDto = customerDao.selectOne(customerId);
+		
+		if(customerDto.getCustomerPw().equals(originPw)) {
+			customerDao.updateCustomerPw(customerId, changePw);
+			return "redirect:passwordFinish";
+		}
+		else {
+			return "redirect:password?error";
+		}
+	}
+	
+	@RequestMapping("/passwordFinish")
+	public String passwordFinish() {
+		return "customer/passwordFinish";
+	}
+	
 	
 	
 	
@@ -168,8 +184,42 @@ public class CustomerController {
 	public String exitFinish() {
 		return "customer/exitFinish";
 		}
+	
+	//비밀번호 찾기
+	@GetMapping("/findPw")
+	public String findPw() {
+		return "customer/findPw.jsp";
 	}
 	
 	
+	@PostMapping("/findPw")
+	public String findPw(@ModelAttribute CustomerDto customerDto) {
+		//[1] 아이디로 모든 정보를 불러오고
+		CustomerDto findDto = 
+				customerDao.selectOne(customerDto.getCustomerId());
+		//[2] 이메일이 일치하는지 확인한다
+		boolean isValid = findDto != null 
+				&& findDto.getCustomerEmail().equals(customerDto.getCustomerId());
+		if(isValid) {//이메일이 같다면
+			//이메일 발송 코드
+			SimpleMailMessage message = new SimpleMailMessage();
+			message.setTo(findDto.getCustomerEmail());
+			message.setSubject("비밀번호 찾기 결과");
+			message.setText(findDto.getCustomerPw());
+			sender.send(message);
+			
+			return "redirect:findPwFinish";
+		}
+		else {//이메일이 다르다면
+			return "redirect:findPw?error";
+		}
+		
+	}
+	
+	@RequestMapping("/findPwFinish")
+	public String findPwFinish() {
+		return "customer/findPwFinish.jsp";
+	}
+}
 
 
