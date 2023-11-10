@@ -13,10 +13,9 @@
 	<!-- 사용자 등록 (가입) -->
 	<insert id="busJoin">
 		INSERT INTO business (bus_id, bus_pw, bus_reg_no, bus_name, bus_tel,
-		bus_email, bus_post, bus_addr1, bus_addr2, bus_reg_date)
+		bus_email, bus_post, bus_addr1, bus_addr2)
 		VALUES (#{busId}, #{busPw}, #{busRegNo}, #{busName}, #{busTel},
-		#{busEmail}, #{busPost}, #{busAddr1}, #{busAddr2},
-		#{busRegDate})
+		#{busEmail}, #{busPost}, #{busAddr1}, #{busAddr2})
 	</insert>
 
 	<!-- 사용자 정보 읽기 (ID로 조회) -->
