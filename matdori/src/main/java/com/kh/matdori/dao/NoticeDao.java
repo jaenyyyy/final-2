@@ -3,18 +3,17 @@ package com.kh.matdori.dao;
 import java.util.List;
 
 import com.kh.matdori.dto.NoticeDto;
+import com.kh.matdori.vo.NoticePageVO;
 
 public interface NoticeDao {
 	
 	int sequence(); //시퀀스 등록
 	void insert(NoticeDto noticeDto); //등록
-	List<NoticeDto> selectList(); //조회
+	List<NoticeDto> selectList(NoticePageVO vo); //조회
 	NoticeDto selectOne(int noticeNo); //상세
-	void edit(int noticeNo, NoticeDto noticeDto); //수정
-	void delete(int noticeNo); //삭제 
+	boolean edit(NoticeDto noticeDto); //수정
+	boolean delete(int noticeNo); //삭제 
 	
-	List<NoticeDto> searchList(String noticeTitle); //검색
-	List<NoticeDto> selectListByPage(int page, int size); //페이징
-	
+	int countList(NoticePageVO vo); //검색 + 페이지네이션
 	
 }

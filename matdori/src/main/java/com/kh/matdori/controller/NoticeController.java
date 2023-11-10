@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.kh.matdori.dao.NoticeDao;
 import com.kh.matdori.dto.CustomerDto;
 import com.kh.matdori.dto.NoticeDto;
+import com.kh.matdori.error.NoTargetException;
+import com.kh.matdori.vo.NoticePageVO;
 
 @Controller
 @RequestMapping("/notice")
@@ -22,12 +24,12 @@ public class NoticeController {
 	@Autowired
 	private NoticeDao noticeDao;
 	
-	@GetMapping("write") 
+	@GetMapping("/write") 
 	public String write() {
 		return "notice/write";
 	}
 	
-	@PostMapping("write") 
+	@PostMapping("/write") 
 	public String write(@ModelAttribute NoticeDto noticeDto, HttpSession session,
 						@ModelAttribute CustomerDto customerDto) {
 		
@@ -43,11 +45,41 @@ public class NoticeController {
 		return "redirect:detail?noticeNo="+noticeNo;
 	}
 	
-	@RequestMapping("detail")
+	@RequestMapping("/detail")
 	public String detail(@RequestParam int noticeNo, Model model, HttpSession session) {
 		NoticeDto noticeDto = noticeDao.selectOne(noticeNo);
 		model.addAttribute("noticeDto", noticeDto);
-		
 		return "notice/detail";
+	}
+	
+	@RequestMapping("/list")
+	public String list(@ModelAttribute(name="vo") NoticePageVO vo,Model model) {
+		int count = noticeDao.countList(vo);
+		vo.setCount(count);
+		model.addAttribute("vo", vo);
+		
+		model.addAttribute("list", noticeDao.selectList(vo));
+		return "notice/list";
+	}
+	
+	@GetMapping("/edit")
+	public String edit(@RequestParam int noticeNo, Model model) {
+		NoticeDto noticeDto = noticeDao.selectOne(noticeNo);
+		model.addAttribute("noticeDto", noticeDto);
+		return "notice/edit";
+	}
+	
+	@PostMapping("/edit")
+	public String edit(@ModelAttribute NoticeDto noticeDto) {
+		boolean result = noticeDao.edit(noticeDto);
+		if(result) return "redirect:detail?noticeNo="+noticeDto.getNoticeNo();
+		else throw new NoTargetException();
+	}
+	
+	@RequestMapping("/delete")
+	public String delete(@RequestParam int noticeNo) {
+		boolean result = noticeDao.delete(noticeNo);
+		if(result) return "redirect:list";
+		else throw new NoTargetException("존재하지 않는 글");
 	}
 }

@@ -1,5 +1,6 @@
 package com.kh.matdori.dao;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.matdori.dto.NoticeDto;
 import com.kh.matdori.error.NoTargetException;
+import com.kh.matdori.vo.NoticePageVO;
 
 @Repository
 public class NoticeDaoImpl implements NoticeDao{
@@ -27,7 +29,7 @@ public class NoticeDaoImpl implements NoticeDao{
 	}
 
 	@Override
-	public List<NoticeDto> selectList() {
+	public List<NoticeDto> selectList(NoticePageVO vo) {
 		return sqlSession.selectList("notice.list");
 	}
 
@@ -39,29 +41,24 @@ public class NoticeDaoImpl implements NoticeDao{
 	}
 
 	@Override
-	public void edit(int noticeNo, NoticeDto noticeDto) {
-		Map<String, Object> param = Map.of("noticeNo", noticeNo, "noticeDto", noticeDto);
-		int result = sqlSession.update("notice.change", param);
-		if(result == 0) throw new NoTargetException();
+	public boolean edit(NoticeDto noticeDto) {
+		Map<String, Object> params = new HashMap <>();
+		params.put("noticeNo", noticeDto.getNoticeNo());
+		params.put("noticeDto", noticeDto);
+		return sqlSession.update("notice.change", params) > 0;
 	}
 
 	@Override
-	public void delete(int noticeNo) {
-		int result = sqlSession.delete("notice.delete", noticeNo);
-		if(result == 0) throw new NoTargetException();
+	public boolean delete(int noticeNo) {
+		return sqlSession.delete("notice.delete", noticeNo) > 0;
 	}
 
 	@Override
-	public List<NoticeDto> searchList(String noticeTitle) {
-		return sqlSession.selectList("notice.search", noticeTitle);
+	public int countList(NoticePageVO vo) {
+		if(vo.isSearch()) {
+			return sqlSession.selectOne("notice.search");
+		}
+		else return sqlSession.selectOne("notice.page");
 	}
-
-	@Override
-	public List<NoticeDto> selectListByPage(int page, int size) {
-		int end = page * size;
-		int begin = end - (size - 1);
-		Map params = Map.of("begin", begin, "end", end);
-		return sqlSession.selectList("notice.page", params);
-	}
-
+	
 }

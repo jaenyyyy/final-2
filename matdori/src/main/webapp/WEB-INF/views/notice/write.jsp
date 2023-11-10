@@ -8,14 +8,14 @@
 <div class="container w-600">
    
    <div>
-      <input type="text" name="noticeTitle" placeholder="제목을 입력해주세요.">
+      <input type="text" name="noticeTitle" class="form-control" placeholder="제목을 입력해주세요.">
    </div>
    <div>
-      <textarea name="noticeContent"rows="15" style="resize:none;" placeholder="내용을 입력해주세요."></textarea>
+      <textarea name="noticeContent"rows="15" class="form-control"  placeholder="내용을 입력해주세요."></textarea>
 
    </div>
-   <div class="right mt-10">
-      <button>작성하기</button>
+   <div class="text-end">
+      <button class="btn btn-warning mt-4">작성하기</button>
    </div>
 </div>
 </form>
