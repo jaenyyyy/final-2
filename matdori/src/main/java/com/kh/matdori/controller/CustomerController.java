@@ -47,16 +47,17 @@ public class CustomerController {
 	// 회원가입 ok
 	@GetMapping("/join")
 	public String join() {
-		return "customer/join";
+	    return "customer/join";
 	}
-	
+
 	@PostMapping("/join")
 	public String join(
-			@ModelAttribute CustomerDto customerDto) throws MessagingException, IOException {
-		customerDao.secureInsert(customerDto);
-		emailService.sendCelebration(customerDto.getCustomerId());
-		return "redirect:joinFinish";
+	        @ModelAttribute CustomerDto customerDto) throws MessagingException, IOException {
+	    customerDao.secureInsert(customerDto);
+	    emailService.sendCelebration(customerDto.getCustomerId());
+	    return "redirect:joinFinish";
 	}
+
 	
 	// 회원가입 완료 
 	@RequestMapping("/joinFinish")
