@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.kh.matdori.dao.MenuDao;
+import com.kh.matdori.dto.MenuByResDto;
 import com.kh.matdori.dto.MenuDto;
 
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
@@ -36,10 +37,17 @@ public class MenuRestController {
 		menuDao.delete(menuNo);
 	}
 	
-	@GetMapping("/menulist")
-	public List<MenuDto> list(){
-		return menuDao.selectList();
+	@GetMapping("/list/{resNo}")
+	public ResponseEntity<List<MenuByResDto>> getMenuListByRestaurant(@PathVariable("resNo") Integer resNo){
+	    if (resNo == null) {
+	        // resNo가 null일 경우 적절한 예외 처리
+	        return ResponseEntity.badRequest().build();
+	    }
+	    List<MenuByResDto> menuList = menuDao.selectList(resNo);
+	    return ResponseEntity.ok(menuList);
 	}
+
+	
 	
 	@GetMapping("/{menuNo}")
 	public ResponseEntity<MenuDto> find(@PathVariable int menuNo){

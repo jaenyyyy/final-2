@@ -2,6 +2,7 @@ package com.kh.matdori.dao;
 
 import java.util.List;
 
+import com.kh.matdori.dto.MenuByResDto;
 import com.kh.matdori.dto.MenuDto;
 
 public interface MenuDao {
@@ -10,10 +11,12 @@ public interface MenuDao {
 
 	void delete(int menuNo);
 
-	List<MenuDto> selectList();
+//	List<MenuByResDto> selectList();
 
 	MenuDto selectOne(int menuNo);
 
 	boolean edit(int menuNo, MenuDto menuDto);
+
+	List<MenuByResDto> selectList(Integer resNo);
 
 }

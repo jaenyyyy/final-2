@@ -10,7 +10,6 @@ public class MenuDto {
 	private int menuNo;
 	private int resNo;
 	private String menuName;
-	@Builder.Default
-	private float menuPrice=-1f;
+	private Float menuPrice;
 	private String menuContent;
 }
