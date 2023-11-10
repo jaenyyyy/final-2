@@ -83,7 +83,7 @@
 			          <a class="nav-link" href="/qna/list">Q&A</a>
 			        </li>
 			        <li class="nav-item">
-			          <a class="nav-link" href="customer/mypage">마이페이지</a>
+			          <a class="nav-link" href="/customer/mypage">마이페이지</a>
 			        </li>
 			        <li class="nav-item dropdown">
 			          <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Dropdown</a>

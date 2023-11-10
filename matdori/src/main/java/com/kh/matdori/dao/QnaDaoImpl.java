@@ -40,16 +40,14 @@ public class QnaDaoImpl implements QnaDao{
 	}
 
 	@Override
-	public void edit(int qnaNo, QnaDto qnaDto) {
+	public boolean edit(int qnaNo, QnaDto qnaDto) {
 		Map<String, Object> param = Map.of("qnaNo", qnaNo, "qnaDto", qnaDto);
-		int result = sqlSession.update("qna.change", param);
-		if(result == 0) throw new NoTargetException();
+		return sqlSession.update("qna.change", param) > 0;
 	}
 
 	@Override
-	public void delete(int qnaNo) {
-		int result = sqlSession.delete("qna.delete", qnaNo);
-		if(result == 0) throw new NoTargetException();
+	public boolean delete(int qnaNo) {
+		return sqlSession.delete("qna.delete", qnaNo) > 0;
 	}
 
 	@Override

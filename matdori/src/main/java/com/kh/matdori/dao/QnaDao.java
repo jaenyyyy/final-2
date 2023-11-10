@@ -10,8 +10,8 @@ public interface QnaDao {
 	void insert(QnaDto qnaDto); //등록
 	List<QnaDto> selectList(); //조회
 	QnaDto selectOne(int qnaNo); //상세
-	void edit(int qnaNo, QnaDto qnaDto); //수정
-	void delete(int qnaNo); //삭제 
+	boolean edit(int qnaNo, QnaDto qnaDto); //수정
+	boolean delete(int qnaNo); //삭제 
 	
 	List<QnaDto> searchList(String qnaTitle); //검색
 	List<QnaDto> selectListByPage(int page, int size); //페이징
