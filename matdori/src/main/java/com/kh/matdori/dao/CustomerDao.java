@@ -22,8 +22,20 @@ public interface CustomerDao {
 	// 이용자 정보 모두 조회 
 	List<CustomerDto> selectList();
 	
-	// true가 반환되면 비번변경 성공 
-	// false면 비번 변경 실패 
-	boolean updateCustomerPw(String customerId, String changePw);
 	
-}
+	boolean updateCustomerPw(String customerId, String changePw);
+
+	
+	// dto 포함 된 회원 정보 사용하여 로그인 수행 
+	CustomerDto login(CustomerDto dto);
+	
+	// 비밀번호 암호화 후 DB등록 
+	void secureInsert(CustomerDto dto);
+	
+	// 회원 정보 조회 후 결과 반환 
+	CustomerDto secureSelectOne(String customerId);
+	
+
+	}
+	
+

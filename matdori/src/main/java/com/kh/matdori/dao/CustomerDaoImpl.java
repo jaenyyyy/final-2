@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Repository;
 
 import com.kh.matdori.dto.CustomerDto;
@@ -19,13 +20,16 @@ public class CustomerDaoImpl implements CustomerDao {
 	@Autowired
 	private SqlSession sqlSession;
 	
+	@Autowired
+	private BCryptPasswordEncoder encoder;
 	
 	
 	@Override
 	public void insert(CustomerDto customerDto) {
 		sqlSession.insert("customer.insert", customerDto);
 	}
-
+	
+	
 	@Override
 	public boolean delete(String customerId) {
 		int result = sqlSession.delete("customer.delete", customerId);
@@ -70,6 +74,41 @@ public class CustomerDaoImpl implements CustomerDao {
 	    return true;
 	}
 
+	
+	
+	
+	
+	
+	@Override
+	public CustomerDto login(CustomerDto dto) {
+		CustomerDto target = sqlSession.selectOne("customer.secureFind", dto.getCustomerId());
+		
+		if(target != null) { // 아이디가 존재한다면
+			boolean result = encoder.matches(dto.getCustomerPw(), target.getCustomerPw());
+		if(result == true) { // 비밀번호가 암호화 도구에 의해 맞다고 판정되면 
+			return target;
+		}
+	}	
+		return null;
+	}
+
+	
+	@Override
+	public void secureInsert(CustomerDto dto) {
+		String origin = dto.getCustomerPw();
+		String encrypt = encoder.encode(origin);
+		dto.setCustomerPw(encrypt);
+		
+		sqlSession.insert("customer.insert", dto);
+	}
+
+	@Override
+	public CustomerDto secureSelectOne(String customerId) {
+		CustomerDto dto = sqlSession.selectOne("customer.detail", customerId);
+		return dto;
+	}
+
+	
 
 
 }
