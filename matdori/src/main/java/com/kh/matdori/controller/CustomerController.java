@@ -2,6 +2,9 @@
 package com.kh.matdori.controller;
 
 import java.io.IOException;
+import java.text.DecimalFormat;
+import java.util.Map;
+import java.util.Random;
 
 import javax.mail.MessagingException;
 import javax.servlet.http.HttpSession;
@@ -12,19 +15,24 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.kh.matdori.dao.CertDao;
 import com.kh.matdori.dao.CustomerDao;
+import com.kh.matdori.dto.CertDto;
 import com.kh.matdori.dto.CustomerDto;
 import com.kh.matdori.service.EmailService;
 
 
 import lombok.extern.slf4j.Slf4j;
 
+
+@CrossOrigin
 @Slf4j
 @Controller
 @RequestMapping("/customer")
@@ -42,25 +50,24 @@ public class CustomerController {
 	@Autowired
 	private BCryptPasswordEncoder encoder;
 	
+	@Autowired
+	private CertDao certDao;
 	
 	
-	// 회원가입 ok
-	@GetMapping("/join")
-	public String join() {
-	    return "customer/join";
-	}
+    @GetMapping("/join")
+    public String join() {
+        return "customer/join";
+    }
 
-	@PostMapping("/join")
-	public String join(
-	        @ModelAttribute CustomerDto customerDto) throws MessagingException, IOException {
-	    customerDao.secureInsert(customerDto);
-	    emailService.sendCelebration(customerDto.getCustomerId());
-	    return "redirect:joinFinish";
-	}
-
+    @PostMapping("/join")
+    public String join(@ModelAttribute CustomerDto customerDto) throws MessagingException, IOException {
+        customerDao.insert(customerDto);
+        emailService.sendCelebration(customerDto.getCustomerEmail());
+        return "redirect:joinFinish";
+    }
 	
 	// 회원가입 완료 
-	@RequestMapping("/joinFinish")
+	@GetMapping("/joinFinish")
 	public String joinFinish() {
 		return "customer/joinFinish";
 	}
@@ -80,7 +87,7 @@ public class CustomerController {
 		}
 		else {
 			//세션 정보 설정...후 메인페이지 혹은 기존페이지로 이동
-			return "redirect:login?success";
+			return "redirect:/";
 		}
 	}
 	
@@ -221,6 +228,51 @@ public class CustomerController {
 	public String findPwFinish() {
 		return "customer/findPwFinish.jsp";
 	}
+	
+	
+	@PostMapping("/send")
+	public void send(@RequestParam String certEmail) {
+		Random r = new Random();
+		int number = r.nextInt(1000000);
+		DecimalFormat fm = new DecimalFormat("000000");
+		String certNumber = fm.format(number);
+		
+		SimpleMailMessage message = new SimpleMailMessage();
+		message.setTo(certEmail);
+		message.setSubject("[맛도리] 인증번호 안내");
+		message.setText("인증번호는 [" + certNumber + "] 입니다");
+		sender.send(message);
+		
+		certDao.delete(certEmail);
+		CertDto certDto = new CertDto();
+		certDto.setCertEmail(certEmail);
+		certDto.setCertNumber(certNumber);
+		certDao.insert(certDto);
+	}
+	
+	
+	@PostMapping("/check")
+	public Map<String, Object> check(@ModelAttribute CertDto certDto) {
+		//[1] 이메일로 인증정보를 조회
+		CertDto findDto = certDao.selectOne(certDto.getCertEmail());//기간제한없음
+		
+		if(findDto != null) {
+			//[2] 인증번호 비교
+			boolean isValid = 
+					findDto.getCertNumber().equals(certDto.getCertNumber());
+			if(isValid) {
+				//인증 성공하면 인증번호를 삭제
+				certDao.delete(certDto.getCertEmail());
+				return Map.of("result", true);
+			}
+		}
+		
+		return Map.of("result", false);
+	}
+	
 }
+		
+	
+
 
 

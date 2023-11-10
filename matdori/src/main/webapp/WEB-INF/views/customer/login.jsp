@@ -23,7 +23,8 @@
 			<br>
 		</div>
 		<div class="text-center">
-			<a href="customer/join"> 회원가입하기 </a>
+			<a href="/customer/join">회원가입하기</a>
+
 		</div>
 	</div>
 
