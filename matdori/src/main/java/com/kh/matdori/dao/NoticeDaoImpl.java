@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.matdori.dto.NoticeDto;
 import com.kh.matdori.error.NoTargetException;
-import com.kh.matdori.vo.NoticePageVO;
+import com.kh.matdori.vo.PaginationVO;
 
 @Repository
 public class NoticeDaoImpl implements NoticeDao{
@@ -29,9 +29,11 @@ public class NoticeDaoImpl implements NoticeDao{
 	}
 
 	@Override
-	public List<NoticeDto> selectList(NoticePageVO vo) {
-		return sqlSession.selectList("notice.list");
+	public List<NoticeDto> selectList(PaginationVO vo) {
+		List<NoticeDto> list = sqlSession.selectList("notice.list", vo);
+		return list;
 	}
+
 
 	@Override 
 	public NoticeDto selectOne(int noticeNo) {
@@ -54,8 +56,8 @@ public class NoticeDaoImpl implements NoticeDao{
 	}
 
 	@Override
-	public int countList(NoticePageVO vo) {
-			return sqlSession.selectOne("notice.count");
+	public int countList(PaginationVO vo) {
+		return sqlSession.selectOne("notice.count", vo);
 	}
 	
 }

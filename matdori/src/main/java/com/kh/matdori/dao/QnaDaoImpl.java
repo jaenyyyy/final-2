@@ -1,5 +1,6 @@
 package com.kh.matdori.dao;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Repository;
 import com.kh.matdori.dto.QnaDto;
 import com.kh.matdori.dto.QnaDto;
 import com.kh.matdori.error.NoTargetException;
+import com.kh.matdori.vo.PaginationVO;
 
 @Repository
 public class QnaDaoImpl implements QnaDao{
@@ -28,8 +30,9 @@ public class QnaDaoImpl implements QnaDao{
 	}
 
 	@Override
-	public List<QnaDto> selectList() {
-		return sqlSession.selectList("qna.list");
+	public List<QnaDto> selectList(PaginationVO vo) {
+		List<QnaDto> list = sqlSession.selectList("qna.list", vo);
+		return list;
 	}
 
 	@Override
@@ -40,27 +43,22 @@ public class QnaDaoImpl implements QnaDao{
 	}
 
 	@Override
-	public boolean edit(int qnaNo, QnaDto qnaDto) {
-		Map<String, Object> param = Map.of("qnaNo", qnaNo, "qnaDto", qnaDto);
-		return sqlSession.update("qna.change", param) > 0;
+	public boolean edit(QnaDto qnaDto) {
+		Map<String, Object> params = new HashMap <>();
+		params.put("noticeNo", qnaDto.getQnaNo());
+		params.put("noticeDto", qnaDto);
+		return sqlSession.update("qna.change", params) > 0;
 	}
 
 	@Override
 	public boolean delete(int qnaNo) {
 		return sqlSession.delete("qna.delete", qnaNo) > 0;
 	}
+	
 
 	@Override
-	public List<QnaDto> searchList(String qnaTitle) {
-		return sqlSession.selectList("qna.search", qnaTitle);
-	}
-
-	@Override
-	public List<QnaDto> selectListByPage(int page, int size) {
-		int end = page * size;
-		int begin = end - (size - 1);
-		Map params = Map.of("begin", begin, "end", end);
-		return sqlSession.selectList("qna.page", params);
+	public int countList(PaginationVO vo) {
+		return sqlSession.selectOne("qna.count", vo);
 	}
 
 }

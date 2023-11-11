@@ -1,5 +1,7 @@
 package com.kh.matdori.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +17,7 @@ import com.kh.matdori.dao.NoticeDao;
 import com.kh.matdori.dto.CustomerDto;
 import com.kh.matdori.dto.NoticeDto;
 import com.kh.matdori.error.NoTargetException;
-import com.kh.matdori.vo.NoticePageVO;
+import com.kh.matdori.vo.PaginationVO;
 
 @Controller
 @RequestMapping("/notice")
@@ -53,12 +55,14 @@ public class NoticeController {
 	}
 	
 	@RequestMapping("/list")
-	public String list(@ModelAttribute(name="vo") NoticePageVO vo,Model model) {
+	public String list(@ModelAttribute(name="vo") PaginationVO vo,Model model) {
 		int count = noticeDao.countList(vo);
 		vo.setCount(count);
 		model.addAttribute("vo", vo);
 		
-		model.addAttribute("list", noticeDao.selectList(vo));
+		List <NoticeDto> list = noticeDao.selectList(vo);
+		model.addAttribute("list", list);
+		
 		return "notice/list";
 	}
 	

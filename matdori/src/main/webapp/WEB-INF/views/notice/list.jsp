@@ -60,7 +60,7 @@
 		            <span class="page-link">${i}</span>
 		          </c:when>
 		          <c:otherwise>
-		            <a class="page-link" href="list?${vo.getQueryString(i)}">${i}</a>
+		            <a class="page-link " href="list?${vo.getQueryString(i)}">${i}</a>
 		          </c:otherwise>
 		        </c:choose>
 		      </li>
@@ -77,20 +77,22 @@
 		  </ul>
 		</div>
 		
+		
+			<!-- 검색창 -->
+	   <form action="list" method="get">
+	   <div class="row">
+	      
+	      <input type="search" name="keyword" required class="form-control"
+	               placeholder="검색어 입력" value="${param.keyword}">
+	      <button type="submit" class="btn btn-warning">
+	         <i class="fa-solid fa-magnifying-glass"></i>
+	         검색
+	      </button>
+	   </div>
+	   </form>
+		
 	 </div>
  </div>
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
  
  
  
