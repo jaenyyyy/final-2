@@ -33,7 +33,7 @@ public class NoticeDaoImpl implements NoticeDao{
 		return sqlSession.selectList("notice.list");
 	}
 
-	@Override
+	@Override 
 	public NoticeDto selectOne(int noticeNo) {
 		NoticeDto noticeDto = sqlSession.selectOne("notice.detail", noticeNo);
 		if(noticeDto == null) throw new NoTargetException();
@@ -55,10 +55,7 @@ public class NoticeDaoImpl implements NoticeDao{
 
 	@Override
 	public int countList(NoticePageVO vo) {
-		if(vo.isSearch()) {
-			return sqlSession.selectOne("notice.search");
-		}
-		else return sqlSession.selectOne("notice.page");
+			return sqlSession.selectOne("notice.count");
 	}
 	
 }

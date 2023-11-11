@@ -82,7 +82,7 @@
 	
 	
 	<!-- 카운트 -->
-	<select id="count" resultType="int">
+	<select id="count" resultType="NoticeDto">
 		<!-- 검색일 때 -->
 	    <choose>
 	        <when test="keyword != null">
