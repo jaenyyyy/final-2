@@ -80,13 +80,15 @@ public class CustomerController {
 	}
 	
 	@PostMapping("/login")
-	public String login(@ModelAttribute CustomerDto dto) {
+	public String login(@ModelAttribute CustomerDto dto, HttpSession session) {
 		CustomerDto target = customerDao.login(dto);
 		if(target == null) {
 			return "redirect:login?error";
 		}
 		else {
 			//세션 정보 설정...후 메인페이지 혹은 기존페이지로 이동
+			 session.setAttribute("name", target.getCustomerId());
+	         session.setAttribute("level", target.getCustomerLevel());
 			return "redirect:/";
 		}
 	}
@@ -100,6 +102,7 @@ public class CustomerController {
 		return "redirect:/";
 	}
 
+	
 	
 	// 마이페이지 ok
 	@RequestMapping("/mypage")
@@ -193,86 +196,85 @@ public class CustomerController {
 		return "customer/exitFinish";
 		}
 	
-	//비밀번호 찾기
-	@GetMapping("/findPw")
-	public String findPw() {
-		return "customer/findPw.jsp";
+//	//비밀번호 찾기
+//	@GetMapping("/findPw")
+//	public String findPw() {
+//		return "customer/findPw.jsp";
+//	}
+//	
+//	
+//	@PostMapping("/findPw")
+//	public String findPw(@ModelAttribute CustomerDto customerDto) {
+//		//[1] 아이디로 모든 정보를 불러오고
+//		CustomerDto findDto = 
+//				customerDao.selectOne(customerDto.getCustomerId());
+//		//[2] 이메일이 일치하는지 확인한다
+//		boolean isValid = findDto != null 
+//				&& findDto.getCustomerEmail().equals(customerDto.getCustomerId());
+//		if(isValid) {//이메일이 같다면
+//			//이메일 발송 코드
+//			SimpleMailMessage message = new SimpleMailMessage();
+//			message.setTo(findDto.getCustomerEmail());
+//			message.setSubject("비밀번호 찾기 결과");
+//			message.setText(findDto.getCustomerPw());
+//			sender.send(message);
+//			
+//			return "redirect:findPwFinish";
+//		}
+//		else {//이메일이 다르다면
+//			return "redirect:findPw?error";
+//		}
+//		
+//	}
+//	
+//	@RequestMapping("/findPwFinish")
+//	public String findPwFinish() {
+//		return "customer/findPwFinish.jsp";
+//	}
+	
+	
+//	// 이메일 인증번호 
+//	@PostMapping("/send")
+//	public void send(@RequestParam String certEmail) {
+//		Random r = new Random();
+//		int number = r.nextInt(1000000);
+//		DecimalFormat fm = new DecimalFormat("000000");
+//		String certNumber = fm.format(number);
+//		
+//		SimpleMailMessage message = new SimpleMailMessage();
+//		message.setTo(certEmail);
+//		message.setSubject("[맛도리] 인증번호 안내");
+//		message.setText("인증번호는 [" + certNumber + "] 입니다");
+//		sender.send(message);
+//		
+//		certDao.delete(certEmail);
+//		CertDto certDto = new CertDto();
+//		certDto.setCertEmail(certEmail);
+//		certDto.setCertNumber(certNumber);
+//		certDao.insert(certDto);
+//	}
+//	
+//	
+//	@PostMapping("/check")
+//	public Map<String, Object> check(@ModelAttribute CertDto certDto) {
+//		//[1] 이메일로 인증정보를 조회
+//		CertDto findDto = certDao.selectOne(certDto.getCertEmail());//기간제한없음
+//		
+//		if(findDto != null) {
+//			//[2] 인증번호 비교
+//			boolean isValid = 
+//					findDto.getCertNumber().equals(certDto.getCertNumber());
+//			if(isValid) {
+//				//인증 성공하면 인증번호를 삭제
+//				certDao.delete(certDto.getCertEmail());
+//				return Map.of("result", true);
+//			}
+//		}
+//		
+//		return Map.of("result", false);
 	}
-	
-	
-	@PostMapping("/findPw")
-	public String findPw(@ModelAttribute CustomerDto customerDto) {
-		//[1] 아이디로 모든 정보를 불러오고
-		CustomerDto findDto = 
-				customerDao.selectOne(customerDto.getCustomerId());
-		//[2] 이메일이 일치하는지 확인한다
-		boolean isValid = findDto != null 
-				&& findDto.getCustomerEmail().equals(customerDto.getCustomerId());
-		if(isValid) {//이메일이 같다면
-			//이메일 발송 코드
-			SimpleMailMessage message = new SimpleMailMessage();
-			message.setTo(findDto.getCustomerEmail());
-			message.setSubject("비밀번호 찾기 결과");
-			message.setText(findDto.getCustomerPw());
-			sender.send(message);
-			
-			return "redirect:findPwFinish";
-		}
-		else {//이메일이 다르다면
-			return "redirect:findPw?error";
-		}
-		
-	}
-	
-	@RequestMapping("/findPwFinish")
-	public String findPwFinish() {
-		return "customer/findPwFinish.jsp";
-	}
-	
-	
-	@PostMapping("/send")
-	public void send(@RequestParam String certEmail) {
-		Random r = new Random();
-		int number = r.nextInt(1000000);
-		DecimalFormat fm = new DecimalFormat("000000");
-		String certNumber = fm.format(number);
-		
-		SimpleMailMessage message = new SimpleMailMessage();
-		message.setTo(certEmail);
-		message.setSubject("[맛도리] 인증번호 안내");
-		message.setText("인증번호는 [" + certNumber + "] 입니다");
-		sender.send(message);
-		
-		certDao.delete(certEmail);
-		CertDto certDto = new CertDto();
-		certDto.setCertEmail(certEmail);
-		certDto.setCertNumber(certNumber);
-		certDao.insert(certDto);
-	}
-	
-	
-	@PostMapping("/check")
-	public Map<String, Object> check(@ModelAttribute CertDto certDto) {
-		//[1] 이메일로 인증정보를 조회
-		CertDto findDto = certDao.selectOne(certDto.getCertEmail());//기간제한없음
-		
-		if(findDto != null) {
-			//[2] 인증번호 비교
-			boolean isValid = 
-					findDto.getCertNumber().equals(certDto.getCertNumber());
-			if(isValid) {
-				//인증 성공하면 인증번호를 삭제
-				certDao.delete(certDto.getCertEmail());
-				return Map.of("result", true);
-			}
-		}
-		
-		return Map.of("result", false);
-	}
-	
-}
-		
-	
+
+
 
 
 

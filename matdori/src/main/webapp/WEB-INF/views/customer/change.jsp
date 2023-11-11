@@ -15,43 +15,38 @@
 			</label>
         </div>
         
-        <div class="row left">
-        <label>
-        	비밀번호 : ${customerDto.customerPw}
-        </label>
-        	
+     
+            <div class="row left">
+                <label>연락처</label>
+                <input type="tel" name="customerContact" value="${customerDto.customerContact}" placeholder="010XXXXXXXX (- 없이)"
+                        class="form-input underline-input w-100 mb-10">
+                <div class="fail-feedback">전화번호 형식이 올바르지 않습니다</div>
+            </div>
+
+            <div class="row left">
+                <label>생년월일</label>
+                <input type="date" name="customerBirth" value="${customerDto.customerBirth}" 
+                class="form-input underline-input w-100">
+                <div class="fail-feedback">잘못된 날짜를 선택하셨습니다</div>
+            </div>
+            
+            <div class="row left">
+            	<input type="password" name="customerPw" class="form-input underline-input w-100 mv-20" placeholder="비밀번호 확인">
+            </div>
+            <div class="row">
+                <button type="submit" class="btn btn-positive w-100">변경하기</button>
+            </div>
+
+
         </div>
-        
-        <div class="row left">
-        <label>이메일 : </label> 
-            <input type="email" name="customerEmail" class="form-input w-100"
-					value="${customerDto.customerEmail}" placeholder="testuser@kh.com">
-        </div>
-        
-        <div class="row left">
-        <label>연락처 : </label>
-            <input type="tel" name="customerContact" class="form-input w-100"
-					value="${customerDto.customerContact}" placeholder="- 제외하고 입력">
-        </div>
-       
-        
-        
-        <div>
-        	<label>비밀번호 확인 : </label>
-        	<input type="password" name="customerPw" required class="form-input w-100">
-        </div>
-        
-        <div class="row">
-            <button type="submit" class="btn btn-positive w-100">정보변경</button>
-        </div>
-        
-        <c:if test="${param.error != null}">
-	        <div class="row red">
-				<h3>입력하신 비밀번호가 일치하지 않습니다</h3>
-			</div>
-		</c:if>
-    </div>
+
+    </form>
     
+			<c:if test="${param.error != null}">
+		        <div class="row important">
+					<span>입력하신 비밀번호가 일치하지 않습니다</span>
+				</div>
+			</c:if>
     
 </form>
 
