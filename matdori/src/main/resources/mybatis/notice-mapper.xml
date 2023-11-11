@@ -21,33 +21,32 @@
 		)
 	</select>
 	
-	
 	<!-- 조회 -->
 	<select id="list" resultType="NoticeDto">
-		<!-- 검색 -->
-		 <choose>
-        <when test="search">
-            <![CDATA[
-                select * from (
-                    select rownum rn, TMP.* from (
-                        select * from notice
-                        where instr(notice_title, #{keyword}) > 0
-                        order by notice_no desc
-                    ) TMP
-                ) where rn between #{startRow} and #{finishRow}
-            ]]>
-        </when>
-        <!-- 검색 없이 목록 -->
-        <otherwise>
-            <![CDATA[
-                select * from (
-                    select rownum rn, TMP.* from (
-                        select * from notice
-                        order by notice_no desc
-                    ) TMP
-                ) where rn between #{startRow} and #{finishRow}
-            ]]>
-        </otherwise>
+	    <!-- 검색 -->
+	    <choose>
+	        <when test="search">
+	            <![CDATA[
+	                select * from (
+	                    select rownum rn, TMP.* from (
+	                        select * from notice
+	                        where instr(notice_title, #{keyword}) > 0
+	                        order by notice_no desc
+	                    ) TMP
+	                ) where rn between #{startRow} and #{finishRow}
+	            ]]>
+	        </when>
+	        <!-- 검색 없이 목록 -->
+	        <otherwise>
+	            <![CDATA[
+	                select * from (
+	                    select rownum rn, TMP.* from (
+	                        select * from notice
+	                        order by notice_no desc
+	                    ) TMP
+	                ) where rn between #{startRow} and #{finishRow}
+	            ]]>
+	        </otherwise>
 	    </choose>
 	</select>
 
@@ -82,8 +81,8 @@
 	
 	
 	<!-- 카운트 -->
-	<select id="count" resultType="NoticeDto">
-		<!-- 검색일 때 -->
+	<select id="count" resultType="int">
+	    <!-- 검색일 때 -->
 	    <choose>
 	        <when test="keyword != null">
 	            <![CDATA[
