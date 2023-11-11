@@ -5,9 +5,9 @@
 
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 
-<div class="container w-500">
+<div class="container w-700">
 	<div class="row">
-		<h1>${customerDto.customerId} 님의 회원 정보</h1>
+		<h1>${customerDto.customerId} 님의 정보</h1>
 	</div>
 	
 	<div class="row">
