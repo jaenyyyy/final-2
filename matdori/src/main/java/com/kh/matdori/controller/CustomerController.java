@@ -81,6 +81,7 @@ public class CustomerController {
 	
 	@PostMapping("/login")
 	public String login(@ModelAttribute CustomerDto dto, HttpSession session) {
+	
 		CustomerDto target = customerDao.login(dto);
 		if(target == null) {
 			return "redirect:login?error";
@@ -157,19 +158,28 @@ public class CustomerController {
 	}
 	
 	@PostMapping("/change")
-	public String change(@ModelAttribute CustomerDto inputDto,
-										HttpSession session) {
+	public String change(@ModelAttribute CustomerDto inputDto, HttpSession session) {
 	    String customerId = (String) session.getAttribute("name");
 	    CustomerDto findDto = customerDao.selectOne(customerId);
-	    if (inputDto.getCustomerPw().equals(findDto.getCustomerPw())) {
+
+	    // 사용자가 입력한 비밀번호를 암호화
+	    String encryptedInputPassword = encoder.encode(inputDto.getCustomerPw());
+
+	    // 암호화된 입력 비밀번호와 DB에 저장된 암호화된 비밀번호 비교
+	    if (encoder.matches(inputDto.getCustomerPw(), findDto.getCustomerPw())) {
+	        // 암호화된 비밀번호를 DTO에 설정
+	        inputDto.setCustomerPw(encryptedInputPassword);
+
 	        inputDto.setCustomerId(customerId);
 	        customerDao.edit(customerId, inputDto);
 	        return "redirect:mypage";
-	    } 
-	    else {
+	    } else {
 	        return "redirect:change?error";
 	    }
 	}
+
+	
+	
 	
 	@GetMapping("/exit")
 	public String exit() {
@@ -179,18 +189,22 @@ public class CustomerController {
 	
 	@PostMapping("/exit")
 	public String exit(HttpSession session, @RequestParam String customerPw) {
-		String customerId = (String) session.getAttribute("name");
-		CustomerDto customerDto = customerDao.selectOne(customerId);
-		if(customerDto.getCustomerPw().equals(customerPw)) {
-			customerDao.delete(customerId);
-			session.removeAttribute("name");
-			return "redirect:exitFinish";
-		}
-		else {
-			return "redirect:exit?error";
-		}
+	    String customerId = (String) session.getAttribute("name");
+	    CustomerDto customerDto = customerDao.selectOne(customerId);
+	 // 사용자가 입력한 비밀번호를 암호화
+	    String encryptedInputPassword = encoder.encode(customerPw);
+
+	    if (encoder.matches(customerPw, customerDto.getCustomerPw())) {
+	        // 삭제할 때도 암호화된 비밀번호를 사용
+	        customerDao.delete(customerId);
+	        session.removeAttribute("name");
+	        return "redirect:exitFinish";
+	    } else {
+	        return "redirect:exit?error";
+	    }
 	}
-		
+	    
+	    
 	@RequestMapping("/exitFinish")
 	public String exitFinish() {
 		return "customer/exitFinish";
@@ -201,8 +215,8 @@ public class CustomerController {
 //	public String findPw() {
 //		return "customer/findPw.jsp";
 //	}
-//	
-//	
+	
+	
 //	@PostMapping("/findPw")
 //	public String findPw(@ModelAttribute CustomerDto customerDto) {
 //		//[1] 아이디로 모든 정보를 불러오고
@@ -226,11 +240,11 @@ public class CustomerController {
 //		}
 //		
 //	}
-//	
-//	@RequestMapping("/findPwFinish")
-//	public String findPwFinish() {
-//		return "customer/findPwFinish.jsp";
-//	}
+	
+	@RequestMapping("/findPwFinish")
+	public String findPwFinish() {
+		return "customer/findPwFinish.jsp";
+	}
 	
 	
 //	// 이메일 인증번호 
@@ -272,6 +286,70 @@ public class CustomerController {
 //		}
 //		
 //		return Map.of("result", false);
+//	}
+//	
+	
+	@GetMapping("/findPw")
+	public String findPw() {
+		return "customer/findPw";
+	}
+	
+	
+	@PostMapping("sendNumber")
+	public String sendNumber(@RequestParam String customerEmail) {
+		 // 인증번호 생성
+        Random r = new Random();
+        int number = r.nextInt(1000000);
+        DecimalFormat fm = new DecimalFormat("000000");
+        String certNumber = fm.format(number);
+        
+        // 이메일 발송
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setTo(customerEmail);
+        message.setSubject("[맛도리] 인증번호 안내");
+        message.setText("인증번호는 [" + certNumber + "] 입니다");
+        sender.send(message);
+        
+        // DB에 저장(기존 데이터 삭제)
+        certDao.delete(customerEmail);
+        CertDto certDto = new CertDto();
+        certDto.setCertEmail(customerEmail);
+        certDto.setCertNumber(certNumber);
+        certDao.insert(certDto);
+
+        return "redirect:/customer/certification";
+    }
+	
+	@GetMapping("/certNumberSuccess")
+	public String certNumberSuccess(@ModelAttribute CertDto certDto, Model model) {
+		CertDto findDto = certDao.selectOne(certDto.getCertEmail());
+
+        if (findDto != null && findDto.getCertNumber().equals(certDto.getCertNumber())) {
+            model.addAttribute("customerEmail", certDto.getCertEmail());
+            return "customer/resetPassword";
+        } else {
+            return "redirect:/customer/findPassword?error";
+        }
+    }
+
+	
+	 // 비밀번호 재설정 폼
+    @GetMapping("/resetPassword")
+    public String resetPassword() {
+        return "customer/resetPassword";
+    }
+
+    // 비밀번호 재설정
+    @PostMapping("/resetPassword")
+    public String resetPassword(@RequestParam String customerEmail,
+    							@RequestParam String newPassword) {
+        // 비밀번호 업데이트 로직
+        customerDao.updateCustomerPw(customerEmail, newPassword);
+
+        return "redirect:/customer/login";
+    }
+
+
 	}
 
 

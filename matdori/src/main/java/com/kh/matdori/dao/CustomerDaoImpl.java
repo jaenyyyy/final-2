@@ -75,7 +75,7 @@ public class CustomerDaoImpl implements CustomerDao {
 	@Override
 	public boolean updateCustomerPw(String customerId, String changePw) {
 	    Map<String, Object> param = Map.of("customerId", customerId, "changePw", changePw);
-	    int result = sqlSession.update("customer.updateCustomerPw", param);
+	    int result = sqlSession.update("customer.updatePassword", param);
 	    if (result == 0) {
 	        throw new NoTargetException();
 	    }
@@ -100,11 +100,11 @@ public class CustomerDaoImpl implements CustomerDao {
 		CustomerDto target = sqlSession.selectOne("customer.detail", dto.getCustomerId());
 		
 		if(target != null) { // 아이디가 존재한다면
-			boolean passwordMatches = encoder.matches(dto.getCustomerPw(), target.getCustomerPw());
-			if(passwordMatches) { // 비밀번호가 암호화 도구에 의해 맞다고 판정되면 
-				return target;
-			}
-		}	
+			boolean result = encoder.matches(dto.getCustomerPw(), target.getCustomerPw());
+		if(result == true) { // 비밀번호가 암호화 도구에 의해 맞다고 판정되면 
+			return target;
+		}
+	}	
 		return null;
 	}
 

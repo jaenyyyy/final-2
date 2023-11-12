@@ -43,18 +43,21 @@
             customer_contact = #{customerDto.customerContact},
         </if>
         
+        <if test="customerDto.customerBirth != null">
+        	customer_birth = #{customerDto.customerBirth},
+        </if>
+        
     </set>
  	   where customer_id = #{customerId}
 	</update>	
 
 	
-	
-	<!--  비밀번호 변경   -->
-	<update id="updateCustomerPw">
-        update customer
-        set customer_pw = #{changePw}, customer_change = sysdate
-        where customer_id = #{customerId}
-    </update>
+<!-- 비밀번호 업데이트 -->
+	<update id="updatePassword">
+    	UPDATE customer	
+    		SET customer_pw = #{newPassword}
+    	WHERE customer_email = #{customerEmail}
+	</update>
 	
 	    <!-- 삭제 -->
    	 	<delete id="delete">
