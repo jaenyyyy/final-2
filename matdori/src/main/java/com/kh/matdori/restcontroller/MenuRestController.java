@@ -60,8 +60,8 @@ public class MenuRestController {
 	}
 	
 	@PutMapping("/edit/{menuNo}")
-	public ResponseEntity<String> edit(@PathVariable int menuNo, @RequestBody MenuDto menuDto){
-		boolean result = menuDao.edit(menuNo, menuDto);
+	public ResponseEntity<String> edit(@PathVariable int menuNo, @RequestBody MenuByResDto menuByResDto){
+		boolean result = menuDao.edit(menuNo, menuByResDto);
 		return result ? ResponseEntity.ok().build() : ResponseEntity.notFound().build();
 	}
 	}

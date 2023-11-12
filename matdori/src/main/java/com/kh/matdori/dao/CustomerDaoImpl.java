@@ -85,9 +85,17 @@ public class CustomerDaoImpl implements CustomerDao {
 	
 	
 	
+	@Override  //암호화 처리 후 등록
+	public void secureInsert(CustomerDto dto) {
+		String origin = dto.getCustomerPw();
+		String encrypt = encoder.encode(origin);
+		dto.setCustomerPw(encrypt);
+		
+		sqlSession.insert("customer.insert", dto);
+	}
 	
 	
-	@Override
+	@Override //암호화 된 상태로 로그인
 	public CustomerDto login(CustomerDto dto) {
 		CustomerDto target = sqlSession.selectOne("customer.detail", dto.getCustomerId());
 		
@@ -100,14 +108,6 @@ public class CustomerDaoImpl implements CustomerDao {
 		return null;
 	}
 
-	@Override
-	public void secureInsert(CustomerDto dto) {
-	    String origin = dto.getCustomerPw();
-	    String encrypt = encoder.encode(origin);
-	    dto.setCustomerPw(encrypt);
-
-	    sqlSession.insert("customer.insert", dto);
-	}
 
 	@Override
 	public CustomerDto secureSelectOne(String customerId) {

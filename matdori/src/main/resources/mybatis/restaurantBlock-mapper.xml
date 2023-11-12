@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+
+<mapper namespace="restaurantBlock">
+
+	<!-- 차단 등록 -->
+	<insert id="insert">
+		insert into restaurant_block(res_no) values(#{resNo})
+	</insert>
+	
+	
+	<!-- 차단 해제 -->
+	<delete id="delete">
+		delete restaurant_block where res_no=#{res_no}
+	</delete>
+	
+	
+	<!-- 차단 목록 -->
+	<select id="list" resultType="RestaurantBlockDto">
+		select * from restaurant_block order by block_time asc
+	</select>
+	
+	
+	<!-- 차단 상세 -->
+	<select id="detail" resultType="RestaurantBlockDto">
+		select * from restaurant_block where res_no = #{resNo}
+	</select>
+	
+</mapper>

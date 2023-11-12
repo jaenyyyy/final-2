@@ -10,7 +10,7 @@
    <div class="row">
    	
    	
-   		<div calss="col">
+   		<div class="col">
       		<h1>공지사항</h1>
       	</div>
 

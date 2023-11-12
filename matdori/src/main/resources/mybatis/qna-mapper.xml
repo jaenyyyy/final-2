@@ -22,9 +22,33 @@
 	</select>
 
 
-	<!-- 조회 -->	
+	<!-- 조회 -->
 	<select id="list" resultType="QnaDto">
-		select * from qna order by qna_no asc
+	    <!-- 검색 -->
+	    <choose>
+	        <when test="search">
+	            <![CDATA[
+	                select * from (
+	                    select rownum rn, TMP.* from (
+	                        select * from qna
+	                        where instr(qna_title, #{keyword}) > 0
+	                        order by qna_no desc
+	                    ) TMP
+	                ) where rn between #{startRow} and #{finishRow}
+	            ]]>
+	        </when>
+	        <!-- 검색 없이 목록 -->
+	        <otherwise>
+	            <![CDATA[
+	                select * from (
+	                    select rownum rn, TMP.* from (
+	                        select * from qna
+	                        order by qna_no desc
+	                    ) TMP
+	                ) where rn between #{startRow} and #{finishRow}
+	            ]]>
+	        </otherwise>
+	    </choose>
 	</select>
 
 	
@@ -42,35 +66,32 @@
 	
 	<!-- 수정 -->
 	<update id="change">
-		update qna
-		<set>
-			<if test="qnaDto.qnaCategory != null">
-				qna_category = #{qnaDto.qnaCategory},
-			</if>
-			<if test="qnaDto.qnaTitle != null">
-				qna_title = #{qnaDto.qnaTitle},
-			</if>
-			<if test="qnaDto.qnaAnswer != null">
-				qna_answer = #{qnaDto.qnaAnser},
-			</if>
-		</set>
-		where qna_no = #{qnaNo}
+   		 update qna
+   		 set
+            qna_category = #{qnaDto.qnaCategory},
+            qna_title = #{qnaDto.qnaTitle},
+            qna_answer = #{qnaDto.qnaAnswer}
+	    where qna_no = #{qnaNo}
 	</update>
 	
 	
-	<!-- 검색 -->
-	<select id="search" resultType="QnaDto">
-		select * from qna where instr(qna_title, #{qnaTitle}) > 0
-	</select>
-	
-	
-	<!-- 페이징 -->
-	<select id="page" resultType="QnaDto">
-		select * from (
-			select rownum rn, TMP.* from (
-				select * from qna order by qna_no asc
-			)TMP
-		) where rn between #{begin} and #{end}
+	<!-- 카운트 -->
+	<select id="count" resultType="int">
+	    <!-- 검색일 때 -->
+	    <choose>
+	        <when test="keyword != null">
+	            <![CDATA[
+	                select count(*) from qna
+	                where instr(qna_title, #{keyword}) > 0
+	            ]]>
+	        </when>
+	        <!-- 검색이 아닐 때 -->
+	        <otherwise>
+	            <![CDATA[
+	                select count(*) from qna
+	            ]]>
+	        </otherwise>
+	    </choose>
 	</select>
 	
 	
