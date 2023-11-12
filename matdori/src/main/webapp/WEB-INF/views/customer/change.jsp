@@ -37,6 +37,7 @@
                 <button type="submit" class="btn btn-positive w-100">변경하기</button>
             </div>
 
+	<a href="findPw">비밀번호 변경</a>
 
         </div>
 

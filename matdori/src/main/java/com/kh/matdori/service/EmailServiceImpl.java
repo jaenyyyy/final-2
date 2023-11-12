@@ -10,6 +10,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
@@ -21,6 +22,7 @@ import lombok.extern.slf4j.Slf4j;
 	@Slf4j
 	@Service
 	public class EmailServiceImpl implements EmailService{
+		
 		@Autowired
 		private JavaMailSender sender;
 
@@ -54,7 +56,5 @@ import lombok.extern.slf4j.Slf4j;
 			
 			sender.send(message);
 		}
+
 	}
-
-
-
