@@ -8,11 +8,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data @NoArgsConstructor @AllArgsConstructor @Builder
-public class NoticeDto {
-	private int noticeNo;
-	private String noticeWriter;
-	private String noticeTitle;
-	private String noticeContent;
-	private Date noticeWriteDate;
-	
+public class RestaurantBlockDto {
+
+	private int resNo;
+	private Date resBlockTime;
+	private String resBlockComment;
 }

@@ -45,8 +45,8 @@ public class QnaDaoImpl implements QnaDao{
 	@Override
 	public boolean edit(QnaDto qnaDto) {
 		Map<String, Object> params = new HashMap <>();
-		params.put("noticeNo", qnaDto.getQnaNo());
-		params.put("noticeDto", qnaDto);
+		params.put("qnaNo", qnaDto.getQnaNo());
+		params.put("qnaDto", qnaDto);
 		return sqlSession.update("qna.change", params) > 0;
 	}
 

@@ -66,23 +66,16 @@
 	
 	<!-- 수정 -->
 	<update id="change">
-		update qna
-		<set>
-			<if test="qnaDto.qnaCategory != null">
-				qna_category = #{qnaDto.qnaCategory},
-			</if>
-			<if test="qnaDto.qnaTitle != null">
-				qna_title = #{qnaDto.qnaTitle},
-			</if>
-			<if test="qnaDto.qnaAnswer != null">
-				qna_answer = #{qnaDto.qnaAnser},
-			</if>
-		</set>
-		where qna_no = #{qnaNo}
+   		 update qna
+   		 set
+            qna_category = #{qnaDto.qnaCategory},
+            qna_title = #{qnaDto.qnaTitle},
+            qna_answer = #{qnaDto.qnaAnswer}
+	    where qna_no = #{qnaNo}
 	</update>
 	
 	
-		<!-- 카운트 -->
+	<!-- 카운트 -->
 	<select id="count" resultType="int">
 	    <!-- 검색일 때 -->
 	    <choose>
