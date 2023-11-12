@@ -35,18 +35,18 @@
     select*from menu where menu_no =#{menuNo}
     </select>
     
-    <update id="edit">
+    <update id="edit" parameterType="java.util.Map">
     update menu 
     <set>
-    <if test="menuDto.menuName != null">
-    menu_name = #{menuDto.menuName},
-    </if>
-    <if test="menuDto.menuPrice != null">
-    menu_price = #{menuDto.menuPrice},
-    </if>
-    <if test="menuDto.menuContent != null">
-    menu_content = #{menuDto.menuContent}
-    </if>
+        <if test="menuName != null">
+            menu_name = #{menuByResDto.menuName},
+        </if>
+        <if test="menuPrice != null">
+            menu_price = #{menuByResDto.menuPrice},
+        </if>
+        <if test="menuContent != null">
+            menu_content = #{menuByResDto.menuContent}
+        </if>
     </set>
      where menu_no =#{menuNo}
     </update>

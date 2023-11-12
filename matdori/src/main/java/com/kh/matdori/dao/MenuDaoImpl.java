@@ -40,10 +40,10 @@ public class MenuDaoImpl implements MenuDao {
 	}
 
 	@Override
-	public boolean edit(int menuNo, MenuDto menuDto) {
+	public boolean edit(int menuNo, MenuByResDto menuByResDto) {
 		Map<String, Object> params = new HashMap<>();
 		params.put("menuNo", menuNo);
-		params.put("menuDto", menuDto);
+		params.put("menuByResDto", menuByResDto);
 		return sqlSession.update("menu.edit", params) > 0;
 	}
 
