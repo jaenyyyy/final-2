@@ -15,8 +15,10 @@ public interface MenuDao {
 
 	MenuDto selectOne(int menuNo);
 
-	boolean edit(int menuNo, MenuDto menuDto);
+//	boolean edit(int menuNo, MenuDto menuDto);
 
 	List<MenuByResDto> selectList(Integer resNo);
+
+	boolean edit(int menuNo, MenuByResDto menuByResDto);
 
 }
