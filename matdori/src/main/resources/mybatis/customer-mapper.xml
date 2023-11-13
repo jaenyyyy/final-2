@@ -47,6 +47,10 @@
         	customer_birth = #{customerDto.customerBirth},
         </if>
         
+        <if test="customerDto.customerPw !=  null">
+        	customer_pw = #{customerDto.customerPw},
+        </if>
+        
     </set>
  	   where customer_id = #{customerId}
 	</update>	

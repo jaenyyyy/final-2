@@ -4,19 +4,25 @@
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-
-
 <mapper namespace="cert">
 
     <!-- 삽입 -->
     <insert id="insert">
-        insert into cert
-         (cert_email, cert_number, cert_time)
-        values (
-        #{certEmail}, #{certNumber}, #{certTime}
-        )
+        insert into cert (cert_email, cert_number)
+        values (#{certEmail}, #{certNumber})
     </insert>
     
+    <!-- 인증정보 삭제 -->
+    <delete id="delete" parameterType="String">
+        delete from cert where cert_email = #{certEmail}
+    </delete>
+
+    <!-- 비밀번호 변경 쿼리 -->
+    <update id="resetPassword" parameterType="map">
+        update customer
+        set password = #{newPassword}
+        where email = #{customerEmail}
+    </update>
 
     <!-- 10분 이내 조회 -->
     <select id="selectIn10min" resultType="CertDto" parameterType="String">
@@ -25,14 +31,11 @@
         and cert_time between sysdate-10/24/60 and sysdate
     </select>
 
-
     <delete id="deleteOver10min">
-    <![CDATA[
-        delete from cert where cert_time < SYSDATE - (10 / (24 * 60))
-    	]]>
-	</delete>
-
-    
+        <![CDATA[
+            delete from cert where cert_time < SYSDATE - (10 / (24 * 60))
+        ]]>
+    </delete>
 
     <!-- 단일 항목 조회 -->
     <select id="selectOne" resultType="CertDto" parameterType="String">
