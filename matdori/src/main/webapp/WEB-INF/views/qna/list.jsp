@@ -32,7 +32,7 @@
                 <c:forEach var="qnaDto" items="${list}">
                     <tr onclick="goToDetail(${qnaDto.qnaNo})" style="cursor: pointer;">
                         <th scope="row">${qnaDto.qnaNo}</th>
-                        <th scope="row">${qnaDto.qnaCategory}</th>
+                        <th scope="row">[ ${qnaDto.qnaCategory} ]</th>
                         <td>${qnaDto.qnaTitle}</td>
                     </tr>
                 </c:forEach>

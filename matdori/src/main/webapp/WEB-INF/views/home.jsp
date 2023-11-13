@@ -49,14 +49,14 @@
                             <img src="/images/dummy.png" width="100%" height="100%">
                         </div>
                         <div class="swiper-slide">
-                            <img src="/images/logo.png" width="100%" height="100%">
+                            <img src="/images/dummy.png" width="100%" height="100%">
                         </div>
                     </div>
                     <!-- If we need pagination -->
-                    <div class="swiper-pagination"></div>
+                    <div class="swiper-pagination" style="color:#FFB416;"></div>
                     <!-- If we need navigation buttons -->
-                    <div class="swiper-button-prev"></div>
-                    <div class="swiper-button-next"></div>
+                    <div class="swiper-button-prev" style="color:#FFB416;"></div>
+                    <div class="swiper-button-next" style="color:#FFB416;"></div>
                 </div>
             </div>
         </div>
