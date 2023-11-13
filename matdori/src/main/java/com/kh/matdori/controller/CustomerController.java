@@ -295,42 +295,42 @@ public class CustomerController {
 	}
 	
 	
-	@PostMapping("sendNumber")
-	public String sendNumber(@RequestParam String customerEmail) {
-		 // 인증번호 생성
-        Random r = new Random();
-        int number = r.nextInt(1000000);
-        DecimalFormat fm = new DecimalFormat("000000");
-        String certNumber = fm.format(number);
-        
-        // 이메일 발송
-        SimpleMailMessage message = new SimpleMailMessage();
-        message.setTo(customerEmail);
-        message.setSubject("[맛도리] 인증번호 안내");
-        message.setText("인증번호는 [" + certNumber + "] 입니다");
-        sender.send(message);
-        
-        // DB에 저장(기존 데이터 삭제)
-        certDao.delete(customerEmail);
-        CertDto certDto = new CertDto();
-        certDto.setCertEmail(customerEmail);
-        certDto.setCertNumber(certNumber);
-        certDao.insert(certDto);
-
-        return "redirect:/customer/certification";
-    }
-	
-	@GetMapping("/certNumberSuccess")
-	public String certNumberSuccess(@ModelAttribute CertDto certDto, Model model) {
-		CertDto findDto = certDao.selectOne(certDto.getCertEmail());
-
-        if (findDto != null && findDto.getCertNumber().equals(certDto.getCertNumber())) {
-            model.addAttribute("customerEmail", certDto.getCertEmail());
-            return "customer/resetPassword";
-        } else {
-            return "redirect:/customer/findPassword?error";
-        }
-    }
+//	@PostMapping("sendNumber")
+//	public String sendNumber(@RequestParam String customerEmail) {
+//		 // 인증번호 생성
+//        Random r = new Random();
+//        int number = r.nextInt(1000000);
+//        DecimalFormat fm = new DecimalFormat("000000");
+//        String certNumber = fm.format(number);
+//        
+//        // 이메일 발송
+//        SimpleMailMessage message = new SimpleMailMessage();
+//        message.setTo(customerEmail);
+//        message.setSubject("[맛도리] 인증번호 안내");
+//        message.setText("인증번호는 [" + certNumber + "] 입니다");
+//        sender.send(message);
+//        
+//        // DB에 저장(기존 데이터 삭제)
+//        certDao.delete(customerEmail);
+//        CertDto certDto = new CertDto();
+//        certDto.setCertEmail(customerEmail);
+//        certDto.setCertNumber(certNumber);
+//        certDao.insert(certDto);
+//
+//        return "redirect:/customer/certification";
+//    }
+//	
+//	@GetMapping("/certNumberSuccess")
+//	public String certNumberSuccess(@ModelAttribute CertDto certDto, Model model) {
+//		CertDto findDto = certDao.selectOne(certDto.getCertEmail());
+//
+//        if (findDto != null && findDto.getCertNumber().equals(certDto.getCertNumber())) {
+//            model.addAttribute("customerEmail", certDto.getCertEmail());
+//            return "customer/resetPassword";
+//        } else {
+//            return "redirect:/customer/findPassword?error";
+//        }
+//    }
 
 	
 	 // 비밀번호 재설정 폼
