@@ -71,7 +71,7 @@
 
 <a href="exit">회원 탈퇴</a>
 <br>
-<a href="findPw">비밀번호 찾기</a>
+<a href="customer/findPw">비밀번호 찾기</a>
 
 
 </section>

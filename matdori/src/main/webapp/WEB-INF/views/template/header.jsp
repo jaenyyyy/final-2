@@ -26,6 +26,11 @@
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
 	
 	
+	
+	<!-- jquery cdn -->
+	<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+	
+	
 </head>
 
 
