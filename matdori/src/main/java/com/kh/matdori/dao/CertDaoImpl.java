@@ -1,6 +1,7 @@
 package com.kh.matdori.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,12 +30,13 @@ public class CertDaoImpl implements CertDao {
     }
 
 
-    @Override
-    public boolean delete(String certEmail) {
-    	int result = sqlSession.delete("cert.delete", certEmail);
-		if(result == 0) throw new NoTargetException();
-		return false;
+	
+	@Override
+	public boolean delete(String certEmail) {
+		return sqlSession.delete("cert.delete", certEmail) > 0;
 	}
+	
+	
 
     
     @Override
@@ -56,4 +58,18 @@ public class CertDaoImpl implements CertDao {
 		if(result == 0) throw new NoTargetException();
 		return false;
 	}
+
+
+
+    @Override
+    public boolean resetPassword(String customerEmail, String newPassword) {
+        try {
+            int result = sqlSession.update("customer.resetPassword", 
+                                          Map.of("customerEmail", customerEmail, "newPassword", newPassword));
+            return result > 0; // 비밀번호 업데이트가 성공하면 true 반환
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false; // 예외 발생 시 실패로 간주하고 false 반환
+        }
+    }
 }

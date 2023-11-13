@@ -4,10 +4,15 @@ import java.text.DecimalFormat;
 import java.util.Map;
 import java.util.Random;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,7 +20,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.kh.matdori.dao.CertDao;
+import com.kh.matdori.dao.CustomerDao;
 import com.kh.matdori.dto.CertDto;
+import com.kh.matdori.dto.CustomerDto;
 
 @CrossOrigin
 @RestController
@@ -26,7 +33,14 @@ public class CertRestController {
 	private CertDao certDao;
 	
 	@Autowired
+	private CustomerDao customerDao;
+	
+	@Autowired
 	private JavaMailSender sender;
+	
+	@Autowired
+	private BCryptPasswordEncoder encoder;
+	
 	
 	@PostMapping("/send")
 	public void send(@RequestParam String certEmail) {
@@ -66,9 +80,45 @@ public class CertRestController {
 				certDao.delete(certDto.getCertEmail());
 				return Map.of("result", true);
 			}
+			
+				
 		}
 		
 		return Map.of("result", false);
 	}
+
 	
-}
+	@GetMapping("/change")
+	public String change(HttpSession session, Model model) {
+	    String customerId = (String) session.getAttribute("name");
+	    CustomerDto customerDto = customerDao.selectOne(customerId);
+	    model.addAttribute("customerDto", customerDto);
+	    return "customer/change";
+	}
+
+	@PostMapping("/change")
+	public String change(@ModelAttribute CustomerDto inputDto, HttpSession session) {
+	    String customerId = (String) session.getAttribute("name");
+	    CustomerDto findDto = customerDao.selectOne(customerId);
+
+	    // 비밀번호 암호화
+	    String encryptedInputPassword = encoder.encode(inputDto.getCustomerPw());
+	    
+	    if (encoder.matches(inputDto.getCustomerPw(), findDto.getCustomerPw())) {
+	        // 일치하면 새로운 비밀번호로 업데이트
+	        findDto.setCustomerPw(encryptedInputPassword);
+	        
+	        // 데이터베이스 업데이트
+	        customerDao.edit(customerId, findDto);
+
+	        return "redirect:mypage";
+	    } else {
+	        // 일치하지 않으면 변경 실패
+	        return "redirect:change?error";
+	    }
+	}
+
+
+	}
+	
+	

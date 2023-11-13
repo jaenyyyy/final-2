@@ -8,6 +8,7 @@ public interface CertDao {
 		boolean deleteOver10min(String certEmail);
 		CertDto selectOne(String certEmail);
 		CertDto selectOneIn10min(String certEmail);
+		boolean resetPassword(String customerEmail, String newPassword);
 	}
 
 
