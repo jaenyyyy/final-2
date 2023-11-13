@@ -34,7 +34,9 @@
 		res_addr2 = #{resAddr2}
 		WHERE res_no = #{resNo}
 	</update>
-    
-    
+	
+	
+	
+	
     
     </mapper>

@@ -38,5 +38,65 @@
 		bus_judge_comment = #{busJudgeComment}
 		WHERE bus_id = #{busId}
 	</update>
+	
+	
+	
+	
+	
+	
+	<!-- restaurant_block 레스토랑 차단 기능 -->
+	
+	<!-- 차단 등록 -->
+	<select id="blockInsert" resultType="RestaurantBlockDto">
+		insert into restaurant_block(res_no) values(#{resNo})
+	</select>
+	
+	
+	<!-- 차단 해제 -->
+	<delete id="blockDelete" >
+		delete restaurant_block where res_no=#{res_no}
+	</delete>
+	
+	
+	
 
+	<!-- restaurant_judge 레스토랑 심사 기능 -->
+	
+	<!-- 시퀀스 등록 -->
+	<select id="sequence" resultType="RestaurantJudgeDto">
+		select restaurant_judge_seq.nextval from dual
+	</select>
+    
+    
+    <!-- 심사 등록 -->
+    <select id="resJudgeInsert" resultType="RestaurantJudgeDto">
+    	insert into restaurant_judge(res_judge_no, res_no, res_judge_comment)
+    	values(#{res_judge_no}, #{res_no}, #{res_judge_comment})
+    </select>
+    
+    
+    <!-- 심사 수정 : 상태변경 및 comment 수정-->
+    <update id="resJudgeUpdate">
+    	update restaurant_judge 
+    	set 
+	    	res_judge_status = #{resJudgeStatus},
+	    	res_judge_date = #{resJudgeDate},
+	    	res_judge_comment = #{resJudgeComment}
+    	where res_judge_no = #{resJudgeNo}
+    </update>
+    
+    
+    <!-- 심사 삭제 -->
+    <delete id="resJudgeDelete">
+    	delete restaurant_judge where res_judge_no = #{resJudgeNo}
+    </delete>
+    
+    
+    <!-- 심사 상세 : 레스토랑 기준 o / 심사 번호 기준 x -->
+    <select id="resJudgeDetail" resultType="RestaurantJudgeDto">
+    	select * from restaurant_judge where res_no = #{resNo}
+    </select>
+    
+    
+	<!-- select list / one은 복합으로 조인해서 만들예정 -->    
 </mapper>
