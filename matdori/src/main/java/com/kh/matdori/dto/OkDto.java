@@ -10,6 +10,5 @@ public class OkDto {
 	private int okNo;
 	private int clockNo;
 	private int seatNo;
-	private String okStatus;
 
 }

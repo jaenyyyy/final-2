@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="reservation">
+	<!-- 예약 등록 -->
+	<insert id="booking">
+		insert into reservation
+		(rez_no, rez_customer_id, rez_res_no, rez_menu_no, ok_no,
+		 rez_customer_count, rez_request) 
+		values(reservation_seq.nextval, #{rezCustomerId}, #{rezResNo}, 
+		#{rezMenuNo}, #{okNo}, #{rezCustomerCount}, #{rezRequest})
+	</insert>
+</mapper>
