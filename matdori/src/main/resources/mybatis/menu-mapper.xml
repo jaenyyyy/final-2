@@ -30,25 +30,30 @@
   WHERE 
     res_no = #{resNo}
 </select>
-    
-    <select id = "findByMenuNo" resultType="MenuDto">
-    select*from menu where menu_no =#{menuNo}
-    </select>
-    
-    <update id="edit" parameterType="java.util.Map">
-    update menu 
-    <set>
-        <if test="menuName != null">
-            menu_name = #{menuByResDto.menuName},
-        </if>
-        <if test="menuPrice != null">
-            menu_price = #{menuByResDto.menuPrice},
-        </if>
-        <if test="menuContent != null">
-            menu_content = #{menuByResDto.menuContent}
-        </if>
-    </set>
-     where menu_no =#{menuNo}
-    </update>
+   
+   <!--  단일메뉴 조회-->
+  <select id="menuByMenuNo" resultType="MenuByResDto">
+  SELECT 
+    menu_no,
+    menu_name,
+    menu_price,
+    menu_content, 
+    res_name,
+    menu_type_name,
+    image_id
+  FROM 
+    restaurant_menu_with_images
+  WHERE 
+    menu_no = #{menuNo}
+</select>
+   
+    <!--  메뉴 수정 -->
+ <update id="edit">
+    update menu set 
+    menu_name = #{menuDto.menuName},
+	menu_price = #{menuDto.menuPrice},
+	menu_content = #{menuDto.menuContent} 
+	where menu_no = #{menuNo}
+</update>
     
     </mapper>
