@@ -31,9 +31,8 @@
     
     
 
-        <!-- 이용자 정보 수정  -->
-   	<update id="edit" parameterType="map">
-    update customer
+      <update id="edit" parameterType="map">
+    UPDATE customer
     <set> 
         <if test="customerDto.customerEmail != null">
             customer_email = #{customerDto.customerEmail},
@@ -44,16 +43,16 @@
         </if>
         
         <if test="customerDto.customerBirth != null">
-        	customer_birth = #{customerDto.customerBirth},
+            customer_birth = #{customerDto.customerBirth},
         </if>
         
         <if test="customerDto.customerPw !=  null">
-        	customer_pw = #{customerDto.customerPw},
+            <!-- 비밀번호는 암호화된 형태로 저장되어 있다고 가정 -->
+            customer_pw = #{customerDto.customerPw},
         </if>
-        
     </set>
- 	   where customer_id = #{customerId}
-	</update>	
+    WHERE customer_id = #{customerId}
+</update>
 
 	
 <!-- 비밀번호 업데이트 -->
@@ -68,10 +67,16 @@
     	 	delete customer where customer_id = #{customerId}
     	</delete>
     
+    <update id="changePassword" parameterType="map">
+  		UPDATE customer
+      	  SET customer_pw = #{customerPw}
+        WHERE customer_id = #{customerId}
+    </update>
     
     
-    
-   
+   <select id="getCustomerByEmail" resultType="CustomerDto">
+    	SELECT * FROM customer WHERE customer_email = #{customerEmail}
+  </select>
     
     
 

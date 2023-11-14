@@ -50,31 +50,7 @@
             </div>
         </div>
     </div>
-    
-    
-    <div id="step2" style="display: none;">
-        <!-- 비밀번호 변경 폼 -->
-        <form action="findPw" method="post">
-            <div class="row left">
-                <label>새로운 비밀번호</label>
-                <input type="password" name="newPassword" class="form-input underline-input w-100 customer-input">
-            </div>
-
-            <div class="row left">
-                <label>비밀번호 확인</label>
-                <input type="password" name="confirmPassword" class="form-input underline-input w-100 customer-input">
-            </div>
-
-            <div class="row">
-                <button type="submit" class="btn btn-positive w-100 select">비밀번호 변경</button>
-            </div>
-        </form>
     </div>
-
-    <div id="loading-icon" class="loading-icon">
-        <i class="fa-solid fa-spinner fa-spin fa-6x black"></i>
-    </div>
-</div>
-
+    
 
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
