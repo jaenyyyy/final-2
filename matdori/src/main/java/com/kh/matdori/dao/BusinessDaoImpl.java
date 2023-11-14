@@ -1,10 +1,13 @@
 package com.kh.matdori.dao;
 
+import java.util.List;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.kh.matdori.dto.BusinessDto;
+import com.kh.matdori.dto.RestaurantDto;
 import com.kh.matdori.error.NoTargetException;
 
 import lombok.extern.slf4j.Slf4j;
@@ -55,6 +58,11 @@ public class BusinessDaoImpl implements BusinessDao {
     public BusinessDto getBusinessDetails(String userId) {
         return sqlSession.selectOne("admin.getDetails", userId);
     }
+
+	@Override
+	public List<RestaurantDto> getMyRestaurantList(String busId) {
+		return sqlSession.selectList("business.busResList", busId);
+	}
 
 
 }

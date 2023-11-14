@@ -50,6 +50,7 @@ public class AdminController {
         return "/admin/business/judgeDetail";
     }
 
+    //사업자 등록 심사 승인,거절
     @PostMapping("/business/details/{userId}")
     public String judgeBusiness(@RequestParam String busId,
                                 @RequestParam String judgeComment,
