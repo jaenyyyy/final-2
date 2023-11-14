@@ -1,6 +1,10 @@
 package com.kh.matdori.dao;
 
+import java.util.List;
+
+import com.kh.matdori.dto.RestaurantAdminListDto;
 import com.kh.matdori.dto.RestaurantJudgeDto;
+import com.kh.matdori.vo.ResAdminVO;
 
 public interface AdminDao {
 	
@@ -16,5 +20,6 @@ public interface AdminDao {
 	boolean deleteResJudge(int resJudgeNo); //심사 삭제
 	RestaurantJudgeDto selectOne(int resNo); //심사 상세 매장기준
 	
-	//목록은 복합검색으로 구현 예정
+	//레스토랑 목록 (복합구문 추가)
+	List<RestaurantAdminListDto> resAdminList(ResAdminVO vo);
 }

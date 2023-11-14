@@ -9,17 +9,28 @@
     }
 </script>
 
-<div class="row">
-    <div class="col text-center">
-        <div class="mt-4">
-            <h1>
-            <i class="fa-solid fa-circle-question" style="color: #ffb416;"></i>
-            Q&A
-            </h1>
-            <a href="write" class="btn btn-warning">작성</a>
-        </div>
-
-        <table class="table table-hover">
+<div class="row" style="margin-top:2%;">
+    <div class="col">
+    
+    
+		<div class="row" style="margin-left: 10%; margin-right: 10%;">
+		    <div class="col-md-6 mt-4">
+		        <h1 class="text-md-start text-center"> 
+		            <i class="fa-regular fa-circle-question" style="color: #ffb416;"></i>
+		            Q & A
+		        </h1>
+		    </div>
+		    
+<%-- 		    <c:if test="${sessionScope.name != null && sessionScope.level == '관리자'}"> --%>
+		    <div class="col-md-6 mt-4 text-md-end text-center"> 
+		        <a href="write" class="btn btn-warning">작성</a>
+		    </div>
+<%-- 			</c:if> --%>
+		</div>
+	
+	<div class="row justify-content-center"> 
+    	<div class="col-md-10 col-sm-12">
+	    <table class="table table-hover justify-content-center text-center">
             <thead>
                 <tr class="table-warning">
                     <th scope="col" class="col-md-1">글번호</th>
@@ -31,62 +42,65 @@
             <tbody>
                 <c:forEach var="qnaDto" items="${list}">
                     <tr onclick="goToDetail(${qnaDto.qnaNo})" style="cursor: pointer;">
-                        <th scope="row">${qnaDto.qnaNo}</th>
+                        <td>${qnaDto.qnaNo}</td>
                         <th scope="row">[ ${qnaDto.qnaCategory} ]</th>
                         <td>${qnaDto.qnaTitle}</td>
                     </tr>
                 </c:forEach>
             </tbody>
         </table>
+        </div>
+     </div>
 
-        <div>
+        <div class="col">
             <ul class="pagination justify-content-center">
-                <!-- 이전 버튼 -->
-                <c:if test="${!vo.first}">
-                    <li class="page-item">
-                        <a class="page-link" href="list?${vo.prevQueryString}" aria-label="Previous">
-                            <span aria-hidden="true">&laquo;</span>
-                        </a>
-                    </li>
-                </c:if>
-
-                <!-- 숫자 버튼 -->
-                <c:forEach var="i" begin="${vo.begin}" end="${vo.end}" step="1">
-                    <li class="page-item ${vo.page == i ? 'active' : ''}">
-                        <c:choose>
-                            <c:when test="${vo.page == i}">
-                                <span class="page-link">${i}</span>
-                            </c:when>
-                            <c:otherwise>
-                                <a class="page-link " href="list?${vo.getQueryString(i)}">${i}</a>
-                            </c:otherwise>
-                        </c:choose>
-                    </li>
-                </c:forEach>
-
-                <!-- 다음 버튼 -->
-                <c:if test="${!vo.last}">
-                    <li class="page-item">
-                        <a class="page-link" href="list?${vo.nextQueryString}" aria-label="Next">
-                            <span aria-hidden="true">&raquo;</span>
-                        </a>
-                    </li>
-                </c:if>
+               <!-- 이전 버튼 -->
+				<c:if test="${!vo.first}">
+				    <li class="page-item">
+				        <a class="page-link" href="list?${vo.prevQueryString}" aria-label="Previous">
+				            <span aria-hidden="true" style="color: #FFB416;">&laquo;</span>
+				        </a>
+				    </li>
+				</c:if>
+				
+				<!-- 숫자 버튼 -->
+				<c:forEach var="i" begin="${vo.begin}" end="${vo.end}" step="1">
+				    <li class="page-item ${vo.page == i ? 'active' : ''}">
+				        <c:choose>
+				            <c:when test="${vo.page == i}">
+				                <span class="page-link" style=" background-color: #FFB416; border-color:#FFB416" >${i}</span>
+				            </c:when>
+				            <c:otherwise>
+				                <a class="page-link" href="list?${vo.getQueryString(i)}" style="color: #FFB416; ">${i}</a>
+				            </c:otherwise>
+				        </c:choose>
+				    </li>
+				</c:forEach>
+				
+				<!-- 다음 버튼 -->
+				<c:if test="${!vo.last}">
+				    <li class="page-item">
+				        <a class="page-link" href="list?${vo.nextQueryString}" aria-label="Next">
+				            <span aria-hidden="true" style="color: #FFB416;">&raquo;</span>
+				        </a>
+				    </li>
+				</c:if>
             </ul>
         </div>
 
-         <!-- 검색창 -->
+        <!-- 검색창 -->
+        <div class="col">
 		<form action="list" method="get">
 		    <div class="row justify-content-center">
 		        <div class="col-md-3">
 		             <div class="input-group mb-3">
-				      <input type="search" name="keyword" class="form-control" placeholder="검색어를 입력해주세요" required>
+				      <input type="search" name="keyword" class="form-control" placeholder="검색어를 입력해주세요"required>
 				      <button type="submit" class="btn btn-warning" type="button" id="button-addon2">검색</button>
 				    </div>
 		        </div>
 		    </div>
 		</form>
-		
+        </div>
 		
 		
     </div>

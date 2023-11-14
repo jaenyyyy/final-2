@@ -5,7 +5,7 @@
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 
 <div class="container mt-5">
-    <h1 class="mb-4">사업자 등록 심사 리스트</h1>
+    <h1 class="mb-4"><i class="fa-solid fa-circle-check" style="color: #ffb416;"></i>사업자 등록 심사 리스트</h1>
     <table class="table table-striped">
         <thead>
             <tr>
