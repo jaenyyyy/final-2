@@ -63,7 +63,6 @@
     </div>
 </div>
 
-<h3> 맛도리 홈페이지 입니당 ~ </h3>
 
 
 
@@ -71,7 +70,7 @@
 
 <a href="exit">회원 탈퇴</a>
 <br>
-<a href="customer/findPw">비밀번호 찾기</a>
+
 
 
 </section>

@@ -85,7 +85,7 @@
 			          <a class="nav-link" href="#">메뉴1</a>
 			        </li>
 			        <li class="nav-item">
-			          <a class="nav-link" href="#">메뉴2</a>
+			          <a class="nav-link" href="/admin/">관리자</a>
 			        </li>
 			        <li class="nav-item">
 			          <a class="nav-link" href="/notice/list">공지사항</a>
