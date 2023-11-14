@@ -35,7 +35,7 @@
 			</tr>
 			
 			<a href="logout"> 로그아웃 </a>
-			<a href="password"> 비밀번호 변경 </a>
+			<a href="changePw"> 비밀번호 변경 </a>
 			<a href="change"> 개인정보 변경 </a>
 			<a href="exit">회원 탈퇴</a>
 			

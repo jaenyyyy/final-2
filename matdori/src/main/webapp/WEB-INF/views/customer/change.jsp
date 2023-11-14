@@ -37,18 +37,19 @@
                 <button type="submit" class="btn btn-positive w-100">변경하기</button>
             </div>
 
-	<a href="findPw">비밀번호 변경</a>
+	<a href="change">비밀번호 변경</a>
 
-        </div>
+        
 
-    </form>
+ 
     
 			<c:if test="${param.error != null}">
 		        <div class="row important">
 					<span>입력하신 비밀번호가 일치하지 않습니다</span>
 				</div>
 			</c:if>
-    
+
+</div>
 </form>
 
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
