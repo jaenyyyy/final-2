@@ -28,22 +28,17 @@ public class MenuDaoImpl implements MenuDao {
 		int result = sqlSession.delete("menu.deleteByMenuNo",menuNo);
 		if(result==0) 	throw new NoTargetException();
 	}
-//
-//	@Override
-//	public List<MenuByResDto> selectList() {
-//		return sqlSession.selectList("menu.menuListByResNo");
-//	}
 
 	@Override
-	public MenuDto selectOne(int menuNo) {
-		return sqlSession.selectOne("menu.findByMenuNo", menuNo);
+	public MenuByResDto selectOne(int menuNo) {
+		return sqlSession.selectOne("menu.menuByMenuNo", menuNo);
 	}
 
 	@Override
-	public boolean edit(int menuNo, MenuByResDto menuByResDto) {
+	public boolean edit(int menuNo, MenuDto menuDto) {
 		Map<String, Object> params = new HashMap<>();
-		params.put("menuNo", menuNo);
-		params.put("menuByResDto", menuByResDto);
+		params.put("menuNo",menuNo);
+		params.put("menuDto",menuDto);
 		return sqlSession.update("menu.edit", params) > 0;
 	}
 

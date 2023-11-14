@@ -42,4 +42,6 @@ public class RestaurantRestController {
 	public RestaurantDto find(@PathVariable int resNo) {
 		return restaurantDao.selectOne(resNo);
 	}
+	
+
 }
