@@ -34,8 +34,8 @@ public interface CustomerDao {
 	
 	// 회원 정보 조회 후 결과 반환 
 	CustomerDto secureSelectOne(String customerId);
-	
 
-	}
+	CustomerDto selectOneByEmail(String customerEmail);
+}
 	
 

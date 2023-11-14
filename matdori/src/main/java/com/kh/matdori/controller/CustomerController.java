@@ -118,33 +118,33 @@ public class CustomerController {
 	
 	
 	
-
-	@GetMapping("/password")
-	public String password() {
-		return "customer/password";
-	}
-	
-	@PostMapping("/password")
-	public String password(HttpSession session,
-								@RequestParam String originPw,
-								@RequestParam String changePw) {
-		String customerId = (String) session.getAttribute("name");
-		CustomerDto customerDto = customerDao.selectOne(customerId);
-		
-		if(customerDto.getCustomerPw().equals(originPw)) {
-			customerDao.updateCustomerPw(customerId, changePw);
-			return "redirect:passwordFinish";
-		}
-		else {
-			return "redirect:password?error";
-		}
-	}
-	
-	@RequestMapping("/passwordFinish")
-	public String passwordFinish() {
-		return "customer/passwordFinish";
-	}
-	
+//
+//	@GetMapping("/password")
+//	public String password() {
+//		return "customer/password";
+//	}
+//	
+//	@PostMapping("/password")
+//	public String password(HttpSession session,
+//								@RequestParam String originPw,
+//								@RequestParam String changePw) {
+//		String customerId = (String) session.getAttribute("name");
+//		CustomerDto customerDto = customerDao.selectOne(customerId);
+//		
+//		if(customerDto.getCustomerPw().equals(originPw)) {
+//			customerDao.updateCustomerPw(customerId, changePw);
+//			return "redirect:passwordFinish";
+//		}
+//		else {
+//			return "redirect:password?error";
+//		}
+//	}
+//	
+//	@RequestMapping("/passwordFinish")
+//	public String passwordFinish() {
+//		return "customer/passwordFinish";
+//	}
+//	
 	
 	
 	
@@ -177,9 +177,48 @@ public class CustomerController {
 	        return "redirect:change?error";
 	    }
 	}
+	
+	
+	
+	
+	@GetMapping("/changePw")
+	public String changePw() {
+	    return "customer/changePw";
+	}
 
-	
-	
+	@PostMapping("/changePw")
+	public String changePw(HttpSession session,
+	                        @RequestParam String originPw,
+	                        @RequestParam String changePw) {
+	    String customerId = (String) session.getAttribute("name");
+	    CustomerDto findDto = customerDao.selectOne(customerId);
+
+	    // 암호화된 입력 비밀번호와 DB에 저장된 암호화된 비밀번호 비교
+	    if (encoder.matches(originPw, findDto.getCustomerPw())) {
+	        // 새로운 비밀번호를 암호화
+	        String encryptedNewPassword = encoder.encode(changePw);
+
+	        // 암호화된 비밀번호를 DTO에 설정
+	        findDto.setCustomerPw(encryptedNewPassword);
+
+	        // customerDao.edit 메소드가 새로운 비밀번호를 업데이트할 수 있도록 수정 필요
+	        customerDao.edit(customerId, findDto);
+
+	        // 비밀번호 변경 완료 후 세션 무효화 및 로그아웃
+	        session.invalidate();
+
+	        return "redirect:changePwFinish";
+	    } else {
+	        return "redirect:changePw?error";
+	    }
+	}
+
+	@RequestMapping("/changePwFinish")
+	public String changePwFinish() {
+	    return "customer/changePwFinish";
+	}
+
+
 	
 	@GetMapping("/exit")
 	public String exit() {
@@ -187,6 +226,7 @@ public class CustomerController {
 	}
 	
 	
+	// 탈퇴 
 	@PostMapping("/exit")
 	public String exit(HttpSession session, @RequestParam String customerPw) {
 	    String customerId = (String) session.getAttribute("name");
@@ -243,7 +283,7 @@ public class CustomerController {
 	
 	@RequestMapping("/findPwFinish")
 	public String findPwFinish() {
-		return "customer/findPwFinish.jsp";
+		return "customer/changePwFinish.jsp";
 	}
 	
 	
@@ -254,24 +294,6 @@ public class CustomerController {
 		return "customer/findPw";
 	}
 	
-
-	
-	 // 비밀번호 재설정 폼
-    @GetMapping("/resetPassword")
-    public String resetPassword() {
-        return "customer/resetPassword";
-    }
-
-    // 비밀번호 재설정
-    @PostMapping("/resetPassword")
-    public String resetPassword(@RequestParam String customerEmail,
-    							@RequestParam String newPassword) {
-        // 비밀번호 업데이트 로직
-        customerDao.updateCustomerPw(customerEmail, newPassword);
-
-        return "redirect:/customer/login";
-    }
-
 
 	}
 

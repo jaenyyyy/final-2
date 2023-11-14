@@ -32,9 +32,8 @@ $(function () {
 
                 window.alert("이메일로 보내드렸어요");
 
-                // 인증 성공 시 step1을 숨기고 step2를 표시
-                $("#step1").hide();
-                $("#step2").show();
+                // 인증 성공 시 버튼을 클릭한 것처럼 동작
+                $(".btn-cert").click();
             },
             error: function () {
                 alert("서버와의 통신이 원활하지 않습니다");
@@ -55,21 +54,16 @@ $(function () {
                 certNumber: number
             },
             success: function (response) {
-                //console.log(response);
-                if (response.result) {//인증 성공
+                if (response.result) {
                     $(".cert-input").removeClass("success fail")
                         .addClass("success");
                     $(".btn-cert").prop("disabled", true);
-                    //상태객체에 상태 저장하는 코드
-
-                    // 인증 성공 시 step1을 숨기고 step2를 표시
-                    $("#step1").hide();
-                    $("#step2").show();
-                }
-                else {
+                    
+                    // 인증 성공 시 페이지 이동
+                    window.location.href = '/changePw';
+                } else {
                     $(".cert-input").removeClass("success fail")
                         .addClass("fail");
-                    //상태객체에 상태 저장하는 코드
                 }
             },
         });

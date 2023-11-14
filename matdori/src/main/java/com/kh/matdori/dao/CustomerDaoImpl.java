@@ -115,6 +115,16 @@ public class CustomerDaoImpl implements CustomerDao {
 		return dto;
 	}
 
+
+	@Override
+	public CustomerDto selectOneByEmail(String customerEmail) {
+		CustomerDto dto = sqlSession.selectOne("customer.getCustomerByEmail", customerEmail);
+		return dto;
+	}
+
+
+	
+
 	
 
 

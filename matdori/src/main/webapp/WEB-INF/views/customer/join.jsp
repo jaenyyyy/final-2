@@ -54,15 +54,6 @@
 		    	</button>
 		        </div>
 		        
-	            <div class="cert-wrapper right">
-			        <input type="text" class="form-input underline-input customer-input cert-input w-50">
-			        <button type="button" class="btn btn-cert btn-positive">확인</button>
-			        
-			        <div class="fail2-feedback">인증번호를 입력해주세요</div>
-			        <div class="fail-feedback">인증번호 잘못입력하셨습니다</div>
-			        <div class="success-feedback">성공!</div>
-	    		</div>
-            </div>
 			
 			  <div class="cert-wrapper right">
 			       <input type="text" class="form-input underline-input customer-input cert-input w-50">
