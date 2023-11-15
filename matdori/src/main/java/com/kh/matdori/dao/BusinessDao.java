@@ -16,4 +16,6 @@ public interface BusinessDao {
 	
 	BusinessDto getBusinessDetails(String userId);
 	List<RestaurantDto> getMyRestaurantList(String busId);
+	BusinessDto findByRegNo(String busRegNo);
+
 }
