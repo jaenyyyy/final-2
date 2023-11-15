@@ -98,7 +98,7 @@
     </select>
     
     
-	<!-- select list / one은 복합으로 조인해서 만들예정 -->
+	<!-- 관리자가 보는 레스토랑 리스트 : 심사, 차단 추가해서 -->
 	<select id="resAdminList" resultType="RestaurantAdminListDto">
 		<include refid="pagingHeader"></include>
 		
@@ -113,17 +113,17 @@
 			<if test="resName != null">
 				and instr(res_name, #{resName}) > 0
 			</if>
-			<!-- 차단여부 -->
+			<!-- 차단여부 (일치)-->
 			<if test="resBlock != null">
 			    and res_block = #{resBlock}
 			</if>
-			<!-- 매장 심사 -->
+			<!-- 매장 심사 (일치)-->
 			<if test="resJudgeStatus !=null">
 				and res_judge_status = #{resJudgeStatus}
 			</if>
 		</where>
 		
-		order by res_reg_date
+		order by res_reg_date desc
 		
 		<include refid="pagingFooter"></include>
 	</select>
@@ -148,4 +148,9 @@
 		</if>
 	</sql>
 	
+	
+	<!-- 관리자가 보는 레스토랑 상세 -->
+	<select id="resAdminDetail" resultType="RestaurantAdminListDto">
+		select * from restaurant_admin_list where res_no = #{resNo}
+	</select>
 </mapper>

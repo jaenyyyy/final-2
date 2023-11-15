@@ -20,6 +20,9 @@ public interface AdminDao {
 	boolean deleteResJudge(int resJudgeNo); //심사 삭제
 	RestaurantJudgeDto selectOne(int resNo); //심사 상세 매장기준
 	
-	//레스토랑 목록 (복합구문 추가)
+	//레스토랑 관리자 - 목록 (복합구문 추가)
 	List<RestaurantAdminListDto> resAdminList(ResAdminVO vo);
+	
+	//레스토랑 관리자 - 상세
+	RestaurantAdminListDto resAdminOne(int resNo);
 }

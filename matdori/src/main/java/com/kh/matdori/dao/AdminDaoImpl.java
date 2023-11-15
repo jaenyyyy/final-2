@@ -81,4 +81,13 @@ public class AdminDaoImpl implements AdminDao{
 			List<RestaurantAdminListDto> list = sqlSession.selectList("admin.resAdminList", vo);
 			return list;
 		}
+		
+		//상세
+		@Override
+		public RestaurantAdminListDto resAdminOne(int resNo) {
+			RestaurantAdminListDto restaurantAdminListDto
+				= sqlSession.selectOne("admin.resAdminDetail", resNo);
+			if(restaurantAdminListDto == null) throw new NoTargetException();
+			return restaurantAdminListDto;
+		}
 }
