@@ -2,6 +2,8 @@ package com.kh.matdori.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -80,10 +82,9 @@ public class AdminController {
     
     
     
-    //레스토랑 심사 기능
     
     
-    //레스토랑 (+차단 +심사 리스트)
+    //레스토랑 관리자 시점 (+차단 +심사 리스트)
     @RequestMapping("/restaurant/list")
     public String list(@ModelAttribute("vo") ResAdminVO vo, Model model) {
     	List <RestaurantAdminListDto> list = adminDao.resAdminList(vo);
@@ -92,6 +93,13 @@ public class AdminController {
     }
     
     
-    
+    //레스토랑 관리자 시점(+차단 +심사 상세)
+    @RequestMapping("/restaurant/detail")
+    public String detail(@RequestParam int resNo, Model model) {
+    	RestaurantAdminListDto restaurantAdminListDto
+    		= adminDao.resAdminOne(resNo);
+    	model.addAttribute("restaurantAdminListDto", restaurantAdminListDto);
+    	return "/admin/restaurant/detail";
+    }
    
 }

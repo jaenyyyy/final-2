@@ -21,11 +21,11 @@
 		        </h1>
 		    </div>
 		    
-<%-- 		    <c:if test="${sessionScope.name != null && sessionScope.level == '관리자'}"> --%>
+		    <c:if test="${sessionScope.name != null && sessionScope.level == '관리자'}">
 		    <div class="col-md-6 mt-4 text-md-end text-center"> 
 		        <a href="write" class="btn btn-warning">작성</a>
 		    </div>
-<%-- 			</c:if> --%>
+			</c:if>
 		</div>
 	
 	<div class="row justify-content-center"> 
