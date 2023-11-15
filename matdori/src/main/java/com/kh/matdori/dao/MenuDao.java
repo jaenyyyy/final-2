@@ -11,7 +11,6 @@ public interface MenuDao {
 
 	void delete(int menuNo);
 
-//	List<MenuByResDto> selectList();
 
 	MenuByResDto selectOne(int menuNo);
 

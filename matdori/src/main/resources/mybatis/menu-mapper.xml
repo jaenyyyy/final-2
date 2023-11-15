@@ -49,10 +49,18 @@
    
     <!--  메뉴 수정 -->
  <update id="edit">
-    update menu set 
-    menu_name = #{menuDto.menuName},
+    update menu 
+    <set> 
+    <if test="menuDto.menuName != null">
+        menu_name = #{menuDto.menuName},
+	</if>
+	<if test="menuDto.menuPrice != null">
 	menu_price = #{menuDto.menuPrice},
-	menu_content = #{menuDto.menuContent} 
+	</if>
+	<if test="menuDto.menuContent != null">
+	menu_content = #{menuDto.menuContent},	
+	</if>
+	</set>
 	where menu_no = #{menuNo}
 </update>
     
