@@ -2,8 +2,6 @@ package com.kh.matdori.controller;
 
 import java.util.List;
 
-import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,10 +16,12 @@ import com.kh.matdori.dao.AdminDao;
 import com.kh.matdori.dao.BusinessDao;
 import com.kh.matdori.dao.BusinessJudgeDao;
 import com.kh.matdori.dao.CustomerDao;
+import com.kh.matdori.dao.RestaurantDao;
 import com.kh.matdori.dto.BusinessDto;
 import com.kh.matdori.dto.BusinessJudgeDto;
 import com.kh.matdori.dto.BusinessJudgeListDto;
 import com.kh.matdori.dto.RestaurantAdminListDto;
+import com.kh.matdori.dto.RestaurantDto;
 import com.kh.matdori.vo.ResAdminVO;
 
 import lombok.extern.slf4j.Slf4j;
@@ -32,13 +32,13 @@ import lombok.extern.slf4j.Slf4j;
 public class AdminController {
 	
 	@Autowired
-	private CustomerDao customerDao;
-	
-	@Autowired
 	private BusinessDao businessDao;
 	
 	@Autowired
 	private AdminDao adminDao;
+	
+	@Autowired
+	private RestaurantDao restaurantDao;
 	
 	@Autowired 
 	private BusinessJudgeDao businessJudgeDao;
@@ -62,7 +62,8 @@ public class AdminController {
         model.addAttribute("business", businessDto);
         return "/admin/business/judgeDetail";
     }
-
+    
+    
     //사업자 등록 심사 승인,거절
     @PostMapping("/business/details/{userId}")
     public String judgeBusiness(@RequestParam String busId,
@@ -81,7 +82,19 @@ public class AdminController {
 
     
     
+    //레스토랑 차단 기능
+    @RequestMapping("/restaurant/block")
+    public String resBlock(@RequestParam int resNo) {
+    	adminDao.insertResBlock(resNo);
+    	return "redirect:/admin/restaurant/detail";
+    }
     
+    //레스토랑 차단 해제
+    @RequestMapping("/restaurant/cancel")
+    public String resCancel(@RequestParam int resNo) {
+    	adminDao.deleteResBlock(resNo);
+    	return "redirect:/admin/restaurant/detail";
+    }
     
     
     //레스토랑 관리자 시점 (+차단 +심사 리스트)
@@ -99,6 +112,10 @@ public class AdminController {
     	RestaurantAdminListDto restaurantAdminListDto
     		= adminDao.resAdminOne(resNo);
     	model.addAttribute("restaurantAdminListDto", restaurantAdminListDto);
+    	
+    	RestaurantDto restaurantDto = restaurantDao.selectOne(resNo);
+    	model.addAttribute("restaurantDto", restaurantDto);
+    	
     	return "/admin/restaurant/detail";
     }
    

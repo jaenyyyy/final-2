@@ -27,7 +27,7 @@
                 </div>
                 
                 <div class="text-end mt-4">
-                	<a class="btn btn-secondary" href="/notice/list">목록</a>
+                	<a class="btn btn-secondary btn-list" href="/notice/list">목록</a>
                     <button class="btn btn-warning">작성</button>
                 </div>
                 
@@ -38,5 +38,21 @@
 </form>
 
 
+<script type="text/javascript">
+	function confirmList() {
+	    if (confirm("작성을 중단하고 목록으로 이동하시겠습니까?")) {
+	        window.location.href = "/notice/list";
+	    }
+	}
+	
+	
+	const deleteButton = document.querySelector('.btn-list');
+	deleteButton.addEventListener('click', function(e) {
+	    e.preventDefault();
+	    confirmList();
+	});
+	
+
+</script>
  <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
 

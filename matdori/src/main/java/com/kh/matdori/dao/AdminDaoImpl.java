@@ -27,7 +27,6 @@ public class AdminDaoImpl implements AdminDao{
 		@Override
 		public void insertResBlock(int resNo) {  //차단
 			sqlSession.insert("admin.blockInsert", resNo);
-			
 		}
 
 		@Override
