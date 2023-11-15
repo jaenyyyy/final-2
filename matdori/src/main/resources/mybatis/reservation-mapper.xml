@@ -8,9 +8,34 @@
 	<!-- 예약 등록 -->
 	<insert id="booking">
 		insert into reservation
-		(rez_no, rez_customer_id, rez_res_no, rez_menu_no, ok_no,
-		 rez_customer_count, rez_request) 
-		values(reservation_seq.nextval, #{rezCustomerId}, #{rezResNo}, 
-		#{rezMenuNo}, #{okNo}, #{rezCustomerCount}, #{rezRequest})
+		(rez_no, rez_customer_id, rez_res_no, 
+		 rez_clock_no, rez_seat_no, rez_menu_no,
+		 rez_customer_count, rez_menu_qty, rez_seat_qty, rez_request) 
+		values
+		<foreach collection="menuList" item="menu" separator=",">
+        (reservation_seq.nextval, #{rezCustomerId}, #{rezResNo}, #{rezClockNo},
+         #{rezSeatNo}, #{menu.menuNo}, #{rezCustomerCount}, #{menu.menuQty},
+         #{rezSeatQty}, #{rezRequest})
+    	</foreach>
 	</insert>
+	
+	<!-- 회원별 예약 조회 -->
+	<select id="rezList" resultType="reservationDto">
+		select * from reservation where rez_customer_id = #{rezCustomerId}
+	</select>
+	
+	<!-- 회원별 예약 상세조회 -->
+	<select id="rezDetailList" resultType="reservationVO">
+		select 
+		from reservation 
+		where rez_no = #{reservationVO.rezNo}
+	</select>
+	
+	<!-- 예약 중복 방지 조회 -->
+	<select id="isInReservation" resultType="reservationDto">
+		select count(*) from reservation 
+		where rez_customer_id = #{rezResNo}
+		and rez_clock_no = #{rezClockNo}
+		and rez_seat_no = #{rezSeatNo}
+	</select>
 </mapper>
