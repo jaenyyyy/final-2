@@ -1,8 +1,11 @@
 package com.kh.matdori.restcontroller;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.mail.MessagingException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +26,7 @@ import com.kh.matdori.dao.BusinessDao;
 import com.kh.matdori.dao.RestaurantDao;
 import com.kh.matdori.dto.BusinessDto;
 import com.kh.matdori.dto.RestaurantDto;
+import com.kh.matdori.service.EmailService;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -42,13 +46,22 @@ public class BusinessRestController {
 	private RestaurantDao restaurantDao;
 	
 //	@Autowired
-//	BCryptPasswordEncoder passwordEncoder;
+//	private EmailReactService emailService;
+	
+	@Autowired
+	BCryptPasswordEncoder encoder;
 	
 	//사업자 가입
 	@PostMapping("/join")
-	public void insert(@RequestBody BusinessDto businessDto) {
-		businessDao.insert(businessDto);
-	}	
+	public void insert(@RequestBody BusinessDto businessDto) throws MessagingException, IOException {
+	    // 비밀번호 암호화
+	    String encodedPassword = encoder.encode(businessDto.getBusPw());
+	    businessDto.setBusPw(encodedPassword);
+	    
+	    businessDao.insert(businessDto);
+	    // emailService.sendCelebration(businessDto.getBusEmail());
+	}
+
 
 	
 	@PostMapping("/login")
@@ -58,7 +71,7 @@ public class BusinessRestController {
 
 	    BusinessDto storedBusiness = businessDao.selectOne(busId);
 
-	    if (storedBusiness != null && busPw.equals(storedBusiness.getBusPw())) {
+	    if (storedBusiness != null && encoder.matches(busPw, storedBusiness.getBusPw())) {
 	        // 로그인 성공
 
 	        // JWT 생성
@@ -136,20 +149,20 @@ public class BusinessRestController {
 	    return ResponseEntity.ok().body(response);
 	}
 	
+	
+	//아이디 찾기(사업자번호와 비밀번호
 	@PostMapping("/findId/busregno/{busRegNo}/buspw/{busPw}")
-	public ResponseEntity<BusinessDto> findIdByRegNoAndPw(@PathVariable String busRegNo, @PathVariable String busPw) {
+	public ResponseEntity<String> findIdByRegNoAndPw(@PathVariable String busRegNo, @PathVariable String busPw) {
 	    System.out.println("busRegNo: " + busRegNo);
 	    System.out.println("busPw: " + busPw);
 	    
 	    BusinessDto foundBusiness = businessDao.findByRegNo(busRegNo);
-	    System.out.println(foundBusiness.getBusPw());
+	    
 	    if (foundBusiness != null && busPw.equals(foundBusiness.getBusPw())) {
-	        // 아이디를 찾은 경우
-	    	System.out.println("일치");
-	        return ResponseEntity.ok(foundBusiness);
+	        System.out.println("일치");
+	        return ResponseEntity.ok(foundBusiness.getBusId());
 	    } else {
-	        // 아이디를 찾지 못한 경우 또는 비밀번호가 일치하지 않는 경우
-	    	System.out.println("불일치");
+	        System.out.println("불일치");
 	        return ResponseEntity.notFound().build();
 	    }
 	}

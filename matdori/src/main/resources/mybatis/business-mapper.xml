@@ -59,10 +59,9 @@
 		SELECT * FROM restaurant WHERE bus_id = #{busId} ORDER BY RES_NO
 	</select>
 	
-    <!-- 사업자등록번호로 가입한 아이디 찾기 -->
-    <select id="findByRegNo" resultType="BusinessDto" parameterType="string">
-        SELECT bus_id
-        FROM business
+    <!-- 사업자등록번호로 가입한 정보찾기 -->
+    <select id="findByRegNo" resultType="BusinessDto">
+        SELECT * FROM business
         WHERE bus_reg_no = #{busRegNo}
     </select>
 
