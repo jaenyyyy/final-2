@@ -64,5 +64,12 @@ public class BusinessDaoImpl implements BusinessDao {
 		return sqlSession.selectList("business.busResList", busId);
 	}
 
+	@Override
+	public BusinessDto findByRegNo(String busRegNo) {
+		return sqlSession.selectOne("business.findByRegNo",busRegNo);
+	}
+
+
+
 
 }

@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.kh.matdori.dao.BusinessDao;
@@ -124,6 +125,35 @@ public class BusinessRestController {
 	        return ResponseEntity.notFound().build();
 	    }
 	}
+
+
+	//아이디 중복체크
+	@GetMapping("/check/{busId}")
+	public ResponseEntity<Map<String, Boolean>> checkBusinessId(@PathVariable String busId) {
+	    BusinessDto existingBusiness = businessDao.selectOne(busId);
+	    Map<String, Boolean> response = new HashMap<>();
+	    response.put("exists", existingBusiness != null);
+	    return ResponseEntity.ok().body(response);
+	}
+	
+	@PostMapping("/findId/busregno/{busRegNo}/buspw/{busPw}")
+	public ResponseEntity<BusinessDto> findIdByRegNoAndPw(@PathVariable String busRegNo, @PathVariable String busPw) {
+	    System.out.println("busRegNo: " + busRegNo);
+	    System.out.println("busPw: " + busPw);
+	    
+	    BusinessDto foundBusiness = businessDao.findByRegNo(busRegNo);
+	    System.out.println(foundBusiness.getBusPw());
+	    if (foundBusiness != null && busPw.equals(foundBusiness.getBusPw())) {
+	        // 아이디를 찾은 경우
+	    	System.out.println("일치");
+	        return ResponseEntity.ok(foundBusiness);
+	    } else {
+	        // 아이디를 찾지 못한 경우 또는 비밀번호가 일치하지 않는 경우
+	    	System.out.println("불일치");
+	        return ResponseEntity.notFound().build();
+	    }
+	}
+
 
 
 
