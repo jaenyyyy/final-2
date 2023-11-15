@@ -4,20 +4,6 @@
 
 <script src="/js/cert.js"></script>
 
-<style>
-    .loading-icon {
-        display: none;
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        z-index: 9999;
-    }
-    
-    .loading-icon img {
-        width: 50px; /* 아이콘의 너비 조절 */
-    }
-</style>
 
 <div class="container w-300">
     <div class="row">
@@ -42,7 +28,7 @@
 
             <div class="cert-wrapper right">
                 <input type="text" class="form-input underline-input customer-input cert-input w-50">
-                <button type="button" class="btn btn-cert btn-positive" onclick="checkCertNumber()">확인</button>
+                <button type="button" class="btn btn-cert btn-positive" link="changePw"> 확인 </button>
                 
                 <div class="fail2-feedback">인증번호를 입력해주세요</div>
                 <div class="fail-feedback">인증번호 잘못입력하셨습니다</div>

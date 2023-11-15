@@ -54,6 +54,7 @@ public class CustomerController {
 	private CertDao certDao;
 	
 	
+	// 회원가입 ok 
     @GetMapping("/join")
     public String join() {
         return "customer/join";
@@ -66,7 +67,8 @@ public class CustomerController {
         return "redirect:joinFinish";
     }
 	
-	// 회원가입 완료 
+    
+	// 회원가입 완료 ok
 	@GetMapping("/joinFinish")
 	public String joinFinish() {
 		return "customer/joinFinish";
@@ -105,6 +107,7 @@ public class CustomerController {
 
 	
 	
+	
 	// 마이페이지 ok
 	@RequestMapping("/mypage")
 	public String mypage(HttpSession session, Model model) {
@@ -118,37 +121,9 @@ public class CustomerController {
 	
 	
 	
-//
-//	@GetMapping("/password")
-//	public String password() {
-//		return "customer/password";
-//	}
-//	
-//	@PostMapping("/password")
-//	public String password(HttpSession session,
-//								@RequestParam String originPw,
-//								@RequestParam String changePw) {
-//		String customerId = (String) session.getAttribute("name");
-//		CustomerDto customerDto = customerDao.selectOne(customerId);
-//		
-//		if(customerDto.getCustomerPw().equals(originPw)) {
-//			customerDao.updateCustomerPw(customerId, changePw);
-//			return "redirect:passwordFinish";
-//		}
-//		else {
-//			return "redirect:password?error";
-//		}
-//	}
-//	
-//	@RequestMapping("/passwordFinish")
-//	public String passwordFinish() {
-//		return "customer/passwordFinish";
-//	}
-//	
 	
 	
-	
-	// 변경 ok
+	// 개인정보 변경 ok
 	@GetMapping("/change")
 	public String change(HttpSession session, Model model) {
 		String customerId = (String)session.getAttribute("name");
@@ -178,9 +153,39 @@ public class CustomerController {
 	    }
 	}
 	
+
+	@GetMapping("/findPw")
+	public String findPw() {
+		return "customer/findPw";
+	}
 	
 	
+	@PostMapping("/findPw")
+	public String findPw(@ModelAttribute CustomerDto customerDto) {
+		//[1] 아이디로 모든 정보를 불러오고
+		CustomerDto findDto = 
+				customerDao.selectOne(customerDto.getCustomerId());
+		//[2] 이메일이 일치하는지 확인한다
+		boolean isValid = findDto != null 
+				&& findDto.getCustomerEmail().equals(customerDto.getCustomerId());
+		if(isValid) {//이메일이 같다면
+			//이메일 발송 코드
+			SimpleMailMessage message = new SimpleMailMessage();
+			message.setTo(findDto.getCustomerEmail());
+			message.setSubject("비밀번호 찾기 결과");
+			message.setText(findDto.getCustomerPw());
+			sender.send(message);
+			
+			return "redirect:findPwFinish";
+		}
+		else {//이메일이 다르다면
+			return "redirect:findPw?error";
+		}
+		
+	}
 	
+	
+	// 비밀번호 재설정 ok 
 	@GetMapping("/changePw")
 	public String changePw() {
 	    return "customer/changePw";
@@ -189,7 +194,8 @@ public class CustomerController {
 	@PostMapping("/changePw")
 	public String changePw(HttpSession session,
 	                        @RequestParam String originPw,
-	                        @RequestParam String changePw) {
+	                        @RequestParam String changePw,
+	                        Model model) {
 	    String customerId = (String) session.getAttribute("name");
 	    CustomerDto findDto = customerDao.selectOne(customerId);
 
@@ -209,24 +215,26 @@ public class CustomerController {
 
 	        return "redirect:changePwFinish";
 	    } else {
-	        return "redirect:changePw?error";
+	        model.addAttribute("error", "비밀번호 변경에 실패했습니다. 입력한 비밀번호를 확인하세요.");
+	        return "customer/changePw";
 	    }
 	}
 
+
+	// 비밀번호 변경 ok 
 	@RequestMapping("/changePwFinish")
 	public String changePwFinish() {
 	    return "customer/changePwFinish";
 	}
 
 
-	
+	// 회원 탈퇴 ok 
 	@GetMapping("/exit")
 	public String exit() {
 		return "customer/exit";
 	}
 	
 	
-	// 탈퇴 
 	@PostMapping("/exit")
 	public String exit(HttpSession session, @RequestParam String customerPw) {
 	    String customerId = (String) session.getAttribute("name");
@@ -250,54 +258,8 @@ public class CustomerController {
 		return "customer/exitFinish";
 		}
 	
-//	//비밀번호 찾기
-//	@GetMapping("/findPw")
-//	public String findPw() {
-//		return "customer/findPw.jsp";
-//	}
-	
-	
-//	@PostMapping("/findPw")
-//	public String findPw(@ModelAttribute CustomerDto customerDto) {
-//		//[1] 아이디로 모든 정보를 불러오고
-//		CustomerDto findDto = 
-//				customerDao.selectOne(customerDto.getCustomerId());
-//		//[2] 이메일이 일치하는지 확인한다
-//		boolean isValid = findDto != null 
-//				&& findDto.getCustomerEmail().equals(customerDto.getCustomerId());
-//		if(isValid) {//이메일이 같다면
-//			//이메일 발송 코드
-//			SimpleMailMessage message = new SimpleMailMessage();
-//			message.setTo(findDto.getCustomerEmail());
-//			message.setSubject("비밀번호 찾기 결과");
-//			message.setText(findDto.getCustomerPw());
-//			sender.send(message);
-//			
-//			return "redirect:findPwFinish";
-//		}
-//		else {//이메일이 다르다면
-//			return "redirect:findPw?error";
-//		}
-//		
-//	}
-	
-	@RequestMapping("/findPwFinish")
-	public String findPwFinish() {
-		return "customer/changePwFinish.jsp";
-	}
-	
-	
 
 	
-	@GetMapping("/findPw")
-	public String findPw() {
-		return "customer/findPw";
-	}
-	
-
-	}
-
-
-
+}
 
 
