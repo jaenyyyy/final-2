@@ -1,6 +1,7 @@
 package com.kh.matdori.restcontroller;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +19,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.kh.matdori.dao.BusinessDao;
+import com.kh.matdori.dao.RestaurantDao;
 import com.kh.matdori.dto.BusinessDto;
+import com.kh.matdori.dto.RestaurantDto;
+
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 
 @CrossOrigin
 @RestController
@@ -29,58 +35,52 @@ public class BusinessRestController {
 	private BusinessDao businessDao;
 	
 	@Autowired
-	BCryptPasswordEncoder passwordEncoder;
+	private RestaurantDto restaurantDto;
+	
+	@Autowired
+	private RestaurantDao restaurantDao;
+	
+//	@Autowired
+//	BCryptPasswordEncoder passwordEncoder;
 	
 	//사업자 가입
 	@PostMapping("/join")
 	public void insert(@RequestBody BusinessDto businessDto) {
 		businessDao.insert(businessDto);
-	}
+	}	
+
 	
 	@PostMapping("/login")
-	public ResponseEntity<Map<String, Object>> login(@RequestBody BusinessDto businessDto) {
+	public ResponseEntity<?> login(@RequestBody BusinessDto businessDto) {
 	    String busId = businessDto.getBusId();
 	    String busPw = businessDto.getBusPw();
-	    
-	    BusinessDto storedBusiness = businessDao.selectOne(busId); // 데이터베이스에서 사용자 정보 가져오기
+
+	    BusinessDto storedBusiness = businessDao.selectOne(busId);
 
 	    if (storedBusiness != null && busPw.equals(storedBusiness.getBusPw())) {
 	        // 로그인 성공
-	        Map<String, Object> response = new HashMap<>();
-	        response.put("busId", storedBusiness.getBusId()); // Adding busId to the response
-	        response.put("message", "로그인 성공"); // Optionally, a success message
-	        return ResponseEntity.ok(response);
+
+	        // JWT 생성
+	        String token = Jwts.builder()
+	                .setSubject(busId)
+	                .signWith(SignatureAlgorithm.HS512, "khproject@lnyy4fh)3h@wg0n)sw6nsynyk!xbxq7f2!%iry+3w1&loos$$finall")
+	                .compact();
+
+	        // 클라이언트에게 busId와 token을 함께 반환
+	        Map<String, String> loginInfo = new HashMap<>();
+	        loginInfo.put("busId", busId);
+	        loginInfo.put("token", token);
+	        
+
+	        return ResponseEntity.ok(loginInfo);
 	    } else {
 	        // 로그인 실패
-	        Map<String, Object> response = new HashMap<>();
-	        response.put("message", "로그인 실패: 아이디 또는 비밀번호가 올바르지 않습니다");
-	        return ResponseEntity.status(401).body(response);
+	        return ResponseEntity.status(401).body("로그인 실패: 아이디 또는 비밀번호가 올바르지 않습니다");
 	    }
 	}
 
-	
-//	public ResponseEntity<String> login(@RequestBody BusinessDto businessDto) {
-//	    String busId = businessDto.getBusId();
-//	    String busPw = businessDto.getBusPw();
-//	    
-//	    BusinessDto storedBusiness = businessDao.selectOne(busId); // 데이터베이스에서 사용자 정보 가져오기
-//
-//	    if (storedBusiness != null) {
-//	        // 저장된 해시된 비밀번호와 사용자가 입력한 비밀번호를 비교
-//	        if (passwordEncoder.matches(busPw, storedBusiness.getBusPw())) {
-//	            // 로그인 성공
-//	            return ResponseEntity.ok("로그인 성공");
-//	        } else {
-//	            // 비밀번호가 일치하지 않는 경우
-//	            return ResponseEntity.status(401).body("로그인 실패: 아이디 또는 비밀번호가 올바르지 않습니다");
-//	        }
-//	    } else {
-//	        // 사용자가 존재하지 않는 경우
-//	        return ResponseEntity.status(401).body("로그인 실패: 사용자가 존재하지 않습니다");
-//	    }
-//	}
 
-	
+
 	
 	//사업자 마이페이지 조회
 	@GetMapping("/mypage/busId/{busId}")
@@ -113,6 +113,20 @@ public class BusinessRestController {
 			return ResponseEntity.status(404).build();
 		}
 	}
+	
+	// 사업자가 운영 중인 매장목록 조회
+	@GetMapping("/myres/{busId}")
+	public ResponseEntity<List<RestaurantDto>> getMyRestaurantList(@PathVariable String busId) {
+	    List<RestaurantDto> myRestaurantList = businessDao.getMyRestaurantList(busId);
+	    if (myRestaurantList != null && !myRestaurantList.isEmpty()) {
+	        return ResponseEntity.ok().body(myRestaurantList);
+	    } else {
+	        return ResponseEntity.notFound().build();
+	    }
+	}
+
+
+
 	
 	//사업자 비밀번호 변경
 	//아이디 배우고 고민해봅시다
