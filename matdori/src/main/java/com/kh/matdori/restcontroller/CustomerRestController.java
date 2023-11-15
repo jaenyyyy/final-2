@@ -27,6 +27,7 @@ public class CustomerRestController {
 	private BCryptPasswordEncoder encoder;
 	
 	
+	// 아이디 중복 여부 체크 
 	@PostMapping("/idCheck")
 	public String idCheck(@RequestParam String customerId) {
 		CustomerDto customerDto = customerDao.selectOne(customerId);
@@ -39,7 +40,7 @@ public class CustomerRestController {
 		
 	}
 	
-	
+	// 이메일 조회 
 	@PostMapping("emailCheck")
 	public String emailCheck(@RequestParam String customerEmail) {
 	    CustomerDto customerDto = customerDao.selectOneByEmail(customerEmail);
@@ -51,41 +52,4 @@ public class CustomerRestController {
 	}
 	
 	
-	@GetMapping("/changePw")
-	public String changePw() {
-	    return "customer/changePw";
-	}
-
-	@PostMapping("/changePw")
-	public String changePw(HttpSession session,
-	                        @RequestParam String originPw,
-	                        @RequestParam String changePw) {
-	    String customerId = (String) session.getAttribute("name");
-	    CustomerDto findDto = customerDao.selectOne(customerId);
-
-	    // 암호화된 입력 비밀번호와 DB에 저장된 암호화된 비밀번호 비교
-	    if (encoder.matches(originPw, findDto.getCustomerPw())) {
-	        // 새로운 비밀번호를 암호화
-	        String encryptedNewPassword = encoder.encode(changePw);
-
-	        // 암호화된 비밀번호를 DTO에 설정
-	        findDto.setCustomerPw(encryptedNewPassword);
-
-	        // customerDao.edit 메소드가 새로운 비밀번호를 업데이트할 수 있도록 수정 필요
-	        customerDao.edit(customerId, findDto);
-
-	        // 비밀번호 변경 완료 후 세션 무효화 및 로그아웃
-	        session.invalidate();
-
-	        return "redirect:changePwFinish";
-	    } else {
-	        return "redirect:changePw?error";
-	    }
-	}
-
-	@RequestMapping("/changePwFinish")
-	public String changePwFinish() {
-	    return "customer/changePwFinish";
-	}
-
 }
