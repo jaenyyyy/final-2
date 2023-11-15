@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+    <mapper namespace = "menuType">
+    
+    <!-- 등록 -->
+<insert id="save">
+    insert into menu_type(menu_type_no, menu_type_name) 
+    values(menu_type_seq.nextval, #{menuTypeName})
+</insert>
+
+
+<delete id="deleteByMenuType">
+delete from menu_by_res where menu_type_no=#{menuTypeNo}
+</delete>
+    </mapper>
