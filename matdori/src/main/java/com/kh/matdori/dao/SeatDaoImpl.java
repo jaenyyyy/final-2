@@ -38,5 +38,10 @@ public class SeatDaoImpl implements SeatDao{
 	public List<SeatListByResVO> selectList() {
 		return sqlSession.selectList("seat.seatListByResNo");
 	}
+	
+	@Override
+	public SeatDto selectOne(int seatNo) {
+		return sqlSession.selectOne("seat.oneOfSeat", seatNo);
+	}
 
 }

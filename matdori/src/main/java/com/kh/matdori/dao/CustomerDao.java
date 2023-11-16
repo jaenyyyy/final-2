@@ -4,7 +4,6 @@ import java.util.List;
 
 import com.kh.matdori.dto.CustomerBlockDto;
 import com.kh.matdori.dto.CustomerDto;
-import com.kh.matdori.vo.BlockListVO;
 
 public interface CustomerDao {
 	
@@ -39,22 +38,26 @@ public interface CustomerDao {
 
 	CustomerDto selectOneByEmail(String customerEmail);
 	
+	
+	
+	
 	// 회원 차단 기능 
 	void insertBlock(String customerId);
 	
 	boolean deleteBlock(String customerId);
 	
-	List<CustomerBlockDto> selectBlockList(BlockListVO vo);
+	List<CustomerBlockDto> cusAdminList(CusAdminVO vo);
 	
 	CustomerBlockDto selectBlockOne(String customerId);
 	
 	CustomerBlockDto selectOneByCustomerName(String customerName);
 
-	int countList(BlockListVO vo);
+	CustomerBlockDto custAdminOne(String customerId);
 
-	List<CustomerDto> selectListByPage(BlockListVO vo);
+	int countList(CusAdminVO vo);
 
 	
+
 	
 	
 }

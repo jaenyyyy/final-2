@@ -34,16 +34,15 @@
 		#{busId}
 	</update>
 
-	<!-- 사용자 정보 수정 (비밀번호 제외) -->
+	<!-- 사용자 정보 수정 -->
 	<update id="busUpdateInfo">
 		UPDATE business SET
+		bus_pw = #{busPw},
 		bus_name = #{busName},
-		bus_tel =
-		#{busTel},
+		bus_tel = #{busTel},
 		bus_email = #{busEmail},
 		bus_post = #{busPost},
-		bus_addr1 =
-		#{busAddr1},
+		bus_addr1 = #{busAddr1},
 		bus_addr2 = #{busAddr2}
 		WHERE bus_id = #{busId}
 	</update>

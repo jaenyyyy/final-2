@@ -33,6 +33,12 @@
 		where seat_no=#{seatNo}
 	</update>
 	
+	<!-- 좌석 세부 조회 -->
+	<select id="oneOfSeat" resultType="seatDto">
+		select * from seat where seat_no = #{seatNo}
+	</select>
+	
+	
 	<!-- 매장별 좌석 조회 -->
 	<select id="seatListByResNo" resultType="seatListByResVO">
 		select r.res_no, r.res_name, 

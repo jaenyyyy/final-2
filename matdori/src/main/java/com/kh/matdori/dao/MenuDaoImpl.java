@@ -46,6 +46,8 @@ public class MenuDaoImpl implements MenuDao {
 	public List<MenuByResDto> selectList(Integer resNo) {
 			return sqlSession.selectList("menu.menuListByResNo",resNo);
 		}
+	
+	
 	}
 
 

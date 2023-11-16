@@ -108,13 +108,19 @@ public class BusinessRestController {
 		}
 	}
 	
-	//사업자 정보 수정
-	@PutMapping("/changeInfo/busId/{busId}")
-	public ResponseEntity<String> edit(
-				@PathVariable String busId, @RequestBody BusinessDto businessDto){
-		boolean result = businessDao.update(busId, businessDto);
-		return result ? ResponseEntity.ok().build() : ResponseEntity.notFound().build();
-	}
+    @PutMapping("/changeInfo/busId/{busId}")
+    public ResponseEntity<String> edit(
+            @PathVariable String busId, @RequestBody BusinessDto businessDto) {
+        // 비밀번호 암호화
+    	System.out.println(businessDto.getBusPw());
+    	System.out.println(businessDto.getBusId());
+    	
+        String encryptedPassword = encoder.encode(businessDto.getBusPw());
+        businessDto.setBusPw(encryptedPassword);
+
+        boolean result = businessDao.update(busId, businessDto);
+        return result ? ResponseEntity.ok().build() : ResponseEntity.notFound().build();
+    }
 	
 	//사업자 탈퇴
 	@DeleteMapping("/{busId}")
@@ -149,6 +155,10 @@ public class BusinessRestController {
 	    return ResponseEntity.ok().body(response);
 	}
 	
+	//사업자 등록번호 중복체크
+	@GetMapping("/check/{busRegNo}")
+	
+	
 	
 	//아이디 찾기(사업자번호와 비밀번호
 	@PostMapping("/findId/busregno/{busRegNo}/buspw/{busPw}")
@@ -171,7 +181,7 @@ public class BusinessRestController {
 
 
 	
-	//사업자 비밀번호 변경
-	//아이디 배우고 고민해봅시다
+	//사업자 개인정보 변경
+	
 	
 }

@@ -16,4 +16,9 @@ public class ClockDaoImpl implements ClockDao{
 	public void insert(ClockDto clockDto) {
 		sqlSession.insert("clock.add", clockDto);
 	}
+	
+	@Override
+	public ClockDto selectOne(int clockNo) {
+		return sqlSession.selectOne("clock.oneOfClock", clockNo);
+	}
 }
