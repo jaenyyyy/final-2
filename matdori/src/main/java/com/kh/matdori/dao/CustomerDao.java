@@ -46,7 +46,7 @@ public interface CustomerDao {
 	
 	boolean deleteBlock(String customerId);
 	
-	List<CustomerBlockDto> cusAdminList(CusAdminVO vo);
+//	List<CustomerBlockDto> cusAdminList(CusAdminVO vo);
 	
 	CustomerBlockDto selectBlockOne(String customerId);
 	
@@ -54,7 +54,7 @@ public interface CustomerDao {
 
 	CustomerBlockDto custAdminOne(String customerId);
 
-	int countList(CusAdminVO vo);
+//	int countList(CusAdminVO vo);
 
 	
 
