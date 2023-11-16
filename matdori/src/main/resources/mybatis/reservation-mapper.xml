@@ -10,13 +10,12 @@
 		insert into reservation
 		(rez_no, rez_customer_id, rez_res_no, 
 		 rez_clock_no, rez_seat_no, rez_menu_no,
-		 rez_customer_count, rez_menu_qty, rez_seat_qty, rez_request) 
+		 rez_customer_count, rez_menu_qty, rez_seat_qty) 
 		values
-		<foreach collection="menuList" item="menu" separator=",">
         (reservation_seq.nextval, #{rezCustomerId}, #{rezResNo}, #{rezClockNo},
-         #{rezSeatNo}, #{menu.menuNo}, #{rezCustomerCount}, #{menu.menuQty},
-         #{rezSeatQty}, #{rezRequest})
-    	</foreach>
+         #{rezSeatNo}, #{rezMenuNo}, #{rezCustomerCount}, #{rezMenuQty},
+         #{rezSeatQty})
+    	
 	</insert>
 	
 	<!-- 회원별 예약 조회 -->
@@ -24,12 +23,17 @@
 		select * from reservation where rez_customer_id = #{rezCustomerId}
 	</select>
 	
-	<!-- 회원별 예약 상세조회 -->
-	<select id="rezDetailList" resultType="reservationVO">
-		select 
-		from reservation 
-		where rez_no = #{reservationVO.rezNo}
+	<!-- 단순 예약 상세조회 -->
+	<select id="detail" resultType="reservationListDto">
+		select * from reservation_list where rez_no = #{rezNo}
 	</select>
+	
+	<!-- 회원별 예약 상세조회 -->
+<!-- 	<select id="rezDetailList" resultType="reservationVO"> -->
+<!-- 		select  -->
+<!-- 		from reservation  -->
+<!-- 		where rez_no = #{reservationVO.rezNo} -->
+<!-- 	</select> -->
 	
 	<!-- 예약 중복 방지 조회 -->
 	<select id="isInReservation" resultType="reservationDto">

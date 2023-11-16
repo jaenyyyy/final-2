@@ -3,7 +3,7 @@
 
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
     
-<form action="booking" method="post" >
+<form action="insert" method="post" >
 	아이디<input type="text" name="rezCustomerId">
 	매장<input type="number" name="rezResNo">
 	시간<input type="number" name="rezClockNo">

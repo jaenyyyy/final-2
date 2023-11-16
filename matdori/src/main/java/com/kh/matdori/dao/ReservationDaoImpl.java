@@ -20,6 +20,17 @@ public class ReservationDaoImpl implements ReservationDao{
 	}
 	
 	@Override
+	public ReservationDto selectOne(int rezNo) {
+		return sqlSession.selectOne("reservation.detail", rezNo);
+	}
+	
+	
+	
+	
+	
+	
+	
+	@Override
 	public boolean isInReservation(int rezResNo, int rezClockNo, int rezSeatNo) {
 		//예약이 이미 돼있는지를 판단할 때 필요한 정보를 전달
 		Map<String, Object> parameters = new HashMap<>();

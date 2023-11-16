@@ -14,5 +14,9 @@ public interface SeatDao {
 	void delete(int seatNo);
 
 	List<SeatListByResVO> selectList();
+	
+	SeatDto selectOne(int seatNo);
+	
+	
 
 }
