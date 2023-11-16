@@ -155,6 +155,10 @@ public class BusinessRestController {
 	    return ResponseEntity.ok().body(response);
 	}
 	
+	//사업자 등록번호 중복체크
+	@GetMapping("/check/{busRegNo}")
+	
+	
 	
 	//아이디 찾기(사업자번호와 비밀번호
 	@PostMapping("/findId/busregno/{busRegNo}/buspw/{busPw}")
