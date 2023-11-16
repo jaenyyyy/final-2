@@ -8,12 +8,27 @@
     
     <!-- 등록 -->
 <insert id="save">
-    insert into menu_type(menu_type_no, menu_type_name) 
-    values(menu_type_seq.nextval, #{menuTypeName})
+  INSERT INTO menu_type(menu_type_no, menu_type_name, res_no)
+  VALUES (menu_type_seq.nextval, #{menuTypeName}, (SELECT res_no FROM restaurant WHERE res_no = #{resNo}))
 </insert>
 
-
+<!-- 삭제 -->
 <delete id="deleteByMenuType">
-delete from menu_by_res where menu_type_no=#{menuTypeNo}
+delete from menu_type where menu_type_no=#{menuTypeNo}
 </delete>
+
+<!-- 수정 -->
+<update id="edit">
+	update menu_type 
+	<set>
+	<if test="menuTypeDto.menuTypeName != null">
+		menu_type_name =#{menuTypeDto.menuTypeName},
+		</if>
+	</set>
+	 where menu_type_no =#{menuTypeNo}
+</update>
+
+<select id="selectListByResNo" resultType="MenuTypeDto">
+    SELECT * FROM menu_type WHERE res_no = #{resNo} ORDER BY menu_type_no ASC
+</select>
     </mapper>

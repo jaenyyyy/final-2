@@ -9,5 +9,6 @@ import lombok.NoArgsConstructor;
 public class MenuTypeDto {
 
 	private int menuTypeNo;
+	private int resNo;
 	private String menuTypeName;
 }
