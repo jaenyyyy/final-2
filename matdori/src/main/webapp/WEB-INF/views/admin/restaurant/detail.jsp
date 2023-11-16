@@ -2,58 +2,11 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<script>
-function toggleLabel() {
-    var switchCheckbox = document.getElementById("flexSwitchCheckDefault");
-    var switchLabel = document.getElementById("switchLabel");
-
-    if (switchCheckbox.checked) {
-        switchLabel.innerText = "차단된 회원";
-        if (confirm("정말 차단하시겠습니까?")) {
-            var blockComment = prompt("차단 사유를 입력해주세요.");
-            if (blockComment !== null) {
-                // AJAX를 사용하여 서버로 데이터 전송
-                var xhr = new XMLHttpRequest();
-                xhr.open("POST", "/admin/restaurant/block", true); //여기가 잘못됐나?
-                xhr.setRequestHeader("Content-Type", "application/json");  //이게 뭔지 모르겠음 이거 뭐지 
-
-                xhr.onreadystatechange = function () {
-                    if (xhr.readyState === XMLHttpRequest.DONE) {
-                        if (xhr.status === 200) {
-                            // 서버에서 차단 처리 성공한 경우
-                            switchCheckbox.checked = true; // 체크된 상태로 변경
-                            switchLabel.innerText = "차단된 회원"; // 라벨 변경
-                        } else {
-                            // 차단 처리 취소한 경우
-                            switchCheckbox.checked = false; // 체크 안된 상태로 변경
-                            switchLabel.innerText = "차단하기"; // 라벨 변경
-                        }
-                    }
-                };
-
-                // restaurantBlockDto의 resBlockComment 값을 전송하기 위해 객체 생성
-                var data = {
-                    resBlockComment: blockComment // 객체에 resBlockComment 추가  //이거도 dto 를 어디꺼 쓰는지 어케 알아?
-                };
-
-                xhr.send(JSON.stringify(data)); // JSON 문자열로 변환하여 전송
-            } else {
-                switchCheckbox.checked = false; // 체크 안된 상태로 변경
-                switchLabel.innerText = "차단하기"; // 라벨 변경
-            }
-        } else {
-            switchCheckbox.checked = false; // 체크 안된 상태로 변경
-            switchLabel.innerText = "차단하기"; // 라벨 변경
-        }
-    } else {
-        switchLabel.innerText = "차단하기";
-    }
-}
-
-</script>
 
 
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
+
+
 
 <div class="row" style="margin-top:2%">
 	<div class="col">
@@ -69,6 +22,7 @@ function toggleLabel() {
 		
 		<!-- 매장정보 -->
 		<div class="row justify-content-center">
+		<input type="hidden" name="resNo" id="resNo" value="${restaurantDto.resNo}">
 			<div class="card border-warning mb-3 " style="max-width: 50rem;">
 				<div class="card-header mt-3 d-flex justify-content-between align-items-center">
 				    <div>
@@ -86,9 +40,17 @@ function toggleLabel() {
 						</c:choose>
 				        </h4>
 				    </div>
-				    <div class="form-check form-switch">
-				        <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault" onclick="toggleLabel()">
-				        <label class="form-check-label" id="switchLabel" for="flexSwitchCheckDefault">차단하기</label>
+				    <div>
+				    
+				    	<c:choose>
+				    		<c:when test="${restaurantAdminListDto.resBlock == 'N'}">
+	                        <button type="button" class="open-modal-block btn btn-secondary">차단하기</button>
+				    		</c:when>
+				    		
+				    		<c:otherwise>
+				    		<button type="button" class="open-modal-cancel btn btn-secondary" >차단해제</button>
+				    		</c:otherwise>
+				    	</c:choose>
 				    </div>
 				</div>
 				<div class="card-body">
@@ -111,15 +73,151 @@ function toggleLabel() {
 			</div>
 		</div>
 		
-		<!-- 심사 -->
+		<!-- 심사 버튼 -->
+		<c:if test="${restaurantAdminListDto.resJudgeStatus eq '심사중'}">
+			<div class="row justify-content-center">
+				<div class="col-md-6 mt-4 mb-4 text-center">
+			        <button type="button" class="btn btn-primary" onClick="NoJudge()">심사거절</button>
+					<button type="button" class="btn btn-warning" onClick="OkJudge()">심사승인</button>
+			    </div>
+			</div>
+		</c:if>
 		
+		
+		<!-- 차단 된 회원일 시 차단 사유 보이는 칸 -->
+		<c:if test="${blockDto.resNo != null}">
+		<div class="row justify-content-center">
+		<input type="hidden" name="resNo" id="resBlockNo" value="${blockDto.resNo}">
+			<div class="card border-warning mb-3 " style="max-width: 50rem;">
+				<div class="card-header mt-3 d-flex justify-content-between align-items-center">
+				    <div>
+				    	<h5 style="font-weight: bold;">차단내역</h5>
+				    </div>
+				</div>
+				<div class="card-body">
+					<div>
+						${blockDto.resBlockComment}
+						<label class="form-label mt-4" for="readOnlyInput">차단 사유</label>
+						<input class="form-control" id="readOnlyInput" type="text" value="${blockDto.resBlockComment}" disabled>
+					</div>
+				</div>
+			</div>
+		</div>
+		</c:if>
+			
+			
+			
+			
+			
+		
+		<!-- 매장 차단 템플릿-->
+		<div class="modal fade" id="blockModal" tabindex="-1" data-bs-backdrop="static">
+		    <div class="modal-dialog">
+		        <div class="modal-content">
+		            <div class="modal-header">
+		                <h1 class="modal-title fs-5" id="exampleModalLabel">매장 차단 사유</h1>
+		                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+		            </div>
+		            <div class="modal-body">
+		                <input type="text" class="form-control" id="resBlockComment">
+		            </div>
+		            <div class="modal-footer">
+		                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+		                <button type="button" class="btn btn-warning" onclick="sendBlockRequest()">차단</button> <!-- 차단 버튼 클릭 시 함수 호출 -->
+		            </div>
+		        </div>
+		    </div>
+		</div>
+        
+        
+        <!-- 차단 해제 템플릿-->
+        <div class="modal fade" id="cancelModal" tabindex="-1" data-bs-backdrop="static">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                            aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <h5>해당 매장을 차단해제 하시겠습니까?</h5>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary"
+                            data-bs-dismiss="modal">취소</button>
+                        <button type="button" class="btn btn-warning" onClick="sendCancelRequest()">해제</button>
+                    </div>
+                </div>
+            </div>
+        </div>
 
 		
+
 	</div>
 </div>
 
 
 
+<script>
+    //매장 차단
+	$(".open-modal-block").click(function(){
+	    $("#blockModal").modal('show');
+	});
+	
+	// 차단 요청 보내기
+	function sendBlockRequest() {
+	    var resNo = document.getElementById("resNo").value; // resNo 값을 가져옴
+	    var resBlockComment = $('#resBlockComment').val(); // 모달 내의 입력값
+
+	    var data = {
+	        resNo: resNo,
+	        resBlockComment: resBlockComment
+	    };
+
+	    $.ajax({
+	        url: '/rest/admin/restaurant/block', // 요청을 보낼 URL
+	        method: 'POST',
+	        contentType : 'application/json; charset=utf-8',
+	        data: JSON.stringify(data), // 데이터 전송
+	        success: function(response) {
+	            console.log('차단 요청이 성공했습니다.');
+	            $('#blockModal').modal('hide'); // 성공 시 모달 닫기
+	        location.reload();
+	        },
+	        error: function(xhr, status, error) {
+	            console.error('차단 요청에 실패했습니다.');
+	        }
+	    });
+	}
+    
+    
+    //차단 해제
+    $(".open-modal-cancel").click(function(){
+        $("#cancelModal").modal('show');
+    });
+	 // 차단 해제 요청 보내기
+	    function sendCancelRequest() {
+	        var resNo = document.getElementById("resNo").value; // resNo 값을 가져옴
+	
+	        var data = {
+	            resNo: resNo
+	        };
+	
+	        $.ajax({
+	            url: '/rest/admin/restaurant/cancel', // 차단 해제 요청을 보낼 URL
+	            method: 'POST',
+	            contentType : 'application/json; charset=utf-8',
+	            data: JSON.stringify(data), // 데이터 전송
+	            success: function(response) {
+	                console.log('차단 해제 요청이 성공했습니다.');
+	                $('#cancelModal').modal('hide'); // 성공 시 모달 닫기
+	                location.reload(); 
+	            },
+	            error: function(xhr, status, error) {
+	                console.error('차단 해제 요청에 실패했습니다.');
+	            }
+	        });
+	    }
+</script>
 
 
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>

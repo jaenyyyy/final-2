@@ -3,14 +3,16 @@ package com.kh.matdori.dao;
 import java.util.List;
 
 import com.kh.matdori.dto.RestaurantAdminListDto;
+import com.kh.matdori.dto.RestaurantBlockDto;
 import com.kh.matdori.dto.RestaurantJudgeDto;
 import com.kh.matdori.vo.ResAdminVO;
 
 public interface AdminDao {
 	
 	//레스토랑 차단
-	void insertResBlock(int resNo);  //차단
+	void insertResBlock(RestaurantBlockDto restaurantBlockDto); //차단
 	boolean deleteResBlock(int resNo);  //차단해제
+	RestaurantBlockDto selectBlockOne(int resNo); //차단 상세
 
 	
 	//레스토랑 심사

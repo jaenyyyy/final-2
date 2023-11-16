@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.kh.matdori.dto.RestaurantAdminListDto;
+import com.kh.matdori.dto.RestaurantBlockDto;
 import com.kh.matdori.dto.RestaurantJudgeDto;
 import com.kh.matdori.error.NoTargetException;
 import com.kh.matdori.vo.ResAdminVO;
@@ -25,16 +26,23 @@ public class AdminDaoImpl implements AdminDao{
 	
 		//레스토랑 차단 기능
 		@Override
-		public void insertResBlock(int resNo) {  //차단
-			sqlSession.insert("admin.blockInsert", resNo);
+		public void insertResBlock(RestaurantBlockDto restaurantBlockDto) {  //차단
+			sqlSession.insert("admin.blockInsert", restaurantBlockDto);
 		}
 
 		@Override
 		public boolean deleteResBlock(int resNo) {  //차단해제
 			return sqlSession.delete("admin.blockDelete", resNo) > 0;
 		}
-
 		
+		
+		@Override
+		public RestaurantBlockDto selectBlockOne(int resNo) {
+			RestaurantBlockDto restaurantBlockDto 
+				= sqlSession.selectOne("admin.resBlockDetail",resNo);
+			return restaurantBlockDto;
+		}
+
 		
 		
 		//레스토랑 심사 기능

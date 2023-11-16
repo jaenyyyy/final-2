@@ -4,7 +4,6 @@ import java.util.List;
 
 import com.kh.matdori.dto.CustomerBlockDto;
 import com.kh.matdori.dto.CustomerDto;
-import com.kh.matdori.vo.CusAdminVO;
 
 public interface CustomerDao {
 	

@@ -23,6 +23,7 @@ import com.kh.matdori.dto.BusinessJudgeListDto;
 import com.kh.matdori.dto.CustomerBlockDto;
 import com.kh.matdori.dto.CustomerDto;
 import com.kh.matdori.dto.RestaurantAdminListDto;
+import com.kh.matdori.dto.RestaurantBlockDto;
 import com.kh.matdori.dto.RestaurantDto;
 import com.kh.matdori.vo.CusAdminVO;
 import com.kh.matdori.vo.ResAdminVO;
@@ -91,20 +92,20 @@ public class AdminController {
     }
 
     
-    
-    //레스토랑 차단 기능
-    @RequestMapping("/restaurant/block")
-    public String resBlock(@RequestParam int resNo) {
-    	adminDao.insertResBlock(resNo);
-    	return "redirect:/admin/restaurant/detail";
-    }
-    
-    //레스토랑 차단 해제
-    @RequestMapping("/restaurant/cancel")
-    public String resCancel(@RequestParam int resNo) {
-    	adminDao.deleteResBlock(resNo);
-    	return "redirect:/admin/restaurant/detail";
-    }
+//    
+//    //레스토랑 차단 기능
+//    @RequestMapping("/restaurant/block")
+//    public String resBlock(@RequestParam int resNo) {
+//    	adminDao.insertResBlock(resNo);
+//    	return "redirect:/admin/restaurant/detail";
+//    }
+//    
+//    //레스토랑 차단 해제
+//    @RequestMapping("/restaurant/cancel")
+//    public String resCancel(@RequestParam int resNo) {
+//    	adminDao.deleteResBlock(resNo);
+//    	return "redirect:/admin/restaurant/detail";
+//    }
     
     
     //레스토랑 관리자 시점 (+차단 +심사 리스트)
@@ -125,6 +126,9 @@ public class AdminController {
     	
     	RestaurantDto restaurantDto = restaurantDao.selectOne(resNo);
     	model.addAttribute("restaurantDto", restaurantDto);
+    	
+    	RestaurantBlockDto blockDto = adminDao.selectBlockOne(resNo);
+    	model.addAttribute("restaurantBlockDto", blockDto);
     	
     	return "/admin/restaurant/detail";
     }

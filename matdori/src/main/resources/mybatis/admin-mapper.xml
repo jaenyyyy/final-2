@@ -47,16 +47,23 @@
 	<!-- restaurant_block 레스토랑 차단 기능 -->
 	
 	<!-- 차단 등록 -->
-	<select id="blockInsert" resultType="RestaurantBlockDto">
-		insert into restaurant_block(res_no) values(#{resNo})
+	<select id="blockInsert" parameterType="RestaurantBlockDto">
+	    INSERT INTO restaurant_block(res_no, res_block_comment)
+	    VALUES (#{resNo}, #{resBlockComment})
 	</select>
 	
 	
 	<!-- 차단 해제 -->
-	<delete id="blockDelete" >
-		delete restaurant_block where res_no=#{res_no}
+	<delete id="blockDelete" parameterType="RestaurantBlockDto">
+	    DELETE FROM restaurant_block
+	    WHERE res_no = #{resNo}
 	</delete>
 	
+	
+	<!-- 차단 상세 -->
+	<select id="resBlockDetail" resultType="RestaurantBlockDto">
+		select * from restaurant_block where res_no = #{resNo}
+	</select>
 	
 	
 
