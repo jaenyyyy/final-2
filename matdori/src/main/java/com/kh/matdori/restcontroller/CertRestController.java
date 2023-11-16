@@ -92,6 +92,52 @@ public class CertRestController {
 		return Map.of("result", false);
 	}
 
+	
+	// 비밀번호 재설정 ok 
+		@GetMapping("/changePw")
+		public String changePw() {
+		    return "customer/changePw";
+		}
+
+		@PostMapping("/changePw")
+		public String changePw(HttpSession session,
+		                        @RequestParam String originPw,
+		                        @RequestParam String changePw,
+		                        Model model) {
+		    String customerId = (String) session.getAttribute("name");
+		    CustomerDto findDto = customerDao.selectOne(customerId);
+
+		    // 암호화된 입력 비밀번호와 DB에 저장된 암호화된 비밀번호 비교
+		    if (encoder.matches(originPw, findDto.getCustomerPw())) {
+		        // 새로운 비밀번호를 암호화
+		        String encryptedNewPassword = encoder.encode(changePw);
+
+		        // 암호화된 비밀번호를 DTO에 설정
+		        findDto.setCustomerPw(encryptedNewPassword);
+
+		        // customerDao.edit 메소드가 새로운 비밀번호를 업데이트할 수 있도록 수정 필요
+		        customerDao.edit(customerId, findDto);
+
+		        // 비밀번호 변경 완료 후 세션 무효화 및 로그아웃
+		        session.invalidate();
+
+		        return "customer/changePw";
+		    } else {
+		        model.addAttribute("error", "비밀번호 변경에 실패했습니다. 입력한 비밀번호를 확인하세요.");
+		        return "redirect:changePw?error";
+		    }
+		}
+		
+		
+		
+
+
+		// 비밀번호 변경 ok 
+		@RequestMapping("/changePwFinish")
+		public String changePwFinish() {
+		    return "customer/changePwFinish";
+		}
+
 }
 	
 	

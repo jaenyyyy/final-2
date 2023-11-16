@@ -27,6 +27,9 @@ public class CustomerRestController {
 	private BCryptPasswordEncoder encoder;
 	
 	
+	
+	// 이메일 인증번호 발송 controller 
+	
 	// 아이디 중복 여부 체크 
 	@PostMapping("/idCheck")
 	public String idCheck(@RequestParam String customerId) {

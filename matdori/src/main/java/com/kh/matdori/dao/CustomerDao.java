@@ -2,7 +2,10 @@ package com.kh.matdori.dao;
 
 import java.util.List;
 
+import com.kh.matdori.dto.CustomerBlockDto;
 import com.kh.matdori.dto.CustomerDto;
+import com.kh.matdori.vo.BlockListVO;
+import com.kh.matdori.vo.PaginationVO;
 
 public interface CustomerDao {
 	
@@ -36,6 +39,25 @@ public interface CustomerDao {
 	CustomerDto secureSelectOne(String customerId);
 
 	CustomerDto selectOneByEmail(String customerEmail);
+	
+	// 회원 차단 기능 
+	void insertBlock(String customerId);
+	
+	boolean deleteBlock(String customerId);
+	
+	List<CustomerBlockDto> selectBlockList(BlockListVO vo);
+	
+	CustomerBlockDto selectBlockOne(String customerId);
+	
+	CustomerBlockDto selectOneByCustomerName(String customerName);
+
+	int countList(BlockListVO vo);
+
+	List<CustomerDto> selectListByPage(BlockListVO vo);
+
+	
+	
+	
 }
 	
 
