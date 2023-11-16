@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
 import com.kh.matdori.dto.CustomerBlockDto;
 import com.kh.matdori.dto.CustomerDto;
 import com.kh.matdori.error.NoTargetException;
-import com.kh.matdori.vo.BlockListVO;
+import com.kh.matdori.vo.CusAdminVO;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -132,23 +132,17 @@ public class CustomerDaoImpl implements CustomerDao {
 	
 	// 회원 차단 기능 
 	@Override
-	public void insertBlock(String customerId) {
-		sqlSession.insert("customerBlock.save", customerId);
+	public void insertBlock(String customerId) { // 차단 
+		sqlSession.insert("customerBlock.insertBlock", customerId);
 	}
-
 
 	@Override
-	public boolean deleteBlock(String customerId) {
-		int result = sqlSession.delete("customerBlock.deleteBlock", customerId);
-		if(result == 0) throw new NoTargetException();
-		return false;
+	public boolean deleteBlock(String customerId) { // 차단 해제 
+		return sqlSession.delete("customerBlock.deleteBlock", customerId) > 0;
 	}
 
-
-	@Override
-	public List<CustomerBlockDto> selectBlockList(BlockListVO vo){
-		return sqlSession.selectList("customerBlock.selectBlockList");
-	}
+	
+	
 
 
 	@Override
@@ -162,25 +156,33 @@ public class CustomerDaoImpl implements CustomerDao {
 		CustomerBlockDto dto = sqlSession.selectOne("customerBlock.selectOneByCustomerName", customerName);
 		return dto;
 	}
-
-
+	
+	
+	
+	// countList 메서드를 int를 반환하는 형태로 수정
 	@Override
-	public int countList(BlockListVO vo) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int countList(CusAdminVO vo) {
+	    return sqlSession.selectOne("customer.cusAdminCountList", vo);
 	}
-
-
-	@Override
-	public List<CustomerDto> selectListByPage(BlockListVO vo) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
 	
 
+	// cusAdminList 메서드에서 레코드를 가져오도록 수정
+	@Override
+	public List<CustomerBlockDto> cusAdminList(CusAdminVO vo) {
+	    return sqlSession.selectList("customer.cusAdminList", vo);
+	}
 	
+	
+
+	// 상세 
+	@Override
+	public CustomerBlockDto custAdminOne(String customerId) {
+	    CustomerBlockDto customerBlockDto = sqlSession.selectOne("customerBlock.selectBlock", customerId);
+	    if(customerBlockDto == null) {
+	        throw new NoTargetException();
+	    }
+	    return customerBlockDto;
+	}
 
 
 }
