@@ -5,11 +5,12 @@
     "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
     
 <mapper namespace ="clock">
-<insert id ="add">
-	insert into clock(clock_no, clock_res_no, clock_select) 
-		values(clock_seq.nextval, #{clockResNo}, #{clockSelect})
-</insert>
-
-<!-- <select id = "list" resultType="ClockDto">
-</select> -->
+	<insert id ="add">
+		insert into clock(clock_no, clock_res_no, clock_select) 
+			values(clock_seq.nextval, #{clockResNo}, #{clockSelect})
+	</insert>
+	
+	<select id = "oneOfClock" resultType="ClockDto">
+		select * from clock where clock_no = #{clockNo}
+	</select>
 </mapper>
