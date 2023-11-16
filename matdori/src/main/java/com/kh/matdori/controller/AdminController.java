@@ -26,8 +26,7 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/admin")
 public class AdminController {
 	
-	@Autowired
-	private CustomerDao customerDao;
+
 	
 	@Autowired
 	private BusinessDao businessDao;

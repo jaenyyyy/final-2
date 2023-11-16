@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 public class CustomerBlockDto {
 	
 	private String customerId;
+	private String customerStatus;
 	private Date customerBlockTime;
 	private String customerBlockComment;
 

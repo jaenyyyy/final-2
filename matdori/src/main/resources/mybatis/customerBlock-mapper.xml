@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="customerBlock">
+
+
+    <!-- insertBlock -->
+    <insert id="insertBlock" parameterType="String">
+        insert into customer_block(customer_id) values(#{customerId})
+    </insert>
+
+    <!-- deleteBlock -->
+    <delete id="deleteBlock" parameterType="String">
+        delete from customer_block where customer_id = #{customerId}
+    </delete>
+
+    <!-- selectBlockList -->
+    <select id="selectBlockList" resultType="CustomerBlockDto">
+        select * from customer_block order by block_time asc
+    </select>
+
+    <!-- selectBlockOne -->
+    <select id="selectBlockOne" parameterType="String" resultType="CustomerBlockDto">
+        select * from customer_block where customer_id = #{customerId}
+    </select>
+
+    <!-- selectOneByCustomerName -->
+    <select id="selectOneByCustomerName" parameterType="String" resultType="CustomerDto">
+        select * from customer where customer_name = #{customerName}
+    </select>
+
+
+<select id="selectListByPage" resultType="CustomerDto" parameterType="BlockListVO">
+        <![CDATA[
+        <choose>
+            <when test="search">
+                SELECT * FROM (
+                    SELECT ROWNUM AS rn, TMP.* FROM (
+                        SELECT * FROM member
+                        WHERE INSTR(${type}, #{keyword}) > 0
+                        AND member_level != '관리자'
+                        ORDER BY ${type} ASC
+                    ) TMP
+                ) WHERE rn BETWEEN #{startRow} AND #{finishRow}
+            </when>
+            <otherwise>
+                SELECT * FROM (
+                    SELECT ROWNUM AS rn, TMP.* FROM (
+                        SELECT * FROM member
+                        WHERE member_level != '관리자'
+                        ORDER BY member_id ASC
+                    ) TMP
+                ) WHERE rn BETWEEN #{startRow} AND #{finishRow}
+            </otherwise>
+        </choose>
+        ]]>
+    </select>
+ 
+ </mapper>

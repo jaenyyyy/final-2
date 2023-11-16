@@ -3,6 +3,7 @@ package com.kh.matdori.controller;
 
 import java.io.IOException;
 import java.text.DecimalFormat;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
@@ -25,8 +26,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.kh.matdori.dao.CertDao;
 import com.kh.matdori.dao.CustomerDao;
 import com.kh.matdori.dto.CertDto;
+import com.kh.matdori.dto.CustomerBlockDto;
 import com.kh.matdori.dto.CustomerDto;
 import com.kh.matdori.service.EmailService;
+import com.kh.matdori.vo.BlockListVO;
+import com.kh.matdori.vo.PaginationVO;
 
 
 import lombok.extern.slf4j.Slf4j;
@@ -154,6 +158,7 @@ public class CustomerController {
 	}
 	
 
+	// 비밀번호 찾기 ? 
 	@GetMapping("/findPw")
 	public String findPw() {
 		return "customer/findPw";
@@ -176,7 +181,7 @@ public class CustomerController {
 			message.setText(findDto.getCustomerPw());
 			sender.send(message);
 			
-			return "redirect:findPwFinish";
+			return "redirect:changePw";
 		}
 		else {//이메일이 다르다면
 			return "redirect:findPw?error";
@@ -213,12 +218,15 @@ public class CustomerController {
 	        // 비밀번호 변경 완료 후 세션 무효화 및 로그아웃
 	        session.invalidate();
 
-	        return "redirect:changePwFinish";
+	        return "customer/changePw";
 	    } else {
 	        model.addAttribute("error", "비밀번호 변경에 실패했습니다. 입력한 비밀번호를 확인하세요.");
-	        return "customer/changePw";
+	        return "redirect:changePw?error";
 	    }
 	}
+	
+	
+	
 
 
 	// 비밀번호 변경 ok 
@@ -258,8 +266,24 @@ public class CustomerController {
 		return "customer/exitFinish";
 		}
 	
-
 	
+	
+	// 이용자 차단 구문 
+	@RequestMapping("/block")
+	public String block(@RequestParam String customerId) {
+		customerDao.insertBlock(customerId);
+		return "customer/list";
+	}
+	
+	@RequestMapping("/cancle")
+	public String cancel(@RequestParam String customerId) {
+		customerDao.deleteBlock(customerId);
+		return "redirect:list";
+	}
+
+
 }
+	
+
 
 
