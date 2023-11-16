@@ -12,32 +12,38 @@
 
 	<!-- 사용자 등록 (가입) -->
 	<insert id="busJoin">
-		INSERT INTO business (bus_id, bus_pw, bus_reg_no, bus_name, bus_tel,
+		INSERT INTO business (bus_id, bus_pw, bus_reg_no,
+		bus_name, bus_tel,
 		bus_email, bus_post, bus_addr1, bus_addr2)
-		VALUES (#{busId}, #{busPw}, #{busRegNo}, #{busName}, #{busTel},
-		#{busEmail}, #{busPost}, #{busAddr1}, #{busAddr2})
+		VALUES
+		(#{busId}, #{busPw}, #{busRegNo}, #{busName}, #{busTel},
+		#{busEmail},
+		#{busPost}, #{busAddr1}, #{busAddr2})
 	</insert>
 
 	<!-- 사용자 정보 읽기 (ID로 조회) -->
-	<select id="busSelectOne"
-		resultType="BusinessDto">
-		SELECT * FROM business WHERE bus_id = #{busId}
+	<select id="busSelectOne" resultType="BusinessDto">
+		SELECT * FROM business
+		WHERE bus_id = #{busId}
 	</select>
-	
+
 
 	<!-- 사용자 정보 수정 (비밀번호 변경) -->
 	<update id="busUpdatePw">
-		UPDATE business SET bus_pw = #{busPw} WHERE bus_id = #{busId}
+		UPDATE business SET bus_pw = #{busPw} WHERE bus_id =
+		#{busId}
 	</update>
 
 	<!-- 사용자 정보 수정 (비밀번호 제외) -->
 	<update id="busUpdateInfo">
 		UPDATE business SET
 		bus_name = #{busName},
-		bus_tel = #{busTel},
+		bus_tel =
+		#{busTel},
 		bus_email = #{busEmail},
 		bus_post = #{busPost},
-		bus_addr1 = #{busAddr1},
+		bus_addr1 =
+		#{busAddr1},
 		bus_addr2 = #{busAddr2}
 		WHERE bus_id = #{busId}
 	</update>
@@ -47,5 +53,18 @@
 	<delete id="busDelete">
 		DELETE FROM business WHERE bus_id = #{busId}
 	</delete>
+
+	<!-- 아이디로 사업자가 운영 중인 매장 목록 조회 -->
+	<select id="busResList" resultType="RestaurantDto">
+		SELECT * FROM restaurant WHERE bus_id = #{busId} ORDER BY RES_NO
+	</select>
+	
+    <!-- 사업자등록번호로 가입한 정보찾기 -->
+    <select id="findByRegNo" resultType="BusinessDto">
+        SELECT * FROM business
+        WHERE bus_reg_no = #{busRegNo}
+    </select>
+
+
 
 </mapper>

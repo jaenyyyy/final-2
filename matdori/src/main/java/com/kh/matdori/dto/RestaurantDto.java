@@ -2,12 +2,14 @@ package com.kh.matdori.dto;
 
 import java.sql.Timestamp;
 
+import org.springframework.stereotype.Repository;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Data @NoArgsConstructor @AllArgsConstructor @Builder
+@Data @NoArgsConstructor @AllArgsConstructor @Builder @Repository
 public class RestaurantDto {
 	private int resNo;
 	private String busId;

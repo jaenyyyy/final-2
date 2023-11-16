@@ -70,8 +70,8 @@
     
     <!-- 심사 등록 -->
     <select id="resJudgeInsert" resultType="RestaurantJudgeDto">
-    	insert into restaurant_judge(res_judge_no, res_no, res_judge_comment)
-    	values(#{res_judge_no}, #{res_no}, #{res_judge_comment})
+    	insert into restaurant_judge(res_judge_no, res_no)
+    	values(#{res_judge_no}, #{res_no})
     </select>
     
     
@@ -98,5 +98,59 @@
     </select>
     
     
-	<!-- select list / one은 복합으로 조인해서 만들예정 -->    
+	<!-- 관리자가 보는 레스토랑 리스트 : 심사, 차단 추가해서 -->
+	<select id="resAdminList" resultType="RestaurantAdminListDto">
+		<include refid="pagingHeader"></include>
+		
+		select * from restaurant_admin_list
+		
+		<where>
+			<!-- 사업자 번호 (일치) -->
+			<if test="resRegNo != null">
+				and res_reg_no = #{resRegNo}
+			</if>
+			<!-- 매장 이름 (유사) -->
+			<if test="resName != null">
+				and instr(res_name, #{resName}) > 0
+			</if>
+			<!-- 차단여부 (일치)-->
+			<if test="resBlock != null">
+			    and res_block = #{resBlock}
+			</if>
+			<!-- 매장 심사 (일치)-->
+			<if test="resJudgeStatus !=null">
+				and res_judge_status = #{resJudgeStatus}
+			</if>
+		</where>
+		
+		order by res_reg_date desc
+		
+		<include refid="pagingFooter"></include>
+	</select>
+	
+	
+	<!-- Top N Query를 위한 코드 조각 생성(상/하) -->
+	
+	<!-- 페이징 헤더 -->
+	<sql id="pagingHeader">
+		<if test="begin != null and end != null">
+		select * from (
+			select rownum rn, TMP.* from(
+		</if>
+	</sql>
+	
+	
+	<!-- 페이징 푸터 -->
+	<sql id="pagingFooter">
+		<if test="begin != null and end != null">
+			)TMP
+		) where rn between #{begin} and #{end}
+		</if>
+	</sql>
+	
+	
+	<!-- 관리자가 보는 레스토랑 상세 -->
+	<select id="resAdminDetail" resultType="RestaurantAdminListDto">
+		select * from restaurant_admin_list where res_no = #{resNo}
+	</select>
 </mapper>

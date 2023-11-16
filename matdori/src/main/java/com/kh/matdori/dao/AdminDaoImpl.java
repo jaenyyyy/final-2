@@ -1,16 +1,21 @@
 package com.kh.matdori.dao;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.kh.matdori.dto.RestaurantAdminListDto;
 import com.kh.matdori.dto.RestaurantJudgeDto;
 import com.kh.matdori.error.NoTargetException;
+import com.kh.matdori.vo.ResAdminVO;
 
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Repository
 public class AdminDaoImpl implements AdminDao{
 	
@@ -22,7 +27,6 @@ public class AdminDaoImpl implements AdminDao{
 		@Override
 		public void insertResBlock(int resNo) {  //차단
 			sqlSession.insert("admin.blockInsert", resNo);
-			
 		}
 
 		@Override
@@ -70,5 +74,19 @@ public class AdminDaoImpl implements AdminDao{
 
 
 
-		//목록은 복합 검색으로 구현 예정
+		//목록
+		@Override
+		public List<RestaurantAdminListDto> resAdminList(ResAdminVO vo){
+			List<RestaurantAdminListDto> list = sqlSession.selectList("admin.resAdminList", vo);
+			return list;
+		}
+		
+		//상세
+		@Override
+		public RestaurantAdminListDto resAdminOne(int resNo) {
+			RestaurantAdminListDto restaurantAdminListDto
+				= sqlSession.selectOne("admin.resAdminDetail", resNo);
+			if(restaurantAdminListDto == null) throw new NoTargetException();
+			return restaurantAdminListDto;
+		}
 }
