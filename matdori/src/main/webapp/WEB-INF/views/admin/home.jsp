@@ -20,12 +20,12 @@
     </div>
     <div class="col-6">
         <div class="alert alert-dismissible alert-warning">
-            <h3><a class="nav-link" href="#">사업체 관리</a></h3>
+            <h3><a class="nav-link" href="#">사업자 관리</a></h3>
         </div>
     </div>
     <div class="col-6">
         <div class="alert alert-dismissible alert-warning">
-            <h3><a class="nav-link" href="/admin/business/judge/list">사업체 심사</a></h3>
+            <h3><a class="nav-link" href="/admin/business/judge/list">사업자 심사</a></h3>
         </div>
     </div>
 
