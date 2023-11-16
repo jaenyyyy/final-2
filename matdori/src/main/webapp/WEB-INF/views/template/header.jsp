@@ -33,93 +33,113 @@
 	
 </head>
 
+<style>
+	/*a태그 밑줄제거*/
+	.dropdown-item a {
+	    text-decoration: none;
+	    color: black;
+	}
+</style>
 
 
 <div class="container-fluid">
 
-	<!-- 헤더 위 -->
-    <div class="row mt-3">
-
-    	<div class="col ms-4" style="margin-top: 70px;"> 
-            <a href="#" class="btn btn-outline-warning">
-       			북마크
-      		</a>
+    <!-- 헤더 위 -->
+    <div class="row mt-3 ms-4">
+        <div class="col ms-4" style="margin-top: 70px;">
+	        <a href="#사업자 홈페이지 가는 주소 " class="me-4">
+                <i class="fa-solid fa-user-tie fa-3x" style="color: #ffb416;"></i>
+            </a>
         </div>
+        
+        
         <div class="col text-center">
-           <img src="/images/logo.png" style="width:250px;">
+            <a href="/">
+                <img src="/images/logo.png" style="width:250px;" alt="맛도리 홈">
+            </a>
         </div>
         <div class="col text-end me-4" style="margin-top: 70px;">
-        	<a href="#" class="btn btn-outline-warning me-4">
-				사업체
-	      	</a>
-        	<c:choose>
-	        	<c:when test="${sessionScope.name != null}">
-	        		<a href="http://localhost:8080/customer/logout" class="btn btn-outline-warning"> 
-	        			로그아웃
-	        		</a>
-	        	</c:when>
-	            <c:otherwise>
-	           		<a href="http://localhost:8080/customer/login" class="btn btn-outline-warning">
-		           		로그인
-	           		</a>
-	            </c:otherwise>
+            <c:choose>
+                <c:when test="${sessionScope.name != null}">
+                    <div class="dropdown">
+                        <a href="#" id="iconLink">
+                            <i class="fa-solid fa-circle-user fa-3x" style="color: #ffb416;"></i>
+                        </a>
+                        <ul class="dropdown-menu" id="subMenu" style="position: absolute; top: 100%; right: 0;">
+                            <li class="dropdown-item"><a href="/customer/mypage">마이페이지</a></li>
+                            <li class="dropdown-item"><a href="#">북마크</a></li>
+                            <li class="dropdown-item"><a href="#">추가</a></li>
+                            <div class="dropdown-divider"></div>
+                            <li class="dropdown-item"><a href="http://localhost:8080/customer/logout">로그아웃</a></li>
+                        </ul>
+                    </div>
+                </c:when>
+                <c:otherwise>
+                    <a href="/customer/login">
+                    	<i class="fa-solid fa-right-to-bracket fa-3x" style="color: #ffb416;"></i>
+                    </a>
+                </c:otherwise>
             </c:choose>
         </div>
-     </div>
-        
-        
-        
-	<!-- 메뉴바 -->
-	<div class="row">
+    </div>
+
+    <!-- 메뉴바 -->
+    <div class="row">
         <div class="col-md-12 offset mt-4">
-			<nav class="navbar navbar-expand-lg bg-warning" data-bs-theme="light">
-			  <div class="container-fluid">
-			    <a class="navbar-brand" href="/">맛도리</a>
-			    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor03" aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
-			      <span class="navbar-toggler-icon"></span>
-			    </button>
-			    <div class="collapse navbar-collapse" id="navbarColor03">
-			      <ul class="navbar-nav me-auto">
-
-			        <li class="nav-item">
-			          <a class="nav-link" href="#">메뉴1</a>
-			        </li>
-			        <li class="nav-item">
-			          <a class="nav-link" href="/admin/">관리자</a>
-			        </li>
-			        <li class="nav-item">
-			          <a class="nav-link" href="/notice/list">공지사항</a>
-			        </li>
-			        <li class="nav-item">
-			          <a class="nav-link" href="/qna/list">Q&A</a>
-			        </li>
-			        <li class="nav-item">
-			          <a class="nav-link" href="/customer/mypage">마이페이지</a>
-			        </li>
-			        <li class="nav-item dropdown">
-			          <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Dropdown</a>
-			          <div class="dropdown-menu">
-			            <a class="dropdown-item" href="#">Action</a>
-			            <a class="dropdown-item" href="#">Another action</a>
-			            <a class="dropdown-item" href="#">Something else here</a>
-			            <div class="dropdown-divider"></div>
-			            <a class="dropdown-item" href="#">Separated link</a>
-			          </div>
-			        </li>
-			      </ul>
-			      <form class="d-flex">
-			        <input class="form-control me-sm-2" type="search" placeholder="검색어를 입력하세요">
-			        <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
-			      </form>
-			    </div>
-			  </div>
-			</nav>
-
+            <nav class="navbar navbar-expand-lg bg-warning" data-bs-theme="light">
+                <div class="container-fluid">
+                    <button class="navbar-toggler mb-2" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor03" aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse justify-content-center" style="margin-left: 400px;" id="navbarColor03">
+                        <ul class="navbar-nav">
+                            <li class="nav-item">
+                                <a class="nav-link me-3" href="#">메뉴1</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link me-3" href="/admin/">관리자</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link me-3" href="/notice/list">공지사항</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link me-3" href="/qna/list">Q&A</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="d-flex ms-auto">
+                        <form class="form-inline">
+                            <div class="col-auto">
+                                <div class="input-group">
+                                    <input class="form-control" type="search" placeholder="검색어를 입력하세요">
+                                    <button class="btn btn-secondary" type="submit">Search</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </nav>
         </div>
     </div>
-    
-    
-    
 </div>
 
- <section>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    const iconLink = document.getElementById("iconLink");
+    const subMenu = document.getElementById("subMenu");
+
+    iconLink.addEventListener("click", function(event) {
+        event.preventDefault();
+        subMenu.classList.toggle("show");
+    });
+
+    document.addEventListener("click", function(event) {
+        const isClickInside = iconLink.contains(event.target) || subMenu.contains(event.target);
+        if (!isClickInside) {
+            subMenu.classList.remove("show");
+        }
+    });
+});
+</script>
+
+<section>
