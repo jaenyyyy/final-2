@@ -3,7 +3,8 @@
     
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 
-<script src="/js/customerJoin.js"></script>
+<script src="/js/cert.js"></script>
+
 
 <form action="join" method="post" autocomplete="off">
 	<div class="container form-border mt-30">
@@ -48,7 +49,7 @@
             
             <div class="row flex-container">
             	<div class="w-50">
-		       	<button type="button" class="btn btn-send btn-positive">
+		       	<button type="button" class="btn btn-send btn-positive" onclick="sendCertNumber()">
 			         <i class="fa-solid fa-spinner fa-spin"></i>
 			        <span>인증번호 보내기</span>
 		    	</button>
@@ -57,7 +58,8 @@
 			
 			  <div class="cert-wrapper right">
 			       <input type="text" class="form-input underline-input customer-input cert-input w-50">
-			       <button type="button" class="btn btn-cert btn-positive">확인</button>
+			       <button type="button" class="btn btn-cert btn-positive" onclick="checkCertNumber()">확인</button>
+
 			        
 			      <div class="fail2-feedback">인증번호를 입력해주세요</div>
 			      <div class="fail-feedback">인증번호 잘못입력하셨습니다</div>

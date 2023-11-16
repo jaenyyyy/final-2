@@ -4,10 +4,11 @@
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="customerBlock">
+		<mapper namespace="customerBlock">
 
 
     <!-- insertBlock -->
+    <!--  새로운 고객의 ID를 삽입하는 쿼리  -->
     <insert id="insertBlock" parameterType="String">
         insert into customer_block(customer_id) values(#{customerId})
     </insert>
@@ -17,23 +18,30 @@
         delete from customer_block where customer_id = #{customerId}
     </delete>
 
+
+	<!--  차단 정보를 시간순으로 정렬  -->
     <!-- selectBlockList -->
     <select id="selectBlockList" resultType="CustomerBlockDto">
         select * from customer_block order by block_time asc
     </select>
 
+
+	<!--  특정 고객 차단 정보를 가져오는  -->
     <!-- selectBlockOne -->
     <select id="selectBlockOne" parameterType="String" resultType="CustomerBlockDto">
         select * from customer_block where customer_id = #{customerId}
     </select>
 
+
+	<!-- 특정 이름을 가진 고객의 정보를 가져오는 -->
     <!-- selectOneByCustomerName -->
     <select id="selectOneByCustomerName" parameterType="String" resultType="CustomerDto">
         select * from customer where customer_name = #{customerName}
     </select>
 
 
-<select id="selectListByPage" resultType="CustomerDto" parameterType="BlockListVO">
+	<!--  페이지네이션, 조건에 따라 고객 리스트를 가져오는 쿼리  -->
+	<select id="selectListByPage" resultType="CustomerDto" parameterType="CusAdminVO">
         <![CDATA[
         <choose>
             <when test="search">
@@ -58,5 +66,67 @@
         </choose>
         ]]>
     </select>
+    
+    
+   	
+
+  	<!-- 관리자가 보는 회원 차단 리스트  -->
+	<select id="cusAdminList" resultType="CusAdminVO">
+		<include refid="pagingHeader"></include>
+		
+		select * from customer_block
+		
+		<where>
+			
+			<if test="customerId != null">
+				and customer_id = #{customerId}
+			</if>
+			
+		
+			
+			<!-- 차단여부 (일치)-->
+			<if test="customerBlock != null">
+			    and customer_block = #{customerBlock}
+			</if>
+			
+		</where>
+		
+		order by customer_block_time desc
+		
+		<include refid="pagingFooter"></include>
+	</select>
+	
+  
+  
+  <!-- 페이징 헤더 -->
+	<sql id="pagingHeader">
+		<if test="begin != null and end != null">
+		select * from (
+			select rownum rn, TMP.* from(
+		</if>
+	</sql>
+	
+	
+	
+	<!-- 페이징 푸터 -->
+	<sql id="pagingFooter">
+		<if test="begin != null and end != null">
+			)TMP
+		) where rn between #{begin} and #{end}
+		</if>
+	</sql>
+	
+	
+	<!-- 상세 -->
+	<select id="cusAdminDetail" resultType="CustomerBlockDto">
+		select * from customer_block where customer_id = #{customerId}
+	</select>
+	
+	
+	<select id="selectBlock" resultType="int">
+		select count(*) from customer_block
+	</select>
+	
+	
  
  </mapper>

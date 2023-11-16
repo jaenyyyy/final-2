@@ -29,7 +29,6 @@ import com.kh.matdori.dto.CertDto;
 import com.kh.matdori.dto.CustomerBlockDto;
 import com.kh.matdori.dto.CustomerDto;
 import com.kh.matdori.service.EmailService;
-import com.kh.matdori.vo.BlockListVO;
 import com.kh.matdori.vo.PaginationVO;
 
 
@@ -268,19 +267,7 @@ public class CustomerController {
 	
 	
 	
-	// 이용자 차단 구문 
-	@RequestMapping("/block")
-	public String block(@RequestParam String customerId) {
-		customerDao.insertBlock(customerId);
-		return "customer/list";
-	}
 	
-	@RequestMapping("/cancle")
-	public String cancel(@RequestParam String customerId) {
-		customerDao.deleteBlock(customerId);
-		return "redirect:list";
-	}
-
 
 }
 	
