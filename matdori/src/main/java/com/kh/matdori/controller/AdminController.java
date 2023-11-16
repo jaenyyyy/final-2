@@ -155,19 +155,19 @@ public class AdminController {
 
     
     // 이용자 차단 관리자 목록 
- 	@RequestMapping("/customer/list")
- 	public String list(@ModelAttribute CusAdminVO vo, Model model) {
- 	    vo.setSize(15);
-
- 	    int count = customerDao.countList(vo); // 레코드 수를 가져옴
- 	    vo.setCount(count); // VO 객체에 레코드 수 설정
- 	    model.addAttribute("vo", vo);
-
- 	    List<CustomerBlockDto> list = customerDao.cusAdminList(vo); // 해당 레코드를 가져옴
- 	    model.addAttribute("list", list);
-
- 	    return "/admin/customer/list";
- 	}
+// 	@RequestMapping("/customer/list")
+// 	public String list(@ModelAttribute CusAdminVO vo, Model model) {
+// 	    vo.setSize(15);
+//
+// 	    int count = customerDao.countList(vo); // 레코드 수를 가져옴
+// 	    vo.setCount(count); // VO 객체에 레코드 수 설정
+// 	    model.addAttribute("vo", vo);
+//
+// 	    List<CustomerBlockDto> list = customerDao.cusAdminList(vo); // 해당 레코드를 가져옴
+// 	    model.addAttribute("list", list);
+//
+// 	    return "/admin/customer/list";
+// 	}
 
    
     

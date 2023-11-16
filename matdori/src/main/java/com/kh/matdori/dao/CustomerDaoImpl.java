@@ -160,17 +160,17 @@ public class CustomerDaoImpl implements CustomerDao {
 	
 	
 	// countList 메서드를 int를 반환하는 형태로 수정
-	@Override
-	public int countList(CusAdminVO vo) {
-	    return sqlSession.selectOne("customer.cusAdminCountList", vo);
-	}
+//	@Override
+//	public int countList(CusAdminVO vo) {
+//	    return sqlSession.selectOne("customer.cusAdminCountList", vo);
+//	}
 	
 
 	// cusAdminList 메서드에서 레코드를 가져오도록 수정
-	@Override
-	public List<CustomerBlockDto> cusAdminList(CusAdminVO vo) {
-	    return sqlSession.selectList("customer.cusAdminList", vo);
-	}
+//	@Override
+//	public List<CustomerBlockDto> cusAdminList(CusAdminVO vo) {
+//	    return sqlSession.selectList("customer.cusAdminList", vo);
+//	}
 	
 	
 
