@@ -221,26 +221,22 @@ public class BusinessRestController {
         }
     }
 
-    // 임시 비밀번호 생성 로직
-    private String generateTemporaryPassword() {
-        SecureRandom random = new SecureRandom();
-        String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$";
-        StringBuilder password = new StringBuilder();
-        String regex = "^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$])[A-Za-z0-9!@#$]{8,15}$";
-
-        do {
-            password.setLength(0); // 기존의 내용 초기화
-            for (int i = 0; i < 15; i++) {
-                int index = random.nextInt(characters.length());
-                password.append(characters.charAt(index));
-            }
-        } while (!password.toString().matches(regex));
-
-        // 암호화
-        String encryptedPassword = encoder.encode(password.toString());
-
-        return encryptedPassword;
-    }
+	/*
+	 * // 임시 비밀번호 생성 로직 private String generateTemporaryPassword() { SecureRandom
+	 * random = new SecureRandom(); String characters =
+	 * "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$";
+	 * StringBuilder password = new StringBuilder(); String regex =
+	 * "^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$])[A-Za-z0-9!@#$]{8,15}$";
+	 * 
+	 * do { password.setLength(0); // 기존의 내용 초기화 for (int i = 0; i < 15; i++) { int
+	 * index = random.nextInt(characters.length());
+	 * password.append(characters.charAt(index)); } } while
+	 * (!password.toString().matches(regex));
+	 * 
+	 * // 암호화 String encryptedPassword = encoder.encode(password.toString());
+	 * 
+	 * return encryptedPassword; }
+	 */
 }
 
 
