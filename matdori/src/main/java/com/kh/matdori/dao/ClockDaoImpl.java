@@ -1,5 +1,7 @@
 package com.kh.matdori.dao;
 
+import java.util.List;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -20,5 +22,10 @@ public class ClockDaoImpl implements ClockDao{
 	@Override
 	public ClockDto selectOne(int clockNo) {
 		return sqlSession.selectOne("clock.oneOfClock", clockNo);
+	}
+	
+	@Override
+	public List<ClockDto> clockList() {
+		return sqlSession.selectList("clock.clockList");
 	}
 }

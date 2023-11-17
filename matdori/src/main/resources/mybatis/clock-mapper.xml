@@ -10,7 +10,11 @@
 			values(clock_seq.nextval, #{clockResNo}, #{clockSelect})
 	</insert>
 	
-	<select id = "oneOfClock" resultType="ClockDto">
+	<select id= "oneOfClock" resultType="ClockDto">
 		select * from clock where clock_no = #{clockNo}
+	</select>
+	
+	<select id= "clockList" resultType="ClockDto">
+		select * from clock
 	</select>
 </mapper>
