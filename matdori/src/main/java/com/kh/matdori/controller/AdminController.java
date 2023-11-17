@@ -25,6 +25,7 @@ import com.kh.matdori.dto.CustomerDto;
 import com.kh.matdori.dto.RestaurantAdminListDto;
 import com.kh.matdori.dto.RestaurantBlockDto;
 import com.kh.matdori.dto.RestaurantDto;
+import com.kh.matdori.dto.RestaurantJudgeDto;
 import com.kh.matdori.vo.CusAdminVO;
 import com.kh.matdori.vo.ResAdminVO;
 
@@ -92,7 +93,7 @@ public class AdminController {
     }
 
     
-//    
+//    restController로 옮김
 //    //레스토랑 차단 기능
 //    @RequestMapping("/restaurant/block")
 //    public String resBlock(@RequestParam int resNo) {
@@ -120,6 +121,7 @@ public class AdminController {
     //레스토랑 관리자 시점(+차단 +심사 상세)
     @RequestMapping("/restaurant/detail")
     public String detail(@RequestParam int resNo, Model model) {
+    	
     	RestaurantAdminListDto restaurantAdminListDto
     		= adminDao.resAdminOne(resNo);
     	model.addAttribute("restaurantAdminListDto", restaurantAdminListDto);
@@ -138,7 +140,6 @@ public class AdminController {
     
     
     
-//    
 // // 이용자 차단 구문 
 // 	@RequestMapping("customer/block")
 // 	public String cusBlock(@RequestParam String customerId) {
@@ -174,6 +175,7 @@ public class AdminController {
     // 이용자 차단 
     @RequestMapping("/customer/detail")
     public String detail(@RequestParam String customerId, Model model) {
+    	
     	CustomerBlockDto customerBlockDto = customerDao.custAdminOne(customerId);
     	model.addAttribute("customerBlockDto", customerBlockDto);
     	
