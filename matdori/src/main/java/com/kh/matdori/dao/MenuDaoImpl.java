@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 import com.kh.matdori.dto.MenuByResDto;
 import com.kh.matdori.dto.MenuDto;
 import com.kh.matdori.error.NoTargetException;
+import com.kh.matdori.vo.MenuWithImagesVO;
 
 @Repository
 public class MenuDaoImpl implements MenuDao {
@@ -25,8 +26,9 @@ public class MenuDaoImpl implements MenuDao {
 
 	@Override
 	public void delete(int menuNo) {
-		int result = sqlSession.delete("menu.deleteByMenuNo",menuNo);
-		if(result==0) 	throw new NoTargetException();
+		int result = sqlSession.delete("menu.deleteByMenuNo", menuNo);
+		if (result == 0)
+			throw new NoTargetException();
 	}
 
 	@Override
@@ -37,18 +39,14 @@ public class MenuDaoImpl implements MenuDao {
 	@Override
 	public boolean edit(int menuNo, MenuDto menuDto) {
 		Map<String, Object> params = new HashMap<>();
-		params.put("menuNo",menuNo);
-		params.put("menuDto",menuDto);
+		params.put("menuNo", menuNo);
+		params.put("menuDto", menuDto);
 		return sqlSession.update("menu.edit", params) > 0;
 	}
 
+
 	@Override
-	public List<MenuByResDto> selectList(Integer resNo) {
-			return sqlSession.selectList("menu.menuListByResNo",resNo);
-		}
-	
-	
+	public List<MenuWithImagesVO> selectList(int menuTypeNo) {
+		 return sqlSession.selectList("menu.selectMenuWithImages",menuTypeNo);
 	}
-
-
-
+}

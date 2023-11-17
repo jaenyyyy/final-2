@@ -16,6 +16,7 @@
     delete menu where menu_no=#{menuNo}
     </delete>
     
+    <!-- 
   <select id="menuListByResNo" resultType="MenuByResDto">
   SELECT 
     menu_no,
@@ -29,7 +30,23 @@
     restaurant_menu_with_images
   WHERE 
     res_no = #{resNo}
+</select> -->
+   
+<!-- 메뉴와 이미지 정보 조회 -->
+<select id="selectMenuWithImages" resultType="MenuWithImagesVO">
+  SELECT
+    m.menu_no,
+    m.menu_name,
+    m.menu_price,
+    m.menu_content,
+    mi.attach_no
+  FROM
+    menu m
+    LEFT JOIN menu_images mi ON m.menu_no = mi.menu_no
+  WHERE
+    m.menu_type_no = #{menuTypeNo}
 </select>
+
    
    <!--  단일메뉴 조회-->
   <select id="menuByMenuNo" resultType="MenuByResDto">

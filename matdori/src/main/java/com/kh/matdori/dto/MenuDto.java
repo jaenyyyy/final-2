@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 @Data @NoArgsConstructor @AllArgsConstructor @Builder
 public class MenuDto {
 	private int menuNo;
+	private int menuTypeNo;
 	private int resNo;
 	private String menuName;
 	private Float menuPrice;
