@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.kh.matdori.dto.MenuByResDto;
 import com.kh.matdori.dto.MenuDto;
+import com.kh.matdori.vo.MenuWithImagesVO;
 
 public interface MenuDao {
 
@@ -14,8 +15,12 @@ public interface MenuDao {
 
 	MenuByResDto selectOne(int menuNo);
 
-	List<MenuByResDto> selectList(Integer resNo);
+
 
 	boolean edit(int menuNo, MenuDto menuDto);
+
+	
+
+	List<MenuWithImagesVO> selectList(int menuTypeNo);
 
 }
