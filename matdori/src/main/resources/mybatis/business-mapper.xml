@@ -26,6 +26,12 @@
 		SELECT * FROM business
 		WHERE bus_id = #{busId}
 	</select>
+	
+	<!-- 사용자 정보 조회(사업자 등록번호 중복 체크용 -->
+	<select id="busSelectOneRegNo" resultType="BusinessDto">
+		SELECT * FROM business
+		WHERE bus_reg_no = #{busRegNo}
+	</select>
 
 
 	<!-- 사용자 정보 수정 (비밀번호 변경) -->

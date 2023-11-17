@@ -156,7 +156,14 @@ public class BusinessRestController {
 	}
 	
 	//사업자 등록번호 중복체크
-	@GetMapping("/check/{busRegNo}")
+	@GetMapping("/checkRegNo/{busRegNo}")
+	public ResponseEntity<Map<String, Boolean>> checkBusinessRegNo(@PathVariable String busRegNo) {
+	    BusinessDto existingBusiness = businessDao.selectOneRegNo(busRegNo);
+	    Map<String, Boolean> response = new HashMap<>();
+	    response.put("exists", existingBusiness != null);
+	    return ResponseEntity.ok().body(response);
+	}
+	
 	
 	
 	
