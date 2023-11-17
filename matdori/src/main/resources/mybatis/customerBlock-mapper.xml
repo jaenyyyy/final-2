@@ -12,6 +12,14 @@
     <insert id="insertBlock" parameterType="String">
         insert into customer_block(customer_id) values(#{customerId})
     </insert>
+    
+    
+    
+    	<select id="customerStatus" resultType="String" parameterType="Long">
+    	select customer_status from customer_block where customer_id = #{customerId}
+		</select>
+
+
 
     <!-- deleteBlock -->
     <delete id="deleteBlock" parameterType="String">
@@ -126,6 +134,7 @@
 	<select id="selectBlock" resultType="int">
 		select count(*) from customer_block
 	</select>
+	
 	
 	
  
