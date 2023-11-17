@@ -34,16 +34,13 @@
 	</update>
 	
 	<!-- 좌석 세부 조회 -->
-	<select id="oneOfSeat" resultType="seatDto">
+	<select id="oneOfSeat" resultType="SeatDto">
 		select * from seat where seat_no = #{seatNo}
 	</select>
 	
 	
 	<!-- 매장별 좌석 조회 -->
-	<select id="seatListByResNo" resultType="seatListByResVO">
-		select r.res_no, r.res_name, 
-			   s.seat_no, s.seat_res_no, s.seat_name, s.seat_count  
-		from seat s 
-		left outer join restaurant r on s.seat_res_no = r.res_no
+	<select id="seatList" resultType="SeatDto">
+		select * from seat
 	</select>
 </mapper>

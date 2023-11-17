@@ -13,6 +13,7 @@ import com.kh.matdori.dto.RestaurantBlockDto;
 import com.kh.matdori.dto.RestaurantJudgeDto;
 import com.kh.matdori.error.NoTargetException;
 import com.kh.matdori.vo.ResAdminVO;
+import com.kh.matdori.vo.RestaurantJudgeVO;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -51,18 +52,17 @@ public class AdminDaoImpl implements AdminDao{
 			return sqlSession.selectOne("admin.sequence");
 		}
 
-		@Override
-		public void insertResJudge(RestaurantJudgeDto restaurantJudgeDto) {
-			sqlSession.insert("admin.resJudgeInsert", restaurantJudgeDto);
-			
-		}
+//		@Override
+//		public void insertResJudge(RestaurantJudgeDto restaurantJudgeDto) {
+//			sqlSession.insert("admin.resJudgeInsert", restaurantJudgeDto);
+//			
+//		}  vo 처리로 일단 주석
 
 		@Override
 		public boolean updateResJudge(RestaurantJudgeDto restaurantJudgeDto) {
 			 Map<String, Object> params = new HashMap<>();
 			    params.put("resJudgeNo", restaurantJudgeDto.getResJudgeNo());
 			    params.put("resJudgeStatus", restaurantJudgeDto.getResJudgeStatus());
-			    params.put("resJudgeDate", restaurantJudgeDto.getResJudgeDate());
 			    params.put("resJudgeComment", restaurantJudgeDto.getResJudgeComment());
 			return sqlSession.update("admin.resJudgeUpdate", params) > 0;
 		}
@@ -96,5 +96,11 @@ public class AdminDaoImpl implements AdminDao{
 				= sqlSession.selectOne("admin.resAdminDetail", resNo);
 			if(restaurantAdminListDto == null) throw new NoTargetException();
 			return restaurantAdminListDto;
+		}
+		
+		
+		@Override
+		public void insertResJudge(RestaurantJudgeVO vo) {
+		//vo 처리로 일단 주석	
 		}
 }

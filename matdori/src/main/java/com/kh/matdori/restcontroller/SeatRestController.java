@@ -45,8 +45,8 @@ public class SeatRestController {
 		seatDao.delete(seatNo);
 	}
 	
-	@GetMapping("/")
-	public List<SeatListByResVO> seatListByRes(){
-		return seatDao.selectList();
-	}
+//	@GetMapping("/")
+//	public List<SeatListByResVO> seatListByRes(){
+//		return seatDao.selectList();
+//	}
 }

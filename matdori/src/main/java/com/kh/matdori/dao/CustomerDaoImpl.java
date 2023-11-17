@@ -185,13 +185,11 @@ public class CustomerDaoImpl implements CustomerDao {
 	return customerAdminListDto;
 	}
 
-
 	@Override
 	public boolean updateBlock(String customerStatus) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
-}
 
 

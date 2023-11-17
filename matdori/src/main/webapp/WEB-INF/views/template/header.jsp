@@ -47,9 +47,15 @@
     <!-- 헤더 위 -->
     <div class="row mt-3 ms-4">
         <div class="col ms-4" style="margin-top: 70px;">
-	        <a href="#사업자 홈페이지 가는 주소 " class="me-4">
-                <i class="fa-solid fa-user-tie fa-3x" style="color: #ffb416;"></i>
-            </a>
+        
+        
+    	<!-- 사업자 홈페이지 가는 주소 -->
+	    	<c:if test="${sessionScope.name == null}">
+		        <a href="#사업자 홈페이지 가는 주소 " class="me-4">
+	                <i class="fa-solid fa-user-tie fa-3x" style="color: #ffb416;"></i>
+	            </a>
+	        </c:if>
+	        
         </div>
         
         
