@@ -20,6 +20,7 @@ import com.kh.matdori.dao.RestaurantDao;
 import com.kh.matdori.dto.BusinessDto;
 import com.kh.matdori.dto.BusinessJudgeDto;
 import com.kh.matdori.dto.BusinessJudgeListDto;
+import com.kh.matdori.dto.CustomerAdminListDto;
 import com.kh.matdori.dto.CustomerBlockDto;
 import com.kh.matdori.dto.CustomerDto;
 import com.kh.matdori.dto.RestaurantAdminListDto;
@@ -140,49 +141,45 @@ public class AdminController {
     
     
     
-// // 이용자 차단 구문 
-// 	@RequestMapping("customer/block")
-// 	public String cusBlock(@RequestParam String customerId) {
-// 		customerDao.insertBlock(customerId);
-// 		return "redirect:/customer/list";
-// 	}
-// 	
-// 	
-// 	@RequestMapping("customer/cancle")
-// 	public String cusCancel(@RequestParam String customerId) {
-// 		customerDao.deleteBlock(customerId);
-// 		return "redirect:/customer/detail";
-// 	}
+//    
+ // 이용자 차단 구문 
+ 	@RequestMapping("customer/block")
+ 	public String cusBlock(@RequestParam String customerId) {
+ 		customerDao.insertBlock(customerId);
+     		return "redirect:/customer/list";
+ 	}
+ 	
+ 	
+ 	@RequestMapping("customer/cancle")
+ 	public String cusCancel(@RequestParam String customerId) {
+ 		customerDao.deleteBlock(customerId);
+ 		return "redirect:/customer/detail";
+ 	}
 
-    
+
+ 	
     // 이용자 차단 관리자 목록 
-// 	@RequestMapping("/customer/list")
-// 	public String list(@ModelAttribute CusAdminVO vo, Model model) {
-// 	    vo.setSize(15);
-//
-// 	    int count = customerDao.countList(vo); // 레코드 수를 가져옴
-// 	    vo.setCount(count); // VO 객체에 레코드 수 설정
-// 	    model.addAttribute("vo", vo);
-//
-// 	    List<CustomerBlockDto> list = customerDao.cusAdminList(vo); // 해당 레코드를 가져옴
-// 	    model.addAttribute("list", list);
-//
-// 	    return "/admin/customer/list";
-// 	}
-
+ 	@RequestMapping("/customer/list")
+ 	public String list(@ModelAttribute CusAdminVO vo, Model model) {
+ 	    List<CustomerAdminListDto> list = customerDao.cusBlockList(vo); // 해당 레코드를 가져옴
+ 	    model.addAttribute("list", list);
+ 	    return "/customer/list";
+ 	}   
    
     
     // 이용자 차단 
     @RequestMapping("/customer/detail")
     public String detail(@RequestParam String customerId, Model model) {
-    	
-    	CustomerBlockDto customerBlockDto = customerDao.custAdminOne(customerId);
+    	CustomerAdminListDto customerAdminListDto = customerDao.custAdminOne(customerId);
+    	model.addAttribute("customerAdminListDto", customerAdminListDto);
     	model.addAttribute("customerBlockDto", customerBlockDto);
-    	
     	CustomerDto customerDto = customerDao.selectOne(customerId);
     	model.addAttribute("customerDto", customerDto);
     	
-    	return "/admin/customer/detail";
+    	CustomerBlockDto customerBlockDto = customerDao.selectBlockOne(customerId);
+    	model.addAttribute("customerBlockDto", customerBlockDto);
+    	
+    	return "/customer/detail";
     }
     
 }
