@@ -7,12 +7,13 @@
     <mapper namespace ="restaurant">
     
     <!-- 등록 -->
-    <insert id ="save">
+   <insert id="save">
     insert into restaurant
-    (res_no, bus_id, res_region_no, res_reg_no, res_name, res_tel, res_post, res_addr1, res_addr2, res_open_time, res_reg_date) 
-    values(restaurant_seq.nextval, #{busId}, #{res_region_no}, #{resRegNo}, #{resName}, #{resTel}, #{resPost}, 
-    			#{resAddr1}, #{resAddr2}, #{resOpenTime}, #{resRegDate})
-    </insert>
+    (res_no, bus_id, res_region_no, res_reg_no, res_name, res_tel,res_open_time, res_post, res_addr1, res_addr2) 
+    values(restaurant_seq.nextval, #{restaurantDto.busId}, #{restaurantDto.resRegionNo}, #{restaurantDto.resRegNo},
+    		    #{restaurantDto.resName}, #{restaurantDto.resTel}, 	#{restaurantDto.resOpenTime}, #{restaurantDto.resPost}, 
+    			#{restaurantDto.resAddr1}, #{restaurantDto.resAddr2})
+</insert>
     
     <!-- 삭제 -->
     <delete id="deleteByResNo">
