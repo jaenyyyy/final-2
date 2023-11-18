@@ -165,21 +165,21 @@ public class AdminController {
  	    model.addAttribute("list", list);
  	    return "/customer/list";
  	}   
-   
-    
-    // 이용자 차단 
-    @RequestMapping("/customer/detail")
-    public String detail(@RequestParam String customerId, Model model) {
-    	CustomerAdminListDto customerAdminListDto = customerDao.custAdminOne(customerId);
-    	model.addAttribute("customerAdminListDto", customerAdminListDto);
-    	model.addAttribute("customerBlockDto", customerBlockDto);
-    	CustomerDto customerDto = customerDao.selectOne(customerId);
-    	model.addAttribute("customerDto", customerDto);
-    	
-    	CustomerBlockDto customerBlockDto = customerDao.selectBlockOne(customerId);
-    	model.addAttribute("customerBlockDto", customerBlockDto);
-    	
-    	return "/customer/detail";
-    }
-    
 }
+    
+//    // 이용자 차단 
+//    @RequestMapping("/customer/detail")
+//    public String detail(@RequestParam String customerId, Model model) {
+//    	CustomerAdminListDto customerAdminListDto = customerDao.custAdminOne(customerId);
+//    	model.addAttribute("customerAdminListDto", customerAdminListDto);
+//    	model.addAttribute("customerBlockDto", customerBlockDto);
+//    	CustomerDto customerDto = customerDao.selectOne(customerId);
+//    	model.addAttribute("customerDto", customerDto);
+//    	
+//    	CustomerBlockDto customerBlockDto = customerDao.selectBlockOne(customerId);
+//    	model.addAttribute("customerBlockDto", customerBlockDto);
+//    	
+//    	return "/customer/detail";
+//    }
+//    
+//}

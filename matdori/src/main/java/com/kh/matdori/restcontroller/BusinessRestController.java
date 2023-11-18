@@ -191,35 +191,35 @@ public class BusinessRestController {
 	    }
 	}
 	
-	//비밀번호 찾기 (아이디 이메일기반 비밀번호 변경)
-    @PostMapping("/business/findPw")
-    public String findPw(@RequestBody BusinessDto businessDto) {
-        // 아이디로 모든 정보를 불러오고
-        BusinessDto foundBusiness = businessDao.selectOne(businessDto.getBusId());
-
-        if (foundBusiness != null && foundBusiness.getBusEmail().equals(businessDto.getBusEmail())
-                && foundBusiness.getBusRegNo().equals(businessDto.getBusRegNo())) {
-            // 이메일과 아이디 일치한다면
-            // 임시 비밀번호 생성
-            String temporaryPassword = generateTemporaryPassword();
-            
-            // 비밀번호 업데이트
-            foundBusiness.setBusPw(temporaryPassword);
-            businessDao.updatePw(temporaryPassword, businessDto);
-
-            // 이메일 발송
-            SimpleMailMessage message = new SimpleMailMessage();
-            message.setTo(foundBusiness.getBusEmail());
-            message.setSubject("임시 비밀번호 발급");
-            message.setText("임시 비밀번호: " + temporaryPassword);
-            sender.send(message);
-
-            return "임시 비밀번호를 이메일로 전송하였습니다.";
-        } else {
-            // 조회된 정보가 없거나 정보가 일치하지 않을 경우
-            return "조회된 정보가 없거나 회원가입되지 않은 고객입니다.";
-        }
-    }
+//	//비밀번호 찾기 (아이디 이메일기반 비밀번호 변경)
+//    @PostMapping("/business/findPw")
+//    public String findPw(@RequestBody BusinessDto businessDto) {
+//        // 아이디로 모든 정보를 불러오고
+//        BusinessDto foundBusiness = businessDao.selectOne(businessDto.getBusId());
+//
+//        if (foundBusiness != null && foundBusiness.getBusEmail().equals(businessDto.getBusEmail())
+//                && foundBusiness.getBusRegNo().equals(businessDto.getBusRegNo())) {
+//            // 이메일과 아이디 일치한다면
+//            // 임시 비밀번호 생성
+//            String temporaryPassword = generateTemporaryPassword();
+//            
+//            // 비밀번호 업데이트
+//            foundBusiness.setBusPw(temporaryPassword);
+//            businessDao.updatePw(temporaryPassword, businessDto);
+//
+//            // 이메일 발송
+//            SimpleMailMessage message = new SimpleMailMessage();
+//            message.setTo(foundBusiness.getBusEmail());
+//            message.setSubject("임시 비밀번호 발급");
+//            message.setText("임시 비밀번호: " + temporaryPassword);
+//            sender.send(message);
+//
+//            return "임시 비밀번호를 이메일로 전송하였습니다.";
+//        } else {
+//            // 조회된 정보가 없거나 정보가 일치하지 않을 경우
+//            return "조회된 정보가 없거나 회원가입되지 않은 고객입니다.";
+//        }
+//    }
 
 	/*
 	 * // 임시 비밀번호 생성 로직 private String generateTemporaryPassword() { SecureRandom
