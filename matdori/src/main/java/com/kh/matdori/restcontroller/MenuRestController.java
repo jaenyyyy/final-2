@@ -75,7 +75,8 @@ public class MenuRestController {
 			List<MenuWithImagesVO> menuList = menuDao.selectList(menuTypeNo);
 			if (menuList != null && !menuList.isEmpty()) {
 				return ResponseEntity.ok(menuList);
-			} else {
+			} 
+			else {
 				return ResponseEntity.notFound().build();
 			}
 		} catch (Exception e) {
