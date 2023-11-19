@@ -269,11 +269,21 @@ public class BusinessRestController {
 	//회원탈퇴
 	@DeleteMapping("/quit/{busId}")
 	public ResponseEntity<String> withdrawBusiness(@PathVariable String busId, @RequestParam String password) {
-	    // 비밀번호 확인
-	    boolean deleted = businessDao.busDeleteWithPassword(busId, password);
-	    if (deleted) {
-	        return ResponseEntity.ok("회원 탈퇴가 완료되었습니다.");
+	    // 사용자가 입력한 비밀번호를 암호화하여 DB에 저장된 암호화된 비밀번호와 비교합니다.
+	    BusinessDto business = businessDao.findByBusId(busId);
+	    System.out.println(business.getBusPw());
+	    System.out.println(password);
+	    
+	    if (business != null && encoder.matches(password, business.getBusPw())) {
+	        // 비밀번호가 일치할 때 회원 탈퇴 수행
+	        boolean deleted = businessDao.delete(busId);
+	        if (deleted) {
+	            return ResponseEntity.ok("회원 탈퇴가 완료되었습니다.");
+	        } else {
+	            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("회원 탈퇴에 실패했습니다.");
+	        }
 	    } else {
+	        // 비밀번호가 일치하지 않을 때 에러 반환
 	        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("비밀번호가 올바르지 않습니다.");
 	    }
 	}

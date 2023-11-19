@@ -53,9 +53,9 @@
 	</update>
 
 
-<!-- 사용자 정보 삭제 (비밀번호 확인 후) -->
-<delete id="busDeleteWithPassword">
-    DELETE FROM business WHERE bus_id = #{busId} AND bus_pw = #{busPw}
+<!-- 사용자 정보 삭제 -->
+<delete id="busDelete">
+    DELETE FROM business WHERE bus_id = #{busId}
 </delete>
 
 
