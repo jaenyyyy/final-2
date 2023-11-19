@@ -17,10 +17,17 @@ public class RestaurantDaoImpl implements RestaurantDao {
 	@Autowired
 	private SqlSession sqlSession;
 
-	//등록
+	
+	
+	//등록 다시
 	@Override
 	public void insert(RestaurantJudgeVO vo) {
-		sqlSession.insert("restaurant.save",vo);		
+		sqlSession.insert("restaurant.save", vo);
+	}
+	
+	@Override
+	public int sequence() {
+		return sqlSession.selectOne("restaurant.sequence");
 	}
 
 	//삭제
@@ -45,6 +52,8 @@ public class RestaurantDaoImpl implements RestaurantDao {
 			throw new NoTargetException();
 		return restaurantDto;
 	}
+
+
 
 	
 

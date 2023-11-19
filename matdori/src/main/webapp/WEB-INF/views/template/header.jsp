@@ -100,7 +100,7 @@
                     <div class="collapse navbar-collapse justify-content-center" style="margin-left: 400px;" id="navbarColor03">
                         <ul class="navbar-nav">
                             <li class="nav-item">
-                                <a class="nav-link me-3" href="#">메뉴1</a>
+                                <a class="nav-link me-3" href="/reservation/insert">예약</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link me-3" href="/admin/">관리자</a>

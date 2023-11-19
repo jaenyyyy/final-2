@@ -30,22 +30,21 @@ public class RestaurantRestController {
 	
 	@PostMapping("/save")
 	public void insert(@RequestBody RestaurantJudgeVO vo) {
+		int resNo = restaurantDao.sequence();
+		vo.setResNo(resNo);
 		restaurantDao.insert(vo);
-	
-//		RestaurantDto restaurantDto = vo.getRestaurantDto();
-//		int resNo = restaurantDao.getSequence();
-//		restaurantDto.setResNo(0);
-//		int resNo = restaurantDto.getResNo();
-//		vo.getRestaurantJudgeDto().setResNo(resNo);
-
-		adminDao.insertResJudge(vo);
+		
+		int resJudgeNo = adminDao.sequence();
+		vo.setResJudgeNo(resJudgeNo);
+		
+	    adminDao.insertResJudge(vo);
 	}
 
 	@DeleteMapping("/{resNo}")
 	public void delete(@PathVariable int resNo) {
 		restaurantDao.delete(resNo);
 	}
-//
+
 	@PutMapping("/{resNo}")
 	public void update(@RequestBody RestaurantDto restaurantDto, @PathVariable int resNo) {
 		restaurantDto.setResNo(resNo); // resNo 설정 추가
@@ -56,6 +55,5 @@ public class RestaurantRestController {
 	public RestaurantDto find(@PathVariable int resNo) {
 		return restaurantDao.selectOne(resNo);
 	}
-	
 
 }
