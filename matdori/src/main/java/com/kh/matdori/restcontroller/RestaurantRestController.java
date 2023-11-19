@@ -28,7 +28,7 @@ public class RestaurantRestController {
 	@Autowired
 	private AdminDao adminDao;
 	
-	@PostMapping("/save")
+	@PostMapping("/")
 	public void insert(@RequestBody RestaurantJudgeVO vo) {
 		int resNo = restaurantDao.sequence();
 		vo.setResNo(resNo);
