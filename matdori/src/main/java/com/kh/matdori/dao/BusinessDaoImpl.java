@@ -76,6 +76,16 @@ public class BusinessDaoImpl implements BusinessDao {
 	}
 
 
+    @Override
+    public boolean busDeleteWithPassword(String busId, String busPw) {
+        Map<String, String> paramMap = new HashMap<>();
+        paramMap.put("busId", busId);
+        paramMap.put("busPw", busPw);
+        int result = sqlSession.delete("business.busDeleteWithPassword", paramMap);
+        return result > 0;
+    }
+
+
 
 
 }

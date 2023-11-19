@@ -53,10 +53,11 @@
 	</update>
 
 
-	<!-- 사용자 삭제 (예: ID로 삭제) -->
-	<delete id="busDelete">
-		DELETE FROM business WHERE bus_id = #{busId}
-	</delete>
+<!-- 사용자 정보 삭제 (비밀번호 확인 후) -->
+<delete id="busDeleteWithPassword">
+    DELETE FROM business WHERE bus_id = #{busId} AND bus_pw = #{busPw}
+</delete>
+
 
 	<!-- 아이디로 사업자가 운영 중인 매장 목록 조회 -->
 	<select id="busResList" resultType="RestaurantDto">

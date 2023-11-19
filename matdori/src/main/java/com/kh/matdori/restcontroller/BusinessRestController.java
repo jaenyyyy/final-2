@@ -264,6 +264,19 @@ public class BusinessRestController {
 	    
 	    return new String(tempPasswordArray);
 	}
+	
+	
+	//회원탈퇴
+	@DeleteMapping("/quit/{busId}")
+	public ResponseEntity<String> withdrawBusiness(@PathVariable String busId, @RequestParam String password) {
+	    // 비밀번호 확인
+	    boolean deleted = businessDao.busDeleteWithPassword(busId, password);
+	    if (deleted) {
+	        return ResponseEntity.ok("회원 탈퇴가 완료되었습니다.");
+	    } else {
+	        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("비밀번호가 올바르지 않습니다.");
+	    }
+	}
 
 
 	 
