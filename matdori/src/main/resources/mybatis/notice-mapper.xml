@@ -12,14 +12,14 @@
 	</select>
 
 	<!-- 등록 -->
-	<select id="write" resultType="NoticeDto">
+	<insert id="write">
 		insert into notice(
 			notice_no, notice_writer, notice_title, notice_content
 		)
 		values (
 			#{noticeNo}, #{noticeWriter}, #{noticeTitle}, #{noticeContent}
 		)
-	</select>
+	</insert>
 	
 	<!-- 조회 -->
 	<select id="list" resultType="NoticeDto">

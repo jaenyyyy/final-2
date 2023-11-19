@@ -13,6 +13,11 @@ public class AttachDaoImpl implements AttachDao{
 
 	@Autowired
 	private SqlSession sqlSession;
+	
+	@Override
+	public int sequence() {
+		return sqlSession.selectOne("attach.sequence");
+	}
 
 	@Override
 	public void insert(AttachDto attachDto) {
