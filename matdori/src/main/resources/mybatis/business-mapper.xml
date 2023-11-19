@@ -36,8 +36,7 @@
 
 	<!-- 사용자 정보 수정 (비밀번호 변경) -->
 	<update id="busUpdatePw">
-		UPDATE business SET bus_pw = #{busPw} WHERE bus_id =
-		#{busId}
+		UPDATE business SET bus_pw = #{busPw} WHERE bus_id = #{busId}
 	</update>
 
 	<!-- 사용자 정보 수정 -->

@@ -1,6 +1,8 @@
 package com.kh.matdori.dao;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,10 +51,9 @@ public class BusinessDaoImpl implements BusinessDao {
 	public boolean updatePw(String busId, BusinessDto businessDto) {
 	    businessDto.setBusId(busId);
 	    int result = sqlSession.update("business.busUpdatePw", businessDto);
-	    if (result == 0) {throw new NoTargetException();
-	    }
 	    return result > 0;
 	}
+
 
     @Override
     public BusinessDto getBusinessDetails(String userId) {
