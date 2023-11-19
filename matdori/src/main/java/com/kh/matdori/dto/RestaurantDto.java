@@ -17,6 +17,7 @@ public class RestaurantDto {
 	private String resRegNo;
 	private String resName;
 	private String resTel;
+	private String resOpenTime;
 	private String resPost, resAddr1, resAddr2;
 	private Timestamp resRegDate;
 
