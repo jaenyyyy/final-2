@@ -9,5 +9,6 @@ public interface ClockDao {
 	void insert(ClockDto clockDto);
 	ClockDto selectOne(int clockNo);
 	List<ClockDto> clockList();
+	List<ClockDto> getClockListByResNo(int clockResNo);
 
 }
