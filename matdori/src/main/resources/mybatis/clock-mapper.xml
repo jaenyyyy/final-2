@@ -17,4 +17,8 @@
 	<select id= "clockList" resultType="ClockDto">
 		select * from clock
 	</select>
+	<!-- 매장별 시간 조회 -->
+	<select id="getClockListByResNo" resultType="ClockDto" parameterType="int">
+	    SELECT * FROM clock WHERE clockResNo = #{clockResNo}
+	</select>
 </mapper>

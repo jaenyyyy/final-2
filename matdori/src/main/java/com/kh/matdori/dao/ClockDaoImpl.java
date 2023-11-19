@@ -28,4 +28,9 @@ public class ClockDaoImpl implements ClockDao{
 	public List<ClockDto> clockList() {
 		return sqlSession.selectList("clock.clockList");
 	}
+	
+	@Override
+	public List<ClockDto> getClockListByResNo(int clockResNo) {
+		return sqlSession.selectList("clock.getClockListByResNo", clockResNo);
+	}
 }
