@@ -10,6 +10,7 @@ public class CusAdminVO {
 	
 	    // 이용자 정보
 	    private String customerId; // 이용자 아이디 
+	    private String customerName; // 이용자 이름 
 	    private String customerStatus; // 이용자 상태 (차단상태 Y / N)
 	    private Date customerBlockTime; // 이용자 차단 시각 
 	    private String customerBlockComment; // 이용자 차단 사유 
@@ -18,6 +19,12 @@ public class CusAdminVO {
 	    
 	    private Date customerBirth;
 	    private int customerContact;
+	    
+	    
+	    
+	    
+	    
+	    
 	    
 
 	    private Integer begin;
