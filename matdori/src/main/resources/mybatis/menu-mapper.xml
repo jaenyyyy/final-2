@@ -9,7 +9,7 @@
     <insert id="save">
     insert into menu(
     menu_no, res_no, menu_name, menu_price, menu_content) 
-    	values(menu_seq.nextval, #{resNo}, #{menuName}, #{menuPrice}, #{menuInfo})
+    	values(menu_seq.nextval, #{resNo}, #{menuName}, #{menuPrice}, #{menuContent})
     </insert>
     
     <delete id="deleteByMenuNo">
