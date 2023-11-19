@@ -81,4 +81,9 @@
 	where menu_no = #{menuNo}
 </update>
     
+   <!-- 메뉴 이미지 isnert --> 
+    <insert id="insertMenuImage" parameterType="MenuImagesDto">
+    insert into menu_images(menu_no, attach_no) values (#{menuNo}, #{attachNo})
+</insert>
+    
     </mapper>
