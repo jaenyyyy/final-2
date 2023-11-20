@@ -12,15 +12,12 @@ public interface MenuDao {
 
 	void delete(int menuNo);
 
-
-	MenuByResDto selectOne(int menuNo);
-
-
-
 	boolean edit(int menuNo, MenuDto menuDto);
-
 	
 
 	List<MenuWithImagesVO> selectList(int menuTypeNo);
+	
+
+	List<MenuWithImagesVO> getMenuByRes(int resNo);
 
 }

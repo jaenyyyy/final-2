@@ -6,15 +6,22 @@
     
     <mapper namespace ="menu">
     
-    <insert id="save">
+<insert id="save">
     insert into menu(
-    menu_no, res_no, menu_name, menu_price, menu_content) 
-    	values(menu_seq.nextval, #{resNo}, #{menuName}, #{menuPrice}, #{menuContent})
-    </insert>
+        menu_no, res_no, menu_type_no, menu_name, menu_price, menu_content) 
+    values(
+        menu_seq.nextval, 
+        #{resNo}, 
+        #{menuTypeNo}, 
+        #{menuName}, 
+        #{menuPrice}, 
+        #{menuContent}
+    )
+</insert>
     
-    <delete id="deleteByMenuNo">
-    delete menu where menu_no=#{menuNo}
-    </delete>
+<delete id="deleteByMenuNo">
+    DELETE FROM menu WHERE menu_no = #{menuNo}
+</delete>
     
     <!-- 
   <select id="menuListByResNo" resultType="MenuByResDto">
@@ -47,6 +54,22 @@
     m.menu_type_no = #{menuTypeNo}
 </select>
 
+
+<!-- 메장별 메뉴 정보 조회 -->
+<select id="selectMenuByRes" resultType="MenuWithImagesVO">
+  SELECT
+    m.menu_no,
+    m.menu_name,
+    m.menu_price,
+    m.menu_content,
+    mi.attach_no
+  FROM
+    menu m
+    LEFT JOIN menu_images mi ON m.menu_no = mi.menu_no
+  WHERE
+    m.res_no = #{resNo}
+</select>
+
    
    <!--  단일메뉴 조회-->
   <select id="menuByMenuNo" resultType="MenuByResDto">
@@ -75,7 +98,7 @@
 	menu_price = #{menuDto.menuPrice},
 	</if>
 	<if test="menuDto.menuContent != null">
-	menu_content = #{menuDto.menuContent},	
+	menu_content = #{menuDto.menuContent}	
 	</if>
 	</set>
 	where menu_no = #{menuNo}
