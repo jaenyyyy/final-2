@@ -20,25 +20,25 @@
      
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/5.3.2/united/bootstrap.min.css" rel="stylesheet">
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-	<!-- swiper cdn -->
-	<script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
-	
-	
-	
-	<!-- jquery cdn -->
-	<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-	
-	
+   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+   <!-- swiper cdn -->
+   <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
+   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
+   
+   
+   
+   <!-- jquery cdn -->
+   <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+   
+   
 </head>
 
 <style>
-	/*a태그 밑줄제거*/
-	.dropdown-item a {
-	    text-decoration: none;
-	    color: black;
-	}
+   /*a태그 밑줄제거*/
+   .dropdown-item a {
+       text-decoration: none;
+       color: black;
+   }
 </style>
 
 
@@ -49,13 +49,13 @@
         <div class="col ms-4" style="margin-top: 70px;">
         
         
-    	<!-- 사업자 홈페이지 가는 주소 -->
-	    	<c:if test="${sessionScope.name == null}">
-		        <a href="#사업자 홈페이지 가는 주소 " class="me-4">
-	                <i class="fa-solid fa-user-tie fa-3x" style="color: #ffb416;"></i>
-	            </a>
-	        </c:if>
-	        
+       <!-- 사업자 홈페이지 가는 주소 -->
+          <c:if test="${sessionScope.name == null}">
+              <a href="#사업자 홈페이지 가는 주소 " class="me-4">
+                   <i class="fa-solid fa-user-tie fa-3x" style="color: #ffb416;"></i>
+               </a>
+           </c:if>
+           
         </div>
         
         
@@ -82,7 +82,7 @@
                 </c:when>
                 <c:otherwise>
                     <a href="/customer/login">
-                    	<i class="fa-solid fa-right-to-bracket fa-3x" style="color: #ffb416;"></i>
+                       <i class="fa-solid fa-right-to-bracket fa-3x" style="color: #ffb416;"></i>
                     </a>
                 </c:otherwise>
             </c:choose>
@@ -100,7 +100,7 @@
                     <div class="collapse navbar-collapse justify-content-center" style="margin-left: 400px;" id="navbarColor03">
                         <ul class="navbar-nav">
                             <li class="nav-item">
-                                <a class="nav-link me-3" href="#">메뉴1</a>
+                                <a class="nav-link me-3" href="/reservation/insert">예약</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link me-3" href="/admin/">관리자</a>

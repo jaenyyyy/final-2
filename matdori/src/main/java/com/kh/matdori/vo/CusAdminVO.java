@@ -15,18 +15,8 @@ public class CusAdminVO {
 	    private Date customerBlockTime; // 이용자 차단 시각 
 	    private String customerBlockComment; // 이용자 차단 사유 
 	    private String customerBlock; // 차단 여부 
-	    
-	    
 	    private Date customerBirth;
 	    private int customerContact;
-	    
-	    
-	    
-	    
-	    
-	    
-	    
-
 	    private Integer begin;
 	    private Integer end;
 
@@ -91,11 +81,8 @@ public class CusAdminVO {
 		}
 		public int getFinishRow() {
 			return page * size;
-	
-
-	   
+		}
 	}
-}
 
 
 

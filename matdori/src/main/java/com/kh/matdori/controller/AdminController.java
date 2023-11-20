@@ -30,6 +30,7 @@ import com.kh.matdori.dto.RestaurantJudgeDto;
 import com.kh.matdori.vo.CusAdminVO;
 import com.kh.matdori.vo.ResAdminVO;
 
+
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -142,19 +143,19 @@ public class AdminController {
     
     
 //    
- // 이용자 차단 구문 
- 	@RequestMapping("customer/block")
- 	public String cusBlock(@RequestParam String customerId) {
- 		customerDao.insertBlock(customerId);
-     		return "redirect:list";
- 	}
- 	
- 	
- 	@RequestMapping("customer/cancle")
- 	public String cusCancel(@RequestParam String customerId) {
- 		customerDao.deleteBlock(customerId);
- 		return "redirect:list";
- 	}
+// // 이용자 차단 구문 
+// 	@RequestMapping("customer/block")
+// 	public String cusBlock(@RequestParam String customerId) {
+// 		customerDao.insertBlock(customerId);
+//     		return "redirect:list";
+// 	}
+// 	
+// 	
+// 	@RequestMapping("customer/cancle")
+// 	public String cusCancel(@RequestParam String customerId) {
+// 		customerDao.deleteBlock(customerId);
+// 		return "redirect:list";
+// 	}
 
  	
  	
@@ -166,13 +167,18 @@ public class AdminController {
  	    List<CustomerAdminListDto> list = customerDao.cusAdminList(vo); // 해당 레코드를 가져옴
  	    log.debug("list ={}s", list);
  	    model.addAttribute("list", list);
+ 	    
+ 	   int count = customerDao.countList(vo);
+ 	   vo.setCount(count);
+ 	   model.addAttribute("vo", vo);
+   	
  	    return "/customer/list";
  	}   
 
     
     // 이용자 차단 상세 
     @RequestMapping("/customer/detail")
-    public String detail(@RequestParam String customerId, Model model) {
+    public String detail(@RequestParam String customerId, @ModelAttribute CusAdminVO vo, Model model) {
     	
     	CustomerBlockDto customerBlockDto = customerDao.selectBlockOne(customerId);
     	log.debug("customerBlockDto ={}s", customerBlockDto);
@@ -187,6 +193,9 @@ public class AdminController {
     	log.debug("customerDto ={}s", customerDto);
     	model.addAttribute("customerDto", customerDto);
     	
+    	int count = customerDao.countList(vo);
+    	vo.setCount(count);
+    	model.addAttribute("vo", vo);
     	
     	return "/customer/detail";
     	}

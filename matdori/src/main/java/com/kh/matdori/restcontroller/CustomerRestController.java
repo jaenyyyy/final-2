@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.kh.matdori.dao.CustomerDao;
+import com.kh.matdori.dto.CustomerAdminListDto;
 import com.kh.matdori.dto.CustomerBlockDto;
 import com.kh.matdori.dto.CustomerDto;
 import com.kh.matdori.dto.RestaurantBlockDto;
@@ -58,19 +59,18 @@ public class CustomerRestController {
 	    }
 	}
 	
-//	// 이용자 차단 구문 
-//	 	@RequestMapping("block")
-//	 	public String cusBlock(@RequestBody CustomerBlockDto CustomerBlockDto, @PathVariable String customerId) {
-//	 		customerDao.insertBlock(CustomerBlockDto.getCustomerId());
-//	     		return "redirect:/customer/detail";
-//	 	}
-//	 	
-//	 	
-//	 	@RequestMapping("cancle")
-//	 	public String cusCancel(@RequestBody CustomerDto customerDto, @PathVariable String customerId) {
-//	 		customerDao.deleteBlock(customerDto.getCustomerId());
-//	 		return "redirect:/customer/detail";
-//	 	}
+	// 이용자 차단 구문 
+	@RequestMapping("/block") // customerId를 받아오는 경로 지정
+	    public String cusBlock(@RequestBody CustomerBlockDto customerBlockDto, @PathVariable String customerId) {
+	        customerDao.insertBlock(customerId); // customerId를 사용하여 처리
+	        return "redirect:/customer/detail";
+	    }
 
-	
-}
+	@RequestMapping("/cancel") // customerId를 받아오는 경로 지정
+	    public String cusCancel(@RequestBody CustomerBlockDto customerBlockDto, @PathVariable String customerId) {
+	        customerDao.deleteBlock(customerId); // customerId를 사용하여 처리
+	        return "redirect:/customer/detail";
+	    }
+	}
+
+
