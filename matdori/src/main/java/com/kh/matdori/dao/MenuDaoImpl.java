@@ -32,11 +32,6 @@ public class MenuDaoImpl implements MenuDao {
 	}
 
 	@Override
-	public MenuByResDto selectOne(int menuNo) {
-		return sqlSession.selectOne("menu.menuByMenuNo", menuNo);
-	}
-
-	@Override
 	public boolean edit(int menuNo, MenuDto menuDto) {
 		Map<String, Object> params = new HashMap<>();
 		params.put("menuNo", menuNo);
@@ -49,4 +44,10 @@ public class MenuDaoImpl implements MenuDao {
 	public List<MenuWithImagesVO> selectList(int menuTypeNo) {
 		 return sqlSession.selectList("menu.selectMenuWithImages",menuTypeNo);
 	}
+
+	@Override
+	public List<MenuWithImagesVO> getMenuByRes(int resNo) {
+		   return sqlSession.selectList("menu.selectMenuByRes", resNo);
+    }
 }
+

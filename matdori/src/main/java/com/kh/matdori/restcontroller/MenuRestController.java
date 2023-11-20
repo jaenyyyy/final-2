@@ -104,8 +104,9 @@ public class MenuRestController {
 	}
 
 	@DeleteMapping("/delete/{menuNo}")
-	public void delete(@PathVariable int menuNo) {
-		menuDao.delete(menuNo);
+	public ResponseEntity<Void> delete(@PathVariable int menuNo) {
+	    menuDao.delete(menuNo);
+	    return ResponseEntity.noContent().build();
 	}
 
 //	@GetMapping("/list/{resNo}")
@@ -118,15 +119,15 @@ public class MenuRestController {
 //	    return ResponseEntity.ok(menuList);
 //	}
 
-	@GetMapping("/{menuNo}")
-	public ResponseEntity<MenuByResDto> find(@PathVariable int menuNo) {
-		MenuByResDto menuByResDto = menuDao.selectOne(menuNo);
-		if (menuByResDto != null) {
-			return ResponseEntity.ok().body(menuByResDto);
-		} else {
-			return ResponseEntity.notFound().build();
-		}
-	}
+//	@GetMapping("/{menuNo}")
+//	public ResponseEntity<MenuByResDto> find(@PathVariable int menuNo) {
+//		MenuByResDto menuByResDto = menuDao.selectOne(menuNo);
+//		if (menuByResDto != null) {
+//			return ResponseEntity.ok().body(menuByResDto);
+//		} else {
+//			return ResponseEntity.notFound().build();
+//		}
+//	}
 
 	@PutMapping("/{menuNo}")
 	public ResponseEntity<String> edit(@PathVariable int menuNo, @RequestBody MenuDto menuDto) {
@@ -151,7 +152,21 @@ public class MenuRestController {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 		}
 	}
-
+	
+	@GetMapping("/menu/{resNo}")
+	public ResponseEntity<List<MenuWithImagesVO>> getMenuByRes(@PathVariable int resNo) {
+	    try {
+	        List<MenuWithImagesVO> menuByResList = menuDao.getMenuByRes(resNo); // 서비스 레이어 메서드 호출
+	        if (menuByResList != null && !menuByResList.isEmpty()) {
+	            return ResponseEntity.ok(menuByResList);
+	        } else {
+	            return ResponseEntity.notFound().build();
+	        }
+	    } catch (Exception e) {
+	        log.error("Error getting menus with images by resNo", e);
+	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+	    }
+	}
 	
 	
 }
