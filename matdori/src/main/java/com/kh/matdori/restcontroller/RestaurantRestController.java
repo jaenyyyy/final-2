@@ -11,8 +11,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.kh.matdori.dao.AdminDao;
 import com.kh.matdori.dao.RestaurantDao;
 import com.kh.matdori.dto.RestaurantDto;
+import com.kh.matdori.dto.RestaurantJudgeDto;
+import com.kh.matdori.vo.RestaurantJudgeVO;
 
 @CrossOrigin
 @RestController
@@ -22,9 +25,19 @@ public class RestaurantRestController {
 	@Autowired
 	private RestaurantDao restaurantDao;
 
-	@PostMapping("/save")
-	public void insert(@RequestBody RestaurantDto restaurantDto) {
-		restaurantDao.insert(restaurantDto);
+	@Autowired
+	private AdminDao adminDao;
+	
+	@PostMapping("/")
+	public void insert(@RequestBody RestaurantJudgeVO vo) {
+		int resNo = restaurantDao.sequence();
+		vo.setResNo(resNo);
+		restaurantDao.insert(vo);
+		
+		int resJudgeNo = adminDao.sequence();
+		vo.setResJudgeNo(resJudgeNo);
+		
+	    adminDao.insertResJudge(vo);
 	}
 
 	@DeleteMapping("/{resNo}")
@@ -42,6 +55,5 @@ public class RestaurantRestController {
 	public RestaurantDto find(@PathVariable int resNo) {
 		return restaurantDao.selectOne(resNo);
 	}
-	
 
 }

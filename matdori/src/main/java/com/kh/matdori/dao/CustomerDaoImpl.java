@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Repository;
 
+import com.kh.matdori.dto.CustomerAdminListDto;
 import com.kh.matdori.dto.CustomerBlockDto;
 import com.kh.matdori.dto.CustomerDto;
 import com.kh.matdori.error.NoTargetException;
@@ -147,42 +148,46 @@ public class CustomerDaoImpl implements CustomerDao {
 
 	@Override
 	public CustomerBlockDto selectBlockOne(String customerId) {
-		CustomerBlockDto dto = sqlSession.selectOne("customerBlock.selectBlockOne", customerId);
-		return dto;
+		CustomerBlockDto customerBlockDto = sqlSession.selectOne("customerBlock.cusBlockDetail", customerId);
+		return customerBlockDto;
 	}
 
 	@Override
 	public CustomerBlockDto selectOneByCustomerName(String customerName) {
-		CustomerBlockDto dto = sqlSession.selectOne("customerBlock.selectOneByCustomerName", customerName);
-		return dto;
+		CustomerBlockDto customerBlockdto = sqlSession.selectOne("customerBlock.selectOneByCustomerName", customerName);
+		return customerBlockdto;
 	}
 	
 	
 	
 	// countList 메서드를 int를 반환하는 형태로 수정
-//	@Override
-//	public int countList(CusAdminVO vo) {
-//	    return sqlSession.selectOne("customer.cusAdminCountList", vo);
-//	}
-	
-
-	// cusAdminList 메서드에서 레코드를 가져오도록 수정
-//	@Override
-//	public List<CustomerBlockDto> cusAdminList(CusAdminVO vo) {
-//	    return sqlSession.selectList("customer.cusAdminList", vo);
-//	}
-	
-	
-
-	// 상세 
 	@Override
-	public CustomerBlockDto custAdminOne(String customerId) {
-	    CustomerBlockDto customerBlockDto = sqlSession.selectOne("customerBlock.selectBlock", customerId);
-	    if(customerBlockDto == null) {
-	        throw new NoTargetException();
-	    }
-	    return customerBlockDto;
+	public int countList(CusAdminVO vo) {
+	    return sqlSession.selectOne("customerBlock.selectBlock", vo);
+	}
+	
+
+	// 목록 
+	@Override
+	public List<CustomerAdminListDto> cusAdminList(CusAdminVO vo) {
+		List<CustomerAdminListDto> list = sqlSession.selectList("customerBlock.cusAdminList", vo);
+		return list;
 	}
 
+	// 상세
+	@Override
+	public CustomerAdminListDto cusAdminOne(String customerId) {
+		CustomerAdminListDto customerAdminListDto
+		= sqlSession.selectOne("customerBlock.cusAdminDetail", customerId);
+		return customerAdminListDto;
+	}
 
+	@Override
+	public boolean updateBlock(String customerStatus) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }
+
+
+

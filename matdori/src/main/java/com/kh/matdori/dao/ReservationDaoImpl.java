@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.kh.matdori.dto.ReservationDto;
+import com.kh.matdori.dto.ReservationListDto;
 
 @Repository
 public class ReservationDaoImpl implements ReservationDao{
@@ -20,7 +21,7 @@ public class ReservationDaoImpl implements ReservationDao{
 	}
 	
 	@Override
-	public ReservationDto selectOne(int rezNo) {
+	public ReservationListDto selectOne(int rezNo) {
 		return sqlSession.selectOne("reservation.detail", rezNo);
 	}
 	

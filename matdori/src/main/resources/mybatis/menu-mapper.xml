@@ -9,7 +9,7 @@
     <insert id="save">
     insert into menu(
     menu_no, res_no, menu_name, menu_price, menu_content) 
-    	values(menu_seq.nextval, #{resNo}, #{menuName}, #{menuPrice}, #{menuInfo})
+    	values(menu_seq.nextval, #{resNo}, #{menuName}, #{menuPrice}, #{menuContent})
     </insert>
     
     <delete id="deleteByMenuNo">
@@ -80,5 +80,10 @@
 	</set>
 	where menu_no = #{menuNo}
 </update>
+    
+   <!-- 메뉴 이미지 isnert --> 
+    <insert id="insertMenuImage" parameterType="MenuImagesDto">
+    insert into menu_images(menu_no, attach_no) values (#{menuNo}, #{attachNo})
+</insert>
     
     </mapper>

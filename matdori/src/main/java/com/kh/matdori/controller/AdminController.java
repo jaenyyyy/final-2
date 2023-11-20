@@ -20,11 +20,13 @@ import com.kh.matdori.dao.RestaurantDao;
 import com.kh.matdori.dto.BusinessDto;
 import com.kh.matdori.dto.BusinessJudgeDto;
 import com.kh.matdori.dto.BusinessJudgeListDto;
+import com.kh.matdori.dto.CustomerAdminListDto;
 import com.kh.matdori.dto.CustomerBlockDto;
 import com.kh.matdori.dto.CustomerDto;
 import com.kh.matdori.dto.RestaurantAdminListDto;
 import com.kh.matdori.dto.RestaurantBlockDto;
 import com.kh.matdori.dto.RestaurantDto;
+import com.kh.matdori.dto.RestaurantJudgeDto;
 import com.kh.matdori.vo.CusAdminVO;
 import com.kh.matdori.vo.ResAdminVO;
 
@@ -92,7 +94,7 @@ public class AdminController {
     }
 
     
-//    
+//    restController로 옮김
 //    //레스토랑 차단 기능
 //    @RequestMapping("/restaurant/block")
 //    public String resBlock(@RequestParam int resNo) {
@@ -120,6 +122,7 @@ public class AdminController {
     //레스토랑 관리자 시점(+차단 +심사 상세)
     @RequestMapping("/restaurant/detail")
     public String detail(@RequestParam int resNo, Model model) {
+    	
     	RestaurantAdminListDto restaurantAdminListDto
     		= adminDao.resAdminOne(resNo);
     	model.addAttribute("restaurantAdminListDto", restaurantAdminListDto);
@@ -139,48 +142,56 @@ public class AdminController {
     
     
 //    
-// // 이용자 차단 구문 
-// 	@RequestMapping("customer/block")
-// 	public String cusBlock(@RequestParam String customerId) {
-// 		customerDao.insertBlock(customerId);
-// 		return "redirect:/customer/list";
-// 	}
-// 	
-// 	
-// 	@RequestMapping("customer/cancle")
-// 	public String cusCancel(@RequestParam String customerId) {
-// 		customerDao.deleteBlock(customerId);
-// 		return "redirect:/customer/detail";
-// 	}
+ // 이용자 차단 구문 
+ 	@RequestMapping("customer/block")
+ 	public String cusBlock(@RequestParam String customerId) {
+ 		customerDao.insertBlock(customerId);
+     		return "redirect:list";
+ 	}
+ 	
+ 	
+ 	@RequestMapping("customer/cancle")
+ 	public String cusCancel(@RequestParam String customerId) {
+ 		customerDao.deleteBlock(customerId);
+ 		return "redirect:list";
+ 	}
 
-    
+ 	
+ 	
+
+ 	
     // 이용자 차단 관리자 목록 
-// 	@RequestMapping("/customer/list")
-// 	public String list(@ModelAttribute CusAdminVO vo, Model model) {
-// 	    vo.setSize(15);
-//
-// 	    int count = customerDao.countList(vo); // 레코드 수를 가져옴
-// 	    vo.setCount(count); // VO 객체에 레코드 수 설정
-// 	    model.addAttribute("vo", vo);
-//
-// 	    List<CustomerBlockDto> list = customerDao.cusAdminList(vo); // 해당 레코드를 가져옴
-// 	    model.addAttribute("list", list);
-//
-// 	    return "/admin/customer/list";
-// 	}
+ 	@RequestMapping("/customer/list")
+ 	public String list(@ModelAttribute("vo") CusAdminVO vo, Model model) {
+ 	    List<CustomerAdminListDto> list = customerDao.cusAdminList(vo); // 해당 레코드를 가져옴
+ 	    log.debug("list ={}s", list);
+ 	    model.addAttribute("list", list);
+ 	    return "/customer/list";
+ 	}   
 
-   
     
-    // 이용자 차단 
+    // 이용자 차단 상세 
     @RequestMapping("/customer/detail")
     public String detail(@RequestParam String customerId, Model model) {
-    	CustomerBlockDto customerBlockDto = customerDao.custAdminOne(customerId);
+    	
+    	CustomerBlockDto customerBlockDto = customerDao.selectBlockOne(customerId);
+    	log.debug("customerBlockDto ={}s", customerBlockDto);
     	model.addAttribute("customerBlockDto", customerBlockDto);
     	
+    	
+    	CustomerAdminListDto customerAdminListDto = customerDao.cusAdminOne(customerId);
+    	log.debug("customerAdminListDto ={}s", customerAdminListDto);
+    	model.addAttribute("customerAdminListDto", customerAdminListDto);
+    
     	CustomerDto customerDto = customerDao.selectOne(customerId);
+    	log.debug("customerDto ={}s", customerDto);
     	model.addAttribute("customerDto", customerDto);
     	
-    	return "/admin/customer/detail";
-    }
-    
-}
+    	
+    	return "/customer/detail";
+    	}
+	}
+
+
+
+

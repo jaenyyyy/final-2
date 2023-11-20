@@ -1,12 +1,13 @@
 package com.kh.matdori.dao;
 
 import com.kh.matdori.dto.ReservationDto;
+import com.kh.matdori.dto.ReservationListDto;
 
 public interface ReservationDao {
 
 	void insert(ReservationDto reservationDto);
 	
-	ReservationDto selectOne(int rezNo);
+	ReservationListDto selectOne(int rezNo);
 	
 	boolean isInReservation(int rezResNo, int rezClockNo, int rezSeatNo);
 }

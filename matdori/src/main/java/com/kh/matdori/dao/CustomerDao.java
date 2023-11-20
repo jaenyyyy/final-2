@@ -2,8 +2,10 @@ package com.kh.matdori.dao;
 
 import java.util.List;
 
+import com.kh.matdori.dto.CustomerAdminListDto;
 import com.kh.matdori.dto.CustomerBlockDto;
 import com.kh.matdori.dto.CustomerDto;
+import com.kh.matdori.vo.CusAdminVO;
 
 public interface CustomerDao {
 	
@@ -46,20 +48,19 @@ public interface CustomerDao {
 	
 	boolean deleteBlock(String customerId);
 	
-//	List<CustomerBlockDto> cusAdminList(CusAdminVO vo);
-	
 	CustomerBlockDto selectBlockOne(String customerId);
 	
 	CustomerBlockDto selectOneByCustomerName(String customerName);
 
-	CustomerBlockDto custAdminOne(String customerId);
+	CustomerAdminListDto cusAdminOne(String customerId);
 
-//	int countList(CusAdminVO vo);
+	int countList(CusAdminVO vo);
 
-	
+	List<CustomerAdminListDto> cusAdminList(CusAdminVO vo);
 
-	
-	
+	boolean updateBlock(String customerStatus);
+
+
 }
 	
 
