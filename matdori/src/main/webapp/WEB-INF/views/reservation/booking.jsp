@@ -11,7 +11,7 @@
 		<div class="row justify-content-center">
 			<div class="card mb-3" style="max-width:50rem;">
 				<div class="card-body">
-				<%-- 	<input type="hidden" name="rezResNo" value="${resNo}"> --%>
+<%-- 					<input type="hidden" name="rezNo" value="${rezNo}"> --%>
 <!-- 					<label class="form-label mt-4" for="readOnlyInput">아이디</label> -->
 <!-- 	    			<input class="form-control" type="text" name="rezCustomerId"> -->
 	    			
@@ -19,8 +19,9 @@
 	    			<input class="form-control" type="number" name="rezResNo">
 	    			
 					<label class="form-label mt-4" for="readOnlyInput">시간</label>
-	    			<select name="selectedClock">
-				        <c:forEach var="clockDto" items="${clockList}">
+	    			<select class="form-control" name="selectedClock">
+				        <option>선택하세요</option>
+				        <c:forEach var="clockDto" items="${clockList}">				        	
 				            <option value="${clockDto.clockNo}">
 				            <fmt:formatDate value="${clockDto.clockSelect}" pattern="yyyy-MM-dd HH"/>
 				            </option>
@@ -28,7 +29,8 @@
 				   	</select>
 	    			
 					<label class="form-label mt-4" for="readOnlyInput">좌석</label>
-	    			<select name="selectedSeat">
+	    			<select class="form-control" name="selectedSeat">
+	    				<option>선택하세요</option>
 				        <c:forEach var="seatDto" items="${seatList}">
 				            <option value="${seatDto.seatNo}">
 				            ${seatDto.seatName}

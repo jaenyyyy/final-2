@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.kh.matdori.dao.ClockDao;
+import com.kh.matdori.dao.CustomerDao;
 import com.kh.matdori.dao.ReservationDao;
 import com.kh.matdori.dao.RestaurantDao;
 import com.kh.matdori.dao.SeatDao;
@@ -22,6 +23,9 @@ import com.kh.matdori.dto.ReservationDto;
 import com.kh.matdori.dto.ReservationListDto;
 import com.kh.matdori.dto.SeatDto;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Controller
 @RequestMapping("/reservation")
 public class ReservationController {
@@ -29,6 +33,8 @@ public class ReservationController {
 	private ReservationDao reservationDao;
 	@Autowired
 	private RestaurantDao restaurantDao;
+	@Autowired
+	private CustomerDao customerDao;
 	@Autowired
 	private ClockDao clockDao;
 	@Autowired
@@ -50,6 +56,10 @@ public class ReservationController {
 //						 @RequestParam("rezResNo") int rezResNo,
 	                     @RequestParam("selectedClock") int clockNo,
 	                     @RequestParam("selectedSeat") int seatNo) {
+		int rezNo = reservationDao.sequence();
+		log.debug("rezNo={}",rezNo);
+		reservationDto.setRezNo(rezNo);
+		
 		//회원별 예약 처리
 		String rezCustomerId = (String)session.getAttribute("name");
 		reservationDto.setRezCustomerId(rezCustomerId);
@@ -66,15 +76,16 @@ public class ReservationController {
 	    }
 
 	    reservationDao.insert(reservationDto);
-	    return "redirect:detail";
+	    log.debug("dto={}",reservationDto);
+	    return "redirect:detail?rezNo="+reservationDto.getRezNo();
 	}
 	
 	@RequestMapping("/detail")
-	public String detail(HttpSession session,
+	public String detail(
+//			HttpSession session,
+//						 @ModelAttribute ReservationDto reservationDto,
 						 @RequestParam int rezNo,
 						 Model model) {
-		String rezCustomerId = (String)session.getAttribute("name");
-		
 		ReservationListDto rezDto = reservationDao.selectOne(rezNo);
 		model.addAttribute("rezDto", rezDto);
 		return "reservation/rezDetail";
