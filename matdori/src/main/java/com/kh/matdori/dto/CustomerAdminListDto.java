@@ -21,4 +21,5 @@ public class CustomerAdminListDto {
 	private Date customerBlockTime;
 	private String customerBlockComment;
 	private String customerStatus;
+	private String customerBlock;
 }

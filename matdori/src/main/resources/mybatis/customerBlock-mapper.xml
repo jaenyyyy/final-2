@@ -8,23 +8,29 @@
 
 
     <!-- insertBlock -->
-    <!--  새로운 고객의 ID를 삽입하는 쿼리  -->
+    <!--  차단 등록  -->
     <insert id="insertBlock" parameterType="String">
-        insert into customer_block(customer_id) values(#{customerId})
+        insert into customer_block(customer_id, customer_block_comment) 
+        values(#{customerId}, #{customerComment})
     </insert>
     
     
     
-    	<select id="customerStatus" resultType="String" parameterType="Long">
-    	select customer_status from customer_block where customer_id = #{customerId}
-		</select>
+    <!--  차단 상세  -->
+    <select id="customerStatus" resultType="CustomerBlockDto">
+   		select * from customer_block where customer_id = #{customerId}
+	</select>
 
 
 
-    <!-- deleteBlock -->
+    <!-- 차단 해제 -->
     <delete id="deleteBlock" parameterType="String">
-        delete from customer_block where customer_id = #{customerId}
+        delete from customer_block
+        where customer_id = #{customerId}
     </delete>
+
+
+
 
 
 	<!--  차단 정보를 시간순으로 정렬  -->
@@ -48,92 +54,58 @@
     </select>
 
 
-	<!--  페이지네이션, 조건에 따라 고객 리스트를 가져오는 쿼리  -->
-	<select id="selectListByPage" resultType="CustomerDto" parameterType="CusAdminVO">
-        <![CDATA[
-        <choose>
-            <when test="search">
-                SELECT * FROM (
-                    SELECT ROWNUM AS rn, TMP.* FROM (
-                        SELECT * FROM member
-                        WHERE INSTR(${type}, #{keyword}) > 0
-                        AND member_level != '관리자'
-                        ORDER BY ${type} ASC
-                    ) TMP
-                ) WHERE rn BETWEEN #{startRow} AND #{finishRow}
-            </when>
-            <otherwise>
-                SELECT * FROM (
-                    SELECT ROWNUM AS rn, TMP.* FROM (
-                        SELECT * FROM member
-                        WHERE member_level != '관리자'
-                        ORDER BY member_id ASC
-                    ) TMP
-                ) WHERE rn BETWEEN #{startRow} AND #{finishRow}
-            </otherwise>
-        </choose>
-        ]]>
-    </select>
-    
+	
     
    	
 
-  	<!-- 관리자가 보는 회원 차단 리스트  -->
-	<select id="cusAdminList" resultType="CusAdminVO">
-		<include refid="pagingHeader"></include>
-		
-		select * from customer_block
-		
-		<where>
-			
-			<if test="customerId != null">
-				and customer_id = #{customerId}
-			</if>
-			
-		
-			
-			<!-- 차단여부 (일치)-->
-			<if test="customerBlock != null">
-			    and customer_block = #{customerBlock}
-			</if>
-			
-		</where>
-		
-		order by customer_block_time desc
-		
-		<include refid="pagingFooter"></include>
-	</select>
-	
+  <!-- 관리자가 보는 회원 차단 리스트 -->
+<select id="cusAdminList" resultType="CustomerAdminListDto">
+    
+    
+    SELECT * FROM customer_admin_list
+    
+    <where>
+    	<!--  회원아이디  -->
+        <if test="customerId != null">
+            and INSTR(customer_id, #{customerId}) > 0
+        </if>
+        
+        <!-- 회원이름(유사)  -->
+        <if test="customerName != null">
+            AND INSTR(customer_name, #{customerName}) > 0
+        </if>
+        
+        <!-- 차단여부 (일치) -->
+        <if test="customerBlock != null">
+           and customer_block = #{customerBlock}
+        </if>
+        
+        <!-- 회원 차단 상태 -->
+        <if test="customerStatus != null">
+            and customer_status = #{customerStatus}
+        </if>
+    </where>
+   		 ORDER BY customer_id DESC
+    
   
+</select>
+
   
-  <!-- 페이징 헤더 -->
-	<sql id="pagingHeader">
-		<if test="begin != null and end != null">
-		select * from (
-			select rownum rn, TMP.* from(
-		</if>
-	</sql>
-	
-	
-	
-	<!-- 페이징 푸터 -->
-	<sql id="pagingFooter">
-		<if test="begin != null and end != null">
-			)TMP
-		) where rn between #{begin} and #{end}
-		</if>
-	</sql>
+ 	<select id="cusBlockDetail" resultType="customerBlockDto">
+ 		select * from customer_block where customer_id = #{customerId}
+ 	</select>
 	
 	
 	<!-- 상세 -->
-	<select id="cusAdminDetail" resultType="CustomerBlockDto">
-		select * from customer_block where customer_id = #{customerId}
+	<select id="cusAdminDetail" resultType="CustomerAdminListDto">
+		select * from customer_admin_list where customer_id = #{customerId}
 	</select>
 	
 	
 	<select id="selectBlock" resultType="int">
 		select count(*) from customer_block
 	</select>
+	
 	
 	
 	

@@ -52,14 +52,15 @@ public interface CustomerDao {
 	
 	CustomerBlockDto selectOneByCustomerName(String customerName);
 
-	CustomerAdminListDto custAdminOne(String customerId);
+	CustomerAdminListDto cusAdminOne(String customerId);
 
 	int countList(CusAdminVO vo);
 
-	List<CustomerAdminListDto> cusBlockList(CusAdminVO vo);
+	List<CustomerAdminListDto> cusAdminList(CusAdminVO vo);
 
-	
 	boolean updateBlock(String customerStatus);
+
+
 }
 	
 

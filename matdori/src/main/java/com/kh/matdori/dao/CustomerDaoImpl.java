@@ -148,14 +148,14 @@ public class CustomerDaoImpl implements CustomerDao {
 
 	@Override
 	public CustomerBlockDto selectBlockOne(String customerId) {
-		CustomerBlockDto dto = sqlSession.selectOne("customerBlock.selectBlockOne", customerId);
-		return dto;
+		CustomerBlockDto customerBlockDto = sqlSession.selectOne("customerBlock.cusBlockDetail", customerId);
+		return customerBlockDto;
 	}
 
 	@Override
 	public CustomerBlockDto selectOneByCustomerName(String customerName) {
-		CustomerBlockDto dto = sqlSession.selectOne("customerBlock.selectOneByCustomerName", customerName);
-		return dto;
+		CustomerBlockDto customerBlockdto = sqlSession.selectOne("customerBlock.selectOneByCustomerName", customerName);
+		return customerBlockdto;
 	}
 	
 	
@@ -167,22 +167,19 @@ public class CustomerDaoImpl implements CustomerDao {
 	}
 	
 
-	// cusAdminList 메서드에서 레코드를 가져오도록 수정
+	// 목록 
 	@Override
-	public List<CustomerAdminListDto> cusBlockList(CusAdminVO vo) {
-		List<CustomerAdminListDto> list = sqlSession.selectList("customerBlock.selectBlock", vo);
+	public List<CustomerAdminListDto> cusAdminList(CusAdminVO vo) {
+		List<CustomerAdminListDto> list = sqlSession.selectList("customerBlock.cusAdminList", vo);
 		return list;
 	}
-	
-	
 
 	// 상세
 	@Override
-	public CustomerAdminListDto custAdminOne(String customerId) {
+	public CustomerAdminListDto cusAdminOne(String customerId) {
 		CustomerAdminListDto customerAdminListDto
-		= sqlSession.selectOne("customerBlock.selectBlock", customerId);
-	if(customerAdminListDto == null) throw new NoTargetException();
-	return customerAdminListDto;
+		= sqlSession.selectOne("customerBlock.cusAdminDetail", customerId);
+		return customerAdminListDto;
 	}
 
 	@Override

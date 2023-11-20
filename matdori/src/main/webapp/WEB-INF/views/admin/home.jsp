@@ -10,7 +10,7 @@
 	</div>
     <div class="col-6">
         <div class="alert alert-dismissible alert-warning">
-            <h3><a class="nav-link" href="#">이용자 관리</a></h3>
+            <h3><a class="nav-link" href="/admin/customer/list">이용자 관리</a></h3>
         </div>
     </div>
     <div class="col-6">

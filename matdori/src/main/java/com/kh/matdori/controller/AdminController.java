@@ -146,40 +146,52 @@ public class AdminController {
  	@RequestMapping("customer/block")
  	public String cusBlock(@RequestParam String customerId) {
  		customerDao.insertBlock(customerId);
-     		return "redirect:/customer/list";
+     		return "redirect:list";
  	}
  	
  	
  	@RequestMapping("customer/cancle")
  	public String cusCancel(@RequestParam String customerId) {
  		customerDao.deleteBlock(customerId);
- 		return "redirect:/customer/detail";
+ 		return "redirect:list";
  	}
 
+ 	
+ 	
 
  	
     // 이용자 차단 관리자 목록 
  	@RequestMapping("/customer/list")
- 	public String list(@ModelAttribute CusAdminVO vo, Model model) {
- 	    List<CustomerAdminListDto> list = customerDao.cusBlockList(vo); // 해당 레코드를 가져옴
+ 	public String list(@ModelAttribute("vo") CusAdminVO vo, Model model) {
+ 	    List<CustomerAdminListDto> list = customerDao.cusAdminList(vo); // 해당 레코드를 가져옴
+ 	    log.debug("list ={}s", list);
  	    model.addAttribute("list", list);
  	    return "/customer/list";
  	}   
-}
+
     
-//    // 이용자 차단 
-//    @RequestMapping("/customer/detail")
-//    public String detail(@RequestParam String customerId, Model model) {
-//    	CustomerAdminListDto customerAdminListDto = customerDao.custAdminOne(customerId);
-//    	model.addAttribute("customerAdminListDto", customerAdminListDto);
-//    	model.addAttribute("customerBlockDto", customerBlockDto);
-//    	CustomerDto customerDto = customerDao.selectOne(customerId);
-//    	model.addAttribute("customerDto", customerDto);
-//    	
-//    	CustomerBlockDto customerBlockDto = customerDao.selectBlockOne(customerId);
-//    	model.addAttribute("customerBlockDto", customerBlockDto);
-//    	
-//    	return "/customer/detail";
-//    }
-//    
-//}
+    // 이용자 차단 상세 
+    @RequestMapping("/customer/detail")
+    public String detail(@RequestParam String customerId, Model model) {
+    	
+    	CustomerBlockDto customerBlockDto = customerDao.selectBlockOne(customerId);
+    	log.debug("customerBlockDto ={}s", customerBlockDto);
+    	model.addAttribute("customerBlockDto", customerBlockDto);
+    	
+    	
+    	CustomerAdminListDto customerAdminListDto = customerDao.cusAdminOne(customerId);
+    	log.debug("customerAdminListDto ={}s", customerAdminListDto);
+    	model.addAttribute("customerAdminListDto", customerAdminListDto);
+    
+    	CustomerDto customerDto = customerDao.selectOne(customerId);
+    	log.debug("customerDto ={}s", customerDto);
+    	model.addAttribute("customerDto", customerDto);
+    	
+    	
+    	return "/customer/detail";
+    	}
+	}
+
+
+
+
