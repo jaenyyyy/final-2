@@ -21,6 +21,4 @@ public interface ReviewDao {
 	void connect(int reviewNo, int attacchNo);
 	AttachDto findImage(int reviewNo);
 	
-	
-
 }
