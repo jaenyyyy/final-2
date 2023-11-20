@@ -9,12 +9,14 @@
 
     <!-- insertBlock -->
     <!--  차단 등록  -->
-    <insert id="insertBlock" parameterType="String">
-        insert into customer_block(customer_id, customer_block_comment) 
-        values(#{customerId}, #{customerComment})
-    </insert>
+
     
-    
+    <select id="blockInsert" parameterType="CustomerBlockDto">
+    INSERT INTO
+		customer_block(customer_id, customer_block_comment)
+		VALUES (#{customerId},
+		#{customerBlockComment})
+    </select>
     
     <!--  차단 상세  -->
     <select id="customerStatus" resultType="CustomerBlockDto">
