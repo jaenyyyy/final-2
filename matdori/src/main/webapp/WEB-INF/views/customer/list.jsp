@@ -2,8 +2,16 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
+
+<script>
+	function goToDetail(customerId) {
+	    window.location = 'detail?customerId=' + customerId;
+	}
+</script>
+
+
+
 
 <div class="row" style="margin-top: 2%;">
 	<div class="col">
@@ -38,7 +46,7 @@
 						<div class="input-group-prepend">
 							<span class="input-group-text">차단여부</span>
 						</div>
-						<select name="customerBlock" class="form-select">
+						<select name="customerStatus" class="form-select">
 							<option value="">선택</option>
 							<option value="Y">Y</option>
 							<option value="N">N</option>
@@ -81,13 +89,12 @@
                     </thead>
                     <tbody>
                         <c:forEach var="customerAdminListDto" items="${list}">
-                            <tr>
-                                <td>
-                                    <a href="/admin/customer/detail?customerId=${customerAdminListDto.customerId}">
-                                        ${customerAdminListDto.customerName}
-                                    </a>
-                                </td>
-                                <td>${customerAdminListDto.customerId}</td>
+                              <tr onClick="goToDetail(${customerAdminListDto.customerId})" style="cursor: pointer;">
+					        <td>${customerAdminListDto.customerName}</td>
+					        <th>${customerAdminListDto.customerId}</th>
+                               
+                                
+                                
                                 <td>${customerAdminListDto.customerStatus}</td>
                                 <td>${customerAdminListDto.customerContact}</td>
                             </tr>
