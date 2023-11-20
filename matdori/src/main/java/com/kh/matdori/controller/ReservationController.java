@@ -15,10 +15,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.kh.matdori.dao.ClockDao;
 import com.kh.matdori.dao.CustomerDao;
+import com.kh.matdori.dao.MenuDao;
 import com.kh.matdori.dao.ReservationDao;
 import com.kh.matdori.dao.RestaurantDao;
 import com.kh.matdori.dao.SeatDao;
 import com.kh.matdori.dto.ClockDto;
+import com.kh.matdori.dto.MenuDto;
 import com.kh.matdori.dto.ReservationDto;
 import com.kh.matdori.dto.ReservationListDto;
 import com.kh.matdori.dto.SeatDto;
@@ -39,12 +41,17 @@ public class ReservationController {
 	private ClockDao clockDao;
 	@Autowired
 	private SeatDao seatDao;
+	@Autowired
+	private MenuDao menuDao;
 	
 	@GetMapping("/insert")
-	public String insert(Model model) {
+	public String insert(Model model,
+						 @RequestParam("rezResNo") int rezResNo
+						) {
 		// clockList, seatList를 데이터베이스에서 조회
-	    List<ClockDto> clockList = clockDao.clockList();
-	    List<SeatDto> seatList = seatDao.seatList();
+	    List<ClockDto> clockList = clockDao.clockList(rezResNo);
+	    List<SeatDto> seatList = seatDao.seatList(rezResNo);
+//	    List<MenuDto> menuList = menuDao.menuList(rezResNo);
 	    // 모델에 clockList, seatList를 추가
 	    model.addAttribute("clockList", clockList);
 	    model.addAttribute("seatList", seatList);
@@ -76,7 +83,7 @@ public class ReservationController {
 	    }
 
 	    reservationDao.insert(reservationDto);
-	    log.debug("dto={}",reservationDto);
+//	    log.debug("dto={}",reservationDto);
 	    return "redirect:detail?rezNo="+reservationDto.getRezNo();
 	}
 	
