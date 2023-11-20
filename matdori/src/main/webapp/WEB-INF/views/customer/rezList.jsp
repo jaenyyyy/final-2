@@ -111,40 +111,36 @@
 		
 		
 		<!-- 후기 작성 모달-->
-		<div class="modal fade" id="reviewModal" tabindex="-1"
-			data-bs-backdrop="static">
-			<div class="modal-dialog">
-				<div class="modal-content">
-					<div class="modal-header">
-						<h1 class="modal-title fs-5" id="exampleModalLabel">
-							[ ${ReservationListDto.resName} ] 리뷰 작성
-						</h1>
-						<button type="button" class="btn-close" data-bs-dismiss="modal"
-							aria-label="Close"></button>
-					</div>
-					<div class="modal-body" style="text-align: center;">
-					    <div class="rating" style="font-size: 30px; display: inline-block;">
-					        <i class="rating__star far fa-star" style="display: inline-block;"></i>
-					        <i class="rating__star far fa-star" style="display: inline-block;"></i>
-					        <i class="rating__star far fa-star" style="display: inline-block;"></i>
-					        <i class="rating__star far fa-star" style="display: inline-block;"></i>
-					        <i class="rating__star far fa-star" style="display: inline-block;"></i>
-					    </div>
-					    <div class="mt-4">
-					        <input type="text" class="form-control" id="resBlockComment" style="height: 200px;">
-					    </div>
-					</div>
-
-
-					<div class="modal-footer">
-						<button type="button" class="btn btn-secondary"
-							data-bs-dismiss="modal">취소</button>
-						<button type="button" class="btn btn-warning"
-							onclick="sendReview()">작성</button>
-						<!-- 차단 버튼 클릭 시 함수 호출 -->
-					</div>
-				</div>
-			</div>
+		<div class="modal fade" id="reviewModal" tabindex="-1" data-bs-backdrop="static">
+		    <div class="modal-dialog">
+		        <div class="modal-content">
+		            <div class="modal-header">
+		                <h1 class="modal-title fs-5" id="exampleModalLabel">
+		                    [ ${ReservationListDto.resName} ] 리뷰 작성
+		                </h1>
+		                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+		            </div>
+		            <div class="modal-body" style="text-align: center;">
+                		<div class="rating" style="font-size: 30px; display: inline-block;">
+						    <i class="rating__star far fa-star" data-value="1" style="display: inline-block;"></i>
+						    <i class="rating__star far fa-star" data-value="2" style="display: inline-block;"></i>
+						    <i class="rating__star far fa-star" data-value="3" style="display: inline-block;"></i>
+						    <i class="rating__star far fa-star" data-value="4" style="display: inline-block;"></i>
+						    <i class="rating__star far fa-star" data-value="5" style="display: inline-block;"></i>
+						</div>
+		                <div class="mt-4">
+		                    <textarea class="form-control" id="reviewContent" rows="5"></textarea>
+		                </div>
+		                <div class="mt-4">
+		                	첨부파일 등록 <input type="file" id="attachFile" accept="image/*">
+		                </div>
+		            </div>
+		            <div class="modal-footer">
+		                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+		                <button type="button" class="btn btn-warning" onclick="sendReview()">작성</button>
+		            </div>
+		        </div>
+		    </div>
 		</div>
 		
 		
@@ -163,30 +159,42 @@
 		$("#reviewModal").modal('show');
 	});
 	
-	//리뷰 작성 보내기
-	function sendBlockRequest() {
-		var resNo = document.getElementById("resNo").value; // resNo 값을 가져옴
-		var resBlockComment = $('#resBlockComment').val(); // 모달 내의 입력값
 	
-		var data = {
-			resNo : resNo,
-			resBlockComment : resBlockComment
-		};
+	//작성하던 창 닫을 때 초기화
+	$(document).ready(function() {
+	    $('#reviewModal').on('hidden.bs.modal', function () {
+	        var reviewData = $('#reviewContent').val();
+
+	        $('#reviewContent').val('');
+	        $('#reviewStarPoint').val('');
+
+	    });
+	});
 	
-		$.ajax({
-			url : '/rest/admin/restaurant/block', // 요청을 보낼 URL
-			method : 'POST',
-			contentType : 'application/json; charset=utf-8',
-			data : JSON.stringify(data), // 데이터 전송
-			success : function(response) {
-				console.log('차단 요청이 성공했습니다.');
-				$('#blockModal').modal('hide'); // 성공 시 모달 닫기
-				location.reload();
-			},
-			error : function(xhr, status, error) {
-				console.error('차단 요청에 실패했습니다.');
-			}
-		});
+	// 리뷰 작성 보내기
+	function sendReview() {
+	    var resNo = document.getElementById("resNo").value; // resNo 값을 가져옴
+	    var resBlockComment = $('#resBlockComment').val(); // 모달 내의 입력값
+
+	    var data = {
+	        resNo: resNo,
+	        resBlockComment: resBlockComment
+	    };
+
+	    $.ajax({
+	        url: '/rest/review/write', // 요청을 보낼 URL
+	        method: 'POST',
+	        contentType: 'application/json; charset=utf-8',
+	        data: JSON.stringify(data), // 데이터 전송
+	        success: function (response) {
+	            console.log('차단 요청이 성공했습니다.');
+	            $('#reveiwModal').modal('hide'); // 성공 시 모달 닫기
+	            location.reload();
+	        },
+	        error: function (xhr, status, error) {
+	            console.error('차단 요청에 실패했습니다.');
+	        }
+	    });
 	}
 	
 	
