@@ -187,6 +187,13 @@ public class CustomerDaoImpl implements CustomerDao {
 		// TODO Auto-generated method stub
 		return false;
 	}
+
+
+	@Override
+	public void insertCusBlock(CustomerBlockDto customerBlockDto) {
+		sqlSession.insert("customerBlock.blockInsert", customerBlockDto);
+		
+	}
 }
 
 

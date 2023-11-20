@@ -46,6 +46,8 @@ public interface CustomerDao {
 	// 회원 차단 기능 
 	void insertBlock(String customerId);
 	
+	void insertCusBlock(CustomerBlockDto customerBlockDto);
+	
 	boolean deleteBlock(String customerId);
 	
 	CustomerBlockDto selectBlockOne(String customerId);

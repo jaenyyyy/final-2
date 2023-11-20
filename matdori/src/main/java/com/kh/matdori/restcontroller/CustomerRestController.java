@@ -61,14 +61,14 @@ public class CustomerRestController {
 	
 	// 이용자 차단 구문 
 	@RequestMapping("/block") // customerId를 받아오는 경로 지정
-	    public String cusBlock(@RequestBody CustomerBlockDto customerBlockDto, @PathVariable String customerId) {
-	        customerDao.insertBlock(customerId); // customerId를 사용하여 처리
+	    public String cusBlock(@RequestBody CustomerBlockDto customerBlockDto) {
+	        customerDao.insertCusBlock(customerBlockDto); // customerId를 사용하여 처리
 	        return "redirect:/customer/detail";
 	    }
 
 	@RequestMapping("/cancel") // customerId를 받아오는 경로 지정
-	    public String cusCancel(@RequestBody CustomerBlockDto customerBlockDto, @PathVariable String customerId) {
-	        customerDao.deleteBlock(customerId); // customerId를 사용하여 처리
+	    public String cusCancel(@RequestBody CustomerBlockDto customerBlockDto) {
+	        customerDao.deleteBlock(customerBlockDto.getCustomerId()); // customerId를 사용하여 처리
 	        return "redirect:/customer/detail";
 	    }
 	}
