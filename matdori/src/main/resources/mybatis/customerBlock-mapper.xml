@@ -24,7 +24,7 @@
 
 
     <!-- 차단 해제 -->
-    <delete id="deleteBlock" parameterType="String">
+    <delete id="deleteBlock" parameterType="CustomerBlockDto">
         delete from customer_block
         where customer_id = #{customerId}
     </delete>
