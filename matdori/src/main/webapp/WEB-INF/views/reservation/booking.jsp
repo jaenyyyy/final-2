@@ -8,7 +8,7 @@
 <div class="row" style="margin-top:2%;">
 	<div class="col">
 		<form action="insert" method="post" >
-		<div class="row justigy-content-center">
+		<div class="row justify-content-center">
 			<div class="card mb-3" style="max-width:50rem;">
 				<div class="card-body">
 				<%-- 	<input type="hidden" name="rezResNo" value="${resNo}"> --%>
@@ -50,13 +50,15 @@
 	    			
 					<label class="form-label mt-4" for="readOnlyInput">요청사항</label>
 	    			<input class="form-control" type="text" name="rezRequest">
+	    			
+					<button class="btn btn-warning w-100 mt-4" type="submit">예약하기</button>
 				</div>
-				<button type="submit">예약하기</button>
 			</div>
 		</div>
 			
 		</form>
 	
+	</div>
 	</div>
     
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
