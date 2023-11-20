@@ -15,6 +15,12 @@ import com.kh.matdori.dto.ReservationListDto;
 public class ReservationDaoImpl implements ReservationDao{
 	@Autowired
 	private SqlSession sqlSession;
+	
+	@Override
+	public int sequence() {
+		return sqlSession.selectOne("reservation.sequence");
+	}
+	
 	//예약등록
 	@Override
 	public void insert(ReservationDto reservationDto) {

@@ -6,6 +6,7 @@ import com.kh.matdori.dto.ReservationDto;
 import com.kh.matdori.dto.ReservationListDto;
 
 public interface ReservationDao {
+	int sequence();
 
 	void insert(ReservationDto reservationDto);
 	
