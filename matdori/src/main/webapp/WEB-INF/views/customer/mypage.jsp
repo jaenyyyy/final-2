@@ -7,7 +7,7 @@
 
 <div class="container w-700">
 	<div class="row">
-		<h1>${customerDto.customerId} 님의 정보</h1>
+		<h1>${customerDto.customerId} 님 반갑습니다.</h1>
 	</div>
 	
 	<div class="row">
@@ -34,15 +34,19 @@
 				<td>${customerDto.customerLevel}</td>
 			</tr>
 			
+	
+		</table>
+		
 			<a href="logout"> 로그아웃 </a>
 			<a href="changePw"> 비밀번호 변경 </a>
 			<a href="change"> 개인정보 변경 </a>
 			<a href="exit">회원 탈퇴</a>
 			
-	
-		</table>
+			
+			<a href="rezList">예약내역</a>
+			<a href="reviewListByCus">나의리뷰</a>
+			
 	</div>
-	
 	
 </div>
 

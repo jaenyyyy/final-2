@@ -17,6 +17,7 @@ import com.kh.matdori.dao.BusinessDao;
 import com.kh.matdori.dao.BusinessJudgeDao;
 import com.kh.matdori.dao.CustomerDao;
 import com.kh.matdori.dao.RestaurantDao;
+import com.kh.matdori.dto.BusinessBlockDto;
 import com.kh.matdori.dto.BusinessDto;
 import com.kh.matdori.dto.BusinessJudgeDto;
 import com.kh.matdori.dto.BusinessJudgeListDto;
@@ -93,6 +94,7 @@ public class AdminController {
         System.out.println("BusJudgeComment: " + judgeDto.getBusJudgeStatus());
         return "redirect:/admin/business/judge/list";
     }
+    
 
     
 //    restController로 옮김
@@ -138,8 +140,43 @@ public class AdminController {
     }
     
     
+  //사업자 관리 리스트
+    @GetMapping("/business/blockManager/list")
+    public String businessBlockManagerList(Model model) {
+        List<BusinessBlockDto> blockedBusinesses = adminDao.getAllBlockedBusinesses();
+        model.addAttribute("businessBlockList", blockedBusinesses);
+        return "/admin/business/BusBlockList";
+    }
     
+    //사업자 관리 상세
+    @GetMapping("/business/blockManager/details/{userId}")
+    public String businessBlockManagerDetails(@PathVariable String userId, Model model) {
+        BusinessDto businessDto = businessDao.getBusinessDetails(userId);
+        model.addAttribute("business", businessDto);
+        return "/admin/business/BusBlockDetail";
+    }
     
+    //사업자 차단, 해제 
+    @PostMapping("/business/blockManager/details/{userId}")
+    public String busBlock(@RequestParam String busId,
+                                @RequestParam String blockComment,
+                                @RequestParam String blockStatus) {
+        BusinessBlockDto blockDto = new BusinessBlockDto();
+        blockDto.setBusId(busId);
+        blockDto.setBusBlockComment(blockComment);
+        blockDto.setBusBlockStatus(blockStatus);
+
+        // adminDao를 직접 호출하여 업데이트
+        adminDao.updateBusBlock(blockDto);
+        System.out.println("상태: " + blockDto.getBusBlockStatus());
+        return "redirect:/admin/business/blockManager/list";
+    }
+    
+  
+
+
+
+
     
     
 //    

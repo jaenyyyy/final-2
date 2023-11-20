@@ -12,7 +12,7 @@ public interface SeatDao {
 
 	void delete(int seatNo);
 
-	List<SeatDto> seatList();
+	List<SeatDto> seatList(int seatResNo);
 	
 	SeatDto selectOne(int seatNo);
 	

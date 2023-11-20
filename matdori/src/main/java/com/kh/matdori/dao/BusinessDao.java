@@ -21,4 +21,8 @@ public interface BusinessDao {
 	
 	BusinessDto selectOneRegNo(String busRegNo);//사업자 중복조회용
 
+	//boolean busDeleteWithPassword(String busId, String busPw);
+
+	BusinessDto findByBusId(String busId);
+
 }

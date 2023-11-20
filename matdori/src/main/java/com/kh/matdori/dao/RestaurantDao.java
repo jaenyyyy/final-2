@@ -12,6 +12,9 @@ public interface RestaurantDao {
 	void edit(int resNo, RestaurantDto restaurantDto);
 
 	RestaurantDto selectOne(int resNo);
-	
 
+	int sequence();
+	
+	
+	
 }

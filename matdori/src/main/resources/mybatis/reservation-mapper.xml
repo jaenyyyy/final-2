@@ -5,28 +5,38 @@
     "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
     
 <mapper namespace="reservation">
+
+	<select id="sequence" resultType="int">
+        select reservation_seq.nextval from dual
+    </select>
+    
 	<!-- 예약 등록 -->
 	<insert id="booking">
 		insert into reservation
 		(rez_no, rez_customer_id, rez_res_no, 
 		 rez_clock_no, rez_seat_no, rez_menu_no,
-		 rez_customer_count, rez_menu_qty, rez_seat_qty) 
+		 rez_customer_count, rez_menu_qty, rez_seat_qty, rez_request) 
 		values
-        (reservation_seq.nextval, #{rezCustomerId}, #{rezResNo}, #{rezClockNo},
+         (#{rezNo}, #{rezCustomerId}, #{rezResNo}, #{rezClockNo},
          #{rezSeatNo}, #{rezMenuNo}, #{rezCustomerCount}, #{rezMenuQty},
-         #{rezSeatQty})
+         #{rezSeatQty}, #{rezRequest})
     	
 	</insert>
 	
 	<!-- 회원별 예약 조회 -->
-	<select id="rezList" resultType="reservationDto">
-		select * from reservation where rez_customer_id = #{rezCustomerId}
+	<select id="rezList" resultType="ReservationListDto">
+		select * from reservation_list where rez_customer_id = #{rezCustomerId}
 	</select>
 	
-	<!-- 단순 예약 상세조회 -->
-	<select id="detail" resultType="reservationListDto">
+	<select id="detail" resultType="ReservationListDto">
 		select * from reservation_list where rez_no = #{rezNo}
 	</select>
+	
+	<!-- 회원별 예약 조회 -->
+<!-- 	<select id="rezList" resultType="ReservationDto"> -->
+<!-- 		select * from reservation where rez_customer_id = 3317#{rezCustomerId} -->
+<!-- 	</select> -->
+	
 	
 	<!-- 회원별 예약 상세조회 -->
 <!-- 	<select id="rezDetailList" resultType="reservationVO"> -->
@@ -36,7 +46,7 @@
 <!-- 	</select> -->
 	
 	<!-- 예약 중복 방지 조회 -->
-	<select id="isInReservation" resultType="reservationDto">
+	<select id="isInReservation" resultType="ReservationDto">
 		select count(*) from reservation 
 		where rez_customer_id = #{rezResNo}
 		and rez_clock_no = #{rezClockNo}

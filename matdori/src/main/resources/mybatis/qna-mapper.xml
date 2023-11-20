@@ -12,14 +12,14 @@
 	
 	
 	<!-- 등록 -->
-	<select id="write" resultType="QnaDto">
+	<insert id="write">
 		insert into qna(
 			qna_no, qna_writer, qna_category, qna_title, qna_answer
 		)
 		values (
 			#{qnaNo}, #{qnaWriter}, #{qnaCategory}, #{qnaTitle}, #{qnaAnswer}
 		)
-	</select>
+	</insert>
 
 
 	<!-- 조회 -->
