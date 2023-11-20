@@ -23,7 +23,6 @@ public class AdminRestController {
 	//레스토랑 차단 기능
     @RequestMapping("/restaurant/block")
     public String resBlock(@RequestBody RestaurantBlockDto restaurantBlockDto) {
-    	log.debug("restaurantBlockDto={}", restaurantBlockDto);
     	adminDao.insertResBlock(restaurantBlockDto);
     	return "redirect:/admin/restaurant/detail";
     }

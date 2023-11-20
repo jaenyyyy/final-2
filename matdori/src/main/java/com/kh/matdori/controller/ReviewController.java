@@ -45,49 +45,49 @@ public class ReviewController {
 	private CustomerDao customerDao;
 	
 	
-	//후기 작성  (이거 모달구현 비동기 - 모달 레스트 컨트롤러로 옮겨야 할듯)
-	@GetMapping("/write")
-	public String insert(@RequestParam int resNo) {
-		return "review/write";
-	}
-	
-	
-	@PostMapping("/write")
-	public String insert(@ModelAttribute ReviewDto reviewDto,
-						@ModelAttribute RestaurantDto restaurantDto, HttpSession session,
-						@RequestParam MultipartFile attach) throws  IllegalStateException, IOException {
-		String customerId = (String) session.getAttribute("name");
-		
-		int reviewNo = reviewDao.sequence();
-		int resNo = restaurantDto.getResNo();
-		
-		reviewDto.setReviewNo(reviewNo);
-		reviewDto.setResNo(resNo);
-		reviewDto.setReviewWriter(customerId);
-		
-		reviewDao.insert(reviewDto);
-		
-		//사진 등록
-		if(!attach.isEmpty()) {
-			int attachNo = attachDao.sequence();
-			
-			String home = System.getProperty("user.home");
-			File dir = new File(home, "upload");
-			dir.mkdirs();
-			File target = new File(dir, String.valueOf(attachNo));
-			attach.transferTo(target);
-			
-			AttachDto attachDto = new AttachDto();
-			attachDto.setAttachNo(attachNo);
-			attachDto.setAttachName(attach.getOriginalFilename());
-			attachDto.setAttachSize(attach.getSize());
-			attachDto.setAttachType(attach.getContentType());
-			attachDao.insert(attachDto);
-			
-			reviewDao.connect(reviewNo, attachNo);
-		}
-		return "redirect:/customer/mypage";
-	}
+//	//후기 작성  rest로 옮김
+//	@GetMapping("/write")
+//	public String insert(@RequestParam int resNo) {
+//		return "review/write";
+//	}
+//	
+//	
+//	@PostMapping("/write")
+//	public String insert(@ModelAttribute ReviewDto reviewDto,
+//						@ModelAttribute RestaurantDto restaurantDto, HttpSession session,
+//						@RequestParam MultipartFile attach) throws  IllegalStateException, IOException {
+//		String customerId = (String) session.getAttribute("name");
+//		
+//		int reviewNo = reviewDao.sequence();
+//		int resNo = restaurantDto.getResNo();
+//		
+//		reviewDto.setReviewNo(reviewNo);
+//		reviewDto.setResNo(resNo);
+//		reviewDto.setReviewWriter(customerId);
+//		
+//		reviewDao.insert(reviewDto);
+//		
+//		//사진 등록
+//		if(!attach.isEmpty()) {
+//			int attachNo = attachDao.sequence();
+//			
+//			String home = System.getProperty("user.home");
+//			File dir = new File(home, "upload");
+//			dir.mkdirs();
+//			File target = new File(dir, String.valueOf(attachNo));
+//			attach.transferTo(target);
+//			
+//			AttachDto attachDto = new AttachDto();
+//			attachDto.setAttachNo(attachNo);
+//			attachDto.setAttachName(attach.getOriginalFilename());
+//			attachDto.setAttachSize(attach.getSize());
+//			attachDto.setAttachType(attach.getContentType());
+//			attachDao.insert(attachDto);
+//			
+//			reviewDao.connect(reviewNo, attachNo);
+//		}
+//		return "redirect:/customer/mypage";
+//	}
 	
 	
 	//파일 다운로드

@@ -286,7 +286,7 @@
 			contentType : 'application/json; charset=utf-8',
 			data : JSON.stringify(data), // 데이터 전송
 			success : function(response) {
-				console.log('차단 요청이 성공했습니다.');
+				console.log(response);
 				$('#blockModal').modal('hide'); // 성공 시 모달 닫기
 				location.reload();
 			},

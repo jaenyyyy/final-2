@@ -25,7 +25,7 @@
                 <div class="d-flex align-items-center">
                     <h4 style="font-weight: bold;" class="me-2">
                         <c:choose>
-                            <c:when test="${customerBlockDto.customerBlock == 'N'}">
+                            <c:when test="${customerAdminListDto.customerStatus == 'N'}">
                                 [ ${customerAdminListDto.customerName} ]
                             </c:when>
                             <c:otherwise>
@@ -37,7 +37,7 @@
                     </h4>
                 </div>
                 <c:choose>
-                    <c:when test="${customerBlockDto.customerBlock == 'N'}">
+                    <c:when test="${customerAdminListDto.customerStatus == 'N'}">
                         <button type="button" class="open-modal-block btn btn-secondary">
                             <i class="fa-solid fa-lock me-2" style="color: #ffffff;"></i>차단하기
                         </button>
@@ -64,7 +64,7 @@
 </div>
 
 <!-- 차단 된 회원일 시 차단 사유 보이는 칸 -->
-<c:if test="${customerAdminListDto.customerBlock == 'Y'}">
+<c:if test="${customerAdminListDto.customerStatus == 'Y'}">
     <div class="row justify-content-center">
         <div class="card border-warning mb-3 " style="max-width: 50rem;">
             <div class="card-header mt-3 d-flex justify-content-between align-items-center">
@@ -131,11 +131,11 @@
 
 	// 차단 요청 보내기
 	function sendBlockRequest() {
-		var resNo = document.getElementById("customerId").value; // resNo 값을 가져옴
-		var resBlockComment = $('#customerBlockComment').val(); // 모달 내의 입력값
+		var customerId = document.getElementById("customerId").value; // resNo 값을 가져옴
+		var customerBlockComment = $('#customerBlockComment').val(); // 모달 내의 입력값
 
 		var data = {
-				customerId : customerId,
+			customerId : customerId,
 			customerBlockComment : customerBlockComment
 		};
 
