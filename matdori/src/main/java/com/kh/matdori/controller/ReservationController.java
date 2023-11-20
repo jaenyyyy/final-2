@@ -45,12 +45,14 @@ public class ReservationController {
 	private MenuDao menuDao;
 	
 	@GetMapping("/insert")
-	public String insert(Model model,
-						 @RequestParam("rezResNo") int rezResNo
+	public String insert(Model model
+//						 ,@RequestParam("rezResNo") int rezResNo
 						) {
 		// clockList, seatList를 데이터베이스에서 조회
-	    List<ClockDto> clockList = clockDao.clockList(rezResNo);
-	    List<SeatDto> seatList = seatDao.seatList(rezResNo);
+		List<ClockDto> clockList = clockDao.clockList();
+		List<SeatDto> seatList = seatDao.seatList();
+//		List<ClockDto> clockList = clockDao.clockList(rezResNo);
+//		List<SeatDto> seatList = seatDao.seatList(rezResNo);
 //	    List<MenuDto> menuList = menuDao.menuList(rezResNo);
 	    // 모델에 clockList, seatList를 추가
 	    model.addAttribute("clockList", clockList);
