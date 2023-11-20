@@ -2,6 +2,7 @@ package com.kh.matdori.dao;
 
 import java.util.List;
 
+import com.kh.matdori.dto.BusinessBlockDto;
 import com.kh.matdori.dto.RestaurantAdminListDto;
 import com.kh.matdori.dto.RestaurantBlockDto;
 import com.kh.matdori.dto.RestaurantJudgeDto;
@@ -28,4 +29,9 @@ public interface AdminDao {
 	
 	//레스토랑 관리자 - 상세
 	RestaurantAdminListDto resAdminOne(int resNo);
+	
+	//사업자 관리 - 목록
+	List<BusinessBlockDto> getAllBlockedBusinesses();
+	//사업자 차단 상태 업데이트
+	void updateBusBlock(BusinessBlockDto blockDto);
 }

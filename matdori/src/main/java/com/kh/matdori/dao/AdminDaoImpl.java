@@ -8,6 +8,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.kh.matdori.dto.BusinessBlockDto;
 import com.kh.matdori.dto.RestaurantAdminListDto;
 import com.kh.matdori.dto.RestaurantBlockDto;
 import com.kh.matdori.dto.RestaurantJudgeDto;
@@ -103,4 +104,22 @@ public class AdminDaoImpl implements AdminDao{
 		public void insertResJudge(RestaurantJudgeVO vo) {
 			sqlSession.insert("admin.resJudgeInsert", vo);
 		}
+
+		//사업자 관리 리스트
+	    @Override
+	    public List<BusinessBlockDto> getAllBlockedBusinesses() {
+	        return sqlSession.selectList("admin.getAllBlockedBusinesses");
+	    }
+
+	    //사업자 차단 상태 업데이트
+	    @Override
+	    public void updateBusBlock(BusinessBlockDto blockDto) {
+	        Map<String, Object> params = new HashMap<>();
+	        params.put("busBlockComment", blockDto.getBusBlockComment());
+	        params.put("busBlockStatus", blockDto.getBusBlockStatus());
+	        params.put("busId", blockDto.getBusId());
+	        sqlSession.update("admin.updateBusBlock", params);
+	    }
+
+		
 }

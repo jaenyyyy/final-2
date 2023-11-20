@@ -33,83 +33,94 @@
 	<!-- 심사완료하면 업데이트 되는 코드 -->
 	<update id="updateJudge" parameterType="map">
 		UPDATE business_judge
-		SET bus_judge_status = #{busJudgeStatus},
+		SET
+		bus_judge_status = #{busJudgeStatus},
 		bus_judge_date = SYSDATE,
 		bus_judge_comment = #{busJudgeComment}
 		WHERE bus_id = #{busId}
 	</update>
-	
-	
-	
-	
-	
-	
+
+
+
+
+
+
 	<!-- restaurant_block 레스토랑 차단 기능 -->
-	
+
 	<!-- 차단 등록 -->
 	<select id="blockInsert" parameterType="RestaurantBlockDto">
-	    INSERT INTO restaurant_block(res_no, res_block_comment)
-	    VALUES (#{resNo}, #{resBlockComment})
+		INSERT INTO
+		restaurant_block(res_no, res_block_comment)
+		VALUES (#{resNo},
+		#{resBlockComment})
 	</select>
-	
-	
+
+
 	<!-- 차단 해제 -->
 	<delete id="blockDelete" parameterType="RestaurantBlockDto">
-	    DELETE FROM restaurant_block
-	    WHERE res_no = #{resNo}
+		DELETE FROM
+		restaurant_block
+		WHERE res_no = #{resNo}
 	</delete>
-	
-	
+
+
 	<!-- 차단 상세 -->
 	<select id="resBlockDetail" resultType="RestaurantBlockDto">
-		select * from restaurant_block where res_no = #{resNo}
+		select * from
+		restaurant_block where res_no = #{resNo}
 	</select>
-	
-	
+
+
 
 	<!-- restaurant_judge 레스토랑 심사 기능 -->
-	
+
 	<!-- 시퀀스 등록 -->
 	<select id="sequence" resultType="int">
-		select restaurant_judge_seq.nextval from dual
+		select
+		restaurant_judge_seq.nextval from dual
 	</select>
-    
-    
-    <!-- 심사 등록 -->
-    <select id="resJudgeInsert" resultType="RestaurantJudgeDto">
-    	insert into restaurant_judge(res_judge_no, res_no)
-    	values(#{resJudgeNo}, #{resNo})
-    </select>
-    
-    
-    <!-- 심사 수정 : 상태변경 및 comment 수정-->
-    <update id="resJudgeUpdate">
-    	update restaurant_judge 
-    	set 
-	    	res_judge_status = #{resJudgeStatus},
-	    	res_judge_comment = #{resJudgeComment}
-    	where res_judge_no = #{resJudgeNo}
-    </update>
-    
-    
-    <!-- 심사 삭제 -->
-    <delete id="resJudgeDelete">
-    	delete restaurant_judge where res_judge_no = #{resJudgeNo}
-    </delete>
-    
-    
-    <!-- 심사 상세 : 레스토랑 기준 o / 심사 번호 기준 x -->
-    <select id="resJudgeDetail" resultType="RestaurantJudgeDto">
-    	select * from restaurant_judge where res_no = #{resNo}
-    </select>
-    
-    
+
+
+	<!-- 심사 등록 -->
+	<select id="resJudgeInsert" resultType="RestaurantJudgeDto">
+		insert into
+		restaurant_judge(res_judge_no, res_no)
+		values(#{resJudgeNo}, #{resNo})
+	</select>
+
+
+	<!-- 심사 수정 : 상태변경 및 comment 수정 -->
+	<update id="resJudgeUpdate">
+		update restaurant_judge
+		set
+		res_judge_status =
+		#{resJudgeStatus},
+		res_judge_comment = #{resJudgeComment}
+		where
+		res_judge_no = #{resJudgeNo}
+	</update>
+
+
+	<!-- 심사 삭제 -->
+	<delete id="resJudgeDelete">
+		delete restaurant_judge where res_judge_no =
+		#{resJudgeNo}
+	</delete>
+
+
+	<!-- 심사 상세 : 레스토랑 기준 o / 심사 번호 기준 x -->
+	<select id="resJudgeDetail" resultType="RestaurantJudgeDto">
+		select * from
+		restaurant_judge where res_no = #{resNo}
+	</select>
+
+
 	<!-- 관리자가 보는 레스토랑 리스트 : 심사, 차단 추가해서 -->
 	<select id="resAdminList" resultType="RestaurantAdminListDto">
 		<include refid="pagingHeader"></include>
-		
+
 		select * from restaurant_admin_list
-		
+
 		<where>
 			<!-- 사업자 번호 (일치) -->
 			<if test="resRegNo != null">
@@ -119,44 +130,71 @@
 			<if test="resName != null">
 				and instr(res_name, #{resName}) > 0
 			</if>
-			<!-- 차단여부 (일치)-->
+			<!-- 차단여부 (일치) -->
 			<if test="resBlock != null">
-			    and res_block = #{resBlock}
+				and res_block = #{resBlock}
 			</if>
-			<!-- 매장 심사 (일치)-->
+			<!-- 매장 심사 (일치) -->
 			<if test="resJudgeStatus !=null">
 				and res_judge_status = #{resJudgeStatus}
 			</if>
 		</where>
-		
+
 		order by res_reg_date desc
-		
+
 		<include refid="pagingFooter"></include>
 	</select>
-	
-	
+
+
 	<!-- Top N Query를 위한 코드 조각 생성(상/하) -->
-	
+
 	<!-- 페이징 헤더 -->
 	<sql id="pagingHeader">
 		<if test="begin != null and end != null">
-		select * from (
+			select * from (
 			select rownum rn, TMP.* from(
 		</if>
 	</sql>
-	
-	
+
+
 	<!-- 페이징 푸터 -->
 	<sql id="pagingFooter">
 		<if test="begin != null and end != null">
 			)TMP
-		) where rn between #{begin} and #{end}
+			) where rn between #{begin} and #{end}
 		</if>
 	</sql>
-	
-	
+
+
 	<!-- 관리자가 보는 레스토랑 상세 -->
 	<select id="resAdminDetail" resultType="RestaurantAdminListDto">
-		select * from restaurant_admin_list where res_no = #{resNo}
+		select * from
+		restaurant_admin_list where res_no = #{resNo}
 	</select>
+
+
+
+
+	<!-- 사업자 관리 차단 -->
+
+	<!-- 두 테이블을 조인하고 필요한 필드를 검색하는 SQL 문을 정의 -->
+	<select id="getAllBlockedBusinesses"
+		resultType="BusinessBlockListDto">
+		SELECT b.bus_id, b.bus_name, b.bus_email,
+		bb.bus_block_status
+		FROM business b
+		LEFT JOIN business_block bb ON
+		b.bus_id = bb.bus_id
+	</select>
+
+	<!-- 사업자 차단상태 업데이트 -->
+	<update id="updateBusBlock">
+		UPDATE business_block
+		SET bus_block_time = SYSDATE,
+		bus_block_comment = #{busBlockComment},
+		bus_block_status = #{busBlockStatus}
+		WHERE bus_id = #{busId}
+	</update>
+
+
 </mapper>
