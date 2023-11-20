@@ -33,8 +33,6 @@
 	</select>
 	
 	<!-- 회원별 예약 조회 -->
-<!-- 	<select id="rezList" resultType="ReservationDto"> -->
-<!-- 		select * from reservation where rez_customer_id = 3317#{rezCustomerId} -->
 <!-- 	</select> -->
 	
 	
