@@ -17,21 +17,22 @@
 		 rez_clock_no, rez_seat_no, rez_menu_no,
 		 rez_customer_count, rez_menu_qty, rez_seat_qty, rez_request) 
 		values
-         #{rezNo}, #{rezCustomerId}, #{rezResNo}, #{rezClockNo},
+         (#{rezNo}, #{rezCustomerId}, #{rezResNo}, #{rezClockNo},
          #{rezSeatNo}, #{rezMenuNo}, #{rezCustomerCount}, #{rezMenuQty},
          #{rezSeatQty}, #{rezRequest})
     	
 	</insert>
 	
-	<!-- 회원별 예약 조회 -->
-	<select id="rezList" resultType="ReservationDto">
-		select * from reservation where rez_customer_id = #{rezCustomerId}
-	</select>
-	
 	<!-- 단순 예약 상세조회 -->
 	<select id="detail" resultType="ReservationListDto">
 		select * from reservation_list where rez_no = #{rezNo}
 	</select>
+	
+<!-- 	<!-- 회원별 예약 조회 --> -->
+<!-- 	<select id="rezList" resultType="ReservationDto"> -->
+<!-- 		select * from reservation where rez_customer_id = #{rezCustomerId} -->
+<!-- 	</select> -->
+	
 	
 	<!-- 회원별 예약 상세조회 -->
 <!-- 	<select id="rezDetailList" resultType="reservationVO"> -->

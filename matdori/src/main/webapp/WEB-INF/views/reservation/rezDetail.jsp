@@ -3,17 +3,6 @@
     
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 
-<div class="row">${reservationListDto.rezNo}</div>
-<div class="row">${reservationListDto.customerId}</div>
-<div class="row">${reservationListDto.resName}</div>
-<div class="row">${reservationListDto.menuName}</div>
-<div class="row">${reservationListDto.menuPrice}</div>
-<div class="row">${reservationListDto.clockSelect}</div>
-<div class="row">${reservationListDto.seatName}</div>
-<div class="row">${reservationListDto.rezMenuQty}</div>
-<div class="row">${reservationListDto.rezCustomerCount}</div>
-<div class="row">${reservationListDto.rezSeatQty}</div>
-<div class="row">${reservationListDto.getTotal()}</div>
 
 
 
@@ -30,6 +19,21 @@
 			</div>
 		</div>
 		
+		<div class="row text-center">
+			<div class="col">
+				<div>${rezDto.rezNo}</div>
+				<div>${rezDto.customerId}</div>
+				<div>${rezDto.resName}</div>
+				<div>${rezDto.menuName}</div>
+				<div>${rezDto.menuPrice}</div>
+				<div>${rezDto.clockSelect}</div>
+				<div>${rezDto.seatName}</div>
+				<div>${rezDto.rezMenuQty}</div>
+				<div>${rezDto.rezCustomerCount}</div>
+				<div>${rezDto.rezSeatQty}</div>
+				<div>${rezDto.getTotal()}</div>
+			</div>
+		</div>
 		
 		<!-- 매장 정보 -->
 		
