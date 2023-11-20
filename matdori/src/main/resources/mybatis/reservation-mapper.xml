@@ -32,9 +32,7 @@
 		select * from reservation_list where rez_no = #{rezNo}
 	</select>
 	
-<!--  회원별 예약 조회 --> 
-<!-- 	<select id="rezList" resultType="ReservationDto"> -->
-<!-- 		select * from reservation where rez_customer_id = #{rezCustomerId} -->
+	<!-- 회원별 예약 조회 -->
 <!-- 	</select> -->
 	
 	

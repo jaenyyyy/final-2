@@ -15,7 +15,7 @@
 	</select>
 	
 	<select id= "clockList" resultType="ClockDto">
-		select * from clock
+		select * from clock where clock_res_no = #{clockResNo}
 	</select>
 	<!-- 매장별 시간 조회 -->
 	<select id="getClockListByResNo" resultType="ClockDto" parameterType="int">

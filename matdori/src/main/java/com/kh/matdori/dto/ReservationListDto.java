@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @Data @NoArgsConstructor @AllArgsConstructor @Builder
 public class ReservationListDto {
 	private int rezNo, resNo, menuNo, clockNo, seatNo;
-	private String customerId;
+	private String rezCustomerId;
 	private String resName, menuName;
 	private Float menuPrice;
 	private String clockSelect, seatName;

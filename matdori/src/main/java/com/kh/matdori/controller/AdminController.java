@@ -17,6 +17,7 @@ import com.kh.matdori.dao.BusinessDao;
 import com.kh.matdori.dao.BusinessJudgeDao;
 import com.kh.matdori.dao.CustomerDao;
 import com.kh.matdori.dao.RestaurantDao;
+import com.kh.matdori.dto.BusinessBlockDto;
 import com.kh.matdori.dto.BusinessDto;
 import com.kh.matdori.dto.BusinessJudgeDto;
 import com.kh.matdori.dto.BusinessJudgeListDto;
@@ -29,6 +30,7 @@ import com.kh.matdori.dto.RestaurantDto;
 import com.kh.matdori.dto.RestaurantJudgeDto;
 import com.kh.matdori.vo.CusAdminVO;
 import com.kh.matdori.vo.ResAdminVO;
+
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -92,6 +94,7 @@ public class AdminController {
         System.out.println("BusJudgeComment: " + judgeDto.getBusJudgeStatus());
         return "redirect:/admin/business/judge/list";
     }
+    
 
     
 //    restController로 옮김
@@ -137,24 +140,59 @@ public class AdminController {
     }
     
     
+  //사업자 관리 리스트
+    @GetMapping("/business/blockManager/list")
+    public String businessBlockManagerList(Model model) {
+        List<BusinessBlockDto> blockedBusinesses = adminDao.getAllBlockedBusinesses();
+        model.addAttribute("businessBlockList", blockedBusinesses);
+        return "/admin/business/BusBlockList";
+    }
     
+    //사업자 관리 상세
+    @GetMapping("/business/blockManager/details/{userId}")
+    public String businessBlockManagerDetails(@PathVariable String userId, Model model) {
+        BusinessDto businessDto = businessDao.getBusinessDetails(userId);
+        model.addAttribute("business", businessDto);
+        return "/admin/business/BusBlockDetail";
+    }
     
+    //사업자 차단, 해제 
+    @PostMapping("/business/blockManager/details/{userId}")
+    public String busBlock(@RequestParam String busId,
+                                @RequestParam String blockComment,
+                                @RequestParam String blockStatus) {
+        BusinessBlockDto blockDto = new BusinessBlockDto();
+        blockDto.setBusId(busId);
+        blockDto.setBusBlockComment(blockComment);
+        blockDto.setBusBlockStatus(blockStatus);
+
+        // adminDao를 직접 호출하여 업데이트
+        adminDao.updateBusBlock(blockDto);
+        System.out.println("상태: " + blockDto.getBusBlockStatus());
+        return "redirect:/admin/business/blockManager/list";
+    }
+    
+  
+
+
+
+
     
     
 //    
- // 이용자 차단 구문 
- 	@RequestMapping("customer/block")
- 	public String cusBlock(@RequestParam String customerId) {
- 		customerDao.insertBlock(customerId);
-     		return "redirect:list";
- 	}
- 	
- 	
- 	@RequestMapping("customer/cancle")
- 	public String cusCancel(@RequestParam String customerId) {
- 		customerDao.deleteBlock(customerId);
- 		return "redirect:list";
- 	}
+// // 이용자 차단 구문 
+// 	@RequestMapping("customer/block")
+// 	public String cusBlock(@RequestParam String customerId) {
+// 		customerDao.insertBlock(customerId);
+//     		return "redirect:list";
+// 	}
+// 	
+// 	
+// 	@RequestMapping("customer/cancle")
+// 	public String cusCancel(@RequestParam String customerId) {
+// 		customerDao.deleteBlock(customerId);
+// 		return "redirect:list";
+// 	}
 
  	
  	
@@ -166,13 +204,18 @@ public class AdminController {
  	    List<CustomerAdminListDto> list = customerDao.cusAdminList(vo); // 해당 레코드를 가져옴
  	    log.debug("list ={}s", list);
  	    model.addAttribute("list", list);
+ 	    
+ 	   int count = customerDao.countList(vo);
+ 	   vo.setCount(count);
+ 	   model.addAttribute("vo", vo);
+   	
  	    return "/customer/list";
  	}   
 
     
     // 이용자 차단 상세 
     @RequestMapping("/customer/detail")
-    public String detail(@RequestParam String customerId, Model model) {
+    public String detail(@RequestParam String customerId, @ModelAttribute CusAdminVO vo, Model model) {
     	
     	CustomerBlockDto customerBlockDto = customerDao.selectBlockOne(customerId);
     	log.debug("customerBlockDto ={}s", customerBlockDto);
@@ -187,6 +230,9 @@ public class AdminController {
     	log.debug("customerDto ={}s", customerDto);
     	model.addAttribute("customerDto", customerDto);
     	
+    	int count = customerDao.countList(vo);
+    	vo.setCount(count);
+    	model.addAttribute("vo", vo);
     	
     	return "/customer/detail";
     	}
