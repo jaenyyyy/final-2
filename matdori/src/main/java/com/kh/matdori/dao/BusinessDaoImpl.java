@@ -1,6 +1,8 @@
 package com.kh.matdori.dao;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,10 +51,9 @@ public class BusinessDaoImpl implements BusinessDao {
 	public boolean updatePw(String busId, BusinessDto businessDto) {
 	    businessDto.setBusId(busId);
 	    int result = sqlSession.update("business.busUpdatePw", businessDto);
-	    if (result == 0) {throw new NoTargetException();
-	    }
 	    return result > 0;
 	}
+
 
     @Override
     public BusinessDto getBusinessDetails(String userId) {
@@ -73,6 +74,20 @@ public class BusinessDaoImpl implements BusinessDao {
 	public BusinessDto selectOneRegNo(String busRegNo) {
 		return sqlSession.selectOne("business.busSelectOneRegNo",busRegNo);
 	}
+
+
+	/*
+	 * @Override public boolean busDeleteWithPassword(String busId, String busPw) {
+	 * Map<String, String> paramMap = new HashMap<>(); paramMap.put("busId", busId);
+	 * paramMap.put("busPw", busPw); int result =
+	 * sqlSession.delete("business.busDeleteWithPassword", paramMap); return result
+	 * > 0; }
+	 */
+
+    @Override
+    public BusinessDto findByBusId(String busId) {
+        return sqlSession.selectOne("business.busSelectOne", busId);
+    }
 
 
 
