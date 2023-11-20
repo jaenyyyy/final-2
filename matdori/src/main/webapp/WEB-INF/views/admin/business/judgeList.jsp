@@ -31,7 +31,7 @@
                     <td>
                         <fmt:formatDate value="${businessJudge.busJudgeDate}" pattern="yyyy-MM-dd" />
                     </td>
-                    <td><a href="/admin/business/details/${businessJudge.busId}">상세보기</a></td>
+                    <td><a href="/admin/business/blockManager/details/${businessBlock.busId}">상세보기</a></td>
                 </tr>
             </c:forEach>
         </tbody>
