@@ -29,6 +29,15 @@
 		width: 70%;
 	}
 	
+	.rating {
+   width: 100%;
+}
+
+	.rating__star {
+    cursor: pointer;
+    color: #FFB416;
+}
+	
 </style>
 
 <div class="container">
@@ -90,7 +99,7 @@
 								<a href="" class="menu-tag">예약상세 ></a>
 							</div>
 							<div class="row">
-								<a class="btn btn-warning btn-sm" href="/review/write">리뷰작성</a>
+								<a class="btn btn-warning btn-sm open-modal-review">리뷰작성</a>
 							</div>
 						</div>
 					</div>
@@ -100,8 +109,120 @@
 			</div>
 		</div>
 		
+		
+		<!-- 후기 작성 모달-->
+		<div class="modal fade" id="reviewModal" tabindex="-1"
+			data-bs-backdrop="static">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h1 class="modal-title fs-5" id="exampleModalLabel">
+							[ ${ReservationListDto.resName} ] 리뷰 작성
+						</h1>
+						<button type="button" class="btn-close" data-bs-dismiss="modal"
+							aria-label="Close"></button>
+					</div>
+					<div class="modal-body" style="text-align: center;">
+					    <div class="rating" style="font-size: 30px; display: inline-block;">
+					        <i class="rating__star far fa-star" style="display: inline-block;"></i>
+					        <i class="rating__star far fa-star" style="display: inline-block;"></i>
+					        <i class="rating__star far fa-star" style="display: inline-block;"></i>
+					        <i class="rating__star far fa-star" style="display: inline-block;"></i>
+					        <i class="rating__star far fa-star" style="display: inline-block;"></i>
+					    </div>
+					    <div class="mt-4">
+					        <input type="text" class="form-control" id="resBlockComment" style="height: 200px;">
+					    </div>
+					</div>
+
+
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary"
+							data-bs-dismiss="modal">취소</button>
+						<button type="button" class="btn btn-warning"
+							onclick="sendReview()">작성</button>
+						<!-- 차단 버튼 클릭 시 함수 호출 -->
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		
+		
 	</div>
 </div>
+
+
+<script>
+	//리뷰 작성
+	$(".open-modal-review").click(function() {
+		var resName = $(this).closest('.res-line').find('.col-7 .row:first-child').text().trim(); 
+		
+		$("#reviewModal .modal-title").text("[ " + resName + " ] 리뷰 작성");
+		
+		$("#reviewModal").modal('show');
+	});
+	
+	//리뷰 작성 보내기
+	function sendBlockRequest() {
+		var resNo = document.getElementById("resNo").value; // resNo 값을 가져옴
+		var resBlockComment = $('#resBlockComment').val(); // 모달 내의 입력값
+	
+		var data = {
+			resNo : resNo,
+			resBlockComment : resBlockComment
+		};
+	
+		$.ajax({
+			url : '/rest/admin/restaurant/block', // 요청을 보낼 URL
+			method : 'POST',
+			contentType : 'application/json; charset=utf-8',
+			data : JSON.stringify(data), // 데이터 전송
+			success : function(response) {
+				console.log('차단 요청이 성공했습니다.');
+				$('#blockModal').modal('hide'); // 성공 시 모달 닫기
+				location.reload();
+			},
+			error : function(xhr, status, error) {
+				console.error('차단 요청에 실패했습니다.');
+			}
+		});
+	}
+	
+	
+	
+	// 별찍기
+	$(document).ready(function() {
+	    executeRating(ratingStars);
+	});
+
+	const ratingStars = [...document.getElementsByClassName("rating__star")];
+
+	function executeRating(stars) {
+	  const starClassActive = "rating__star fas fa-star";
+	  const starClassInactive = "rating__star far fa-star";
+	  const starsLength = stars.length;
+	  let i;
+
+	  stars.map((star) => {
+	    star.onclick = () => {
+	      i = stars.indexOf(star);
+
+	      if (star.className===starClassInactive) {
+	        for (i; i >= 0; --i) stars[i].className = starClassActive;
+	      } else {
+	        for (i; i < starsLength; ++i) stars[i].className = starClassInactive;
+	      }
+	    };
+	  });
+	}
+
+	executeRating(ratingStars);
+
+
+
+
+</script>
 		
 
 
