@@ -24,8 +24,8 @@
 	</insert>
 	
 	<!-- 회원별 예약 조회 -->
-	<select id="rezList" resultType="ReservationDto">
-		select * from reservation where rez_customer_id = #{rezCustomerId}
+	<select id="rezList" resultType="ReservationListDto">
+		select * from reservation_list where rez_customer_id = #{rezCustomerId}
 	</select>
 	
 	<!-- 단순 예약 상세조회 -->
