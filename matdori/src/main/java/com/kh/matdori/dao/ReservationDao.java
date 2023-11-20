@@ -14,5 +14,5 @@ public interface ReservationDao {
 	
 	boolean isInReservation(int rezResNo, int rezClockNo, int rezSeatNo);
 	
-	List<ReservationDto> rezList(String rezCustomerId);
+	List<ReservationListDto> rezList(String rezCustomerId); //회원별 예약조회
 }

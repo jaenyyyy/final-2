@@ -23,7 +23,11 @@
     	
 	</insert>
 	
-	<!-- 단순 예약 상세조회 -->
+	<!-- 회원별 예약 조회 -->
+	<select id="rezList" resultType="ReservationListDto">
+		select * from reservation_list where rez_customer_id = #{rezCustomerId}
+	</select>
+	
 	<select id="detail" resultType="ReservationListDto">
 		select * from reservation_list where rez_no = #{rezNo}
 	</select>

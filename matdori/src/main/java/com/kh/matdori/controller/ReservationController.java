@@ -19,7 +19,6 @@ import com.kh.matdori.dao.ReservationDao;
 import com.kh.matdori.dao.RestaurantDao;
 import com.kh.matdori.dao.SeatDao;
 import com.kh.matdori.dto.ClockDto;
-import com.kh.matdori.dto.CustomerDto;
 import com.kh.matdori.dto.ReservationDto;
 import com.kh.matdori.dto.ReservationListDto;
 import com.kh.matdori.dto.SeatDto;

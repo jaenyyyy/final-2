@@ -25,7 +25,7 @@ import com.kh.matdori.dao.CustomerDao;
 import com.kh.matdori.dao.ReservationDao;
 import com.kh.matdori.dao.ReviewDao;
 import com.kh.matdori.dto.CustomerDto;
-import com.kh.matdori.dto.ReservationDto;
+import com.kh.matdori.dto.ReservationListDto;
 import com.kh.matdori.dto.ReviewDto;
 import com.kh.matdori.service.EmailService;
 
@@ -272,12 +272,10 @@ public class CustomerController {
 	
 	//마이페이지에서 보는 예약 내역 
 	@RequestMapping("/rezList")
-	public String list(Model model, HttpSession session,
-					@ModelAttribute ReservationDto reservationDto,
-					@ModelAttribute CustomerDto customerDto) {
+	public String list(Model model, HttpSession session) {
 		String customerId = (String)session.getAttribute("name");
 		
-		List <ReservationDto> rezList = reservationDao.rezList(customerId);
+		List <ReservationListDto> rezList = reservationDao.rezList(customerId);
 		model.addAttribute("rezList", rezList);
 		
 		return "customer/rezList";

@@ -47,10 +47,10 @@ public class ReservationDaoImpl implements ReservationDao{
 	}
 	
 	
-	
+	//회원별 예약내역 조회
 	@Override
-	public List<ReservationDto> rezList(String rezCustomerId) {
-		List<ReservationDto> rezList = sqlSession.selectList("rezList", rezCustomerId);
+	public List<ReservationListDto> rezList(String rezCustomerId) {
+		List<ReservationListDto> rezList = sqlSession.selectList("rezList", rezCustomerId);
 		return rezList;
 	}
 
