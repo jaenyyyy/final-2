@@ -131,19 +131,6 @@ public class ReviewController {
 	}
 	
 	
-	//마이페이지에 나오는 후기 목록 (나중에 customer로 옮길 것)
-	@RequestMapping("/listByCus")
-	public String list(Model model, @ModelAttribute ReviewDto reviewDto,
-						@ModelAttribute CustomerDto customerDto) {
-		String customerId = customerDto.getCustomerId();
-		reviewDto.setReviewWriter(customerId);
-		
-		List <ReviewDto> listByCus = reviewDao.selectListByCus(customerId);
-		model.addAttribute("listByCus", listByCus);
-		
-		return "/어디로 보내지?";
-	}
-	
 	
 	//상세 - 상세는 모달로 구현(레스트로 옮겨야 할듯)
 	@RequestMapping("/detail") 

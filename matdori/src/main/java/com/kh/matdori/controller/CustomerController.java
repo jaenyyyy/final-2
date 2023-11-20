@@ -2,10 +2,7 @@
 package com.kh.matdori.controller;
 
 import java.io.IOException;
-import java.text.DecimalFormat;
 import java.util.List;
-import java.util.Map;
-import java.util.Random;
 
 import javax.mail.MessagingException;
 import javax.servlet.http.HttpSession;
@@ -25,12 +22,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.kh.matdori.dao.CertDao;
 import com.kh.matdori.dao.CustomerDao;
-import com.kh.matdori.dto.CertDto;
-import com.kh.matdori.dto.CustomerBlockDto;
+import com.kh.matdori.dao.ReservationDao;
+import com.kh.matdori.dao.ReviewDao;
 import com.kh.matdori.dto.CustomerDto;
+import com.kh.matdori.dto.ReservationDto;
+import com.kh.matdori.dto.ReviewDto;
 import com.kh.matdori.service.EmailService;
-import com.kh.matdori.vo.PaginationVO;
-
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -55,6 +52,12 @@ public class CustomerController {
 	
 	@Autowired
 	private CertDao certDao;
+	
+	@Autowired
+	private ReviewDao reviewDao;
+	
+	@Autowired
+	private ReservationDao reservationDao;
 	
 	
 	// 회원가입 ok 
@@ -267,7 +270,33 @@ public class CustomerController {
 	
 	
 	
+	//마이페이지에서 보는 예약 내역 
+	@RequestMapping("/rezList")
+	public String list(Model model, HttpSession session,
+					@ModelAttribute ReservationDto reservationDto,
+					@ModelAttribute CustomerDto customerDto) {
+		String customerId = (String)session.getAttribute("name");
+		
+		List <ReservationDto> rezList = reservationDao.rezList(customerId);
+		model.addAttribute("rezList", rezList);
+		
+		return "customer/rezList";
+	}
 	
+	
+	
+	//나의리뷰
+	@RequestMapping("/reviewListByCus")
+	public String list(Model model, @ModelAttribute ReviewDto reviewDto,
+						@ModelAttribute CustomerDto customerDto) {
+		String customerId = customerDto.getCustomerId();
+		reviewDto.setReviewWriter(customerId);
+		
+		List <ReviewDto> listByCus = reviewDao.selectListByCus(customerId);
+		model.addAttribute("listByCus", listByCus);
+		
+		return "customer/reviewListByCus";
+	}
 
 }
 	
