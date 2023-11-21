@@ -18,10 +18,12 @@ public class BusinessJudgeRestController {
 	@Autowired
 	private BusinessJudgeDao businessJudgeDao;
 	
-	//사업자 가입시 생성되는 사업자등록심사
-    @PostMapping("/reg")
-    public void createBusinessJudge(@RequestBody BusinessJudgeDto businessJudgeDto) {
-        businessJudgeDao.createBusinessJudge(businessJudgeDto);
-    }
+	/*
+	 * //사업자 가입시 생성되는 사업자등록심사
+	 * 
+	 * @PostMapping("/reg") public void createBusinessJudge(@RequestBody
+	 * BusinessJudgeDto businessJudgeDto) {
+	 * businessJudgeDao.createBusinessJudge(businessJudgeDto); }
+	 */
 
 }

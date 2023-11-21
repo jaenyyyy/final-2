@@ -5,16 +5,6 @@
 
 <mapper namespace="admin">
 
-	<!-- 두 테이블을 조인하고 필요한 필드를 검색하는 SQL 문을 정의 -->
-	<select id="getList" resultType="BusinessJudgeListDto">
-		SELECT bj.bus_judge_no,
-		b.bus_id, b.bus_reg_date, b.bus_name, b.bus_reg_no,
-		bj.bus_judge_status, bj.bus_judge_date
-		FROM business_judge bj
-		LEFT JOIN
-		business b ON bj.bus_id = b.bus_id ORDER BY bj.bus_judge_date DESC
-	</select>
-
 	<!-- 매퍼에서 해당 아이디의 사업자 테이블 정보를 가져오는 SQL 쿼리 -->
 	<select id="getDetails" resultType="BusinessDto">
 		SELECT
@@ -30,28 +20,108 @@
 		WHERE bus_id = #{busId}
 	</select>
 
+	<!-- 사업자 등록 심사 -->
+
+	<!-- 두 테이블을 조인하고 필요한 필드를 검색하는 SQL 문을 정의 -->
+	<select id="getList" resultType="BusinessJudgeListDto">
+		SELECT bj.bus_judge_date,
+		b.bus_id, b.bus_name, b.bus_reg_no,
+		bj.bus_judge_status,
+		bj.bus_judge_date AS judge_date
+		FROM business b
+		LEFT JOIN business_judge
+		bj ON b.bus_id = bj.bus_id
+	</select>
+
 	<!-- 심사이전에 해당 ID에 대한 레코드가 있는지 확인하는 쿼리 -->
-	<select id="checkIfBusBlockExists" resultType="int">
-		SELECT COUNT(*) FROM business_block WHERE bus_id = #{busId}
+	<select id="checkIfBusJudgeExists" resultType="int">
+		SELECT COUNT(*)
+		FROM business_judge
+		WHERE bus_id = #{busId}
 	</select>
 
 	<!-- 심사이전에 정보가 없다면 작동할 insert -->
-	<insert id="insertBusBlock">
-		INSERT INTO business_block (bus_id, bus_block_time, bus_block_comment,
-		bus_block_status)
-		VALUES (#{busId}, SYSDATE, #{busBlockComment}, #{busBlockStatus})
+	<insert id="insertBusJudge" parameterType="map">
+		INSERT INTO
+		business_judge (BUS_JUDGE_NO, bus_id, bus_judge_date,
+		bus_judge_comment,
+		bus_judge_status)
+		VALUES (business_judge_seq.nextval,
+		#{busId}, SYSDATE,
+		#{judgeComment},
+		#{judgeStatus})
 	</insert>
+
 
 	<!-- 심사완료하면 업데이트 되는 코드 -->
 	<update id="updateJudge" parameterType="map">
 		UPDATE business_judge
 		SET
-		bus_judge_status = #{busJudgeStatus},
+		bus_judge_status = #{judgeStatus},
 		bus_judge_date = SYSDATE,
-		bus_judge_comment = #{busJudgeComment}
+		bus_judge_comment = #{judgeComment}
 		WHERE bus_id = #{busId}
 	</update>
 
+	<!-- 카운트 -->
+	<select id="count" resultType="int">
+		<!-- 검색일 때 -->
+		<choose>
+			<when test="keyword != null">
+	            <![CDATA[
+	                select count(*) from business
+	                where instr(bus_id, #{keyword}) > 0
+	            ]]>
+			</when>
+			<!-- 검색이 아닐 때 -->
+			<otherwise>
+	            <![CDATA[
+	                select count(*) from business
+	            ]]>
+			</otherwise>
+		</choose>
+	</select>
+	
+
+
+
+	<!-- 사업자 관리 차단 -->
+
+	<!-- 두 테이블을 조인하고 필요한 필드를 검색하는 SQL 문을 정의 -->
+	<select id="getAllBlockedBusinesses"
+		resultType="BusinessBlockListDto">
+		SELECT b.bus_id, b.bus_name, b.bus_email,
+		bb.bus_block_status
+		FROM business b
+		LEFT JOIN business_block bb ON
+		b.bus_id = bb.bus_id
+	</select>
+
+	<!-- 심사이전에 해당 ID에 대한 레코드가 있는지 확인하는 쿼리 -->
+	<select id="checkIfBusBlockExists" resultType="int">
+		SELECT COUNT(*)
+		FROM business_block WHERE bus_id = #{busId}
+	</select>
+
+	<!-- 심사이전에 정보가 없다면 작동할 insert -->
+	<insert id="insertBusBlock">
+		INSERT INTO business_block (bus_id, bus_block_time,
+		bus_block_comment,
+		bus_block_status)
+		VALUES (#{busId}, SYSDATE,
+		#{busBlockComment}, #{busBlockStatus})
+	</insert>
+
+	<!-- 사업자 차단상태 업데이트 -->
+	<update id="updateBusBlock">
+		UPDATE business_block
+		SET
+		bus_block_time = SYSDATE,
+		bus_block_comment = #{busBlockComment},
+		bus_block_status =
+		#{busBlockStatus}
+		WHERE bus_id = #{busId}
+	</update>
 
 
 
@@ -187,28 +257,7 @@
 
 
 
-	<!-- 사업자 관리 차단 -->
 
-	<!-- 두 테이블을 조인하고 필요한 필드를 검색하는 SQL 문을 정의 -->
-	<select id="getAllBlockedBusinesses"
-		resultType="BusinessBlockListDto">
-		SELECT b.bus_id, b.bus_name, b.bus_email,
-		bb.bus_block_status
-		FROM business b
-		LEFT JOIN business_block bb ON
-		b.bus_id = bb.bus_id
-	</select>
-
-	<!-- 사업자 차단상태 업데이트 -->
-	<update id="updateBusBlock">
-		UPDATE business_block
-		SET
-		bus_block_time = SYSDATE,
-		bus_block_comment = #{busBlockComment},
-		bus_block_status =
-		#{busBlockStatus}
-		WHERE bus_id = #{busId}
-	</update>
 
 
 </mapper>

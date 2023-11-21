@@ -18,17 +18,21 @@ import com.kh.matdori.dao.BusinessJudgeDao;
 import com.kh.matdori.dao.CustomerDao;
 import com.kh.matdori.dao.RestaurantDao;
 import com.kh.matdori.dto.BusinessBlockDto;
+import com.kh.matdori.dto.BusinessBlockListDto;
 import com.kh.matdori.dto.BusinessDto;
 import com.kh.matdori.dto.BusinessJudgeDto;
 import com.kh.matdori.dto.BusinessJudgeListDto;
 import com.kh.matdori.dto.CustomerAdminListDto;
 import com.kh.matdori.dto.CustomerBlockDto;
 import com.kh.matdori.dto.CustomerDto;
+import com.kh.matdori.dto.NoticeDto;
 import com.kh.matdori.dto.RestaurantAdminListDto;
 import com.kh.matdori.dto.RestaurantBlockDto;
 import com.kh.matdori.dto.RestaurantDto;
 import com.kh.matdori.dto.RestaurantJudgeDto;
+import com.kh.matdori.vo.BusPaginationVO;
 import com.kh.matdori.vo.CusAdminVO;
+import com.kh.matdori.vo.PaginationVO;
 import com.kh.matdori.vo.ResAdminVO;
 
 
@@ -64,12 +68,24 @@ public class AdminController {
 	}
 	
 	
-    @GetMapping("/business/judge/list")
-    public String busJudgeList(Model model) {
-        List<BusinessJudgeListDto> businessJudgeList = businessJudgeDao.getAllBusinessJudge();
-        model.addAttribute("businessJudgeList", businessJudgeList);
-        return "/admin/business/judgeList";
-    }
+//	//심사 리스트
+	@GetMapping("/business/judge/list")
+	public String busJudgeList(Model model, @ModelAttribute(name = "vo") BusPaginationVO vo) {
+	    int count = businessJudgeDao.countList(vo);
+	    vo.setCount(count);
+	    
+	    // 페이징 정보 계산
+	    vo.calculatePageInfo();
+	    
+	    List<BusinessJudgeListDto> businessJudgeList = businessJudgeDao.getList(vo);
+	    
+	    model.addAttribute("vo", vo);
+	    model.addAttribute("businessJudgeList", businessJudgeList);
+	    
+	    return "/admin/business/judgeList";
+	}
+
+
 
     @GetMapping("/business/details/{userId}")
     public String busJudgeDetails(@PathVariable String userId, Model model) {
@@ -91,7 +107,7 @@ public class AdminController {
 
         // businessJudgeDao를 직접 호출하여 업데이트
         businessJudgeDao.updateBusinessJudge(judgeDto);
-        System.out.println("BusJudgeComment: " + judgeDto.getBusJudgeStatus());
+        //System.out.println("BusJudgeComment: " + judgeDto.getBusJudgeComment());
         return "redirect:/admin/business/judge/list";
     }
     
@@ -142,11 +158,24 @@ public class AdminController {
     
   //사업자 관리 리스트
     @GetMapping("/business/blockManager/list")
-    public String businessBlockManagerList(Model model) {
-        List<BusinessBlockDto> blockedBusinesses = adminDao.getAllBlockedBusinesses();
+    public String businessBlockManagerList(Model model, @ModelAttribute(name = "vo") BusPaginationVO vo) {
+        int count = adminDao.countList(vo);
+        vo.setCount(count);
+        
+	    // 페이징 정보 계산
+	    vo.calculatePageInfo();
+    	
+    	//List<BusinessBlockDto> blockedBusinesses = adminDao.getAllBlockedBusinesses();
+	    
+	    List<BusinessBlockDto> blockedBusinesses = adminDao.getList(vo);
+	    model.addAttribute("vo", vo);
         model.addAttribute("businessBlockList", blockedBusinesses);
         return "/admin/business/BusBlockList";
     }
+    
+    
+    
+    
     
     //사업자 관리 상세
     @GetMapping("/business/blockManager/details/{userId}")
