@@ -11,7 +11,7 @@
 
 /* 헤더 아이콘 색상*/
 .headerIcon{
-    color: #BEADFA;
+    color: #F7B731;
 }
 
 /*
@@ -197,7 +197,7 @@ ul.menu li{
 
 /* 메뉴에 마우스가 올라가면 하이트라이트 효과 */
 ul.menu li:hover{
-	color: #BEADFA;
+	color: #F7B731;
 }
 
 /* 
@@ -287,7 +287,7 @@ a.link:visited{
 }
 a.link:hover
 {
-	color: #BEADFA;
+	color: #F7B731;
 }
 
 
@@ -365,9 +365,9 @@ table {
     vertical-align: bottom;
  
  	font-size: 15px;
- 	border: 1px solid #BEADFA;
+ 	border: 1px solid #F7B731;
     border-radius: 5em;
-    background-color: #BEADFA;
+    background-color: #F7B731;
 }
 
 /*작은 버튼*/
@@ -382,27 +382,27 @@ table {
   	height: 40px;
     outline: none; /*outline은 입력 창 선택 시 강조 효과*/
     line-height: 2.5em;
-    border: 1px solid #BEADFA;
-    color: #BEADFA;
+    border: 1px solid #F7B731;
+    color: #F7B731;
 }
 
 .btn.btn-positive {
 	padding: 0.6em 1.4em;
-    border-color: #BEADFA;
-    background-color: #BEADFA;
+    border-color: #F7B731;
+    background-color: #F7B731;
     color: white;
 }
 .btn.btn-negative {
 	padding: 0.6em 1.4em;
-    border-color: #BEADFA;
+    border-color: #F7B731;
     background-color: white;
-    color: #BEADFA;
+    color: #F7B731;
 }
 
 .count-box{
 	background-color: #FFFEFC;
 	border-radius: 2em;
-	border: 1px solid #BEADFA;
+	border: 1px solid #F7B731;
 	height: 40px;
 }
 
@@ -412,10 +412,10 @@ table {
     font-size: 15px;
   	height: 40px;
     outline: none; /*outline은 입력 창 선택 시 강조 효과*/
-    border: 2px solid #BEADFA;
+    border: 2px solid #F7B731;
     border-radius: 0.2em;
     line-height: 1.2em;
-    font-style: #BEADFA;
+    font-style: #F7B731;
 }
 
 /*라운드 검색창*/
@@ -446,7 +446,7 @@ table {
  .form-border{
 	width : 500px;
 	height: auto;
-	border: 2px solid #BEADFA;
+	border: 2px solid #F7B731;
 	border-radius: 15px;
 	background-color: #FFFEFC;
 	
@@ -471,15 +471,15 @@ hr{
 }
 
 .selected-sort{
-	color : #BEADFA
+	color : #F7B731
 }
 
 /* 첨부파일 버튼*/
 input::file-selector-button{
 	font-size: 15px;
 	border-radius: 5em;
-	background-color: #BEADFA;
-	border: 1px solid #BEADFA;
+	background-color: #F7B731;
+	border: 1px solid #F7B731;
 	color: white;
 }
 

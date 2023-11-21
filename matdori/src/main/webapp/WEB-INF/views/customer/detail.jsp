@@ -81,8 +81,12 @@ checkboxes.forEach(checkbox => {
 		</div>
 	</div>
 </div>
+
 <div class="row justify-content-center">
-	<div class="col-md-6">
+		<div class="card border-warning mb-3 " style="max-width: 50rem;">
+			<div
+				class="card-header mt-3 d-flex justify-content-between align-items-center">
+				<div>
 		<label class="form-label mt-4" for="readOnlyInput">아이디</label> <input
 			class="form-control" id="readOnlyInput1" type="text"
 			value="${customerAdminListDto.customerId}" disabled> <label
@@ -90,13 +94,13 @@ checkboxes.forEach(checkbox => {
 			class="form-control" id="readOnlyInput2" type="text"
 			value="${customerAdminListDto.customerBirth}" disabled> <label
 			class="form-label mt-4" for="readOnlyInput">연락처</label> <input
-			class="form-control" id="readOnlyInput2" type="text"
+			class="form-control" id="readOnlyInput3" type="text"
 			value="${customerAdminListDto.customerContact}" disabled> <label
 			class="form-label mt-4" for="readOnlyInput">이메일</label> <input
-			class="form-control" id="readOnlyInput2" type="text"
+			class="form-control" id="readOnlyInput4" type="text"
 			value="${customerAdminListDto.customerEmail}" disabled> <label
 			class="form-label mt-4" for="readOnlyInput">성별</label> <input
-			class="form-control" id="readOnlyInput2" type="text"
+			class="form-control" id="readOnlyInput5" type="text"
 			value="${customerAdminListDto.customerGender}" disabled>
 			
 			
@@ -105,7 +109,7 @@ checkboxes.forEach(checkbox => {
 			
 			<br>
 			<input
-			class="form-control" id="readOnlyInput2" type="text"
+			class="form-control" id="readOnlyInput6" type="text"
 			value="${customerAdminListDto.customerLevel}" disabled>
 			<br> 
 
@@ -151,9 +155,9 @@ checkboxes.forEach(checkbox => {
 					
 			<br>
 			 <label
-			class="form-label mt-4" for="readOnlyInput">회원 포인트 ${customerAdminListDto.customerPoint} pt</label> 
-				<input class="form-control" id="readOnlyInput2" type="text" placeholder="새로운 포인트 입력">
-				<button type="button" class="btn btn-warning" onClick="updateUpdatePointBtn()">포인트 변경</button>
+			class="form-label mt-4" for="readOnlyInput8">회원 포인트 ${customerAdminListDto.customerPoint} pt</label> 
+				<input class="form-control" id="readOnlyInput8" type="number" placeholder="새로운 포인트 입력">
+				<button type="button" class="btn btn-secondary" onClick="updateUpdatePointBtn()">포인트 변경</button>
 			
 			<br>
 			
@@ -162,6 +166,9 @@ checkboxes.forEach(checkbox => {
 			class="form-control mb-4" id="readOnlyInput3" type="text"
 			value="${customerAdminListDto.customerBlockTime}" disabled>
 	</div>
+</div>
+</div>
+
 </div>
 
 
@@ -257,6 +264,14 @@ function updateCustomerLevelBtn() {
             data: data,
             success: function(response) {
                 console.log("등급 변경이 완료되었습니다.");
+
+                // 변경된 등급 값을 가져와서 input에 반영
+                var updatedLevel = document.getElementById('readOnlyInput6');
+                updatedLevel.value = customerLevel.value;
+
+                // 변경 버튼의 텍스트를 '변경 완료'로 수정
+                var updateBtn = document.querySelector('.btn-warning');
+                updateBtn.textContent = '변경 완료';
             },
             error: function(xhr, status, error) {
                 console.error("등급 변경에 실패했습니다.");
@@ -269,7 +284,7 @@ function updateCustomerLevelBtn() {
 
 function updateUpdatePointBtn() {
     var customerId = document.getElementById("customerId").value;
-    var customerPointInput = document.getElementById("readOnlyInput2");
+    var customerPointInput = document.getElementById("readOnlyInput8");
     var customerPoint = customerPointInput.value;
 
     if (customerPoint !== null) {
@@ -287,6 +302,15 @@ function updateUpdatePointBtn() {
             data: data,
             success: function(response) {
                 console.log("포인트 변경이 완료되었습니다.");
+
+                // 변경된 포인트 값을 가져와서 input에 반영
+                var updatedPoint = document.getElementById('readOnlyInput8');
+                updatedPoint.value = customerPoint;
+
+                // 포인트 변경 버튼 텍스트를 '포인트 수정 완료'로 변경
+                var updateBtn = document.querySelector('.btn-secondary');
+                updateBtn.textContent = "수정 완료";
+              
             },
             error: function(xhr, status, error) {
                 console.error("포인트 변경에 실패했습니다.");
@@ -295,13 +319,14 @@ function updateUpdatePointBtn() {
     } else {
         console.log("포인트를 변경하세요.");
     }
-};
+}
+
 
 
 
 //포인트 수정 가능하도록 필드 활성화
 function enablePointEdit() {
-    var pointField = document.getElementById('readOnlyInput2');
+    var pointField = document.getElementById('readOnlyInput7');
     pointField.removeAttribute('disabled');
 }
 

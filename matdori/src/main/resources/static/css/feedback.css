@@ -1,0 +1,25 @@
+/* CSS for Success Feedback */
+.success-feedback {
+    color: green;
+    font-size: 12px;
+    display: none; /* initially hiding */
+}
+
+/* CSS for Fail Feedback */
+.fail-feedback {
+    color: red;
+    font-size: 12px;
+    display: none; /* initially hiding */
+}
+
+/* CSS for Fail2 Feedback */
+.fail2-feedback {
+    color: red;
+    font-size: 12px;
+    display: none; /* initially hiding */
+}
+
+/* CSS for showing feedback */
+.show-feedback {
+    display: block !important; /* overriding 'display: none' */
+}

@@ -22,8 +22,7 @@
 			<div class="row justify-content-center">
 				<div class="col-md-4">
 
-					<br>
-					<br>
+					<br> <br>
 					<h2>회원 관리</h2>
 
 					<div class="input-group mb-3">
@@ -54,6 +53,9 @@
 					</div>
 
 
+
+
+
 					<div class="col text-center">
 						<button class="btn btn-warning" type="submit">검색</button>
 					</div>
@@ -62,8 +64,7 @@
 		</form>
 
 
-		<br>
-		<br>
+		<br> <br>
 
 		<div class="row" style="margin-left: 10%; margin-right: 10%">
 			<div class="col-md-6 mt-4">
@@ -75,36 +76,76 @@
 		</div>
 
 
-<!-- 회원 리스트 -->
-        <div class="row justify-content-center">
-            <div class="col-md-10 col-sm-12">
-                <table class="table table-hover justify-content-center text-center">
-                    <thead>
-                        <tr class="table-warning">
-                            <th scope="col" class="col-md-2">회원이름</th>
-                            <th scope="col" class="col-md-3">회원아이디</th>
-                            <th scope="col" class="col-md-1">회원상태</th>
-                            <th scope="col" class="col-md-3">회원연락처</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <c:forEach var="customerAdminListDto" items="${list}">
-                              <tr onClick="goToDetail(${customerAdminListDto.customerId})" style="cursor: pointer;">
-					        <td>${customerAdminListDto.customerName}</td>
-					        <th>${customerAdminListDto.customerId}</th>
-                               
-                                
-                                
-                                <td>${customerAdminListDto.customerStatus}</td>
-                                <td>${customerAdminListDto.customerContact}</td>
-                            </tr>
-                        </c:forEach>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
+		<!-- 회원 리스트 -->
+		
+		<div class="row justify-content-center">
+			<div class="col-md-10 col-sm-12">
+				<table class="table table-hover justify-content-center text-center">
+					<thead>
+						<tr class="table-warning">
+							<th scope="col" class="col-md-2">회원이름</th>
+							<th scope="col" class="col-md-3">회원아이디</th>
+							<th scope="col" class="col-md-1">회원상태</th>
+							<th scope="col" class="col-md-3">회원연락처</th>
+						</tr>
+					</thead>
+					<tbody>
+						<c:forEach var="customerAdminListDto" items="${list}">
+							<tr onClick="goToDetail(${customerAdminListDto.customerId})"
+								style="cursor: pointer;">
+								<td>${customerAdminListDto.customerName}</td>
+								<th>${customerAdminListDto.customerId}</th>
+
+
+
+								<td>${customerAdminListDto.customerStatus}</td>
+								<td>${customerAdminListDto.customerContact}</td>
+							</tr>
+						</c:forEach>
+					</tbody>
+				</table>
+
+				<!-- 페이지네이션 -->
+				<div class="row page-navigator my-4">
+					<div class="col-md-10 col-sm-12">
+						<!-- 이전 버튼 -->
+						<c:if test="${!vo.first}">
+							<a href="list?${vo.prevQueryString}" class="btn btn-warning">
+								<i class="fa-solid fa-angle-left"></i> 이전
+							</a>
+						</c:if>
+
+						<!-- 숫자 버튼 -->
+						<c:forEach var="i" begin="${vo.begin}" end="${vo.end}" step="1">
+							<c:choose>
+								<c:when test="${vo.page == i}">
+									<a href="list?${vo.getQueryString(i)}" class="btn btn-primary">${i}</a>
+								</c:when>
+								<c:otherwise>
+									<a href="list?${vo.getQueryString(i)}" class="btn btn-light">${i}</a>
+								</c:otherwise>
+							</c:choose>
+						</c:forEach>
+
+						<!-- 다음 버튼 -->
+						<c:if test="${!vo.last}">
+							<a href="list?${vo.nextQueryString}" class="btn btn-light">
+								다음 <i class="fa-solid fa-angle-right"></i>
+							</a>
+						</c:if>
+					</div>
+				</div>
+
+
+			</div>
+
+		</div>
+	</div>
 </div>
+
+
+
+
 
 
 
