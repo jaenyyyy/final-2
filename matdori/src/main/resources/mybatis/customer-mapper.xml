@@ -77,6 +77,12 @@
    <select id="getCustomerByEmail" resultType="CustomerDto">
     	SELECT * FROM customer WHERE customer_email = #{customerEmail}
   </select>
+  
+  
+  
+  <!-- 포인트 차감(사용) -->
+  
+  <!-- 포인트 페이백-->
     
     
 

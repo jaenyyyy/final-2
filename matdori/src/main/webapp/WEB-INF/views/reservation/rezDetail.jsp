@@ -100,7 +100,7 @@
 							</tr>
 							<tr>
 								<th>예약 메뉴</th>
-								<td>${rezDto.menuName} (${rezDto.rezMenuQty}개)</td>
+								<td>${rezDto.menuName} <fmt:formatNumber value="${rezDto.menuPrice}" pattern="#,##0"/> 원 (${rezDto.rezMenuQty}개)</td>
 							</tr>
 							<tr>
 								<th>요청사항</th>
@@ -120,13 +120,14 @@
 				<div>
 					<table class="table table-border table-stripe">
 						<tr>
-							<th>예약 금액</th>
+							<th>합계 금액</th>
 							<td>
-								<fmt:formatNumber value="${rezDto.menuPrice}" pattern="#,##0"/> 원
+								<fmt:formatNumber value="${rezDto.getTotal()}" pattern="#,##0"/> 원
 							</td>
 						</tr>
 					</table>
 				</div>
+				
 				<div>
 					<table class="table table-border table-stripe">
 						<tr>
@@ -151,13 +152,14 @@
 				<div>
 					<table class="table table-border table-stripe">
 						<tr>
-							<th>총 합계금액</th>
+							<th>결제금액</th>
 							<td>
-								<fmt:formatNumber value="${rezDto.getTotal()}" pattern="#,##0"/> 원
+								어쩌고
 							</td>
 						</tr>
 					</table>
 				</div>
+				
 				<div>
 					<table class="table table-border table-stripe">
 						<tr>
