@@ -1,7 +1,5 @@
 package com.kh.matdori.restcontroller;
 
-import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,10 +15,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.kh.matdori.dao.CustomerDao;
-import com.kh.matdori.dto.CustomerAdminListDto;
 import com.kh.matdori.dto.CustomerBlockDto;
 import com.kh.matdori.dto.CustomerDto;
-import com.kh.matdori.dto.RestaurantBlockDto;
 
 @CrossOrigin
 @RestController
@@ -66,6 +62,12 @@ public class CustomerRestController {
 	}
 
 	@RequestMapping("/cancel") // customerId를 받아오는 경로 지정
+	    public String cusCancel(@RequestBody CustomerBlockDto customerBlockDto) {
+	        customerDao.deleteBlock(customerBlockDto.getCustomerId()); // customerId를 사용하여 처리
+	        return "redirect:/customer/detail";
+	    }
+	
+	
 	public String cusCancel(@RequestBody CustomerBlockDto customerBlockDto) {
 		customerDao.deleteBlock(customerBlockDto.getCustomerId()); // customerId를 사용하여 처리
 		return "redirect:/customer/detail";

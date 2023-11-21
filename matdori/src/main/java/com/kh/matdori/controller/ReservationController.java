@@ -24,6 +24,7 @@ import com.kh.matdori.dto.MenuDto;
 import com.kh.matdori.dto.ReservationDto;
 import com.kh.matdori.dto.ReservationListDto;
 import com.kh.matdori.dto.SeatDto;
+import com.kh.matdori.vo.PaymentSumVO;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -92,15 +93,15 @@ public class ReservationController {
 	@RequestMapping("/detail")
 	public String detail(
 //			HttpSession session,
-//						 @ModelAttribute ReservationDto reservationDto,
-						 @RequestParam int rezNo,
+						  @RequestParam int rezNo,
 						 Model model) {
+//		int rezNo = vo.getReservationListDto().getRezNo();  //rezNo = 예약 번호인데, 이걸 listDto에서 넘버 꺼내와서 담아옴
+		
 		ReservationListDto rezDto = reservationDao.selectOne(rezNo);
+		
 		model.addAttribute("rezDto", rezDto);
+		
 		return "reservation/rezDetail";
 	}
-	
-	
-
 	
 }

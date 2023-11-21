@@ -94,8 +94,18 @@
   
   
   <!-- 포인트 차감(사용) -->
-  
-  <!-- 포인트 페이백-->
+  <update id="minusPoint" parameterType="map">
+	  <![CDATA[
+	    UPDATE customer SET customer_point = customer_point - #{customerPoint} WHERE customer_id = #{customerId}
+	  ]]>
+	</update>
+	  
+	  <!-- 포인트 페이백 -->
+	<update id="paybackPoint" parameterType="map">
+	  <![CDATA[
+	    UPDATE customer SET customer_point = customer_point + #{customerPoint} WHERE customer_id = #{customerId}
+	  ]]>
+	</update>
     
     
 

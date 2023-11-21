@@ -73,8 +73,8 @@
 					<div>
 						<table class="table table-border table-stripe">
 							<tr>
-								<th>아이디</th>
-								<td>${rezDto.rezCustomerId}</td>
+								<th>예약자</th>
+								<td>${ReservationListDto.customerName}</td>
 							</tr>
 						</table>
 					</div>
@@ -122,7 +122,7 @@
 						<tr>
 							<th>합계 금액</th>
 							<td>
-								<fmt:formatNumber value="${rezDto.getTotal()}" pattern="#,##0"/> 원
+<%-- 								<fmt:formatNumber value="${rezDto.getTotal()}" pattern="#,##0"/> 원 --%>
 							</td>
 						</tr>
 					</table>
@@ -160,17 +160,11 @@
 					</table>
 				</div>
 				
-				<div>
-					<table class="table table-border table-stripe">
-						<tr>
-							<th>결제방식</th>
-							<td>
-								카카페사진
-							</td>
-						</tr>
-					</table>
+				<div class="row">
+					<div class="col mt-2" style="font-weight: bold;">결제방식</div>
+					<div class="col"><img src="/images/kakao.png" width="80px"></div>
 				</div>
-				<div >
+				<div>
 					<input type="checkbox"> 동의하나요 <br>
 					<input type="checkbox"> 동의하나요
 				</div>
