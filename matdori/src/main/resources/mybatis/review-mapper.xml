@@ -15,7 +15,7 @@
 	<insert id ="write">
 		insert into review(
 			review_no, res_no, review_writer, review_content,
-			review_write_date, review_satr_point
+			review_write_date, review_star_point
 			)
 		values(
 			#{reviewNo}, #{resNo}, #{reviewWriter}, #{reviewContent},

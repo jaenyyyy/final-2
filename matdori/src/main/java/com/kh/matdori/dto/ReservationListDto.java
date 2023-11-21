@@ -20,8 +20,5 @@ public class ReservationListDto {
 	private String rezRequest;
 //	private Date rezDay;
 	
-
-
-	
 	
 }

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.matdori.dto.ReservationDto;
 import com.kh.matdori.dto.ReservationListDto;
+import com.kh.matdori.vo.PaymentSumVO;
 
 @Repository
 public class ReservationDaoImpl implements ReservationDao{

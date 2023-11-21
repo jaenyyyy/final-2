@@ -1,12 +1,8 @@
 package com.kh.matdori.restcontroller;
 
-import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,10 +10,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.kh.matdori.dao.CustomerDao;
-import com.kh.matdori.dto.CustomerAdminListDto;
 import com.kh.matdori.dto.CustomerBlockDto;
 import com.kh.matdori.dto.CustomerDto;
-import com.kh.matdori.dto.RestaurantBlockDto;
 
 @CrossOrigin
 @RestController
@@ -71,6 +65,8 @@ public class CustomerRestController {
 	        customerDao.deleteBlock(customerBlockDto.getCustomerId()); // customerId를 사용하여 처리
 	        return "redirect:/customer/detail";
 	    }
+	
+	
 	}
 
 

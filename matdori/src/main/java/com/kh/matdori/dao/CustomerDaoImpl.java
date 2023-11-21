@@ -1,5 +1,6 @@
 package com.kh.matdori.dao;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -13,6 +14,7 @@ import com.kh.matdori.dto.CustomerBlockDto;
 import com.kh.matdori.dto.CustomerDto;
 import com.kh.matdori.error.NoTargetException;
 import com.kh.matdori.vo.CusAdminVO;
+import com.kh.matdori.vo.PaymentSumVO;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -193,6 +195,30 @@ public class CustomerDaoImpl implements CustomerDao {
 	public void insertCusBlock(CustomerBlockDto customerBlockDto) {
 		sqlSession.insert("customerBlock.blockInsert", customerBlockDto);
 		
+	}
+	
+	
+	
+	
+	
+	//결제에서 쓰일 포인트 차감+페이백 
+	@Override
+	public boolean minusPoint(PaymentSumVO vo) {
+		Map<String, Object> params = new HashMap<>();
+		params.put("customerId", vo.getCustomerDto().getCustomerId());
+		params.put("customerPoint", vo.getInputPoint());
+		
+		return sqlSession.update("customer.minusPoint", vo) > 0;
+	}
+	
+	
+	@Override
+	public boolean paybackPoint(PaymentSumVO vo) {
+		Map<String, Object> params = new HashMap<>();
+		params.put("customerId", vo.getCustomerDto().getCustomerId());
+		params.put("customerPoint",	vo.getLevelByPayback());
+		
+		return sqlSession.update("customer.paybackPoint", vo) > 0;
 	}
 }
 
