@@ -14,17 +14,17 @@ import lombok.NoArgsConstructor;
 
 @Data @NoArgsConstructor @AllArgsConstructor @Builder
 public class MenuWithImagesVO {
-	  private int menuNo;
 	  private String menuName;
-	  private BigDecimal menuPrice;
+	  private Float menuPrice;
 	  private String menuContent;
 	  private MultipartFile menuImage;
-	  private int attachNo;
 	  
 	  @JsonIgnore
 	   public MenuDto getMenuDto() {
 	      return MenuDto.builder()
 	            .menuName(menuName)
+	            .menuPrice(menuPrice)
+	            .menuContent(menuContent)
 	            .build();
 	   }
 	}

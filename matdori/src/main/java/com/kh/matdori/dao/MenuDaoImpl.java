@@ -8,7 +8,6 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.kh.matdori.dto.MenuByResDto;
 import com.kh.matdori.dto.MenuDto;
 import com.kh.matdori.error.NoTargetException;
 import com.kh.matdori.vo.MenuWithImagesVO;
@@ -39,15 +38,27 @@ public class MenuDaoImpl implements MenuDao {
 		return sqlSession.update("menu.edit", params) > 0;
 	}
 
-
 	@Override
 	public List<MenuWithImagesVO> selectList(int menuTypeNo) {
-		 return sqlSession.selectList("menu.selectMenuWithImages",menuTypeNo);
+		return sqlSession.selectList("menu.selectMenuWithImages", menuTypeNo);
 	}
 
 	@Override
 	public List<MenuWithImagesVO> getMenuByRes(int resNo) {
-		   return sqlSession.selectList("menu.selectMenuByRes", resNo);
-    }
-}
+		return sqlSession.selectList("menu.selectMenuByRes", resNo);
+	}
 
+	@Override
+	public int sequence() {
+		return sqlSession.selectOne("menu.sequence");
+
+	}
+
+	@Override
+	public void insertMenuImage(int menuNo, int attachNo) {
+		Map<String, Object> params = new HashMap<>();
+		params.put("menuNo", menuNo);
+		params.put("attachNo", attachNo);
+		sqlSession.insert("menu.insertMenuImage", params);
+	}
+}
