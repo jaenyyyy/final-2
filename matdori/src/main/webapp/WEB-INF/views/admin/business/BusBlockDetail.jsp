@@ -77,10 +77,10 @@
         <input type="hidden" name="busId" value="${business.busId}">
         
         <div class="row mt-2">
-            <div class="col-4">차단사유</div>
+            <div class="col-4">차단,해제 사유</div>
         </div>
         <div class="col-8">
-            <input type="text" class="form-control" name="blockComment" id="blockComment">
+            <input type="text" class="form-control" name="blockComment" id="blockComment" required>
         </div>
         
         <div class="row mt-2">

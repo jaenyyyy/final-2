@@ -22,6 +22,6 @@ public class BusinessJudgeListDto {
 
     private String busName;
     private String busRegNo;
-    private Date busRegDate;
+    //private Date busRegDate;
 
 }

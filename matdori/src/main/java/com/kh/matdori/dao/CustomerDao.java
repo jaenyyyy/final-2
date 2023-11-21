@@ -41,7 +41,7 @@ public interface CustomerDao {
 
 	CustomerDto selectOneByEmail(String customerEmail);
 	
-	
+	boolean updateTemporaryPassword(String customerId, String temporaryPassword);
 	
 	
 	// 회원 차단 기능 
@@ -60,9 +60,11 @@ public interface CustomerDao {
 	int countList(CusAdminVO vo);
 
 	List<CustomerAdminListDto> cusAdminList(CusAdminVO vo);
+	
+	// 회원 레벨 업데이트 
+	boolean updateCustomerLevel(String customerId, String customerLevel);
 
 	boolean updateBlock(String customerStatus);
-	
 	
 	//포인트 차감 (마이너스)
 	boolean minusPoint(PaymentSumVO vo);
@@ -70,6 +72,7 @@ public interface CustomerDao {
 	//포인트 페이백 (플러스)
 	boolean paybackPoint(PaymentSumVO vo);
 	
+	boolean updatePoint(String customerId, int customerPoint);
 
 
 }

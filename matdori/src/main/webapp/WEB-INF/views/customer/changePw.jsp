@@ -36,7 +36,6 @@
             <div class="row">
                 <button type="submit" class="btn btn-positive w-100 mt-20">변경하기</button>
             </div>
-		
 		</div>
 		
 	</form>
@@ -46,5 +45,7 @@
 				</div>
 			</c:if>
 
+
+	
 
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
