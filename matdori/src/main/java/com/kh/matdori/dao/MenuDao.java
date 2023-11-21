@@ -20,4 +20,8 @@ public interface MenuDao {
 
 	List<MenuWithImagesVO> getMenuByRes(int resNo);
 
+	int sequence();
+
+	void insertMenuImage(int menuNo, int attachNo);
+
 }
