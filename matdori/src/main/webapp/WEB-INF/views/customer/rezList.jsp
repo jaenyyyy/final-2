@@ -76,35 +76,34 @@
 		<div class="col-9">
 			<div class="row">
 				<c:forEach var="ReservationListDto" items="${rezList}">
-					<div>
-						<br>
-					</div>
-					<div class="row res-line p-4" style="margin-left: 100px;">
-						<div class="col-3">
-							사진자리
-						</div>
-						<div class="col-7">
-							<div class="row">
-								${ReservationListDto.resName}
-							</div>
-							<div class="row">
-								예약일 : ${fn:substring(ReservationListDto.clockSelect, 0, 10)}
-							</div>
-							<div class="row">
-								예약시간 : ${fn:substring(ReservationListDto.clockSelect, 11, 16)}
-							</div>
-						</div>
-						<div class="col-2 text-end">
-							<div class="row mb-3">
-								<a href="" class="menu-tag">예약상세 ></a>
-							</div>
-							<div class="row">
-								<a class="btn btn-warning btn-sm open-modal-review">리뷰작성</a>
-							</div>
-						</div>
-					</div>
-					
-					    
+				    <div>
+				        <br>
+				    </div>
+				    <div class="row res-line p-4" style="margin-left: 100px;">
+				        <div class="col-3">
+				            사진자리
+				        </div>
+				        <div class="col-7">
+				            <input type="hidden" class="resNoInput" value="${ReservationListDto.resNo}">
+				            <div class="row modal-title">
+				                ${ReservationListDto.resName}
+				            </div>
+				            <div class="row">
+				                예약일 : ${fn:substring(ReservationListDto.clockSelect, 0, 10)}
+				            </div>
+				            <div class="row">
+				                예약시간 : ${fn:substring(ReservationListDto.clockSelect, 11, 16)}
+				            </div>
+				        </div>
+				        <div class="col-2 text-end">
+				            <div class="row mb-3">
+				                <a href="#" class="menu-tag">예약상세 ></a>
+				            </div>
+				            <div class="row">
+				                <a class="btn btn-warning btn-sm open-modal-review">리뷰작성</a>
+				            </div>
+				        </div>
+				    </div>
 				</c:forEach>
 			</div>
 		</div>
@@ -115,7 +114,7 @@
 		    <div class="modal-dialog">
 		        <div class="modal-content">
 		            <div class="modal-header">
-		                <h1 class="modal-title fs-5" id="exampleModalLabel">
+		                <h1 class="modal-title fs-5">
 		                    [ ${ReservationListDto.resName} ] 리뷰 작성
 		                </h1>
 		                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -150,51 +149,53 @@
 
 
 <script>
-	//리뷰 작성
-	$(".open-modal-review").click(function() {
-		var resName = $(this).closest('.res-line').find('.col-7 .row:first-child').text().trim(); 
-		
-		$("#reviewModal .modal-title").text("[ " + resName + " ] 리뷰 작성");
-		
-		$("#reviewModal").modal('show');
-	});
+$(".open-modal-review").click(function() {
+    var resLine = $(this).closest('.res-line');
+    var resName = resLine.data('resName');
+    var resNo = resLine.data('resNo');
+
+    $("#modal-title").text("[ " + resName + " ] 리뷰 작성");
+    $("#resNo").val(resNo);
+
+    $("#reviewModal").modal('show');
+});
 	
 	
 	//작성하던 창 닫을 때 초기화
 	$(document).ready(function() {
-	    $('#reviewModal').on('hidden.bs.modal', function () {
-	        var reviewData = $('#reviewContent').val();
-
-	        $('#reviewContent').val('');
-	        $('#reviewStarPoint').val('');
-
-	    });
+		$('#reviewModal').on('hidden.bs.modal', function () {
+		    var reviewData = $('#reviewContent').val();
+		    $('#reviewContent').val('');
+		});
 	});
 	
 	// 리뷰 작성 보내기
 	function sendReview() {
-	    var resNo = document.getElementById("resNo").value; // resNo 값을 가져옴
-	    var resBlockComment = $('#resBlockComment').val(); // 모달 내의 입력값
-
-	    var data = {
-	        resNo: resNo,
-	        resBlockComment: resBlockComment
-	    };
-
-	    $.ajax({
-	        url: '/rest/review/write', // 요청을 보낼 URL
-	        method: 'POST',
-	        contentType: 'application/json; charset=utf-8',
-	        data: JSON.stringify(data), // 데이터 전송
-	        success: function (response) {
-	            console.log('차단 요청이 성공했습니다.');
-	            $('#reveiwModal').modal('hide'); // 성공 시 모달 닫기
-	            location.reload();
-	        },
-	        error: function (xhr, status, error) {
-	            console.error('차단 요청에 실패했습니다.');
-	        }
-	    });
+	    var resNo = $('#resNo').val();
+	    var reviewContent = $('#reviewContent').val();
+	    var reviewStarCount = 0;
+	    
+	    var formData = new FormData();
+	    formData.append('resNo', resNo);
+	    formData.append('reviewContent', reviewContent);
+	    formData.append('reviewStarCount', reviewStarCount);
+	    formData.append('attach', $('#attachFile')[0].files[0]); // 파일 추가
+    
+    $.ajax({
+        url: '/rest/review/write',
+        method: 'POST',
+        processData: false,
+        contentType: false,
+        data: formData,
+        success: function(response) {
+            console.log('성공');
+            $('#reviewModal').modal('hide');
+            location.reload();
+        },
+        error: function(xhr, status, error) {
+            console.error('실패');
+        }
+    });
 	}
 	
 	

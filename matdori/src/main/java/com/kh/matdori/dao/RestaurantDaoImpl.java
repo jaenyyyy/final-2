@@ -21,8 +21,8 @@ public class RestaurantDaoImpl implements RestaurantDao {
 	
 	//등록 다시
 	@Override
-	public void insert(RestaurantJudgeVO vo) {
-		sqlSession.insert("restaurant.save", vo);
+	public void insert(RestaurantDto restaurantDto) {
+		sqlSession.insert("restaurant.save", restaurantDto);
 	}
 	
 	@Override

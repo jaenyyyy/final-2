@@ -30,15 +30,25 @@ public class RestaurantRestController {
 	
 	@PostMapping("/")
 	public void insert(@RequestBody RestaurantJudgeVO vo) {
+		//시퀀스 꺼냄
 		int resNo = restaurantDao.sequence();
-		vo.setResNo(resNo);
-		restaurantDao.insert(vo);
+		int judgeNo = adminDao.sequence();
 		
-		int resJudgeNo = adminDao.sequence();
-		vo.setResJudgeNo(resJudgeNo);
 		
-	    adminDao.insertResJudge(vo);
-	}
+		vo.getRestaurantDto().setResNo(resNo);
+		
+		//등록함
+		 restaurantDao.insert(vo.getRestaurantDto());
+
+	    // 시퀀스 값을 받아옴
+	    
+	    //resNo+judgeNo 설정
+	    vo.getRestaurantJudgeDto().setResNo(resNo);
+	    vo.getRestaurantJudgeDto().setResJudgeNo(judgeNo);
+	    
+	    //여기에 왜 안넣어지냐
+	    adminDao.insertResJudge(vo.getRestaurantJudgeDto());
+		}
 
 	@DeleteMapping("/{resNo}")
 	public void delete(@PathVariable int resNo) {
