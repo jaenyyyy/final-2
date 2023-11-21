@@ -6,6 +6,7 @@ import com.kh.matdori.dto.BusinessBlockDto;
 import com.kh.matdori.dto.RestaurantAdminListDto;
 import com.kh.matdori.dto.RestaurantBlockDto;
 import com.kh.matdori.dto.RestaurantJudgeDto;
+import com.kh.matdori.vo.BusPaginationVO;
 import com.kh.matdori.vo.ResAdminVO;
 import com.kh.matdori.vo.RestaurantJudgeVO;
 
@@ -32,6 +33,17 @@ public interface AdminDao {
 	
 	//사업자 관리 - 목록
 	List<BusinessBlockDto> getAllBlockedBusinesses();
+	
+	//사업자 목록
+	List<BusinessBlockDto> getList(BusPaginationVO vo);
+	
+	//페이지네이션용
+	int countList(BusPaginationVO vo);
+	
+//	// 사업자 차단 상태 업데이트 이전에 존재 여부 확인을 위한 메서드 추가
+//    int checkIfBusBlockExists(String busId);
 	//사업자 차단 상태 업데이트
 	void updateBusBlock(BusinessBlockDto blockDto);
+	
+	
 }

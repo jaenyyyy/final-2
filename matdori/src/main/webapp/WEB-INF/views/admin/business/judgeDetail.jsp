@@ -9,7 +9,7 @@
 	<h1>사업자 등록 심사 상세</h1>
 
 	<div class="row mt-2">
-		<div class="col-4 " >아이디</div>
+		<div class="col-4 ">아이디</div>
 	</div>
 	<div class="col-8">
 		<input type="text" class="form-control" value="${business.busId}"
@@ -71,20 +71,23 @@
 		<input type="text" class="form-control" value="${business.busAddr2}"
 			readonly>
 	</div>
-	
-<form id="judgeForm" action="/admin/business/details/{userId}" method="post">
-    <input type="hidden" name="busId" value="${business.busId}">
 
-    <div class="row mt-2">
-        <div class="col-4">심사코멘트</div>
-    </div>
-    <div class="col-8">
-        <input type="text" class="form-control" name="judgeComment" id="judgeComment">
-    </div>
-    <button type="submit" name="judgeStatus" value="심사승인">승인</button>
-    <button type="submit" name="judgeStatus" value="심사거절">거절</button>
-</form>
+	<!-- 승인 심사 폼 -->
+	<form id="judgeForm" action="/admin/business/details/{userId}"
+		method="post">
+		<input type="hidden" name="busId" value="${business.busId}">
 
+		<div class="row mt-2">
+			<div class="col-4">심사코멘트</div>
+		</div>
+		<div class="col-8">
+			<input type="text" class="form-control" name="judgeComment" required
+				id="judgeComment">
+		</div>
+		<button type="submit" name="judgeStatus" class="btn btn-success" value="심사승인">승인</button>
+		<button type="submit" name="judgeStatus"  class="btn btn-danger ml-2"value="심사거절">거절</button>
+		<a href="/admin/business/judge/list" class="btn btn-primary">목록으로</a>
+	</form>
 
 </div>
 
