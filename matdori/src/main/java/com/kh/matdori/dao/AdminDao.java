@@ -32,6 +32,8 @@ public interface AdminDao {
 	
 	//사업자 관리 - 목록
 	List<BusinessBlockDto> getAllBlockedBusinesses();
+//	// 사업자 차단 상태 업데이트 이전에 존재 여부 확인을 위한 메서드 추가
+//    int checkIfBusBlockExists(String busId);
 	//사업자 차단 상태 업데이트
 	void updateBusBlock(BusinessBlockDto blockDto);
 }

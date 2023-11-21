@@ -118,8 +118,13 @@ public class AdminDaoImpl implements AdminDao{
 	        params.put("busBlockComment", blockDto.getBusBlockComment());
 	        params.put("busBlockStatus", blockDto.getBusBlockStatus());
 	        params.put("busId", blockDto.getBusId());
-	        sqlSession.update("admin.updateBusBlock", params);
-	    }
-
-		
+	        
+	        // 만약 해당 ID에 대한 레코드가 없다면, 삽입 작업을 수행할 수 있도록 DAO 메서드를 수정
+	        int count = sqlSession.selectOne("admin.checkIfBusBlockExists", blockDto.getBusId());
+	        if (count == 0) {
+	            sqlSession.insert("admin.insertBusBlock", params);
+	        } else {
+	            sqlSession.update("admin.updateBusBlock", params);
+	        }
+	    }	
 }

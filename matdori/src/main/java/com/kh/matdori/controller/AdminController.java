@@ -165,10 +165,15 @@ public class AdminController {
         blockDto.setBusId(busId);
         blockDto.setBusBlockComment(blockComment);
         blockDto.setBusBlockStatus(blockStatus);
+        
+        //System.out.println("전달받은 데이터1: " + blockComment);
+        //System.out.println("전달받은 데이터2: " + blockStatus);
 
         // adminDao를 직접 호출하여 업데이트
         adminDao.updateBusBlock(blockDto);
-        System.out.println("상태: " + blockDto.getBusBlockStatus());
+        //System.out.println("상태: " + blockDto.getBusBlockStatus());
+        //System.out.println("전달받는 아이디: " + blockDto.getBusId());
+        
         return "redirect:/admin/business/blockManager/list";
     }
     

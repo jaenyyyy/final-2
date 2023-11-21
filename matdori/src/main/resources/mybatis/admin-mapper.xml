@@ -30,6 +30,18 @@
 		WHERE bus_id = #{busId}
 	</select>
 
+	<!-- 심사이전에 해당 ID에 대한 레코드가 있는지 확인하는 쿼리 -->
+	<select id="checkIfBusBlockExists" resultType="int">
+		SELECT COUNT(*) FROM business_block WHERE bus_id = #{busId}
+	</select>
+
+	<!-- 심사이전에 정보가 없다면 작동할 insert -->
+	<insert id="insertBusBlock">
+		INSERT INTO business_block (bus_id, bus_block_time, bus_block_comment,
+		bus_block_status)
+		VALUES (#{busId}, SYSDATE, #{busBlockComment}, #{busBlockStatus})
+	</insert>
+
 	<!-- 심사완료하면 업데이트 되는 코드 -->
 	<update id="updateJudge" parameterType="map">
 		UPDATE business_judge
@@ -190,9 +202,11 @@
 	<!-- 사업자 차단상태 업데이트 -->
 	<update id="updateBusBlock">
 		UPDATE business_block
-		SET bus_block_time = SYSDATE,
+		SET
+		bus_block_time = SYSDATE,
 		bus_block_comment = #{busBlockComment},
-		bus_block_status = #{busBlockStatus}
+		bus_block_status =
+		#{busBlockStatus}
 		WHERE bus_id = #{busId}
 	</update>
 
