@@ -111,6 +111,9 @@
                             <li class="nav-item">
                                 <a class="nav-link me-3" href="/qna/list">Q&A</a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link me-3" href="/customer/findPw">비밀번호 찾기</a>
+                            </li>
                         </ul>
                     </div>
                     <div class="d-flex ms-auto">

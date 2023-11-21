@@ -1,5 +1,6 @@
 package com.kh.matdori.dao;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -145,7 +146,6 @@ public class CustomerDaoImpl implements CustomerDao {
 	
 	
 
-
 	@Override
 	public CustomerBlockDto selectBlockOne(String customerId) {
 		CustomerBlockDto customerBlockDto = sqlSession.selectOne("customerBlock.cusBlockDetail", customerId);
@@ -194,7 +194,37 @@ public class CustomerDaoImpl implements CustomerDao {
 		sqlSession.insert("customerBlock.blockInsert", customerBlockDto);
 		
 	}
-}
+
+
+	@Override
+	public boolean updateTemporaryPassword(String customerId, String temporaryPassword) {
+		  Map<String, Object> param = new HashMap<>();
+	        param.put("customerId", customerId);
+	        param.put("temporaryPassword", temporaryPassword);
+
+	        int affectedRows = sqlSession.update("customer.updateTemporaryPassword", param);
+	        return affectedRows > 0;
+	    }
+
+
+	@Override
+	public boolean updateCustomerLevel(String customerId, String customerLevel) {
+		Map<String, Object> params = new HashMap<>();
+			params.put("customerId", customerId);
+			params.put("customerLevel", customerLevel);
+		return sqlSession.update("customer.levelEdit", params) > 0;
+	}
+
+
+	@Override
+	public boolean updatePoint(String customerId, int customerPoint) {
+		Map<String, Object> params = new HashMap<>();
+		params.put("customerId", customerId);
+		params.put("customerPoint", customerPoint);
+		return sqlSession.update("customer.pointEdit", params) > 0;
+	}
+	}
+
 
 
 

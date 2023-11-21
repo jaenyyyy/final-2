@@ -191,6 +191,32 @@ public class CustomerController {
 		
 	}
 	
+	// 비밀번호 찾기 
+//	@GetMapping("password")
+//	public String password() {
+//		return "customer/password";
+//	}
+//	
+//	@PostMapping("password")
+//	public String password(@ModelAttribute CustomerDto customerDto) {
+//		CustomerDto findDto = customerDao.selectOne(customerDto.getCustomerId());
+//		boolean isVaild = findDto != null
+//				&& findDto.getCustomerEmail().equals(customerDto.getCustomerEmail());
+//		if (isVaild) {
+//			 String temporaryPassword = generateTemporaryPassword();
+//			 
+//			 findDto.setCustomerPw(temporaryPassword);
+//			 customerDao.updateTemporaryPassword(findDto.getCustomerId(), temporaryPassword);
+//			 
+//			 sendTemporaryPasswordEmail(findDto.getCustomerEmail(), temporaryPassword);
+//			 return "redirect:/passwordFinish";
+//		}
+//		else {
+//			return "redirect:/passwordFinish?error";
+//		}
+//	}
+//	
+	
 	
 	// 비밀번호 재설정 ok 
 	@GetMapping("/changePw")
