@@ -5,7 +5,7 @@ import com.kh.matdori.vo.RestaurantJudgeVO;
 
 public interface RestaurantDao {
 
-	void insert(RestaurantJudgeVO vo);
+	void insert(RestaurantDto restaurantDto);
 
 	void delete(int resNo);
 

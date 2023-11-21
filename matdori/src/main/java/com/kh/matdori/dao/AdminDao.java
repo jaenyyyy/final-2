@@ -19,7 +19,7 @@ public interface AdminDao {
 	
 	//레스토랑 심사
 	int sequence();  //시퀀스 등록
-	void insertResJudge(RestaurantJudgeVO vo); //심사 등록  (리액트 insert에서 넘기느라 vo로 생성했다)
+	void insertResJudge(RestaurantJudgeDto restaurantJudgeDto); //심사 등록  (리액트 insert에서 넘기느라 vo로 생성했다)
 	boolean updateResJudge(RestaurantJudgeDto restaurantJudgeDto); //심사 수정
 	boolean deleteResJudge(int resJudgeNo); //심사 삭제
 	RestaurantJudgeDto selectOne(int resNo); //심사 상세 매장기준

@@ -101,8 +101,8 @@ public class AdminDaoImpl implements AdminDao{
 		
 		
 		@Override
-		public void insertResJudge(RestaurantJudgeVO vo) {
-			sqlSession.insert("admin.resJudgeInsert", vo);
+		public void insertResJudge(RestaurantJudgeDto restaurantJudgeDto) {
+			sqlSession.insert("admin.resJudgeInsert", restaurantJudgeDto);
 		}
 
 		//사업자 관리 리스트
