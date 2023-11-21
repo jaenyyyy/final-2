@@ -55,13 +55,26 @@
 </update>
 
 	
-<!-- 비밀번호 업데이트 -->
+	<!-- 비밀번호 업데이트 -->
 	<update id="updatePassword">
     	UPDATE customer	
     		SET customer_pw = #{newPassword}
     	WHERE customer_email = #{customerEmail}
 	</update>
 	
+	<!--  레벨 업데이트  -->
+	<update id="levelEdit">
+    update customer set customer_level = #{customerLevel}
+    where customer_id = #{customerId}
+	</update>
+	
+	<!--  포인트 업데이트  -->
+	<update id="pointEdit">
+	update customer set customer_point = #{customerPoint}
+	where customer_id = #{customerId}
+	</update>
+	
+
 	    <!-- 삭제 -->
    	 	<delete id="delete">
     	 	delete customer where customer_id = #{customerId}

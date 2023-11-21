@@ -180,7 +180,7 @@ public class AdminController {
     
     
 //    
-// // 이용자 차단 구문 
+// // 이용자 차단 구문(restcontroller)
 // 	@RequestMapping("customer/block")
 // 	public String cusBlock(@RequestParam String customerId) {
 // 		customerDao.insertBlock(customerId);
@@ -236,7 +236,21 @@ public class AdminController {
     	
     	return "/customer/detail";
     	}
-	}
+	
+
+
+//	// 이용자 등급 수정 ajax로 restcontroller로 옮김
+//	@RequestMapping("/customer/levelEdit")
+//	public String customerEdit(@ModelAttribute CustomerDto customerDto) {
+//		boolean result = customerDao.updateCustomerLevel(customerDto);
+//		if(result) {
+//			return "redirect:edit?customerId="+customerDto.getCustomerId();
+//		}
+//		else {
+//			return "redirect:error";
+//		}
+//	}
+}
 
 
 

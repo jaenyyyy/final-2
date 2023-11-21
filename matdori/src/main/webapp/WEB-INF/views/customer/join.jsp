@@ -3,7 +3,7 @@
     
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 
-<script src="/js/cert.js"></script>
+<script src="/js/customerJoin.js"></script>
 
 
 <form action="join" method="post" autocomplete="off">
@@ -97,6 +97,8 @@
 		</div>
 	</div>
 </form>
+
+
 
 
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
