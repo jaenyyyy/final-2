@@ -1,6 +1,9 @@
 package com.kh.matdori.restcontroller;
 
+import java.net.URI;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,9 +17,11 @@ import org.springframework.web.bind.annotation.RestController;
 import com.kh.matdori.dao.AdminDao;
 import com.kh.matdori.dao.RestaurantDao;
 import com.kh.matdori.dto.RestaurantDto;
-import com.kh.matdori.dto.RestaurantJudgeDto;
 import com.kh.matdori.vo.RestaurantJudgeVO;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @CrossOrigin
 @RestController
 @RequestMapping("/restaurant")
@@ -29,11 +34,14 @@ public class RestaurantRestController {
 	private AdminDao adminDao;
 	
 	@PostMapping("/")
-	public void insert(@RequestBody RestaurantJudgeVO vo) {
+	public ResponseEntity<?> insert(@RequestBody RestaurantJudgeVO vo) {
+		 // 디버그 로그 출력
+		log.debug("Received busId: {}", vo.getRestaurantDto().getBusId());
 		//시퀀스 꺼냄
 		int resNo = restaurantDao.sequence();
 		int judgeNo = adminDao.sequence();
 		
+		 log.debug("Generated resNo: {}, judgeNo: {}", resNo, judgeNo);
 		
 		vo.getRestaurantDto().setResNo(resNo);
 		
@@ -46,8 +54,9 @@ public class RestaurantRestController {
 	    vo.getRestaurantJudgeDto().setResNo(resNo);
 	    vo.getRestaurantJudgeDto().setResJudgeNo(judgeNo);
 	    
-	    //여기에 왜 안넣어지냐
+	   
 	    adminDao.insertResJudge(vo.getRestaurantJudgeDto());
+		return ResponseEntity.created(URI.create("/restaurant/" + resNo)).build();
 		}
 
 	@DeleteMapping("/{resNo}")
