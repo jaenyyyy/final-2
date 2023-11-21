@@ -9,6 +9,10 @@ import lombok.NoArgsConstructor;
 public class ReservationListDto {
 	private int rezNo, resNo, menuNo, clockNo, seatNo;
 	private String rezCustomerId;
+	private String customerName;
+	private String customerContact;
+	private int customerPoint;
+	private String customerLevel;
 	private String resName, menuName;
 	private Float menuPrice;
 	private String clockSelect, seatName;
@@ -16,8 +20,8 @@ public class ReservationListDto {
 	private String rezRequest;
 //	private Date rezDay;
 	
-//	private List<MenuDto> menuList;
-	public Float getTotal() {
-		return menuPrice * rezMenuQty;
-	}
+
+
+	
+	
 }
