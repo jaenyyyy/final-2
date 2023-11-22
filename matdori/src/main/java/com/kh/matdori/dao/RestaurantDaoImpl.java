@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.matdori.dto.RestaurantDto;
 import com.kh.matdori.error.NoTargetException;
+import com.kh.matdori.vo.RestaurantDetailVO;
 import com.kh.matdori.vo.RestaurantJudgeVO;
 
 import lombok.extern.slf4j.Slf4j;
@@ -51,6 +52,11 @@ public class RestaurantDaoImpl implements RestaurantDao {
 		if(restaurantDto == null)
 			throw new NoTargetException();
 		return restaurantDto;
+	}
+	
+	@Override
+	public RestaurantDetailVO selectDetail(int resNo) {
+		return sqlSession.selectOne("restaurant.resDetail", resNo);
 	}
 
 
