@@ -13,6 +13,9 @@ public class PaymentSumVO {
 	private ReservationListDto reservationListDto;
 	private CustomerDto customerDto; 
 	private int inputPoint;
+//	private float getSumTotal;
+//	private float getPaymentTotal;
+//	private float getLevelByPayback;
 	
 	
 	//합계 금액 (메뉴가격 * 메뉴개수)

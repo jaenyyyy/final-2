@@ -20,6 +20,7 @@ import com.kh.matdori.dao.ReservationDao;
 import com.kh.matdori.dao.RestaurantDao;
 import com.kh.matdori.dao.SeatDao;
 import com.kh.matdori.dto.ClockDto;
+import com.kh.matdori.dto.CustomerDto;
 import com.kh.matdori.dto.ReservationDto;
 import com.kh.matdori.dto.ReservationListDto;
 import com.kh.matdori.dto.SeatDto;
@@ -109,7 +110,23 @@ public class ReservationController {
 		
 		ReservationListDto rezDto = reservationDao.selectOne(rezNo);
 		
+		
+		//계산을 위한 vo 생성
+		PaymentSumVO vo = new PaymentSumVO();
+		
+		//rezDto 설정을 vo 가져오는걸로 설정
+		vo.setReservationListDto(rezDto);
+		
+		Float sumTotal = vo.getSumTotal();
+		Float paymentTotal = vo.getPaymentTotal();
+		int inputPoint = vo.getInputPoint();
+		
+		
+		
 		model.addAttribute("rezDto", rezDto);
+		model.addAttribute("sumTotal", sumTotal);
+	    model.addAttribute("paymentTotal", paymentTotal);
+	    model.addAttribute("inputPoint", inputPoint);
 		
 		return "reservation/rezDetail";
 	}
