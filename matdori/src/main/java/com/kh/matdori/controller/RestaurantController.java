@@ -30,8 +30,8 @@ public class RestaurantController {
 	public String detail(Model model, 
 						 @RequestParam int resNo) {
 		RestaurantDetailVO resDetail = restaurantDao.selectDetail(resNo);
-		List<MenuWithImagesVO> menuList = menuDao.getMenuByRes(resNo);
-		List<ReviewDto> reviewList = reviewDao.selectListByRes(resNo);
+//		List<MenuWithImagesVO> menuList = menuDao.getMenuByRes(resNo);
+//		List<ReviewDto> reviewList = reviewDao.selectListByRes(resNo);
 		
 		model.addAttribute("resDetail", resDetail);
 		model.addAttribute("menuList", menuList);

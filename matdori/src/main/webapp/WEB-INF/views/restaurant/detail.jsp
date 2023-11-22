@@ -16,13 +16,13 @@
 		
 		<div class="row justify-content-center text-center">
 			<div class="row">
-				<c:forEach var="resDetail" items="${resDetail}">
+				<c:forEach var="menuList" items="${menuList}">
 					<div class="row">
-						${resDetail.menuName}
+						${menuList.menuName}
 						-
-						${resDetail.menuPrice}원
+						${menuList.menuPrice}원
 						-
-						${resDetail.menuContent}
+						${menuList.menuContent}
 						
 					</div>
 				</c:forEach>

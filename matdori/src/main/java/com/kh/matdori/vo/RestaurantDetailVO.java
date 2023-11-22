@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 
 @Data @NoArgsConstructor @AllArgsConstructor @Builder
 public class RestaurantDetailVO {
-	private int resNo, menuNo;
+	private int resNo;
 	private String resName, resTel;
 	private String resOpenTime;
 	private String resPost, resAddr1, resAddr2;
