@@ -1,5 +1,6 @@
 package com.kh.matdori.controller;
 
+import java.net.URISyntaxException;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -16,13 +17,18 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.kh.matdori.dao.ClockDao;
 import com.kh.matdori.dao.CustomerDao;
 import com.kh.matdori.dao.MenuDao;
+import com.kh.matdori.dao.PaymentDao;
 import com.kh.matdori.dao.ReservationDao;
 import com.kh.matdori.dao.RestaurantDao;
 import com.kh.matdori.dao.SeatDao;
 import com.kh.matdori.dto.ClockDto;
+import com.kh.matdori.dto.PaymentDto;
 import com.kh.matdori.dto.ReservationDto;
 import com.kh.matdori.dto.ReservationListDto;
 import com.kh.matdori.dto.SeatDto;
+import com.kh.matdori.service.KakaoPayService;
+import com.kh.matdori.vo.KakaoPayApproveRequestVO;
+import com.kh.matdori.vo.KakaoPayApproveResponseVO;
 import com.kh.matdori.vo.PaymentSumVO;
 
 import lombok.extern.slf4j.Slf4j;
@@ -43,6 +49,11 @@ public class ReservationController {
 	private SeatDao seatDao;
 	@Autowired
 	private MenuDao menuDao;
+	@Autowired
+	private PaymentDao paymentDao;
+	@Autowired
+	private KakaoPayService kakaoPayService;
+	
 	
 	@GetMapping("/insert")
 	public String insert(Model model
@@ -109,9 +120,66 @@ public class ReservationController {
 		
 		ReservationListDto rezDto = reservationDao.selectOne(rezNo);
 		
+		
+		//계산을 위한 vo 생성
+		PaymentSumVO vo = new PaymentSumVO();
+		
+		//rezDto 설정을 vo 가져오는걸로 설정
+		vo.setReservationListDto(rezDto);
+		
+		Float sumTotal = vo.getSumTotal();
+		Float paymentTotal = vo.getPaymentTotal();
+		int inputPoint = vo.getInputPoint();
+		
+		
+		
 		model.addAttribute("rezDto", rezDto);
+		model.addAttribute("sumTotal", sumTotal);
+	    model.addAttribute("paymentTotal", paymentTotal);
+	    model.addAttribute("inputPoint", inputPoint);
 		
 		return "reservation/rezDetail";
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	//결제  --재은 구역--
+	@GetMapping("/payment/success")
+	public String paymentSuccess(HttpSession session,
+								@RequestParam String pg_token) throws URISyntaxException {
+		KakaoPayApproveRequestVO request = (KakaoPayApproveRequestVO)session.getAttribute("approve");
+		
+		session.removeAttribute("approve");
+		
+		request.setPgToken(pg_token);  //토큰설정
+		KakaoPayApproveResponseVO response = kakaoPayService.approve(request); //승인요청
+		
+		//[1] 결제번호 생성
+		int paymentNo = Integer.parseInt(response.getPartnerOrderId());
+		
+		//[2] 결제정보 등록
+		paymentDao.insert(PaymentDto.builder()
+				.paymentNo(paymentNo)
+				.paymentCustomer(response.getPartnerUserId())
+				.paymentTid(response.getTid())
+				.paymentName(response.getItemName())
+				.paymentPrice(response.getAmount().getTotal())
+				.paymentRemain(response.getAmount().getTotal())
+				.build());
+		
+		
+		return "redirect:successResult";
+	}
+	
+	@RequestMapping("/payment/successResult")
+	public String paymentSuccessResult() {
+		return "/reservation/successResult";
 	}
 	
 }
