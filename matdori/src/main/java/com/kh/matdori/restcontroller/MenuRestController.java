@@ -107,15 +107,15 @@ public class MenuRestController {
 //	    return ResponseEntity.ok(menuList);
 //	}
 
-//	@GetMapping("/{menuNo}")
-//	public ResponseEntity<MenuByResDto> find(@PathVariable int menuNo) {
-//		MenuByResDto menuByResDto = menuDao.selectOne(menuNo);
-//		if (menuByResDto != null) {
-//			return ResponseEntity.ok().body(menuByResDto);
-//		} else {
-//			return ResponseEntity.notFound().build();
-//		}
-//	}
+	@GetMapping("/{menuNo}")
+	public ResponseEntity<MenuWithImagesVO> find(@PathVariable int menuNo) {
+	    MenuWithImagesVO vo = menuDao.selectOne(menuNo);
+	    if (vo != null) {
+	        return ResponseEntity.ok().body(vo);
+	    } else {
+	        return ResponseEntity.notFound().build();
+	    }
+	}
 
 	@PutMapping("/{menuNo}")
 	public ResponseEntity<String> edit(@PathVariable int menuNo, @RequestBody MenuDto menuDto) {
