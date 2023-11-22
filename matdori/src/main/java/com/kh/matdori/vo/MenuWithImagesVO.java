@@ -14,6 +14,7 @@ import lombok.NoArgsConstructor;
 
 @Data @NoArgsConstructor @AllArgsConstructor @Builder
 public class MenuWithImagesVO {
+//	  private int menuNo;
 	  private String menuName;
 	  private Float menuPrice;
 	  private String menuContent;
