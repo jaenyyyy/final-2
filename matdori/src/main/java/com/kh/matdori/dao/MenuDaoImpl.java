@@ -61,4 +61,9 @@ public class MenuDaoImpl implements MenuDao {
 		params.put("attachNo", attachNo);
 		sqlSession.insert("menu.insertMenuImage", params);
 	}
+
+	@Override
+	public MenuWithImagesVO selectOne(int menuNo) {
+		return sqlSession.selectOne("menu.menuByMenuNo", menuNo);
+	}
 }

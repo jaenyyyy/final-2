@@ -76,19 +76,19 @@
 
    
    <!--  단일메뉴 조회-->
-  <select id="menuByMenuNo" resultType="MenuByResDto">
+  <select id="menuByMenuNo" resultType="MenuWithImagesVO">
   SELECT 
-    menu_no,
-    menu_name,
-    menu_price,
-    menu_content, 
-    res_name,
-    menu_type_name,
-    image_id
+    m.menu_no,	
+    m.menu_name,
+    m.menu_price,
+    m.menu_content,
+    a.attach_name as menuImage
   FROM 
-    restaurant_menu_with_images
+    menu m
+  LEFT JOIN menu_images mi ON m.menu_no = mi.menu_no
+  LEFT JOIN attach a ON mi.attach_no = a.attach_no
   WHERE 
-    menu_no = #{menuNo}
+    m.menu_no = #{menuNo}
 </select>
    
     <!--  메뉴 수정 -->
