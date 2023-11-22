@@ -81,6 +81,7 @@
 					
 				</div>
 				<!-- 예약내역 -->
+				
 				<div class="list-border">
 					<div>
 						<h5 class="h-title">예약내역</h5>
@@ -113,7 +114,10 @@
 			</div>
 			
 			
+			
+			
 			<!-- 결제정보 -->
+			
 			<div class="col list-border mb-4 ms-4">
 				<div>
 					<h5 class="h-title">결제정보</h5>
@@ -135,13 +139,13 @@
 					    <th>포인트 사용</th>
 					    <td>
 					        <input type="number" class="form-control w-50" id="inputPoint" name="inputPoint" oninput="updatePaymentTotal()" value="${inputPoint}">
-					        <span id="customerPoint">보유 포인트: ${rezDto.customerPoint} pt</span>
+					        <span id="customerPoint">보유 포인트: <fmt:formatNumber value="${rezDto.customerPoint}" pattern="#,##0"/> pt </span>
 					    </td>
 					</tr>
 					<tr>
 					    <th>결제금액</th>
 					    <td id="paymentAmount">
-					        <fmt:formatNumber value="${paymentTotal}" pattern="#,##0"/> 원
+					        <fmt:formatNumber value="${paymentTotal}" pattern=3"#,##0"/> 원
 					    </td>
 					</tr>
 					</table>
@@ -156,7 +160,11 @@
 					<input type="checkbox"> 동의하나요
 				</div>
 				<div>
-					<button class="btn btn-warning w-100">결제하기</button>
+					<c:forEach var="confirmVO" items="${list}" varStatus="stat"> 
+						<input type="hidden" name="product[${stat.index}].productNo" value="${confirmVO.purchaseVO.productNo}">
+						<input type="hidden" name="product[${stat.index}].qty" value="${confirmVO.purchaseVO.qty}">
+					</c:forEach>	
+					<button type="submit" class="btn btn-warning w-100">결제하기</button>
 				</div>
 			</div>
 			
