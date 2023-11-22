@@ -31,6 +31,7 @@ import com.kh.matdori.dto.RestaurantBlockDto;
 import com.kh.matdori.dto.RestaurantDto;
 import com.kh.matdori.dto.RestaurantJudgeDto;
 import com.kh.matdori.dto.ReviewDto;
+import com.kh.matdori.vo.BusBlockPaginationVO;
 import com.kh.matdori.vo.BusPaginationVO;
 import com.kh.matdori.vo.CusAdminVO;
 import com.kh.matdori.vo.PaginationVO;
@@ -72,13 +73,13 @@ public class AdminController {
 //	//심사 리스트
 	@GetMapping("/business/judge/list")
 	public String busJudgeList(Model model, @ModelAttribute(name = "vo") BusPaginationVO vo) {
-	    int count = businessJudgeDao.countList(vo);
+	    int count = adminDao.countList(vo);
 	    vo.setCount(count);
 	    
 	    // 페이징 정보 계산
 	    vo.calculatePageInfo();
 	    
-	    List<BusinessJudgeListDto> businessJudgeList = businessJudgeDao.getList(vo);
+	    List<BusinessJudgeListDto> businessJudgeList = adminDao.getList(vo);
 	    
 	    model.addAttribute("vo", vo);
 	    model.addAttribute("businessJudgeList", businessJudgeList);
@@ -160,18 +161,18 @@ public class AdminController {
     }
     
     
-  //사업자 관리 리스트
+  //사업자 차단 관리 리스트
     @GetMapping("/business/blockManager/list")
-    public String businessBlockManagerList(Model model, @ModelAttribute(name = "vo") BusPaginationVO vo) {
-        int count = adminDao.countList(vo);
+    public String businessBlockManagerList(Model model, @ModelAttribute(name = "vo") BusBlockPaginationVO vo) {
+        int count = adminDao.countBlockList(vo);
         vo.setCount(count);
-        
+        System.out.println("페이지 카운트 : " + vo.getPageCount());
+        System.out.println("전체페이지 카운트 : " + vo.getCount());
 	    // 페이징 정보 계산
 	    vo.calculatePageInfo();
     	
-    	//List<BusinessBlockDto> blockedBusinesses = adminDao.getAllBlockedBusinesses();
+    	List<BusinessBlockDto> blockedBusinesses = adminDao.getBusBlocklist(vo);
 	    
-	    List<BusinessBlockDto> blockedBusinesses = adminDao.getList(vo);
 	    model.addAttribute("vo", vo);
         model.addAttribute("businessBlockList", blockedBusinesses);
         return "/admin/business/BusBlockList";

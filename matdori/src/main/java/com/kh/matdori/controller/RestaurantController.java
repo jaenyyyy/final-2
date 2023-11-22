@@ -33,9 +33,10 @@ public class RestaurantController {
 //		List<MenuWithImagesVO> menuList = menuDao.getMenuByRes(resNo);
 //		List<ReviewDto> reviewList = reviewDao.selectListByRes(resNo);
 		
-		model.addAttribute("resDetail", resDetail);
-		model.addAttribute("menuList", menuList);
-		model.addAttribute("reviewList", reviewList);
+//		model.addAttribute("resDetail", resDetail);
+//		model.addAttribute("menuList", menuList);
+//		model.addAttribute("reviewList", reviewList); 
+		//오류나서 주석처리
 		
 		return "restaurant/detail";
 		
