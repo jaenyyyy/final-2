@@ -20,6 +20,7 @@
   #{resAddr1}, #{resAddr2})
 </insert>
 
+
     
     <!-- 삭제 -->
     <delete id="deleteByResNo">
