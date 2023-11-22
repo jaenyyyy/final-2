@@ -20,7 +20,6 @@ import com.kh.matdori.dao.ReservationDao;
 import com.kh.matdori.dao.RestaurantDao;
 import com.kh.matdori.dao.SeatDao;
 import com.kh.matdori.dto.ClockDto;
-import com.kh.matdori.dto.MenuDto;
 import com.kh.matdori.dto.ReservationDto;
 import com.kh.matdori.dto.ReservationListDto;
 import com.kh.matdori.dto.SeatDto;
@@ -57,6 +56,17 @@ public class ReservationController {
 	    // 모델에 clockList, seatList를 추가
 	    model.addAttribute("clockList", clockList);
 	    model.addAttribute("seatList", seatList);
+//	    List<PurchaseVO> list = listVO.getProduct();
+//		for(PurchaseVO vo : list) {
+//			ProductDto productDto = productDao.selectOne(vo.getProductNo());//상품정보 조회
+//			paymentDao.insertDetail(PaymentDetailDto.builder()
+//							.paymentDetailOrigin(paymentNo)//상위결제번호
+//							.paymentDetailProduct(vo.getProductNo())//상품번호(vo, productDto)
+//							.paymentDetailProductName(productDto.getProductName())//상품명(productDto)
+//							.paymentDetailProductPrice(productDto.getProductPrice())//상품가격(productDto)
+//							.paymentDetailProductQty(vo.getQty())//구매수량(vo)
+//						.build());
+//		}
 		return "reservation/booking";
 	}
 	@PostMapping("/insert")

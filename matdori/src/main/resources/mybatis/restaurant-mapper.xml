@@ -31,6 +31,20 @@
     select * from restaurant where res_no = #{resNo}
     </select>
     
+    <!-- 매장 상세조회 -->
+    <select id="resDetail" resultType="RestaurantDetailVO">
+    select 
+    r.res_no, r.res_name, r.res_tel, r.res_open_time,
+    r.res_post, r.res_addr1, r.res_addr2,
+<!--     r.res_post, r.res_addr1, r.res_addr2, r.res_notice, -->
+    m.menu_name, m.menu_price, m.menu_content,
+    re.review_writer, re.review_content, re.review_write_date, re.review_star_point 
+    from restaurant r 
+    left join menu m on r.res_no = m.res_no 
+    left join review re on r.res_no = re.res_no 
+    where r.res_no = #{resNo}
+    </select>
+    
     <!-- 정보 수정 (사업자번호 제외) -->
 	<update id="editResInfo">
 		UPDATE restaurant SET
