@@ -14,7 +14,6 @@ import com.kh.matdori.dao.ReviewDao;
 import com.kh.matdori.dto.RestaurantDto;
 import com.kh.matdori.dto.ReviewDto;
 import com.kh.matdori.vo.MenuWithImagesVO;
-import com.kh.matdori.vo.RestaurantDetailVO;
 
 import lombok.extern.slf4j.Slf4j;
 
