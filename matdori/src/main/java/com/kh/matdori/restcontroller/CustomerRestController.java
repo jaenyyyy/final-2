@@ -61,17 +61,18 @@ public class CustomerRestController {
 		return "redirect:/customer/detail";
 	}
 
-	@RequestMapping("/cancel") // customerId를 받아오는 경로 지정
-	    public String cusCancel(@RequestBody CustomerBlockDto customerBlockDto) {
-	        customerDao.deleteBlock(customerBlockDto.getCustomerId()); // customerId를 사용하여 처리
-	        return "redirect:/customer/detail";
-	    }
-	
-	
-	public String cusCancel(@RequestBody CustomerBlockDto customerBlockDto) {
-		customerDao.deleteBlock(customerBlockDto.getCustomerId()); // customerId를 사용하여 처리
-		return "redirect:/customer/detail";
-	}
+	//오류?로 임시 주석처리
+//	@RequestMapping("/cancel") // customerId를 받아오는 경로 지정
+//	    public String cusCancel(@RequestBody CustomerBlockDto customerBlockDto) {
+//	        customerDao.deleteBlock(customerBlockDto.getCustomerId()); // customerId를 사용하여 처리
+//	        return "redirect:/customer/detail";
+//	    }
+//	
+//	
+//	public String cusCancel(@RequestBody CustomerBlockDto customerBlockDto) {
+//		customerDao.deleteBlock(customerBlockDto.getCustomerId()); // customerId를 사용하여 처리
+//		return "redirect:/customer/detail";
+//	}
 
 //	  @RequestMapping("/levelEdit")
 //	    public ResponseEntity<String> customerEdit(@RequestBody CustomerDto customerDto) {

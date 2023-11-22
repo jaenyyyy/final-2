@@ -219,7 +219,7 @@ public class CustomerDaoImpl implements CustomerDao {
 		
 		return sqlSession.update("customer.paybackPoint", vo) > 0;
 	}
-}
+//}오류나서 임시 주석처리
 
 
 	@Override
