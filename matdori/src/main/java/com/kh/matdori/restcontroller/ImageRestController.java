@@ -12,8 +12,11 @@ import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.kh.matdori.configuration.FileUploadProperties;
 import com.kh.matdori.dao.AttachDao;
@@ -21,6 +24,12 @@ import com.kh.matdori.dao.MenuDao;
 import com.kh.matdori.dao.RestaurantDao;
 import com.kh.matdori.dto.AttachDto;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
+@RestController
+@CrossOrigin
+@RequestMapping("/image")
 public class ImageRestController {
 
 	  
@@ -48,51 +57,51 @@ public class ImageRestController {
 	         }
 	         
 	         
-//	   @GetMapping("/menu/{menuNo}")
-//	   public ResponseEntity<ByteArrayResource>downloadActorImage(@PathVariable int menuNo) throws IOException{
+	   @GetMapping("/menu/{menuNo}")
+	   public ResponseEntity<ByteArrayResource>downloadMenuImage(@PathVariable int menuNo) throws IOException{
+	      log.debug("menuNo={}",menuNo);
+//	      log.debug("actorNo={}",actorNo);
+	      
+	      AttachDto attachDto = menuDao.findMenuImage(menuNo);
+	      log.debug("attachDto={}",attachDto);
+	      
+	      File target = new File(dir,String.valueOf(attachDto.getAttachNo()));
+	      byte[] data=FileUtils.readFileToByteArray(target);//실제파일정보 불러오기
+	      ByteArrayResource resource=new ByteArrayResource(data);
+	      
+	      return ResponseEntity.ok()
+	            .header(HttpHeaders.CONTENT_ENCODING, StandardCharsets.UTF_8.name())
+	            .contentLength(attachDto.getAttachSize())
+	            .header(HttpHeaders.CONTENT_TYPE,attachDto.getAttachType())
+	            .contentType(MediaType.APPLICATION_OCTET_STREAM)
+	            .header("Content-Disposition","attachment;filename="+attachDto.getAttachName())
+
+	            .body(resource);
+	   }
+	   
+//	   @GetMapping("/movieMain/{movieNo}")
+//	   public ResponseEntity<ByteArrayResource>downloadMovieMainImage(@PathVariable int movieNo) throws IOException{
 //	      
-////	      log.debug("actorNo={}",actorNo);
+//	      log.debug("movieNo={}",movieNo);
 //	      
-//	      AttachDto menuImgDto = menuDao.findActorImage(menuNo);
-////	      log.debug("imageActorDto={}",imageActorDto);
+//	      ImageDto movieMainImageDto = movieDao.findMainImage(movieNo);
 //	      
-//	      File target = new File(dir,String.valueOf(imageActorDto.getImageNo()));
+//	      log.debug("movieMainImageDto={}",movieMainImageDto);
+//	      
+//	      File target = new File(dir,String.valueOf(movieMainImageDto.getImageNo()));
 //	      byte[] data=FileUtils.readFileToByteArray(target);//실제파일정보 불러오기
 //	      ByteArrayResource resource=new ByteArrayResource(data);
 //	      
 //	      return ResponseEntity.ok()
 //	            .header(HttpHeaders.CONTENT_ENCODING, StandardCharsets.UTF_8.name())
-//	            .contentLength(menuImgDto.getImageSize())
-//	            .header(HttpHeaders.CONTENT_TYPE,menuImgDto.getImageType())
+//	            .contentLength(movieMainImageDto.getImageSize())
+//	            .header(HttpHeaders.CONTENT_TYPE,movieMainImageDto.getImageType())
 //	            .contentType(MediaType.APPLICATION_OCTET_STREAM)
-//	            .header("Content-Disposition","attachment;filename="+menuImgDto.getImageName())
-//
+//	            .header("Content-Disposition","attachment;filename="+movieMainImageDto.getImageName())
+//	            
 //	            .body(resource);
 //	   }
 //	   
-////	   @GetMapping("/movieMain/{movieNo}")
-////	   public ResponseEntity<ByteArrayResource>downloadMovieMainImage(@PathVariable int movieNo) throws IOException{
-////	      
-////	      log.debug("movieNo={}",movieNo);
-////	      
-////	      ImageDto movieMainImageDto = movieDao.findMainImage(movieNo);
-////	      
-////	      log.debug("movieMainImageDto={}",movieMainImageDto);
-////	      
-////	      File target = new File(dir,String.valueOf(movieMainImageDto.getImageNo()));
-////	      byte[] data=FileUtils.readFileToByteArray(target);//실제파일정보 불러오기
-////	      ByteArrayResource resource=new ByteArrayResource(data);
-////	      
-////	      return ResponseEntity.ok()
-////	            .header(HttpHeaders.CONTENT_ENCODING, StandardCharsets.UTF_8.name())
-////	            .contentLength(movieMainImageDto.getImageSize())
-////	            .header(HttpHeaders.CONTENT_TYPE,movieMainImageDto.getImageType())
-////	            .contentType(MediaType.APPLICATION_OCTET_STREAM)
-////	            .header("Content-Disposition","attachment;filename="+movieMainImageDto.getImageName())
-////	            
-////	            .body(resource);
-////	   }
-////	   
 //	   @GetMapping("/{imageNo}")
 //	   public ResponseEntity<ByteArrayResource>downloadImage(@PathVariable int attachNo) throws IOException{
 //	      
@@ -110,7 +119,7 @@ public class ImageRestController {
 //	            
 //	            .body(resource);
 //	   }
-//  
+  
 	}
 	
 	
