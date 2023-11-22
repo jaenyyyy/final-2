@@ -45,7 +45,7 @@
 
 						<h4>
 							<c:choose>
-								<c:when test="${restaurantAdminListDto.resJudgeStatus eq '심사중'}">
+								<c:when test="${restaurantAdminListDto.resJudgeStatus eq '심사대기'}">
 									<span class="badge rounded-pill bg-secondary">${restaurantAdminListDto.resJudgeStatus}</span>
 								</c:when>
 								<c:when
@@ -103,9 +103,8 @@
 
 
 		<!-- 심사 내역 -->
-		<c:if
-			test="${restaurantAdminListDto.resJudgeStatus eq '심사승인'
-					&& restaurantAdminListDto.resJudgeStatus eq '심사거절'}">
+		<c:if test="${restaurantAdminListDto.resJudgeStatus eq '심사승인'
+					|| restaurantAdminListDto.resJudgeStatus eq '심사거절'}">
 			<div class="row justify-content-center">
 				<div class="card border-warning mb-3 " style="max-width: 50rem;">
 					<div
@@ -171,7 +170,15 @@
 				</div>
 			</div>
 		</c:if>
+		
 
+		
+		<!-- 목록 버튼 -->
+		<div class="row justify-content-center">
+			<div class="col-md-6 mt-4 text-center">
+				<a class="btn btn-secondary" href="list">목록으로</a>
+			</div>
+		</div>
 
 
 
@@ -183,7 +190,7 @@
 			<div class="modal-dialog">
 				<div class="modal-content">
 					<div class="modal-header">
-						<h1 class="modal-title fs-5" id="exampleModalLabel">매장 차단 사유</h1>
+						<h1 class="modal-title fs-5">매장 차단 사유</h1>
 						<button type="button" class="btn-close" data-bs-dismiss="modal"
 							aria-label="Close"></button>
 					</div>
@@ -195,7 +202,6 @@
 							data-bs-dismiss="modal">취소</button>
 						<button type="button" class="btn btn-warning"
 							onclick="sendBlockRequest()">차단</button>
-						<!-- 차단 버튼 클릭 시 함수 호출 -->
 					</div>
 				</div>
 			</div>
@@ -226,21 +232,24 @@
 
 
 		<!-- 매장 심사 모달-->
-		<div class="modal fade" id="judgeModal" tabindex="-1"
-			data-bs-backdrop="static">
+		<div class="modal fade" id="judgeModal" tabindex="-1" data-bs-backdrop="static">
+			<div>
+			    <input type="hidden" id="resJudgeNo" value="${restaurantJudgeDto.resJudgeNo}">
+			</div>
 			<div class="modal-dialog">
 				<div class="modal-content">
 					<div class="modal-header">
-						<h1 class="modal-title fs-5" id="exampleModalLabel">매장 심사</h1>
+						<h1 class="modal-title fs-5">매장 심사</h1>
 						<button type="button" class="btn-close" data-bs-dismiss="modal"
 							aria-label="Close"></button>
 					</div>
 					<div class="modal-body">
 						<div class="text-center">
-							<label> <input type="radio" class="form-radio"
-								name="resJudgeStatus" value="심사승인">심사승인
-							</label> <label> <input type="radio" class="form-radio ms-4"
-								name="resJudgeStatus" value="심사거절">심사거절
+							<label> 
+							    <input type="radio" class="form-radio" name="resJudgeStatus" value="심사승인">심사승인
+							</label> 
+							<label> 
+							    <input type="radio" class="form-radio ms-4" name="resJudgeStatus" value="심사거절">심사거절
 							</label>
 						</div>
 						<div>
@@ -330,21 +339,25 @@
 	});
 	// 심사 요청 보내기
 	function sendJudgeRequest() {
-		var resNo = document.getElementById("resNo").value; // resNo 값을 가져옴
-
+		var resJudgeNo = document.getElementById("resJudgeNo").value; // resJudgeNo 값을 가져옴
+		var resJudgeStatus = $("input[name='resJudgeStatus']:checked").val();
+		var resJudgeComment = $('input[name="resJudgeComment"]').val();
+		
 		var data = {
-			resNo : resNo,
+			resJudgeNo : resJudgeNo,
 			resJudgeStatus : resJudgeStatus,
 			resJudgeComment : resJudgeComment
 		};
+		
+		 console.log(data);
 
 		$.ajax({
-			url : '/rest/admin/restaurant/judge', // 심사 해제 요청을 보낼 URL
+			url : '/rest/admin/restaurant/judge', // 심사 
 			method : 'POST',
 			contentType : 'application/json; charset=utf-8',
 			data : JSON.stringify(data), // 데이터 전송
 			success : function(response) {
-				console.log('심사 해제 요청 성공');
+				console.log('심사 요청 성공');
 				$('#judgeModal').modal('hide'); // 성공 시 모달 닫기
 				location.reload();
 			},

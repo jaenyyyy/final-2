@@ -176,8 +176,7 @@
 		update restaurant_judge
 		set
 		res_judge_status = #{resJudgeStatus},
-		res_judge_date = sysdate,
-		res_judge_comment = #{resJudgeComment},
+		res_judge_comment = #{resJudgeComment}
 		where
 		res_judge_no = #{resJudgeNo}
 	</update>

@@ -30,6 +30,7 @@ import com.kh.matdori.dto.RestaurantAdminListDto;
 import com.kh.matdori.dto.RestaurantBlockDto;
 import com.kh.matdori.dto.RestaurantDto;
 import com.kh.matdori.dto.RestaurantJudgeDto;
+import com.kh.matdori.dto.ReviewDto;
 import com.kh.matdori.vo.BusPaginationVO;
 import com.kh.matdori.vo.CusAdminVO;
 import com.kh.matdori.vo.PaginationVO;
@@ -151,6 +152,9 @@ public class AdminController {
     	
     	RestaurantBlockDto blockDto = adminDao.selectBlockOne(resNo);
     	model.addAttribute("restaurantBlockDto", blockDto);
+    	
+    	RestaurantJudgeDto restaurantJudgeDto = adminDao.selectOne(resNo);
+    	model.addAttribute("restaurantJudgeDto", restaurantJudgeDto);
     	
     	return "/admin/restaurant/detail";
     }
