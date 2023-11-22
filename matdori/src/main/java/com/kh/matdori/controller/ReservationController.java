@@ -22,9 +22,9 @@ import com.kh.matdori.dao.ReservationDao;
 import com.kh.matdori.dao.RestaurantDao;
 import com.kh.matdori.dao.SeatDao;
 import com.kh.matdori.dto.ClockDto;
+import com.kh.matdori.dto.MenuDto;
 import com.kh.matdori.dto.PaymentDto;
 import com.kh.matdori.dto.ReservationDto;
-import com.kh.matdori.dto.ReservationListDto;
 import com.kh.matdori.dto.SeatDto;
 import com.kh.matdori.error.NoTargetException;
 import com.kh.matdori.service.KakaoPayService;
@@ -32,6 +32,7 @@ import com.kh.matdori.vo.KakaoPayApproveRequestVO;
 import com.kh.matdori.vo.KakaoPayApproveResponseVO;
 import com.kh.matdori.vo.KakaoPayCancelRequestVO;
 import com.kh.matdori.vo.KakaoPayCancelResponseVO;
+import com.kh.matdori.vo.MenuWithImagesVO;
 import com.kh.matdori.vo.PaymentSumVO;
 
 import lombok.extern.slf4j.Slf4j;
@@ -119,27 +120,28 @@ public class ReservationController {
 //			HttpSession session,
 						  @RequestParam int rezNo,
 						 Model model) {
-//		int rezNo = vo.getReservationListDto().getRezNo();  //rezNo = 예약 번호인데, 이걸 listDto에서 넘버 꺼내와서 담아옴
+//		int rezNo = vo.getReservationDto().getRezNo();  //rezNo = 예약 번호인데, 이걸 listDto에서 넘버 꺼내와서 담아옴
 		
-		ReservationListDto rezDto = reservationDao.selectOne(rezNo);
-		
+		ReservationDto rezDto = reservationDao.selectOne(rezNo);
 		
 		//계산을 위한 vo 생성
-		PaymentSumVO vo = new PaymentSumVO();
-		
-		//rezDto 설정을 vo 가져오는걸로 설정
-		vo.setReservationListDto(rezDto);
-		
-		Float sumTotal = vo.getSumTotal();
-		Float paymentTotal = vo.getPaymentTotal();
-		int inputPoint = vo.getInputPoint();
+//		PaymentSumVO vo = new PaymentSumVO();
+//		
+//		//rezDto 설정을 vo 가져오는걸로 설정
+//		vo.setReservationDto(rezDto);
+//		
+//		Float sumTotal = vo.getSumTotal();
+//		Float paymentTotal = vo.getPaymentTotal();
+//		int inputPoint = vo.getInputPoint();
 		
 		
 		
 		model.addAttribute("rezDto", rezDto);
-		model.addAttribute("sumTotal", sumTotal);
-	    model.addAttribute("paymentTotal", paymentTotal);
-	    model.addAttribute("inputPoint", inputPoint);
+//		model.addAttribute("sumTotal", sumTotal);
+//	    model.addAttribute("paymentTotal", paymentTotal);
+//	    model.addAttribute("inputPoint", inputPoint);
+	    
+	    log.debug("rezNo={}", rezNo);
 		
 		return "reservation/rezDetail";
 	}

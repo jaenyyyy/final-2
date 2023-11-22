@@ -1,7 +1,5 @@
 package com.kh.matdori.restcontroller;
 
-
-
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
@@ -44,59 +42,70 @@ public class MenuRestController {
 
 	@Autowired
 	private AttachDao attachDao;
-	
-	//초기 디렉터리 설정
+
+	// 초기 디렉터리 설정
 	@Autowired
 	private FileUploadProperties props;
 	private File dir;
-	
+
 	@PostConstruct
 	public void init() {
 		dir = new File(props.getHome());
 		dir.mkdirs();
 	}
-	
-	
+
 	// 사진업로드
-	 @PostMapping(value = "/upload/resNo/{resNo}/menuTypeNo/{menuTypeNo}",consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-	   public void insert(@ModelAttribute MenuWithImagesVO vo, @PathVariable int resNo, @PathVariable int menuTypeNo) throws IllegalStateException, IOException {
-	      
-	      MenuDto menuDto = vo.getMenuDto();
-	      
-	      int menuNo = menuDao.sequence();
-	      
-	      menuDto.setMenuNo(menuNo);
-	      
-	      menuDto.setResNo(resNo);
-	      menuDto.setMenuTypeNo(menuTypeNo);
-	      
-	      menuDao.save(menuDto);
-	
-	      MultipartFile menuImage =vo.getMenuImage();
-	      int attachNo = attachDao.sequence();
-	      File target = new File(dir,String.valueOf(attachNo));
-	      menuImage.transferTo(target);
-	      AttachDto attachDto = new AttachDto();
-	      attachDto.setAttachNo(attachNo);
-	      attachDto.setAttachName(menuImage.getOriginalFilename());
-	      attachDto.setAttachSize(menuImage.getSize());
-	      attachDto.setAttachType(menuImage.getContentType());   
-	      attachDao.insert(attachDto);
-	      
-	      menuDao.insertMenuImage(menuNo,attachNo);
-	   }
-	
+	@PostMapping(value = "/upload/resNo/{resNo}/menuTypeNo/{menuTypeNo}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+	public void insert(@ModelAttribute MenuWithImagesVO vo, @PathVariable int resNo, @PathVariable int menuTypeNo)
+			throws IllegalStateException, IOException {
+
+		MenuDto menuDto = vo.getMenuDto();
+
+		int menuNo = menuDao.sequence();
+
+		menuDto.setMenuNo(menuNo);
+
+		menuDto.setResNo(resNo);
+		menuDto.setMenuTypeNo(menuTypeNo);
+
+		menuDao.save(menuDto);
+
+		MultipartFile menuImage = vo.getMenuImage();
+		int attachNo = attachDao.sequence();
+		File target = new File(dir, String.valueOf(attachNo));
+		menuImage.transferTo(target);
+		AttachDto attachDto = new AttachDto();
+		attachDto.setAttachNo(attachNo);
+		attachDto.setAttachName(menuImage.getOriginalFilename());
+		attachDto.setAttachSize(menuImage.getSize());
+		attachDto.setAttachType(menuImage.getContentType());
+		attachDao.insert(attachDto);
+
+		menuDao.insertMenuImage(menuNo, attachNo);
+	}
+
 	@PostMapping("/")
 	public void insert(@RequestBody MenuDto menuDto) {
 		menuDao.save(menuDto);
 	}
 
 	@DeleteMapping("/delete/{menuNo}")
-	public ResponseEntity<Void> delete(@PathVariable int menuNo) {
-	    menuDao.delete(menuNo);
-	    return ResponseEntity.noContent().build();
-	}
+	public ResponseEntity<String> delete(@PathVariable int menuNo) {
+		AttachDto attachDto = menuDao.findMenuImage(menuNo);
 
+		if (attachDto != null) {
+			File target = new File(dir, String.valueOf(attachDto.getAttachNo()));
+			target.delete();// 실제파일 삭제
+			attachDao.delete(attachDto.getAttachNo());
+		}
+
+		boolean result = menuDao.delete(menuNo);
+		if (result) {
+			return ResponseEntity.status(200).build();
+		} else {
+			return ResponseEntity.status(404).build();
+		}
+	}
 //	@GetMapping("/list/{resNo}")
 //	public ResponseEntity<List<MenuByResDto>> getMenuListByRestaurant(@PathVariable("resNo") Integer resNo){
 //	    if (resNo == null) {
@@ -109,12 +118,12 @@ public class MenuRestController {
 
 	@GetMapping("/{menuNo}")
 	public ResponseEntity<MenuWithImagesVO> find(@PathVariable int menuNo) {
-	    MenuWithImagesVO vo = menuDao.selectOne(menuNo);
-	    if (vo != null) {
-	        return ResponseEntity.ok().body(vo);
-	    } else {
-	        return ResponseEntity.notFound().build();
-	    }
+		MenuWithImagesVO vo = menuDao.selectOne(menuNo);
+		if (vo != null) {
+			return ResponseEntity.ok().body(vo);
+		} else {
+			return ResponseEntity.notFound().build();
+		}
 	}
 
 	@PutMapping("/{menuNo}")
@@ -125,36 +134,40 @@ public class MenuRestController {
 	}
 
 	// 특정 메뉴 타입에 해당하는 메뉴와 이미지 정보를 가져오는 엔드포인트
-	@GetMapping("/{menuTypeNo}/detail")
-	public ResponseEntity<List<MenuWithImagesVO>> getMenuWithImagesByType(@PathVariable int menuTypeNo) {
+//	@GetMapping("/{menuTypeNo}/detail")
+//	public ResponseEntity<List<MenuWithImagesVO>> getMenuWithImagesByType(@PathVariable int menuTypeNo) {
+//		try {
+//			List<MenuWithImagesVO> menuList = menuDao.selectList(menuTypeNo);
+//			if (menuList != null && !menuList.isEmpty()) {
+//				return ResponseEntity.ok(menuList);
+//			} 
+//			else {
+//				return ResponseEntity.notFound().build();
+//			}
+//		} catch (Exception e) {
+//			log.error("Error getting menus with images by type", e);
+//			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+//		}
+//	}
+
+	@GetMapping("/list/{menuTypeNo}")
+	public List<MenuDto> list(@PathVariable int menuTypeNo) {
+		return menuDao.selectListByMenuTypeNo(menuTypeNo);
+	}
+
+	@GetMapping("/menu/{resNo}")
+	public ResponseEntity<List<MenuWithImagesVO>> getMenuByRes(@PathVariable int resNo) {
 		try {
-			List<MenuWithImagesVO> menuList = menuDao.selectList(menuTypeNo);
-			if (menuList != null && !menuList.isEmpty()) {
-				return ResponseEntity.ok(menuList);
-			} 
-			else {
+			List<MenuWithImagesVO> menuByResList = menuDao.getMenuByRes(resNo); // 서비스 레이어 메서드 호출
+			if (menuByResList != null && !menuByResList.isEmpty()) {
+				return ResponseEntity.ok(menuByResList);
+			} else {
 				return ResponseEntity.notFound().build();
 			}
 		} catch (Exception e) {
-			log.error("Error getting menus with images by type", e);
+			log.error("Error getting menus with images by resNo", e);
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 		}
 	}
-	
-	@GetMapping("/menu/{resNo}")
-	public ResponseEntity<List<MenuWithImagesVO>> getMenuByRes(@PathVariable int resNo) {
-	    try {
-	        List<MenuWithImagesVO> menuByResList = menuDao.getMenuByRes(resNo); // 서비스 레이어 메서드 호출
-	        if (menuByResList != null && !menuByResList.isEmpty()) {
-	            return ResponseEntity.ok(menuByResList);
-	        } else {
-	            return ResponseEntity.notFound().build();
-	        }
-	    } catch (Exception e) {
-	        log.error("Error getting menus with images by resNo", e);
-	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-	    }
-	}
-	
-	
+
 }

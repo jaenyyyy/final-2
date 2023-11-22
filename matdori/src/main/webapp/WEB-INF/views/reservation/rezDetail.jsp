@@ -49,15 +49,15 @@
 				            사진자리
 				        </div>
 				        <div class="col-7">
-				            <input type="hidden" class="resNoInput" value="${ReservationListDto.resNo}">
+				            <input type="hidden" class="resNoInput" value="${ReservationDto.resNo}">
 				            <div class="row">
 				                ${rezDto.resName}
 				            </div>
 				            <div class="row">
-				                예약일 : ${fn:substring(ReservationListDto.clockSelect, 0, 10)}
+				                예약일 : ${fn:substring(ClockDto.clockSelect, 0, 10)}
 				            </div>
 				            <div class="row">
-				                예약시간 : ${fn:substring(ReservationListDto.clockSelect, 11, 16)}
+				                예약시간 : ${fn:substring(ClockDto.clockSelect, 11, 16)}
 				            </div>
 				        </div>
 				        

@@ -73,12 +73,13 @@
 						-
 						${menuListByRes.menuContent}
 					</div>
-					<div class="row">
-						<button class="btn menuSelect" data-menu-no="${menuListByRes.menuNo}">
-							선택
-						</button>
-					</div>
+<!-- 					<div class="row"> -->
+<%-- 						<button class="btn menuSelect" data-menu-no="${menuListByRes.menuNo}"> --%>
+<!-- 							선택 -->
+<!-- 						</button> -->
+<!-- 					</div> -->
 				</c:forEach>
+				이거 선택박스 만들어서 선택된거 넘겨야됨
 			</div>
 			----------------------------------------------------------
 			<div class="row">

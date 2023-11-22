@@ -8,6 +8,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.kh.matdori.dto.AttachDto;
 import com.kh.matdori.dto.MenuDto;
 import com.kh.matdori.error.NoTargetException;
 import com.kh.matdori.vo.MenuWithImagesVO;
@@ -24,10 +25,9 @@ public class MenuDaoImpl implements MenuDao {
 	}
 
 	@Override
-	public void delete(int menuNo) {
-		int result = sqlSession.delete("menu.deleteByMenuNo", menuNo);
-		if (result == 0)
-			throw new NoTargetException();
+	public boolean delete(int menuNo) {
+		return sqlSession.delete("menu.deleteByMenuNo", menuNo) > 0;
+		
 	}
 
 	@Override
@@ -38,11 +38,15 @@ public class MenuDaoImpl implements MenuDao {
 		return sqlSession.update("menu.edit", params) > 0;
 	}
 
-	@Override
-	public List<MenuWithImagesVO> selectList(int menuTypeNo) {
-		return sqlSession.selectList("menu.selectMenuWithImages", menuTypeNo);
-	}
+//	@Override
+//	public List<MenuWithImagesVO> selectList(int menuTypeNo) {
+//		return sqlSession.selectList("menu.selectMenuWithImages", menuTypeNo);
+//	}
 
+	@Override
+	public List<MenuDto> selectListByMenuTypeNo(int menuTypeNo) {
+		return sqlSession.selectList("menu.selectListByMenuTypeNo",menuTypeNo);
+	}
 	@Override
 	public List<MenuWithImagesVO> getMenuByRes(int resNo) {
 		return sqlSession.selectList("menu.selectMenuByRes", resNo);
@@ -66,4 +70,11 @@ public class MenuDaoImpl implements MenuDao {
 	public MenuWithImagesVO selectOne(int menuNo) {
 		return sqlSession.selectOne("menu.menuByMenuNo", menuNo);
 	}
+
+	@Override
+	public AttachDto findMenuImage(int menuNo) {
+		return sqlSession.selectOne("menu.findMenuImage", menuNo);
+	}
+
+
 }
