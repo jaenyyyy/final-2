@@ -38,7 +38,7 @@
 		            </div>
 		           <select name="resJudgeStatus"class="form-select">
 						<option value="">선택</option>
-						<option value="심사중">심사중</option>
+						<option value="심사대기">심사대기</option>
 						<option value="심사승인">심사승인</option>
 						<option value="심사거절">심사거절</option>
 					</select>
