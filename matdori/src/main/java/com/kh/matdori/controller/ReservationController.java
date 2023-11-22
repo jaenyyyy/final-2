@@ -26,9 +26,12 @@ import com.kh.matdori.dto.MenuDto;
 import com.kh.matdori.dto.PaymentDto;
 import com.kh.matdori.dto.ReservationDto;
 import com.kh.matdori.dto.SeatDto;
+import com.kh.matdori.error.NoTargetException;
 import com.kh.matdori.service.KakaoPayService;
 import com.kh.matdori.vo.KakaoPayApproveRequestVO;
 import com.kh.matdori.vo.KakaoPayApproveResponseVO;
+import com.kh.matdori.vo.KakaoPayCancelRequestVO;
+import com.kh.matdori.vo.KakaoPayCancelResponseVO;
 import com.kh.matdori.vo.MenuWithImagesVO;
 import com.kh.matdori.vo.PaymentSumVO;
 
@@ -176,12 +179,63 @@ public class ReservationController {
 				.build());
 		
 		
-		return "redirect:successResult";
+		return "redirect:/successResult";
 	}
 	
 	@RequestMapping("/payment/successResult")
 	public String paymentSuccessResult() {
-		return "/reservation/successResult";
+		return "reservation/successResult";
+	}
+	
+//	@RequestMapping("/payment/list")  //사용자가 보는 구매목록
+	public String paymentList(Model model, HttpSession session) {
+		
+		String customerId = (String) session.getAttribute("name");
+		model.addAttribute("list", paymentDao.listByCustomer(customerId));
+		return "reservation/listByCustomer";
+	}
+	
+	
+	
+	@RequestMapping("payment/cancel")
+	public String paymentCancel(@RequestParam int paymentNo) throws URISyntaxException {
+		//1
+		PaymentDto paymentDto = paymentDao.selectOne(paymentNo);
+		if(paymentDto == null || paymentDto.getPaymentRemain() == 0) {
+			throw new NoTargetException("이미 취소된 결제입니다");
+		}
+		
+		//2
+		KakaoPayCancelRequestVO request = KakaoPayCancelRequestVO.builder()
+					.tid(paymentDto.getPaymentTid()) //거래번호
+					.cancelAmount(paymentDto.getPaymentRemain()) //잔여금액
+					.build();
+		KakaoPayCancelResponseVO response = kakaoPayService.cancel(request);
+		
+		//3
+		paymentDao.cancelPayment(PaymentDto.builder()
+				.paymentNo(paymentNo).paymentRemain(0)
+				.build());
+		
+		
+		return "redirect:listByCustomer";
+	}
+	
+	
+	@RequestMapping("/payment/delete")
+	public String test3cancel(HttpSession session) {
+		session.removeAttribute("approve");
+		session.removeAttribute("listVO");
+		
+		return "paymentDelete";
+	}
+	
+	@RequestMapping("/payment/fail")
+	public String test3fail(HttpSession session) {
+		session.removeAttribute("approve");
+		session.removeAttribute("listVO");
+		
+		return "paymentFail";
 	}
 	
 }

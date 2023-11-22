@@ -18,4 +18,9 @@ public class PaymentDto {
 	private int paymentRemain; //잔여결제금액(취소 가능 금액)
 	private Date paymentTime;
 	private String paymentStatus;
+	
+	
+	public boolean isCanceled() {  //이미 취소된 대상을 찾기 위해서 만든 가상의 메소드
+		return paymentStatus.equals("예약취소");
+	}
 }

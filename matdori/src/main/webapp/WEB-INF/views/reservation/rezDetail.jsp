@@ -160,11 +160,12 @@
 					<input type="checkbox"> 동의하나요
 				</div>
 				<div>
-					<c:forEach var="confirmVO" items="${list}" varStatus="stat"> 
-						<input type="hidden" name="product[${stat.index}].productNo" value="${confirmVO.purchaseVO.productNo}">
-						<input type="hidden" name="product[${stat.index}].qty" value="${confirmVO.purchaseVO.qty}">
-					</c:forEach>	
+					<!-- 전송되는 부분 -->
+					<form method="post">
+						<input type="hidden" name="restaurant.productNo" value="${paymentSumVO.reservationListDto.productNo}">
+						<input type="hidden" name="restaurant.qty" value="${confirmVO.purchaseVO.qty}">
 					<button type="submit" class="btn btn-warning w-100">결제하기</button>
+					</form>
 				</div>
 			</div>
 			

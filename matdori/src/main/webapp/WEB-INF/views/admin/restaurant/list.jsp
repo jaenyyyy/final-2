@@ -108,6 +108,44 @@
 		</div>
 		
 		
+		
+        <div class="col">
+            <ul class="pagination justify-content-center">
+               <!-- 이전 버튼 -->
+				<c:if test="${!vo.first}">
+				    <li class="page-item">
+				        <a class="page-link" href="list?${vo.prevQueryString}" aria-label="Previous">
+				            <span aria-hidden="true" style="color: #FFB416;">&laquo;</span>
+				        </a>
+				    </li>
+				</c:if>
+				
+				<!-- 숫자 버튼 -->
+				<c:forEach var="i" begin="${vo.begin}" end="${vo.end}" step="1">
+				    <li class="page-item ${vo.page == i ? 'active' : ''}">
+				        <c:choose>
+				            <c:when test="${vo.page == i}">
+				                <span class="page-link" style=" background-color: #FFB416; border-color:#FFB416" >${i}</span>
+				            </c:when>
+				            <c:otherwise>
+				                <a class="page-link" href="list?${vo.getQueryString(i)}" style="color: #FFB416; ">${i}</a>
+				            </c:otherwise>
+				        </c:choose>
+				    </li>
+				</c:forEach>
+				
+				<!-- 다음 버튼 -->
+				<c:if test="${!vo.last}">
+				    <li class="page-item">
+				        <a class="page-link" href="list?${vo.nextQueryString}" aria-label="Next">
+				            <span aria-hidden="true" style="color: #FFB416;">&raquo;</span>
+				        </a>
+				    </li>
+				</c:if>
+            </ul>
+        </div>
+		
+		
 	</div>
 </div>
 
