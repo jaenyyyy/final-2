@@ -61,6 +61,8 @@
 
 
 
+
+
 <div class="container"  id="homeSection" >
 	<div class="col">
 
@@ -117,7 +119,7 @@
 		<!-- 예약 버튼 -->
 		<div class="row justify-content-center mb-3 mt-4">
 			<div class="row justify-content-center">
-				<a href="/reservation/insert" class="btn btn-warning w-50 text-black"> 예약하기
+				<a href="/reservation/insert?rezResNo=${resDto.resNo}" class="btn btn-warning w-50 text-black"> 예약하기
 				</a>
 			</div>
 		</div>
@@ -413,7 +415,25 @@
 				</a></h5>
 			</div>
 		</div>
-		
+		-----------------------------반복문 지금 못써서 냅둔 자료  -------------------------------
+			<div class="row">
+				<c:forEach var="menuListByRes" items="${menuListByRes}">
+					<div class="row">${menuListByRes.menuName} -
+						${menuListByRes.menuPrice}원 - ${menuListByRes.menuContent}</div>
+					<div class="row">
+						<button class="btn btn-warning menuSelect" data-menu-no="${menuListByRes.menuNo}">
+							선택
+						</button>
+					</div>
+				</c:forEach>
+			</div>
+			<div class="row">
+				<c:forEach var="reviewByRes" items="${reviewByRes}">
+					<div class="row">${reviewByRes.reviewWriter} -
+						${reviewByRes.reviewContent} - ${reviewByRes.reviewWriteDate} -
+						${reviewByRes.reviewStarPoint}</div>
+				</c:forEach>
+			</div>
 		
 			
 		</div>
@@ -452,6 +472,34 @@ window.addEventListener('scroll', function() {
         navbar.style.transform = 'none'; 
     }
 });
+
+<!-- 메뉴 선택이다 임마 -->
+$(function(){
+    $(".menuSelect").click(function(e){
+    	e.preventDefault();
+        
+        // 상품 번호 가져오기
+        var productNo = $(this).data("menu-no");
+        
+        $.ajax({
+            url: "/rest/reservation/add",
+            method: "post",
+            data: { menuNo: menuNo },
+            success: function(response) {
+                    $("#modalMessage").text(response.message);
+//                     openModal(); // 모달 열기
+
+            },
+            error: function (xhr) {
+                // 에러 처리
+                console.log(arguments);
+                $("#modalMessage").text(xhr.responseJSON.message);
+//                 openModal(); // 모달 열기
+            },
+            
+        });
+    });
+ });
 </script>
 
 
@@ -506,26 +554,8 @@ window.addEventListener('scroll', function() {
 
 
 
-			-----------------------------반복문 지금 못써서 냅둔 자료  -------------------------------
-			<div class="row">
-				<c:forEach var="menuListByRes" items="${menuListByRes}">
-					<div class="row">${menuListByRes.menuName} -
-						${menuListByRes.menuPrice}원 - ${menuListByRes.menuContent}</div>
-<!-- 					<div class="row"> -->
-<%-- 						<button class="btn menuSelect" data-menu-no="${menuListByRes.menuNo}"> --%>
-<!-- 							선택 -->
-<!-- 						</button> -->
-<!-- 					</div> -->
-				</c:forEach>
-				이거 선택박스 만들어서 선택된거 넘겨야됨
-			</div>
-			<div class="row">
-				<c:forEach var="reviewByRes" items="${reviewByRes}">
-					<div class="row">${reviewByRes.reviewWriter} -
-						${reviewByRes.reviewContent} - ${reviewByRes.reviewWriteDate} -
-						${reviewByRes.reviewStarPoint}</div>
-				</c:forEach>
-			</div>
+			
+		
 			
 			
 

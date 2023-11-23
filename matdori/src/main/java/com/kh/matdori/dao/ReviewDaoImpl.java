@@ -47,6 +47,7 @@ public class ReviewDaoImpl implements ReviewDao{
 		return listByRes;
 	}
 
+	// 리뷰이미지 + 리뷰리스트
 	@Override
 	public List<ReviewDto> selectListByCus(String reviewWriter) {
 		List<ReviewDto> listByCus = sqlSession.selectList("review.listByCus", reviewWriter);

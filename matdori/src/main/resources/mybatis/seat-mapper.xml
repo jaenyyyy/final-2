@@ -41,7 +41,7 @@
 	
 	<!-- 매장별 좌석 조회 -->
 	<select id="seatList" resultType="SeatDto">
-		select * from seat 
-<!-- 		select * from seat where seat_res_no = #{seatResNo} -->
+<!-- 		select * from seat  -->
+		select * from seat where seat_res_no = #{seatResNo}
 	</select>
 </mapper>

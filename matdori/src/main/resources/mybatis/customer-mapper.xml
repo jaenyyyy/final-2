@@ -28,6 +28,21 @@
 		select * from customer
 	</select>
 
+
+	<select id="selectCustomerListByPage"
+		resultType="CustomerAdminListDto" parameterType="map">
+		SELECT * FROM (
+		SELECT
+		ROW_NUMBER() OVER (ORDER BY customer_id DESC) AS rnum, c.*
+		FROM
+		customer c
+		) AS tmp
+		WHERE rnum BETWEEN #{start} AND #{end}
+	</select>
+
+
+
+
 	<!-- 이용자 상세 정보 조회 -->
 	<select id="detail" resultType="CustomerDto">
 		select * from customer where
@@ -79,6 +94,49 @@
 		update customer set customer_point = #{customerPoint}
 		where customer_id = #{customerId}
 	</update>
+
+
+	<!-- 삭제 -->
+	<delete id="delete">
+		delete customer where customer_id = #{customerId}
+	</delete>
+
+	<update id="changePassword" parameterType="map">
+		UPDATE customer
+		SET
+		customer_pw = #{customerPw}
+		WHERE customer_id = #{customerId}
+	</update>
+
+
+	<!-- 리스트 구하는 vo -->
+	<select id="countList" parameterType="CusAdminVO" resultType="int">
+    <![CDATA[
+    SELECT *
+    FROM (
+        SELECT rownum rn, TMP.*
+        FROM (
+            SELECT *
+            FROM customer
+            ORDER BY customer_id DESC
+        ) TMP
+    ) WHERE rn BETWEEN #{startRow} AND #{endRow}
+    ]]>
+	</select>
+
+
+
+
+	<!-- 검색이 아닐 때 사용되는 카운트 vo -->
+	<select id="count" parameterType="CusAdminVO"
+		resultType="int">
+     <![CDATA[
+    SELECT count(*)
+    FROM customer
+    ]]>
+	</select>
+
+
 
 
 	<!-- 삭제 -->
@@ -159,7 +217,6 @@
 		FROM pick
 		WHERE res_no = #{resNo}
 	</select>
-
 
 
 </mapper>

@@ -25,6 +25,7 @@ import com.kh.matdori.dto.ClockDto;
 import com.kh.matdori.dto.MenuDto;
 import com.kh.matdori.dto.PaymentDto;
 import com.kh.matdori.dto.ReservationDto;
+import com.kh.matdori.dto.RestaurantDto;
 import com.kh.matdori.dto.SeatDto;
 import com.kh.matdori.error.NoTargetException;
 import com.kh.matdori.service.KakaoPayService;
@@ -58,20 +59,6 @@ public class ReservationController {
 	@Autowired
 	private KakaoPayService kakaoPayService;
 	
-	
-	@GetMapping("/insert")
-	public String insert(Model model
-//						 ,@RequestParam("rezResNo") int rezResNo
-						) {
-		// clockList, seatList를 데이터베이스에서 조회
-		List<ClockDto> clockList = clockDao.clockList();
-		List<SeatDto> seatList = seatDao.seatList();
-//		List<ClockDto> clockList = clockDao.clockList(rezResNo);
-//		List<SeatDto> seatList = seatDao.seatList(rezResNo);
-//	    List<MenuDto> menuList = menuDao.menuList(rezResNo);
-	    // 모델에 clockList, seatList를 추가
-	    model.addAttribute("clockList", clockList);
-	    model.addAttribute("seatList", seatList);
 //	    List<PurchaseVO> list = listVO.getProduct();
 //		for(PurchaseVO vo : list) {
 //			ProductDto productDto = productDao.selectOne(vo.getProductNo());//상품정보 조회
@@ -83,6 +70,20 @@ public class ReservationController {
 //							.paymentDetailProductQty(vo.getQty())//구매수량(vo)
 //						.build());
 //		}
+	
+	@GetMapping("/insert")
+	public String insert(Model model
+						 ,@RequestParam("rezResNo") int rezResNo
+						) {
+		// clockList, seatList를 데이터베이스에서 조회
+		RestaurantDto resDto = restaurantDao.selectOne(rezResNo);
+		List<ClockDto> clockList = clockDao.clockList(rezResNo);
+		List<SeatDto> seatList = seatDao.seatList(rezResNo);
+		
+	    // 모델에 clockList, seatList를 추가
+		model.addAttribute("resDto", resDto);
+	    model.addAttribute("clockList", clockList);
+	    model.addAttribute("seatList", seatList);
 		return "reservation/booking";
 	}
 	@PostMapping("/insert")
@@ -92,8 +93,9 @@ public class ReservationController {
 	                     @RequestParam("selectedClock") int clockNo,
 	                     @RequestParam("selectedSeat") int seatNo) {
 		int rezNo = reservationDao.sequence();
-		log.debug("rezNo={}",rezNo);
+		
 		reservationDto.setRezNo(rezNo);
+		log.debug("rezNo={}",rezNo);
 		
 		//회원별 예약 처리
 		String rezCustomerId = (String)session.getAttribute("name");
@@ -120,11 +122,12 @@ public class ReservationController {
 //			HttpSession session,
 						  @RequestParam int rezNo,
 						 Model model) {
-//		int rezNo = vo.getReservationDto().getRezNo();  //rezNo = 예약 번호인데, 이걸 listDto에서 넘버 꺼내와서 담아옴
 		
 		ReservationDto rezDto = reservationDao.selectOne(rezNo);
 		
-		//계산을 위한 vo 생성
+
+//		int rezNo = vo.getReservationDto().getRezNo();  //rezNo = 예약 번호인데, 이걸 listDto에서 넘버 꺼내와서 담아옴
+//		//계산을 위한 vo 생성
 //		PaymentSumVO vo = new PaymentSumVO();
 //		
 //		//rezDto 설정을 vo 가져오는걸로 설정
@@ -137,10 +140,11 @@ public class ReservationController {
 		
 		
 		model.addAttribute("rezDto", rezDto);
+
 //		model.addAttribute("sumTotal", sumTotal);
 //	    model.addAttribute("paymentTotal", paymentTotal);
 //	    model.addAttribute("inputPoint", inputPoint);
-	    
+//	    
 	    log.debug("rezNo={}", rezNo);
 		
 		return "reservation/rezDetail";

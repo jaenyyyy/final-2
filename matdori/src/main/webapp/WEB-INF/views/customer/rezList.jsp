@@ -7,232 +7,112 @@
 
 
 <style>
-	.row-top{
-		margin-top : 20%;
-	}
-	.page-line {
-		border-right: 3px solid #ffb416; 
-	}
-	.bold{
-		font-weight : bold;
-	}
-	.menu-tag{
-		text-decoration: none;
-		color: black;
-	}
-	.menu-tag:hover {
-  		color: #FFB416; 
-	}
-	.res-line{
-		border-top: 1px solid #ffb416;
-		border-bottom: 1px solid #ffb416;
-		width: 70%;
-	}
-	
-	.rating {
+   .row-top{
+      margin-top : 20%;
+   }
+   .page-line {
+      border-right: 3px solid #ffb416; 
+   }
+   .bold{
+      font-weight : bold;
+   }
+   .menu-tag{
+      text-decoration: none;
+      color: black;
+   }
+   .menu-tag:hover {
+        color: #FFB416; 
+   }
+   .res-line{
+      border-top: 1px solid #ffb416;
+      border-bottom: 1px solid #ffb416;
+      width: 70%;
+   }
+   
+   .rating {
    width: 100%;
 }
 
-	.rating__star {
+   .rating__star {
     cursor: pointer;
     color: #FFB416;
 }
-	
+   
 </style>
 
 <div class="container">
-	<div class="row" style="margin-top: 5%">
-	
-		<!-- 제목 -->
-		<div class="row mb-4">
-			<h1 class="bold">
-				<i class="fa-solid fa-user" style="color: #ffb416;"></i>
-				마이페이지
-			</h1>
-		</div>
+   <div class="row" style="margin-top: 5%">
+   
+      <!-- 제목 -->
+      <div class="row mb-4">
+         <h1 class="bold">
+            <i class="fa-solid fa-user" style="color: #ffb416;"></i>
+            마이페이지
+         </h1>
+      </div>
 
-		<!-- 마이페이지 탭 -->
-		<div class="col-3 page-line">
-			<div class="row">
-				<h2 class="bold">
-					<a class="menu-tag" href="">북마크</a>
-				</h2>
-			</div>
-			<div class="row row-top">
-				<h2 class="bold">
-					<a class="menu-tag" style="color:#FFB416;" href="">예약내역</a>
-				</h2>
-			</div>
-			<div class="row row-top" >
-				<h2 class="bold">
-					<a class="menu-tag" href="">나의리뷰</a>
-				</h2>
-			</div>
-		</div>
-		
-		
-		
-		<!-- 주 내용 -->
-		<div class="col-9">
-			<div class="row">
-				<c:forEach var="ReservationDto" items="${rezList}">
-				    <div>
-				        <br>
-				    </div>
-				    <div class="row res-line p-4" style="margin-left: 100px;">
-				        <div class="col-3">
-				            사진자리
-				        </div>
-				        <div class="col-7">
-				            <input type="hidden" class="resNoInput" value="${ReservationDto.resNo}">
-				            <div class="row modal-title">
-				                ${RestaurantDto.resName}
-				            </div>
-				            <div class="row">
-				                예약일 : ${fn:substring(ClockDto.clockSelect, 0, 10)}
-				            </div>
-				            <div class="row">
-				                예약시간 : ${fn:substring(ClockDto.clockSelect, 11, 16)}
-				            </div>
-				        </div>
-				        <div class="col-2 text-end">
-				            <div class="row mb-3">
-				                <a href="#" class="menu-tag">예약상세 ></a>
-				            </div>
-				            <div class="row">
-				                <a class="btn btn-warning btn-sm open-modal-review">리뷰작성</a>
-				            </div>
-				        </div>
-				    </div>
-				</c:forEach>
-			</div>
-		</div>
-		
-		
-		<!-- 후기 작성 모달-->
-		<div class="modal fade" id="reviewModal" tabindex="-1" data-bs-backdrop="static">
-		    <div class="modal-dialog">
-		        <div class="modal-content">
-		            <div class="modal-header">
-		                <h1 class="modal-title fs-5">
-		                    [ ${RestaurantDto.resName} ] 리뷰 작성
-		                </h1>
-		                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-		            </div>
-		            <div class="modal-body" style="text-align: center;">
-                		<div class="rating" style="font-size: 30px; display: inline-block;">
-						    <i class="rating__star far fa-star" data-value="1" style="display: inline-block;"></i>
-						    <i class="rating__star far fa-star" data-value="2" style="display: inline-block;"></i>
-						    <i class="rating__star far fa-star" data-value="3" style="display: inline-block;"></i>
-						    <i class="rating__star far fa-star" data-value="4" style="display: inline-block;"></i>
-						    <i class="rating__star far fa-star" data-value="5" style="display: inline-block;"></i>
-						</div>
-		                <div class="mt-4">
-		                    <textarea class="form-control" id="reviewContent" rows="5"></textarea>
-		                </div>
-		                <div class="mt-4">
-		                	첨부파일 등록 <input type="file" id="attachFile" accept="image/*">
-		                </div>
-		            </div>
-		            <div class="modal-footer">
-		                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
-		                <button type="button" class="btn btn-warning" onclick="sendReview()">작성</button>
-		            </div>
-		        </div>
-		    </div>
-		</div>
-		
-		
-		
-	</div>
+      <!-- 마이페이지 탭 -->
+      <div class="col-3 page-line">
+         <div class="row">
+            <h2 class="bold">
+               <a class="menu-tag" href="">북마크</a>
+            </h2>
+         </div>
+         <div class="row row-top">
+            <h2 class="bold">
+               <a class="menu-tag" style="color:#FFB416;" href="">예약내역</a>
+            </h2>
+         </div>
+         <div class="row row-top" >
+            <h2 class="bold">
+               <a class="menu-tag" href="">나의리뷰</a>
+            </h2>
+         </div>
+      </div>
+      
+      
+      
+      <!-- 주 내용 -->
+      <div class="col-9">
+         <div class="row">
+            <c:forEach var="reservationListDto" items="${rezList}">
+                <div>
+                    <br>
+                </div>
+                <div class="row res-line p-4" style="margin-left: 100px;">
+                      <div class="col-3">
+                        사진자리
+                    </div>
+                    <div class="col-7">
+                        <div class="row modal-title">
+                            ${reservationListDto.resName}
+                        </div>
+                        <div class="row">
+                            예약일 : ${fn:substring(reservationListDto.clockSelect, 0, 10)}
+                        </div>
+                        <div class="row">
+                            예약시간 : ${fn:substring(reservationListDto.clockSelect, 11, 16)}
+                        </div>
+                    </div>
+                    <div class="col-2 text-end">
+                        <div class="row mb-3">
+                            <a href="#" class="menu-tag">예약상세 ></a>
+
+                        </div>
+                        <div class="row">
+                            <a class="btn btn-warning btn-sm open-modal-review">리뷰작성</a>
+                        </div>
+                    </div>
+                </div>
+            </c:forEach>
+         </div>
+      </div>
+      
+   </div>
 </div>
 
 
-<script>
-$(".open-modal-review").click(function() {
-    var resLine = $(this).closest('.res-line');
-    var resName = resLine.data('resName');
-    var resNo = resLine.data('resNo');
-
-    $("#modal-title").text("[ " + resName + " ] 리뷰 작성");
-    $("#resNo").val(resNo);
-
-    $("#reviewModal").modal('show');
-});
-	
-	
-	//작성하던 창 닫을 때 초기화
-	$(document).ready(function() {
-		$('#reviewModal').on('hidden.bs.modal', function () {
-		    var reviewData = $('#reviewContent').val();
-		    $('#reviewContent').val('');
-		});
-	});
-	
-	// 리뷰 작성 보내기
-	function sendReview() {
-	    var resNo = $('#resNo').val();
-	    var reviewContent = $('#reviewContent').val();
-	    var reviewStarCount = 0;
-	    
-	    var formData = new FormData();
-	    formData.append('resNo', resNo);
-	    formData.append('reviewContent', reviewContent);
-	    formData.append('reviewStarCount', reviewStarCount);
-	    formData.append('attach', $('#attachFile')[0].files[0]); // 파일 추가
-    
-    $.ajax({
-        url: '/rest/review/write',
-        method: 'POST',
-        processData: false,
-        contentType: false,
-        data: formData,
-        success: function(response) {
-            console.log('성공');
-            $('#reviewModal').modal('hide');
-            location.reload();
-        },
-        error: function(xhr, status, error) {
-            console.error('실패');
-        }
-    });
-	}
-	
-	
-	
-	// 별찍기
-	$(document).ready(function() {
-	    executeRating(ratingStars);
-	});
-
-	const ratingStars = [...document.getElementsByClassName("rating__star")];
-
-	function executeRating(stars) {
-	  const starClassActive = "rating__star fas fa-star";
-	  const starClassInactive = "rating__star far fa-star";
-	  const starsLength = stars.length;
-	  let i;
-
-	  stars.map((star) => {
-	    star.onclick = () => {
-	      i = stars.indexOf(star);
-
-	      if (star.className===starClassInactive) {
-	        for (i; i >= 0; --i) stars[i].className = starClassActive;
-	      } else {
-	        for (i; i < starsLength; ++i) stars[i].className = starClassInactive;
-	      }
-	    };
-	  });
-	}
-
-	executeRating(ratingStars);
-
-
-
-
-</script>
-		
+      
 
 
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
