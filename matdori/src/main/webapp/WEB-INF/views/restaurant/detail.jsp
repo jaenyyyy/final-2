@@ -472,33 +472,33 @@ window.addEventListener('scroll', function() {
     }
 });
 
-<!-- 메뉴 선택이다 임마 -->
-$(function(){
-    $(".menuSelect").click(function(e){
-    	e.preventDefault();
+<!-- 메뉴 선택이다 임마 하 다 쓸모가 없어 졋구나 제기럴-->
+// $(function(){
+//     $(".menuSelect").click(function(e){
+//     	e.preventDefault();
         
-        // 상품 번호 가져오기
-        var productNo = $(this).data("menu-no");
+//         // 상품 번호 가져오기
+//         var menuNo = $(this).data("menu-no");
         
-        $.ajax({
-            url: "/rest/reservation/add",
-            method: "post",
-            data: { menuNo: menuNo },
-            success: function(response) {
-                    $("#modalMessage").text(response.message);
-//                     openModal(); // 모달 열기
+//         $.ajax({
+//             url: "/rest/reservation/add",
+//             method: "post",
+//             data: { menuNo: menuNo },
+//             success: function(response) {
+//                     $("#modalMessage").text(response.message);
+// //                     openModal(); // 모달 열기
 
-            },
-            error: function (xhr) {
-                // 에러 처리
-                console.log(arguments);
-                $("#modalMessage").text(xhr.responseJSON.message);
-//                 openModal(); // 모달 열기
-            },
+//             },
+//             error: function (xhr) {
+//                 // 에러 처리
+//                 console.log(arguments);
+//                 $("#modalMessage").text(xhr.responseJSON.message);
+// //                 openModal(); // 모달 열기
+//             },
             
-        });
-    });
- });
+//         });
+//     });
+//  });
 </script>
 
 

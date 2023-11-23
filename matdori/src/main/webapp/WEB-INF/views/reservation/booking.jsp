@@ -14,7 +14,6 @@
 <%-- 					<input type="hidden" name="rezNo" value="${rezNo}"> --%>
 <!-- 					<label class="form-label mt-4" for="readOnlyInput">아이디</label> -->
 <!-- 	    			<input class="form-control" type="text" name="rezCustomerId"> -->
-	    			
 					<label class="form-label mt-4" for="readOnlyInput">매장</label>
 	    			<input class="form-control" type="number" name="rezResNo">
 	    			
