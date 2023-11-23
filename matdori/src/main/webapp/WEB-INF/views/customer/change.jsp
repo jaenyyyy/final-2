@@ -1,55 +1,74 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 
+<style>
+  .container {
+    max-width: 700px; /* 변경 가능한 폭 설정 */
+    margin: 0 auto; /* 가운데 정렬 */
+  }
+ </style>
+
+
 <form action="change" method="post" autocomplete="off">
-	<div class="container w-500">
-        <div class="row">
-            <h1>개인정보 변경</h1>
-        </div>
-        <div class="row left">
-            <label>
-              	이름 : ${customerDto.customerName}
-			</label>
-        </div>
-        
-     
-            <div class="row left">
-                <label>연락처</label>
-                <input type="tel" name="customerContact" value="${customerDto.customerContact}" placeholder="010XXXXXXXX (- 없이)"
-                        class="form-input underline-input w-100 mb-10">
-                <div class="fail-feedback">전화번호 형식이 올바르지 않습니다</div>
-            </div>
-
-            <div class="row left">
-                <label>생년월일</label>
-                <input type="date" name="customerBirth" value="${customerDto.customerBirth}" 
-                class="form-input underline-input w-100">
-                <div class="fail-feedback">잘못된 날짜를 선택하셨습니다</div>
-            </div>
-            
-            <div class="row left">
-            	<input type="password" name="customerPw" class="form-input underline-input w-100 mv-20" placeholder="비밀번호 확인">
-            </div>
-            <div class="row">
-                <button type="submit" class="btn btn-positive w-100">변경하기</button>
-            </div>
-
-	<a href="change">비밀번호 변경</a>
-
-        
-
- 
-    
-			<c:if test="${param.error != null}">
-		        <div class="row important">
-					<span>입력하신 비밀번호가 일치하지 않습니다</span>
+	<div class="container">
+		<div class="row" style="margin-top: 10%">
+		
+		
+			<!-- 제목 -->
+			<div class="row mb-4">
+				<h1 class="bold">
+					<i class="fa-solid fa-user" style="color: #ffb416;"></i> 개인정보 변경
+				</h1>
+			</div>
+			
+			<!-- 정보변경 -->
+			<div class="row">
+				<div class="form-group">
+				  <fieldset disabled="">
+				    <label class="form-label" for="disabledInput">이름</label>
+				    <input class="form-control" id="disabledInput" type="text" placeholder="${customerDto.customerName}" disabled="">
+				  </fieldset>
 				</div>
-			</c:if>
-
-</div>
+				
+				<div class="form-group">
+				  <label class="col-form-label mt-4" for="inputDefault">연락처</label>
+				  <input type="tel" name="customerContact" class="form-control" value="${customerDto.customerContact}" placeholder="( - ) 제외" id="inputDefault">
+				  <div class="fail-feedback">전화번호 형식이 올바르지 않습니다</div>
+				</div>
+				
+				<div class="form-group">
+				  <label class="col-form-label mt-4" for="inputDefault">생년월일</label>
+				  <input type="date" name="customerBirth" class="form-control" value="${customerDto.customerBirth}">
+				  <div class="fail-feedback">잘못된 날짜를 선택하셨습니다</div>
+				</div>
+				
+				<div class="form-group mb-4">
+				  <label class="col-form-label mt-4" for="inputDefault">비밀번호 확인</label>
+				  <input type="password" name="customerPw" class="form-control" placeholder="비밀번호를 입력해주세요">
+				</div>
+				
+				
+				<!-- 버튼 -->
+				<div class="row ms-1 mt-2">
+					<button type="submit" class="btn btn-warning">변경하기</button>
+				</div>
+				
+				<c:if test="${param.error != null}">
+					<div class="row important">
+						<span>입력하신 비밀번호가 일치하지 않습니다</span>
+					</div>
+				</c:if>
+			</div>
+			
+			
+			
+		</div>
+	</div>
 </form>
+
+
 
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
