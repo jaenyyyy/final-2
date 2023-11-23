@@ -60,10 +60,14 @@ public class ImageRestController {
 	   @GetMapping("/menu/{menuNo}")
 	   public ResponseEntity<ByteArrayResource>downloadMenuImage(@PathVariable int menuNo) throws IOException{
 	      log.debug("menuNo={}",menuNo);
-//	      log.debug("actorNo={}",actorNo);
 	      
 	      AttachDto attachDto = menuDao.findMenuImage(menuNo);
 	      log.debug("attachDto={}",attachDto);
+	      
+	      if (attachDto == null) {
+	          // 이미지가 존재하지 않는 경우, 적절한 HTTP 상태 코드 반환
+	          return ResponseEntity.notFound().build();
+	      }
 	      
 	      File target = new File(dir,String.valueOf(attachDto.getAttachNo()));
 	      byte[] data=FileUtils.readFileToByteArray(target);//실제파일정보 불러오기
