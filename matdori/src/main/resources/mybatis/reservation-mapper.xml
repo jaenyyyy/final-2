@@ -28,16 +28,18 @@
 		select * from reservation where rez_no = #{rezNo}
 	</select>
 	
-	<!-- 회원별 예약 조회 -->
-<!-- 	</select> -->
 	
+	<!-- 회원별 예약 리스트 -->
+	<select id="rezList" resultType="ReservationListDto">
+		select * from reservation_list where rez_customer_id = #{rezCustomerId}
+	</select>
 	
 	<!-- 회원별 예약 상세조회 -->
-<!-- 	<select id="rezDetailList" resultType="reservationVO"> -->
-<!-- 		select  -->
-<!-- 		from reservation  -->
-<!-- 		where rez_no = #{reservationVO.rezNo} -->
-<!-- 	</select> -->
+	<select id="rezDetailList" resultType="ReservationVO">
+		select 
+		from reservation 
+		where rez_no = #{reservationVO.rezNo}
+	</select>
 	
 	<!-- 예약 중복 방지 조회 -->
 	<select id="isInReservation" resultType="ReservationDto">

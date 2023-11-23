@@ -313,7 +313,7 @@
 
 	<!-- 관리자가 보는 레스토랑 상세 -->
 	<select id="resAdminDetail" resultType="RestaurantAdminListDto">
-		select * from
+		select * from 
 		restaurant_admin_list where res_no = #{resNo}
 	</select>
 
