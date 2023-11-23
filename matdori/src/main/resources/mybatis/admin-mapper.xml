@@ -269,32 +269,25 @@
 
 	<!-- 관리자가 보는 레스토랑 리스트 : 심사, 차단 추가해서 -->
 	<select id="resAdminList" resultType="RestaurantAdminListDto">
-		<include refid="pagingHeader"></include>
-
-		select * from restaurant_admin_list
-
-		<where>
-			<!-- 사업자 번호 (일치) -->
-			<if test="resRegNo != null">
-				and res_reg_no = #{resRegNo}
-			</if>
-			<!-- 매장 이름 (유사) -->
-			<if test="resName != null">
-				and instr(res_name, #{resName}) > 0
-			</if>
-			<!-- 차단여부 (일치) -->
-			<if test="resBlock != null">
-				and res_block = #{resBlock}
-			</if>
-			<!-- 매장 심사 (일치) -->
-			<if test="resJudgeStatus !=null">
-				and res_judge_status = #{resJudgeStatus}
-			</if>
-		</where>
-
-		order by res_reg_date desc
-
-		<include refid="pagingFooter"></include>
+	    <include refid="pagingHeader"></include>
+	    select * from restaurant_admin_list
+	    <where>
+	        <!-- 검색 분류 및 키워드 -->
+	        <if test="keyword != null and keyword != ''">
+	            and (instr(res_reg_no, #{keyword}) > 0 
+	            or instr(res_name, #{keyword}) > 0)
+	        </if>
+	        <!-- 차단 여부 -->
+	        <if test="resBlock != null">
+	            and res_block = #{resBlock}
+	        </if>
+	        <!-- 매장 심사 -->
+	        <if test="resJudgeStatus != null">
+	            and res_judge_status = #{resJudgeStatus}
+	        </if>
+	    </where>
+	    order by res_reg_date desc
+	    <include refid="pagingFooter"></include>
 	</select>
 
 

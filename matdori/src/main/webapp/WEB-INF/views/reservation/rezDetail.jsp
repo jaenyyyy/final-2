@@ -49,15 +49,15 @@
 				            사진자리
 				        </div>
 				        <div class="col-7">
-				            <input type="hidden" class="resNoInput" value="${ReservationListDto.resNo}">
+				            <input type="hidden" class="resNoInput" value="${ReservationDto.resNo}">
 				            <div class="row">
 				                ${rezDto.resName}
 				            </div>
 				            <div class="row">
-				                예약일 : ${fn:substring(ReservationListDto.clockSelect, 0, 10)}
+				                예약일 : ${fn:substring(ClockDto.clockSelect, 0, 10)}
 				            </div>
 				            <div class="row">
-				                예약시간 : ${fn:substring(ReservationListDto.clockSelect, 11, 16)}
+				                예약시간 : ${fn:substring(ClockDto.clockSelect, 11, 16)}
 				            </div>
 				        </div>
 				        
@@ -81,6 +81,7 @@
 					
 				</div>
 				<!-- 예약내역 -->
+				
 				<div class="list-border">
 					<div>
 						<h5 class="h-title">예약내역</h5>
@@ -113,7 +114,10 @@
 			</div>
 			
 			
+			
+			
 			<!-- 결제정보 -->
+			
 			<div class="col list-border mb-4 ms-4">
 				<div>
 					<h5 class="h-title">결제정보</h5>
@@ -135,13 +139,13 @@
 					    <th>포인트 사용</th>
 					    <td>
 					        <input type="number" class="form-control w-50" id="inputPoint" name="inputPoint" oninput="updatePaymentTotal()" value="${inputPoint}">
-					        <span id="customerPoint">보유 포인트: ${rezDto.customerPoint} pt</span>
+					        <span id="customerPoint">보유 포인트: <fmt:formatNumber value="${rezDto.customerPoint}" pattern="#,##0"/> pt </span>
 					    </td>
 					</tr>
 					<tr>
 					    <th>결제금액</th>
 					    <td id="paymentAmount">
-					        <fmt:formatNumber value="${paymentTotal}" pattern="#,##0"/> 원
+					        <fmt:formatNumber value="${paymentTotal}" pattern=3"#,##0"/> 원
 					    </td>
 					</tr>
 					</table>
@@ -156,7 +160,12 @@
 					<input type="checkbox"> 동의하나요
 				</div>
 				<div>
-					<button class="btn btn-warning w-100">결제하기</button>
+					<!-- 전송되는 부분 -->
+					<form method="post">
+						<input type="hidden" name="restaurant.productNo" value="${paymentSumVO.reservationListDto.productNo}">
+						<input type="hidden" name="restaurant.qty" value="${confirmVO.purchaseVO.qty}">
+					<button type="submit" class="btn btn-warning w-100">결제하기</button>
+					</form>
 				</div>
 			</div>
 			

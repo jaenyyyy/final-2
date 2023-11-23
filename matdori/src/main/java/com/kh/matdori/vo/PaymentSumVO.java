@@ -1,7 +1,8 @@
 package com.kh.matdori.vo;
 
 import com.kh.matdori.dto.CustomerDto;
-import com.kh.matdori.dto.ReservationListDto;
+import com.kh.matdori.dto.MenuDto;
+import com.kh.matdori.dto.ReservationDto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -10,8 +11,9 @@ import lombok.NoArgsConstructor;
 
 @Data @NoArgsConstructor @AllArgsConstructor @Builder
 public class PaymentSumVO {
-	private ReservationListDto reservationListDto;
+	private ReservationDto reservationDto;
 	private CustomerDto customerDto; 
+	private MenuDto menuDto;
 	private int inputPoint;
 //	private float getSumTotal;
 //	private float getPaymentTotal;
@@ -20,8 +22,8 @@ public class PaymentSumVO {
 	
 	//합계 금액 (메뉴가격 * 메뉴개수)
 	public Float getSumTotal() {
-		return reservationListDto.getMenuPrice() 
-				* reservationListDto.getRezMenuQty();
+		return menuDto.getMenuPrice() 
+				* reservationDto.getRezMenuQty();
 	}
 	
 	

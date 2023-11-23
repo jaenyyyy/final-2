@@ -75,7 +75,7 @@
 		<!-- 주 내용 -->
 		<div class="col-9">
 			<div class="row">
-				<c:forEach var="ReservationListDto" items="${rezList}">
+				<c:forEach var="ReservationDto" items="${rezList}">
 				    <div>
 				        <br>
 				    </div>
@@ -84,15 +84,15 @@
 				            사진자리
 				        </div>
 				        <div class="col-7">
-				            <input type="hidden" class="resNoInput" value="${ReservationListDto.resNo}">
+				            <input type="hidden" class="resNoInput" value="${ReservationDto.resNo}">
 				            <div class="row modal-title">
-				                ${ReservationListDto.resName}
+				                ${RestaurantDto.resName}
 				            </div>
 				            <div class="row">
-				                예약일 : ${fn:substring(ReservationListDto.clockSelect, 0, 10)}
+				                예약일 : ${fn:substring(ClockDto.clockSelect, 0, 10)}
 				            </div>
 				            <div class="row">
-				                예약시간 : ${fn:substring(ReservationListDto.clockSelect, 11, 16)}
+				                예약시간 : ${fn:substring(ClockDto.clockSelect, 11, 16)}
 				            </div>
 				        </div>
 				        <div class="col-2 text-end">
@@ -115,7 +115,7 @@
 		        <div class="modal-content">
 		            <div class="modal-header">
 		                <h1 class="modal-title fs-5">
-		                    [ ${ReservationListDto.resName} ] 리뷰 작성
+		                    [ ${RestaurantDto.resName} ] 리뷰 작성
 		                </h1>
 		                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 		            </div>

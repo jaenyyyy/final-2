@@ -26,7 +26,11 @@
 <delete id="deleteByMenuNo">
     DELETE FROM menu WHERE menu_no = #{menuNo}
 </delete>
-    
+  
+  
+  <select id="selectListByMenuTypeNo" resultType="MenuDto" >
+  select * from menu where menu_type_no=#{menuTypeNo}
+  </select>
     <!-- 
   <select id="menuListByResNo" resultType="MenuByResDto">
   SELECT 
@@ -76,8 +80,8 @@
 
    
    <!--  단일메뉴 조회-->
-  <select id="menuByMenuNo" resultType="MenuWithImagesVO">
-  SELECT 
+  <!-- <select id="menuByMenuNo" resultType="MenuWithImagesVO">
+  )SELECT 
     m.menu_no,	
     m.menu_name,
     m.menu_price,
@@ -89,8 +93,14 @@
   LEFT JOIN attach a ON mi.attach_no = a.attach_no
   WHERE 
     m.menu_no = #{menuNo}
+</select> -->
+
+<select id="findMenuImage" resultType="AttachDto">
+	  	select*from attach where attach_no=(
+	  	select attach_no from menu_images where menu_no=#{menuNo}
+	  	)
+	
 </select>
-   
     <!--  메뉴 수정 -->
  <update id="edit">
     update menu 

@@ -11,10 +11,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.kh.matdori.dao.MenuDao;
 import com.kh.matdori.dao.RestaurantDao;
 import com.kh.matdori.dao.ReviewDao;
+import com.kh.matdori.dto.RestaurantDto;
 import com.kh.matdori.dto.ReviewDto;
 import com.kh.matdori.vo.MenuWithImagesVO;
-import com.kh.matdori.vo.RestaurantDetailVO;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Controller
 @RequestMapping("/restaurant")
 public class RestaurantController {
@@ -29,14 +32,22 @@ public class RestaurantController {
 	@RequestMapping("/detail")
 	public String detail(Model model, 
 						 @RequestParam int resNo) {
-		RestaurantDetailVO resDetail = restaurantDao.selectDetail(resNo);
-//		List<MenuWithImagesVO> menuList = menuDao.getMenuByRes(resNo);
-//		List<ReviewDto> reviewList = reviewDao.selectListByRes(resNo);
+		RestaurantDto resDto = restaurantDao.selectOne(resNo);
+		List<MenuWithImagesVO> menuListByRes = menuDao.getMenuByRes(resNo);
+		List<ReviewDto> reviewByRes = reviewDao.selectListByRes(resNo);
 		
+
 //		model.addAttribute("resDetail", resDetail);
 //		model.addAttribute("menuList", menuList);
 //		model.addAttribute("reviewList", reviewList); 
-		//오류나서 주석처리
+
+		model.addAttribute("resDto", resDto);
+		model.addAttribute("menuListByRes", menuListByRes);
+		model.addAttribute("reviewByRes", reviewByRes);
+//		log.debug("list= {}",resDto);
+//		log.debug("list= {}",menuListByRes);
+//		log.debug("list= {}",reviewByRes);
+
 		
 		return "restaurant/detail";
 		

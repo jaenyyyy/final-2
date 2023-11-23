@@ -9,8 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.kh.matdori.dto.ReservationDto;
-import com.kh.matdori.dto.ReservationListDto;
-import com.kh.matdori.vo.PaymentSumVO;
 
 @Repository
 public class ReservationDaoImpl implements ReservationDao{
@@ -29,7 +27,7 @@ public class ReservationDaoImpl implements ReservationDao{
 	}
 	
 	@Override
-	public ReservationListDto selectOne(int rezNo) {
+	public ReservationDto selectOne(int rezNo) {
 		return sqlSession.selectOne("reservation.detail", rezNo);
 	}
 	
@@ -50,8 +48,8 @@ public class ReservationDaoImpl implements ReservationDao{
 	
 	//회원별 예약내역 조회
 	@Override
-	public List<ReservationListDto> rezList(String rezCustomerId) {
-		List<ReservationListDto> rezList = sqlSession.selectList("rezList", rezCustomerId);
+	public List<ReservationDto> rezList(String rezCustomerId) {
+		List<ReservationDto> rezList = sqlSession.selectList("rezList", rezCustomerId);
 		return rezList;
 	}
 
