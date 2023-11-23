@@ -131,11 +131,11 @@ public class ReservationController {
 //		PaymentSumVO vo = new PaymentSumVO();
 //		
 //		//rezDto 설정을 vo 가져오는걸로 설정
-		vo.setReservationDto(rezDto);
-		
-		Float sumTotal = vo.getSumTotal();
-		Float paymentTotal = vo.getPaymentTotal();
-		int inputPoint = vo.getInputPoint();
+//		vo.setReservationDto(rezDto);
+//		
+//		Float sumTotal = vo.getSumTotal();
+//		Float paymentTotal = vo.getPaymentTotal();
+//		int inputPoint = vo.getInputPoint();
 		
 		
 		
