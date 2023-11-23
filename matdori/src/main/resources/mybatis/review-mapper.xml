@@ -27,7 +27,7 @@
 	<select id="listByRes" resultType="ReviewDto">
 		select rl.*, ri.attach_no
 		from review_list rl
-			left outer join review_image ri on rl.review_no = ri.review_no
+			left outer join review_images ri on rl.review_no = ri.review_no
 		where res_no = #{resNo} order by rl.review_no desc
 	</select>
 	

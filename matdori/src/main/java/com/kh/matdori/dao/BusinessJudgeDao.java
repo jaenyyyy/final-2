@@ -14,8 +14,8 @@ public interface BusinessJudgeDao {
 
 	 void updateBusinessJudge(BusinessJudgeDto judgeDto);
 
-	List<BusinessJudgeListDto> getList(BusPaginationVO vo);
+//	
 	
-	int countList(BusPaginationVO vo); //검색 + 페이지네이션
+	
 	
 }

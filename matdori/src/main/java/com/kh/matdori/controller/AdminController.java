@@ -31,6 +31,8 @@ import com.kh.matdori.dto.RestaurantAdminListDto;
 import com.kh.matdori.dto.RestaurantBlockDto;
 import com.kh.matdori.dto.RestaurantDto;
 import com.kh.matdori.dto.RestaurantJudgeDto;
+import com.kh.matdori.dto.ReviewDto;
+import com.kh.matdori.vo.BusBlockPaginationVO;
 import com.kh.matdori.vo.BusPaginationVO;
 import com.kh.matdori.vo.CusAdminVO;
 import com.kh.matdori.vo.PaginationVO;
@@ -68,7 +70,6 @@ public class AdminController {
 	public String busJudgeList(Model model, @ModelAttribute(name = "vo") BusPaginationVO vo) {
 		int count = businessJudgeDao.countList(vo);
 		vo.setCount(count);
-
 		// 페이징 정보 계산
 		vo.calculatePageInfo();
 
@@ -85,6 +86,18 @@ public class AdminController {
 		BusinessDto businessDto = businessDao.getBusinessDetails(userId);
 		model.addAttribute("business", businessDto);
 		return "/admin/business/judgeDetail";
+	    int count = adminDao.countList(vo);
+	    vo.setCount(count);
+	    
+	    // 페이징 정보 계산
+	    vo.calculatePageInfo();
+	    
+	    List<BusinessJudgeListDto> businessJudgeList = adminDao.getList(vo);
+	    
+	    model.addAttribute("vo", vo);
+	    model.addAttribute("businessJudgeList", businessJudgeList);
+	    
+	    return "/admin/business/judgeList";
 	}
 
 	// 사업자 등록 심사 승인,거절
@@ -116,6 +129,7 @@ public class AdminController {
 //    	adminDao.deleteResBlock(resNo);
 //    	return "redirect:/admin/restaurant/detail";
 //    }
+
 
 	// 레스토랑 관리자 시점 (+차단 +심사 리스트)
 	@RequestMapping("/restaurant/list")
@@ -186,6 +200,95 @@ public class AdminController {
 
 		return "redirect:/admin/business/blockManager/list";
 	}
+
+    
+    
+    //레스토랑 관리자 시점 (+차단 +심사 리스트)
+    @RequestMapping("/restaurant/list")
+    public String list(@ModelAttribute("vo") ResAdminVO vo, Model model) {
+    	List <RestaurantAdminListDto> list = adminDao.resAdminList(vo);
+    	model.addAttribute("list", list);
+    	return "/admin/restaurant/list";
+    }
+    
+    
+    //레스토랑 관리자 시점(+차단 +심사 상세)
+    @RequestMapping("/restaurant/detail")
+    public String detail(@RequestParam int resNo, Model model) {
+    	
+    	RestaurantAdminListDto restaurantAdminListDto
+    		= adminDao.resAdminOne(resNo);
+    	model.addAttribute("restaurantAdminListDto", restaurantAdminListDto);
+    	
+    	RestaurantDto restaurantDto = restaurantDao.selectOne(resNo);
+    	model.addAttribute("restaurantDto", restaurantDto);
+    	
+    	RestaurantBlockDto blockDto = adminDao.selectBlockOne(resNo);
+    	model.addAttribute("restaurantBlockDto", blockDto);
+    	
+    	RestaurantJudgeDto restaurantJudgeDto = adminDao.selectOne(resNo);
+    	model.addAttribute("restaurantJudgeDto", restaurantJudgeDto);
+    	
+    	return "/admin/restaurant/detail";
+    }
+    
+    
+  //사업자 차단 관리 리스트
+    @GetMapping("/business/blockManager/list")
+    public String businessBlockManagerList(Model model, @ModelAttribute(name = "vo") BusBlockPaginationVO vo) {
+        int count = adminDao.countBlockList(vo);
+        vo.setCount(count);
+        System.out.println("페이지 카운트 : " + vo.getPageCount());
+        System.out.println("전체페이지 카운트 : " + vo.getCount());
+	    // 페이징 정보 계산
+	    vo.calculatePageInfo();
+    	
+    	List<BusinessBlockDto> blockedBusinesses = adminDao.getBusBlocklist(vo);
+	    
+	    model.addAttribute("vo", vo);
+        model.addAttribute("businessBlockList", blockedBusinesses);
+        return "/admin/business/BusBlockList";
+    }
+    
+    
+    
+    
+    
+    //사업자 관리 상세
+    @GetMapping("/business/blockManager/details/{userId}")
+    public String businessBlockManagerDetails(@PathVariable String userId, Model model) {
+        BusinessDto businessDto = businessDao.getBusinessDetails(userId);
+        model.addAttribute("business", businessDto);
+        return "/admin/business/BusBlockDetail";
+    }
+    
+    //사업자 차단, 해제 
+    @PostMapping("/business/blockManager/details/{userId}")
+    public String busBlock(@RequestParam String busId,
+                                @RequestParam String blockComment,
+                                @RequestParam String blockStatus) {
+        BusinessBlockDto blockDto = new BusinessBlockDto();
+        blockDto.setBusId(busId);
+        blockDto.setBusBlockComment(blockComment);
+        blockDto.setBusBlockStatus(blockStatus);
+        
+        //System.out.println("전달받은 데이터1: " + blockComment);
+        //System.out.println("전달받은 데이터2: " + blockStatus);
+
+        // adminDao를 직접 호출하여 업데이트
+        adminDao.updateBusBlock(blockDto);
+        //System.out.println("상태: " + blockDto.getBusBlockStatus());
+        //System.out.println("전달받는 아이디: " + blockDto.getBusId());
+        
+        return "redirect:/admin/business/blockManager/list";
+    }
+    
+  
+
+
+
+
+    
 
 //    
 // // 이용자 차단 구문(restcontroller)

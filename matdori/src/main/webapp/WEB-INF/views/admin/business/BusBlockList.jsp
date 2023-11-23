@@ -6,6 +6,43 @@
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 
 <div class="container mt-5">
+
+		<%-- <form>
+			<div class="row justify-content-center">
+				<div class="col-md-4">
+					<div class="input-group mb-3">
+						<div class="input-group-prepend">
+							<span class="input-group-text">사업자아이디</span>
+						</div>
+						<input type="text" name="busId" value="${businessBlock.busId}"
+							class="form-control">
+					</div>
+
+					<div class="input-group mb-3">
+						<div class="input-group-prepend">
+							<span class="input-group-text">사업자이름</span>
+						</div>
+						<input type="text" name="busName" value="${businessBlock.busName}"
+							class="form-control">
+					</div>
+
+					<div class="input-group mb-3">
+						<div class="input-group-prepend">
+							<span class="input-group-text">차단여부</span>
+						</div>
+						<select name="busBlockStatus" class="form-select">
+							<option value="">선택</option>
+							<option value="Y">Y</option>
+							<option value="N">N</option>
+						</select>
+					</div>
+					<div class="col text-center">
+						<button class="btn btn-warning" type="submit">검색</button>
+					</div>
+				</div>
+			</div>
+		</form> --%>
+		
 	<h1 class="mb-4">
 		<i class="fa-solid fa-circle-check" style="color: #ffb416;"></i>사업자 관리
 	</h1>
