@@ -41,6 +41,7 @@
 			<a href="changePw"> 비밀번호 변경 </a>
 			<a href="change"> 개인정보 변경 </a>
 			<a href="exit">회원 탈퇴</a>
+			<a href="reviewWrite">리뷰작성</a>
 			
 			
 			<a href="rezList">예약내역</a>

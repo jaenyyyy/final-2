@@ -77,7 +77,7 @@
 
 
 		<!-- 회원 리스트 -->
-		
+
 		<div class="row justify-content-center">
 			<div class="col-md-10 col-sm-12">
 				<table class="table table-hover justify-content-center text-center">
@@ -87,6 +87,7 @@
 							<th scope="col" class="col-md-3">회원아이디</th>
 							<th scope="col" class="col-md-1">회원상태</th>
 							<th scope="col" class="col-md-3">회원연락처</th>
+							<th scope="col" class="col-md-3">회원상세</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -100,6 +101,11 @@
 
 								<td>${customerAdminListDto.customerStatus}</td>
 								<td>${customerAdminListDto.customerContact}</td>
+								<td><a
+									href="/admin/customer/detail?customerId=${customerAdminListDto.customerId}"
+									class="btn btn-primary btn-sm">상세보기</a></td>
+
+
 							</tr>
 						</c:forEach>
 					</tbody>

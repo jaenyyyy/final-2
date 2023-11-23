@@ -149,55 +149,7 @@
 
 
 <script>
-$(".open-modal-review").click(function() {
-    var resLine = $(this).closest('.res-line');
-    var resName = resLine.data('resName');
-    var resNo = resLine.data('resNo');
 
-    $("#modal-title").text("[ " + resName + " ] 리뷰 작성");
-    $("#resNo").val(resNo);
-
-    $("#reviewModal").modal('show');
-});
-	
-	
-	//작성하던 창 닫을 때 초기화
-	$(document).ready(function() {
-		$('#reviewModal').on('hidden.bs.modal', function () {
-		    var reviewData = $('#reviewContent').val();
-		    $('#reviewContent').val('');
-		});
-	});
-	
-	// 리뷰 작성 보내기
-	function sendReview() {
-	    var resNo = $('#resNo').val();
-	    var reviewContent = $('#reviewContent').val();
-	    var reviewStarCount = 0;
-	    
-	    var formData = new FormData();
-	    formData.append('resNo', resNo);
-	    formData.append('reviewContent', reviewContent);
-	    formData.append('reviewStarCount', reviewStarCount);
-	    formData.append('attach', $('#attachFile')[0].files[0]); // 파일 추가
-    
-    $.ajax({
-        url: '/rest/review/write',
-        method: 'POST',
-        processData: false,
-        contentType: false,
-        data: formData,
-        success: function(response) {
-            console.log('성공');
-            $('#reviewModal').modal('hide');
-            location.reload();
-        },
-        error: function(xhr, status, error) {
-            console.error('실패');
-        }
-    });
-	}
-	
 	
 	
 	// 별찍기

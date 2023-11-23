@@ -31,7 +31,7 @@
 		where res_no = #{resNo} order by rl.review_no desc
 	</select>
 	
-	<!-- 리뷰 목록 (이용자) -->
+	<!-- 리뷰 목록 (이용자) + 리뷰리스트, 리뷰이미지 -->
 	<select id="listByCus" resultType="ReviewDto">
 		select rl.*, ri.attach_no
 		from review_list rl
