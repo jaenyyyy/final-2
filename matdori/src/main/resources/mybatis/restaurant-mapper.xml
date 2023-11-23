@@ -10,7 +10,12 @@
     <select id="sequence" resultType="int">
     	select restaurant_seq.nextval from dual
     </select>
-    
+
+	<!-- 사진 시퀀스 생성 -->    
+    <select id="sequenceAttach" resultType="int">
+    	select attach_seq.nextval from dual
+    </select>
+
     <!-- 등록 -->
    <insert id="save">
   insert into restaurant
@@ -58,7 +63,24 @@
 	</update>
 	
 	
+    <!-- 이미지 삽입 -->
+    <insert id="insertResImage">
+        INSERT INTO res_images (attach_no, res_no)
+        VALUES (#{attachNo}, #{resNo})
+    </insert>
+
+    <!-- 레스토랑별 이미지 조회 -->
+    <select id="selectResImagesByResNo" resultType="ResImagesDto">
+        SELECT * FROM res_images
+        WHERE res_no = #{resNo}
+    </select>
+
+    <!-- 이미지 삭제 -->
+    <delete id="deleteResImage">
+        DELETE FROM res_images
+        WHERE attach_no = #{attachNo}
+    </delete>
+</mapper>
 	
 	
-    
-    </mapper>
+   
