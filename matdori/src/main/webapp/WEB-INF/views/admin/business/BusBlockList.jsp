@@ -7,7 +7,7 @@
 
 <div class="container mt-5">
 
-		<form>
+		<%-- <form>
 			<div class="row justify-content-center">
 				<div class="col-md-4">
 					<div class="input-group mb-3">
@@ -41,7 +41,7 @@
 					</div>
 				</div>
 			</div>
-		</form>
+		</form> --%>
 		
 	<h1 class="mb-4">
 		<i class="fa-solid fa-circle-check" style="color: #ffb416;"></i>사업자 관리

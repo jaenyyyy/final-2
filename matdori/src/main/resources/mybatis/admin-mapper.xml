@@ -117,6 +117,25 @@
     ORDER BY b.bus_id DESC 
 </select> -->
 
+	<!-- 사업자 심사 카운트 -->
+	<select id="countBlock" resultType="int">
+		<!-- 검색일 때 -->
+		<choose>
+			<when test="keyword != null">
+	            <![CDATA[
+	                select count(*) from business
+	                where instr(bus_id, #{keyword}) > 0
+	            ]]>
+			</when>
+			<!-- 검색이 아닐 때 -->
+			<otherwise>
+	            <![CDATA[
+	                select count(*) from business
+	            ]]>
+			</otherwise>
+		</choose>
+	</select>
+
 	<!-- 사업자 관리 차단 이전에 해당 ID에 대한 레코드가 있는지 확인하는 쿼리 -->
 	<select id="checkIfBusBlockExists" resultType="int">
 		SELECT COUNT(*)
@@ -144,16 +163,15 @@
 	</update>
 	
 	<!-- 사업자 관리 차단 카운트? -->
-	<select id="countBlock" resultType="int">
+	<!-- <select id="countBlock" resultType="int"> -->
     <!-- 검색이 적용된 경우 -->
-    <choose>
+<!--     <choose>
         <when test="busId != null or busName != null or busBlockStatus != null">
             <![CDATA[
                 SELECT COUNT(*)
                 FROM business b
                 LEFT JOIN business_block bb ON b.bus_id = bb.bus_id
                 WHERE 
-                    <!-- 각 필드에 대한 검색 조건 추가 -->
                     <if test="busId != null">
                         b.bus_id = #{busId}
                     </if>
@@ -165,7 +183,6 @@
                     </if>
             ]]>
         </when>
-        <!-- 검색이 아닌 경우 -->
         <otherwise>
             <![CDATA[
                 SELECT COUNT(*)
@@ -174,7 +191,7 @@
             ]]>
         </otherwise>
     </choose>
-</select>
+</select> -->
 
 
 
