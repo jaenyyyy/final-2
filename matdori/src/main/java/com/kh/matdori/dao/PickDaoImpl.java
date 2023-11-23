@@ -40,9 +40,9 @@ public class PickDaoImpl implements PickDao{
 	//찜횟수 
 	@Override
 	public int count(int resNo) {
-		// TODO Auto-generated method stub
-		return 0;
+	    return sqlSession.selectOne("customer.getPicksCount", resNo);
 	}
+
 
 	//찜한 목록 조회
 	@Override

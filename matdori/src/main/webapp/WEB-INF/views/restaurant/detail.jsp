@@ -87,9 +87,11 @@
 				<c:choose>
 					<c:when test="${pickDto.resNo != null}">
 						<i class="fa-solid fa-bookmark fa-3x bookmark" style="color: #ffb416;"></i>
+						<br><span></span>
 					</c:when>
 					<c:otherwise>
 						<i class="fa-regular fa-bookmark fa-3x bookmark" style="color: #ffb416;"></i>
+						<br><span></span>
 					</c:otherwise>
 				</c:choose>
 			</div>
@@ -523,7 +525,7 @@ $(function(){
                         $(".fa-bookmark").removeClass("fa-solid fa-regular").addClass("fa-regular");
                     }
     				//전달받은 찜 개수를 북마크 뒤의 span에 출력
-    				$(".fa-bookmark").next("span").text(response.count);
+                    $(".fa-bookmark").next("br").next("span").text(response.count + "명이 찜한 식당!");
                 }
             });
 
@@ -540,7 +542,7 @@ $(function(){
                             $(".fa-bookmark").removeClass("fa-solid fa-regular").addClass("fa-regular");
                         }
         				//전달받은 찜 개수를 북마크 뒤의 span에 출력
-        				$(".fa-bookmark").next("span").text(response.count);
+                        $(".fa-bookmark").next("br").next("span").text(response.count + "명이 찜한 식당!");
                     }
                 });
             });

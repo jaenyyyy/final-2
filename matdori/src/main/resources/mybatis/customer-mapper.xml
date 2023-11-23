@@ -172,7 +172,7 @@
 	<delete id="pickDelete" parameterType="PickDto">
 		DELETE FROM pick
 		WHERE
-		res_no = #{resNo}
+		res_no = #{resNo} AND customer_id = #{customerId}
 	</delete>
 
 	<!-- 찜했는지 확인 -->
@@ -185,8 +185,8 @@
 
 
 	<!-- 찜한 식당 내역 조회 -->
-	<!-- parameterType="String" resultType="RestaurantDto" -->
-	<select id="getPickResByUser" >
+	<!-- parameterType="String"  -->
+	<select id="getPickResByUser"  resultType="RestaurantDto">
 		SELECT r.*
 		FROM restaurant r
 		INNER JOIN pick p ON
