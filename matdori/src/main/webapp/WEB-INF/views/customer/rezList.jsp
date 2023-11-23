@@ -75,7 +75,7 @@
 		<!-- 주 내용 -->
 		<div class="col-9">
 			<div class="row">
-				<c:forEach var="ReservationDto" items="${rezList}">
+				<c:forEach var="ReservationListDto" items="${rezList}">
 				    <div>
 				        <br>
 				    </div>
@@ -84,15 +84,15 @@
 				            사진자리
 				        </div>
 				        <div class="col-7">
-				            <input type="hidden" class="resNoInput" value="${ReservationDto.resNo}">
+				            <input type="hidden" class="resNoInput" value="${ReservationListDto.resNo}">
 				            <div class="row modal-title">
-				                ${RestaurantDto.resName}
+				                ${ReservationListDto.resName}
 				            </div>
 				            <div class="row">
-				                예약일 : ${fn:substring(ClockDto.clockSelect, 0, 10)}
+				                예약일 : ${fn:substring(ReservationListDto.clockSelect, 0, 10)}
 				            </div>
 				            <div class="row">
-				                예약시간 : ${fn:substring(ClockDto.clockSelect, 11, 16)}
+				                예약시간 : ${fn:substring(ReservationListDto.clockSelect, 11, 16)}
 				            </div>
 				        </div>
 				        <div class="col-2 text-end">
@@ -115,7 +115,7 @@
 		        <div class="modal-content">
 		            <div class="modal-header">
 		                <h1 class="modal-title fs-5">
-		                    [ ${RestaurantDto.resName} ] 리뷰 작성
+		                    [ ${ReservationListDto.resName} ] 리뷰 작성
 		                </h1>
 		                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 		            </div>
@@ -149,55 +149,7 @@
 
 
 <script>
-$(".open-modal-review").click(function() {
-    var resLine = $(this).closest('.res-line');
-    var resName = resLine.data('resName');
-    var resNo = resLine.data('resNo');
 
-    $("#modal-title").text("[ " + resName + " ] 리뷰 작성");
-    $("#resNo").val(resNo);
-
-    $("#reviewModal").modal('show');
-});
-	
-	
-	//작성하던 창 닫을 때 초기화
-	$(document).ready(function() {
-		$('#reviewModal').on('hidden.bs.modal', function () {
-		    var reviewData = $('#reviewContent').val();
-		    $('#reviewContent').val('');
-		});
-	});
-	
-	// 리뷰 작성 보내기
-	function sendReview() {
-	    var resNo = $('#resNo').val();
-	    var reviewContent = $('#reviewContent').val();
-	    var reviewStarCount = 0;
-	    
-	    var formData = new FormData();
-	    formData.append('resNo', resNo);
-	    formData.append('reviewContent', reviewContent);
-	    formData.append('reviewStarCount', reviewStarCount);
-	    formData.append('attach', $('#attachFile')[0].files[0]); // 파일 추가
-    
-    $.ajax({
-        url: '/rest/review/write',
-        method: 'POST',
-        processData: false,
-        contentType: false,
-        data: formData,
-        success: function(response) {
-            console.log('성공');
-            $('#reviewModal').modal('hide');
-            location.reload();
-        },
-        error: function(xhr, status, error) {
-            console.error('실패');
-        }
-    });
-	}
-	
 	
 	
 	// 별찍기
