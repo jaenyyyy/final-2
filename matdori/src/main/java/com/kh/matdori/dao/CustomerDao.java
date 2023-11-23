@@ -61,6 +61,10 @@ public interface CustomerDao {
 
 	List<CustomerAdminListDto> cusAdminList(CusAdminVO vo);
 	
+	List<CustomerAdminListDto> getList(CusAdminVO vo);
+	
+	List<CustomerAdminListDto> selectCustomerListByPage(CusAdminVO vo);
+	
 	// 회원 레벨 업데이트 
 	boolean updateCustomerLevel(String customerId, String customerLevel);
 

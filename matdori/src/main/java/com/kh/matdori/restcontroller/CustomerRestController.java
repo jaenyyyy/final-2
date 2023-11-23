@@ -68,10 +68,6 @@ public class CustomerRestController {
 	    }
 	
 	
-	public String cusCancel(@RequestBody CustomerBlockDto customerBlockDto) {
-		customerDao.deleteBlock(customerBlockDto.getCustomerId()); // customerId를 사용하여 처리
-		return "redirect:/customer/detail";
-	}
 
 //	  @RequestMapping("/levelEdit")
 //	    public ResponseEntity<String> customerEdit(@RequestBody CustomerDto customerDto) {
