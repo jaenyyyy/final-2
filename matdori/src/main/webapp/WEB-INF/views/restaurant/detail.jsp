@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 
@@ -81,19 +82,19 @@
 			</div>
 
 
-			<!-- 북마크 : 나중에 클릭하면 북마크 설정 되는거 / ajax로 값 전송 되게 구현할 예정 -->
+			<!-- 북마크 : 클릭하면 북마크 설정 / ajax로 값 전송 되게 구현할 예정 -->
 			<div class="col-6" style="text-align: right;">
 				<c:choose>
 					<c:when test="${pickDto.resNo != null}">
-						<i class="fa-solid fa-bookmark fa-3x" style="color: #ffb416;"></i>
+						<i class="fa-solid fa-bookmark fa-3x bookmark" style="color: #ffb416;"></i>
 					</c:when>
 					<c:otherwise>
-						<i class="fa-regular fa-bookmark fa-3x" style="color: #ffb416;"></i>
+						<i class="fa-regular fa-bookmark fa-3x bookmark" style="color: #ffb416;"></i>
 					</c:otherwise>
 				</c:choose>
 			</div>
 		</div>
-
+</div>
 
 		<!-- 사진 틀-->
 		<div class="row justify-content-center mb-3 mt-4">
@@ -500,6 +501,50 @@ $(function(){
     });
  });
 </script>
+
+
+<!-- 북마크 설정/해제를 위한 --> 
+<c:if test="${sessionScope.name != null}">
+    <script>
+        $(function() {
+        	var params = new URLSearchParams(location.search);
+        	var resNo = params.get("resNo");
+
+        	/* console.log("resNo:", resNo); */
+
+            $.ajax({
+                url: "/rest/pick/check",
+                method: "post",
+                data: { resNo: resNo },
+                success: function(response) {
+                    if (response.check) {
+                        $(".fa-bookmark").removeClass("fa-solid fa-regular").addClass("fa-solid");
+                    } else {
+                        $(".fa-bookmark").removeClass("fa-solid fa-regular").addClass("fa-regular");
+                    }
+                }
+            });
+
+            $(".fa-bookmark").click(function() {
+            	console.log("북마크 클릭됨");
+                $.ajax({
+                    url: "/rest/pick/action",
+                    method: "post",
+                    data: { resNo: resNo },
+                    success: function(response) {
+                        if (response.check) {
+                            $(".fa-bookmark").removeClass("fa-solid fa-regular").addClass("fa-solid");
+                        } else {
+                            $(".fa-bookmark").removeClass("fa-solid fa-regular").addClass("fa-regular");
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+</c:if>
+
+
 
 
 
