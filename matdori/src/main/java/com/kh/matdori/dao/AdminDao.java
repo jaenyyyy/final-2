@@ -36,7 +36,7 @@ public interface AdminDao {
 	//사업자 차단 관리 리스트
 	List<BusinessBlockDto> getBusBlocklist(BusBlockPaginationVO vo);
 	
-	//사업자 등록 심사 리스트
+	//사업자 등록 심사 리스트 
 	List<BusinessJudgeListDto> getList(BusPaginationVO vo);
 	
 	//사업자 차단 페이지네이션용
