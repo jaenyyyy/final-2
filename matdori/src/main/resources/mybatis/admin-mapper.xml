@@ -23,7 +23,7 @@
 	<!-- 사업자 등록 심사 -->
 
 	<!-- 두 테이블을 조인하고 필요한 필드를 검색하는 SQL 문을 정의 -->
-	<select id="getList" resultType="BusinessJudgeListDto">
+	<select id="getJudgeList" resultType="BusinessJudgeListDto">
 		SELECT bj.bus_judge_date,
 		b.bus_id, b.bus_name, b.bus_reg_no,
 		bj.bus_judge_status,
@@ -33,14 +33,14 @@
 		bj ON b.bus_id = bj.bus_id
 	</select>
 
-	<!-- 심사이전에 해당 ID에 대한 레코드가 있는지 확인하는 쿼리 -->
+	<!-- 사업자 심사이전에 해당 ID에 대한 레코드가 있는지 확인하는 쿼리 -->
 	<select id="checkIfBusJudgeExists" resultType="int">
 		SELECT COUNT(*)
 		FROM business_judge
 		WHERE bus_id = #{busId}
 	</select>
 
-	<!-- 심사이전에 정보가 없다면 작동할 insert -->
+	<!-- 사업자 심사이전에 정보가 없다면 작동할 insert -->
 	<insert id="insertBusJudge" parameterType="map">
 		INSERT INTO
 		business_judge (BUS_JUDGE_NO, bus_id, bus_judge_date,
@@ -53,7 +53,7 @@
 	</insert>
 
 
-	<!-- 심사완료하면 업데이트 되는 코드 -->
+	<!-- 사업자 심사완료하면 업데이트 되는 코드 -->
 	<update id="updateJudge" parameterType="map">
 		UPDATE business_judge
 		SET
@@ -63,7 +63,7 @@
 		WHERE bus_id = #{busId}
 	</update>
 
-	<!-- 카운트 -->
+	<!-- 사업자 심사 카운트 -->
 	<select id="count" resultType="int">
 		<!-- 검색일 때 -->
 		<choose>
@@ -87,8 +87,8 @@
 
 	<!-- 사업자 관리 차단 -->
 
-	<!-- 두 테이블을 조인하고 필요한 필드를 검색하는 SQL 문을 정의 -->
-	<select id="getAllBlockedBusinesses"
+	<!-- 사업자 관리 차단 리스트-->
+	<select id="getBusBlocklist"
 		resultType="BusinessBlockListDto">
 		SELECT b.bus_id, b.bus_name, b.bus_email,
 		bb.bus_block_status
@@ -96,14 +96,53 @@
 		LEFT JOIN business_block bb ON
 		b.bus_id = bb.bus_id
 	</select>
+<!-- 	<select id="getBusBlocklist" resultType="BusinessBlockListDto">
+    SELECT b.bus_id, b.bus_name, b.bus_email, bb.bus_block_status
+    FROM business b
+    LEFT JOIN business_block bb ON b.bus_id = bb.bus_id
+    <where>
+        사업자 아이디로 검색
+        <if test="busId != null">
+            AND b.bus_id = #{busId}
+        </if>
+        사업자 이름으로 검색
+        <if test="busName != null">
+            AND b.bus_name LIKE #{busName}
+        </if>
+        차단 상태로 검색
+        <if test="busBlockStatus != null">
+            AND bb.bus_block_status = #{busBlockStatus}
+        </if>
+    </where>
+    ORDER BY b.bus_id DESC 
+</select> -->
 
-	<!-- 심사이전에 해당 ID에 대한 레코드가 있는지 확인하는 쿼리 -->
+	<!-- 사업자 심사 카운트 -->
+	<select id="countBlock" resultType="int">
+		<!-- 검색일 때 -->
+		<choose>
+			<when test="keyword != null">
+	            <![CDATA[
+	                select count(*) from business
+	                where instr(bus_id, #{keyword}) > 0
+	            ]]>
+			</when>
+			<!-- 검색이 아닐 때 -->
+			<otherwise>
+	            <![CDATA[
+	                select count(*) from business
+	            ]]>
+			</otherwise>
+		</choose>
+	</select>
+
+	<!-- 사업자 관리 차단 이전에 해당 ID에 대한 레코드가 있는지 확인하는 쿼리 -->
 	<select id="checkIfBusBlockExists" resultType="int">
 		SELECT COUNT(*)
 		FROM business_block WHERE bus_id = #{busId}
 	</select>
 
-	<!-- 심사이전에 정보가 없다면 작동할 insert -->
+	<!-- 사업자 관리 차단 이전에 정보가 없다면 작동할 insert -->
 	<insert id="insertBusBlock">
 		INSERT INTO business_block (bus_id, bus_block_time,
 		bus_block_comment,
@@ -122,6 +161,38 @@
 		#{busBlockStatus}
 		WHERE bus_id = #{busId}
 	</update>
+	
+	<!-- 사업자 관리 차단 카운트? -->
+	<!-- <select id="countBlock" resultType="int"> -->
+    <!-- 검색이 적용된 경우 -->
+<!--     <choose>
+        <when test="busId != null or busName != null or busBlockStatus != null">
+            <![CDATA[
+                SELECT COUNT(*)
+                FROM business b
+                LEFT JOIN business_block bb ON b.bus_id = bb.bus_id
+                WHERE 
+                    <if test="busId != null">
+                        b.bus_id = #{busId}
+                    </if>
+                    <if test="busName != null">
+                        AND b.bus_name LIKE CONCAT('%', #{busName}, '%')
+                    </if>
+                    <if test="busBlockStatus != null">
+                        AND bb.bus_block_status = #{busBlockStatus}
+                    </if>
+            ]]>
+        </when>
+        <otherwise>
+            <![CDATA[
+                SELECT COUNT(*)
+                FROM business b
+                LEFT JOIN business_block bb ON b.bus_id = bb.bus_id
+            ]]>
+        </otherwise>
+    </choose>
+</select> -->
+
 
 
 
@@ -242,7 +313,7 @@
 
 	<!-- 관리자가 보는 레스토랑 상세 -->
 	<select id="resAdminDetail" resultType="RestaurantAdminListDto">
-		select * from
+		select * from 
 		restaurant_admin_list where res_no = #{resNo}
 	</select>
 

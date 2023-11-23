@@ -3,111 +3,161 @@
 <!DOCTYPE mapper
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
-    
-    
-    <mapper namespace = "customer">
-    
-    
-    <!--  등록  -->
-    <insert id="insert">
-   		 insert into customer
-    		(customer_id, customer_pw, customer_name, customer_email, customer_contact,
-    	  	 customer_birth, customer_gender)
-		 values (
-			#{customerId}, #{customerPw}, #{customerName}, #{customerEmail},
-			#{customerContact}, #{customerBirth}, #{customerGender}
-    		)
-    </insert>
-    
-    <!--  조회   -->
-    <select id="list" resultType="CustomerDto">
-    	select * from customer
-    </select>
-    
-    <!-- 이용자 상세 정보 조회 -->
-    <select id="detail" resultType="CustomerDto">
-    	select * from customer where customer_id = #{customerId}
-    </select>
-    
-    
 
-      <update id="edit" parameterType="map">
-    UPDATE customer
-    <set> 
-        <if test="customerDto.customerEmail != null">
-            customer_email = #{customerDto.customerEmail},
-        </if>
-        
-        <if test="customerDto.customerContact != null">
-            customer_contact = #{customerDto.customerContact},
-        </if>
-        
-        <if test="customerDto.customerBirth != null">
-            customer_birth = #{customerDto.customerBirth},
-        </if>
-        
-        <if test="customerDto.customerPw !=  null">
-            <!-- 비밀번호는 암호화된 형태로 저장되어 있다고 가정 -->
-            customer_pw = #{customerDto.customerPw},
-        </if>
-    </set>
-    WHERE customer_id = #{customerId}
-</update>
 
-	
+<mapper namespace="customer">
+
+
+	<!-- 등록 -->
+	<insert id="insert">
+		insert into customer
+		(customer_id, customer_pw,
+		customer_name, customer_email, customer_contact,
+		customer_birth,
+		customer_gender)
+		values (
+		#{customerId}, #{customerPw}, #{customerName},
+		#{customerEmail},
+		#{customerContact}, #{customerBirth},
+		#{customerGender}
+		)
+	</insert>
+
+	<!-- 조회 -->
+	<select id="list" resultType="CustomerDto">
+		select * from customer
+	</select>
+
+	<select id="selectCustomerListByPage"
+		resultType="CustomerAdminListDto" parameterType="map">
+		SELECT * FROM (
+		SELECT
+		ROW_NUMBER() OVER (ORDER BY customer_id DESC) AS rnum, c.*
+		FROM
+		customer c
+		) AS tmp
+		WHERE rnum BETWEEN #{start} AND #{end}
+	</select>
+
+
+
+	<!-- 이용자 상세 정보 조회 -->
+	<select id="detail" resultType="CustomerDto">
+		select * from customer where
+		customer_id = #{customerId}
+	</select>
+
+
+
+	<update id="edit" parameterType="map">
+		UPDATE customer
+		<set>
+			<if test="customerDto.customerEmail != null">
+				customer_email = #{customerDto.customerEmail},
+			</if>
+
+			<if test="customerDto.customerContact != null">
+				customer_contact = #{customerDto.customerContact},
+			</if>
+
+			<if test="customerDto.customerBirth != null">
+				customer_birth = #{customerDto.customerBirth},
+			</if>
+
+			<if test="customerDto.customerPw !=  null">
+				<!-- 비밀번호는 암호화된 형태로 저장되어 있다고 가정 -->
+				customer_pw = #{customerDto.customerPw},
+			</if>
+		</set>
+		WHERE customer_id = #{customerId}
+	</update>
+
+
 	<!-- 비밀번호 업데이트 -->
 	<update id="updatePassword">
-    	UPDATE customer	
-    		SET customer_pw = #{newPassword}
-    	WHERE customer_email = #{customerEmail}
+		UPDATE customer
+		SET customer_pw = #{newPassword}
+		WHERE
+		customer_email = #{customerEmail}
 	</update>
-	
-	<!--  레벨 업데이트  -->
-	<update id="levelEdit">
-    update customer set customer_level = #{customerLevel}
-    where customer_id = #{customerId}
-	</update>
-	
-	<!--  포인트 업데이트  -->
-	<update id="pointEdit">
-	update customer set customer_point = #{customerPoint}
-	where customer_id = #{customerId}
-	</update>
-	
 
-	    <!-- 삭제 -->
-   	 	<delete id="delete">
-    	 	delete customer where customer_id = #{customerId}
-    	</delete>
-    
-    <update id="changePassword" parameterType="map">
-  		UPDATE customer
-      	  SET customer_pw = #{customerPw}
-        WHERE customer_id = #{customerId}
-    </update>
-    
-    
-   <select id="getCustomerByEmail" resultType="CustomerDto">
-    	SELECT * FROM customer WHERE customer_email = #{customerEmail}
-  </select>
-  
-  
-  
-  <!-- 포인트 차감(사용) -->
-  <update id="minusPoint" parameterType="map">
+	<!-- 레벨 업데이트 -->
+	<update id="levelEdit">
+		update customer set customer_level = #{customerLevel}
+		where customer_id = #{customerId}
+	</update>
+
+	<!-- 포인트 업데이트 -->
+	<update id="pointEdit">
+		update customer set customer_point = #{customerPoint}
+		where customer_id = #{customerId}
+	</update>
+
+	<!-- 리스트 구하는 vo -->
+	<select id="countList" parameterType="CusAdminVO" resultType="int">
+    <![CDATA[
+    SELECT *
+    FROM (
+        SELECT rownum rn, TMP.*
+        FROM (
+            SELECT *
+            FROM customer
+            ORDER BY customer_id DESC
+        ) TMP
+    ) WHERE rn BETWEEN #{startRow} AND #{endRow}
+    ]]>
+	</select>
+
+
+
+
+	<!-- 검색이 아닐 때 사용되는 카운트 vo -->
+	<select id="count" parameterType="CusAdminVO"
+		resultType="int">
+     <![CDATA[
+    SELECT count(*)
+    FROM customer
+    ]]>
+	</select>
+
+
+
+
+	<!-- 삭제 -->
+	<delete id="delete">
+		delete customer where customer_id = #{customerId}
+	</delete>
+
+	<update id="changePassword" parameterType="map">
+		UPDATE customer
+		SET
+		customer_pw = #{customerPw}
+		WHERE customer_id = #{customerId}
+	</update>
+
+
+	<select id="getCustomerByEmail" resultType="CustomerDto">
+		SELECT * FROM
+		customer WHERE customer_email = #{customerEmail}
+	</select>
+
+
+
+	<!-- 포인트 차감(사용) -->
+	<update id="minusPoint" parameterType="map">
 	  <![CDATA[
 	    UPDATE customer SET customer_point = customer_point - #{customerPoint} WHERE customer_id = #{customerId}
 	  ]]>
 	</update>
-	  
-	  <!-- 포인트 페이백 -->
+
+	<!-- 포인트 페이백 -->
 	<update id="paybackPoint" parameterType="map">
 	  <![CDATA[
 	    UPDATE customer SET customer_point = customer_point + #{customerPoint} WHERE customer_id = #{customerId}
 	  ]]>
 	</update>
-    
-    
 
-    </mapper>
+
+
+</mapper>
     

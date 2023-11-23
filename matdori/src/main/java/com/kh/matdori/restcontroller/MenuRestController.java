@@ -64,25 +64,27 @@ public class MenuRestController {
 		int menuNo = menuDao.sequence();
 
 		menuDto.setMenuNo(menuNo);
-
 		menuDto.setResNo(resNo);
 		menuDto.setMenuTypeNo(menuTypeNo);
 
 		menuDao.save(menuDto);
 
 		MultipartFile menuImage = vo.getMenuImage();
-		int attachNo = attachDao.sequence();
-		File target = new File(dir, String.valueOf(attachNo));
-		menuImage.transferTo(target);
-		AttachDto attachDto = new AttachDto();
-		attachDto.setAttachNo(attachNo);
-		attachDto.setAttachName(menuImage.getOriginalFilename());
-		attachDto.setAttachSize(menuImage.getSize());
-		attachDto.setAttachType(menuImage.getContentType());
-		attachDao.insert(attachDto);
+		 if (menuImage != null && !menuImage.isEmpty()) {
+		        int attachNo = attachDao.sequence();
+		        File target = new File(dir, String.valueOf(attachNo));
+		        menuImage.transferTo(target);
 
-		menuDao.insertMenuImage(menuNo, attachNo);
-	}
+		        AttachDto attachDto = new AttachDto();
+		        attachDto.setAttachNo(attachNo);
+		        attachDto.setAttachName(menuImage.getOriginalFilename());
+		        attachDto.setAttachSize(menuImage.getSize());
+		        attachDto.setAttachType(menuImage.getContentType());
+		        attachDao.insert(attachDto);
+
+		        menuDao.insertMenuImage(menuNo, attachNo);
+		    }
+		}
 
 	@PostMapping("/")
 	public void insert(@RequestBody MenuDto menuDto) {
@@ -133,6 +135,32 @@ public class MenuRestController {
 		return result ? ResponseEntity.ok().build() : ResponseEntity.notFound().build();
 	}
 
+	@PutMapping(value = "/{menuNo}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+	public ResponseEntity<String> edit(@PathVariable int menuNo, @ModelAttribute MenuWithImagesVO vo) throws IllegalStateException, IOException {
+	    MenuDto menuDto = vo.getMenuDto();
+
+	    boolean result = menuDao.edit(menuNo, menuDto);
+	    log.debug("menuDto={}", menuDto);
+
+	    // 메뉴 이미지 처리
+	    MultipartFile menuImage = vo.getMenuImage();
+	    if (menuImage != null && !menuImage.isEmpty()) {
+	        int attachNo = attachDao.sequence();
+	        File target = new File(dir, String.valueOf(attachNo));
+	        menuImage.transferTo(target);
+
+	        AttachDto attachDto = new AttachDto();
+	        attachDto.setAttachNo(attachNo);
+	        attachDto.setAttachName(menuImage.getOriginalFilename());
+	        attachDto.setAttachSize(menuImage.getSize());
+	        attachDto.setAttachType(menuImage.getContentType());
+	        attachDao.insert(attachDto);
+
+	        menuDao.insertMenuImage(menuNo, attachNo);
+	    }
+
+	    return result ? ResponseEntity.ok().build() : ResponseEntity.notFound().build();
+	}
 	// 특정 메뉴 타입에 해당하는 메뉴와 이미지 정보를 가져오는 엔드포인트
 //	@GetMapping("/{menuTypeNo}/detail")
 //	public ResponseEntity<List<MenuWithImagesVO>> getMenuWithImagesByType(@PathVariable int menuTypeNo) {

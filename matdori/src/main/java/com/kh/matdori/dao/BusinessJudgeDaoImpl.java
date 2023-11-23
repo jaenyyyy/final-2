@@ -24,28 +24,6 @@ public class BusinessJudgeDaoImpl implements BusinessJudgeDao {
 	@Autowired
 	private SqlSession sqlSession;
 	
-	 //사업자 관리 리스트
-	@Override
-	public List<BusinessJudgeListDto> getList(BusPaginationVO vo) {
-	    RowBounds rowBounds = new RowBounds(vo.getStartRow() - 1, vo.getSize());
-	    return sqlSession.selectList("getList", null, rowBounds);
-	}
-
-	
-	/*
-	 * //사업자 관리 리스트
-	 * 
-	 * @Override public List<BusinessJudgeListDto> getList() { return
-	 * sqlSession.selectList("admin.getList"); }
-	 */
-	
-    //사업자 심사 페이지네이션용
-	@Override
-	public int countList(BusPaginationVO vo) {
-		return sqlSession.selectOne("admin.count",vo);
-	}
-    
-
 
     //사업자 심사 상태 업데이드
     @Override

@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -161,12 +162,7 @@ public class CustomerDaoImpl implements CustomerDao {
 	
 	
 	
-	// countList 메서드를 int를 반환하는 형태로 수정
-	@Override
-	public int countList(CusAdminVO vo) {
-	    return sqlSession.selectOne("customerBlock.selectBlock", vo);
-	}
-	
+
 
 	// 목록 
 	@Override
@@ -249,7 +245,28 @@ public class CustomerDaoImpl implements CustomerDao {
 		params.put("customerPoint", customerPoint);
 		return sqlSession.update("customer.pointEdit", params) > 0;
 	}
+
+
+	@Override
+	 public List<CustomerAdminListDto> getList(CusAdminVO vo) {
+        return sqlSession.selectList("customer.countList", vo);
 	}
+
+	// 페이지네이션 
+	@Override
+	public int countList(CusAdminVO vo) {
+	    return sqlSession.selectOne("customer.count", vo);
+	}
+	
+
+	// 리스트 구하기 
+	@Override
+	public List<CustomerAdminListDto> selectCustomerListByPage(CusAdminVO vo) {
+		return sqlSession.selectList("customer.countList", vo);
+	}
+}
+
+	
 
 
 

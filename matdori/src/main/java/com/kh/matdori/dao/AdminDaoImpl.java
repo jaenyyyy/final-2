@@ -15,6 +15,7 @@ import com.kh.matdori.dto.RestaurantAdminListDto;
 import com.kh.matdori.dto.RestaurantBlockDto;
 import com.kh.matdori.dto.RestaurantJudgeDto;
 import com.kh.matdori.error.NoTargetException;
+import com.kh.matdori.vo.BusBlockPaginationVO;
 import com.kh.matdori.vo.BusPaginationVO;
 import com.kh.matdori.vo.ResAdminVO;
 import com.kh.matdori.vo.RestaurantJudgeVO;
@@ -109,27 +110,32 @@ public class AdminDaoImpl implements AdminDao{
 		}
 		
 
-		//사업자 차단 페이지네이션용
+	    //사업자 심사 리스트
+	    @Override
+	    public List<BusinessJudgeListDto> getList(BusPaginationVO vo) {
+	        RowBounds rowBounds = new RowBounds(vo.getStartRow() - 1, vo.getSize());
+	        return sqlSession.selectList("getJudgeList", null, rowBounds);
+	    }
+	    
+	    //사업자 심사 페이지네이션용
 		@Override
 		public int countList(BusPaginationVO vo) {
 			return sqlSession.selectOne("admin.count",vo);
 		}
 
+
+		//사업자 차단 페이지네이션용
+		@Override
+		public int countBlockList(BusBlockPaginationVO vo) {
+			return sqlSession.selectOne("admin.countBlock",vo);
+		}
 		
-		//사업자 관리 리스트
-	    @Override
-	    public List<BusinessBlockDto> getAllBlockedBusinesses() {
-	        return sqlSession.selectList("admin.getAllBlockedBusinesses");
+		//사업자 차단 리스트
+	    @Override 
+	    public List<BusinessBlockDto> getBusBlocklist(BusBlockPaginationVO vo) {
+	    	RowBounds rowBounds = new RowBounds(vo.getStartRow() - 1, vo.getSize());
+	        return sqlSession.selectList("admin.getBusBlocklist", null, rowBounds);
 	    }
-	    
-	    @Override
-	    public List<BusinessBlockDto> getList(BusPaginationVO vo) {
-	        RowBounds rowBounds = new RowBounds(vo.getStartRow() - 1, vo.getSize());
-	        return sqlSession.selectList("getAllBlockedBusinesses", null, rowBounds);
-	    }
-
-
-
 
 	    //사업자 차단 상태 업데이트
 	    @Override
@@ -147,6 +153,7 @@ public class AdminDaoImpl implements AdminDao{
 	            sqlSession.update("admin.updateBusBlock", params);
 	        }
 	    }
+
 
 
 }
