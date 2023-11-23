@@ -29,4 +29,6 @@ public interface MenuDao {
 
 	AttachDto findMenuImage(int menuNo);
 
+	MenuDto selectOneByMenuNo(int menuNo);
+
 }
