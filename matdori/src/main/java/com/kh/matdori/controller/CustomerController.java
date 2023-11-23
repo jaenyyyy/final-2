@@ -25,6 +25,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.kh.matdori.dao.AttachDao;
 import com.kh.matdori.dao.CertDao;
 import com.kh.matdori.dao.CustomerDao;
+import com.kh.matdori.dao.PickDao;
 import com.kh.matdori.dao.ReservationDao;
 import com.kh.matdori.dao.ReviewDao;
 import com.kh.matdori.dto.AttachDto;
@@ -67,6 +68,9 @@ public class CustomerController {
    @Autowired
    private AttachDao attachDao;
 
+   @Autowired
+   private PickDao pickDao;
+   
    // 회원가입 ok
    @GetMapping("/join")
    public String join() {
@@ -286,6 +290,21 @@ public class CustomerController {
 
       return "customer/rezList";
    }
+   
+   //마이페이지에서 보는 찜 내역
+   @RequestMapping("/pick")
+   public String pickList(Model model, HttpSession session) {
+       String customerId = (String) session.getAttribute("name");
+       
+       // userId를 이용하여 해당 사용자가 찜한 식당 목록 조회 (예시: pickList를 DB에서 가져오는 메서드)
+       List<RestaurantDto> pickList = pickDao.pickList(customerId);
+       
+       // JSP로 찜한 식당 목록 전달
+       model.addAttribute("pickList", pickList);
+       
+       return "customer/pickList";
+   }
+
 
    @GetMapping("/reviewListByCus")
    private String reviewListByCus() {
