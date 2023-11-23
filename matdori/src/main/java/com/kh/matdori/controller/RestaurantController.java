@@ -36,12 +36,18 @@ public class RestaurantController {
 		List<MenuWithImagesVO> menuListByRes = menuDao.getMenuByRes(resNo);
 		List<ReviewDto> reviewByRes = reviewDao.selectListByRes(resNo);
 		
+
+//		model.addAttribute("resDetail", resDetail);
+//		model.addAttribute("menuList", menuList);
+//		model.addAttribute("reviewList", reviewList); 
+
 		model.addAttribute("resDto", resDto);
 		model.addAttribute("menuListByRes", menuListByRes);
 		model.addAttribute("reviewByRes", reviewByRes);
 //		log.debug("list= {}",resDto);
 //		log.debug("list= {}",menuListByRes);
 //		log.debug("list= {}",reviewByRes);
+
 		
 		return "restaurant/detail";
 		
