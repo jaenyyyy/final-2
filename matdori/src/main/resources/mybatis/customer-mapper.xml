@@ -50,7 +50,7 @@
 	</select>
 
 
-
+ 
 	<update id="edit" parameterType="map">
 		UPDATE customer
 		<set>
@@ -135,22 +135,6 @@
     FROM customer
     ]]>
 	</select>
-
-
-
-
-	<!-- 삭제 -->
-	<delete id="delete">
-		delete customer where customer_id = #{customerId}
-	</delete>
-
-	<update id="changePassword" parameterType="map">
-		UPDATE customer
-		SET
-		customer_pw = #{customerPw}
-		WHERE customer_id = #{customerId}
-	</update>
-
 
 	<select id="getCustomerByEmail" resultType="CustomerDto">
 		SELECT * FROM
