@@ -415,17 +415,17 @@
 			</div>
 		</div>
 		-----------------------------반복문 지금 못써서 냅둔 자료  -------------------------------
-<!-- 			<div class="row"> -->
-<%-- 				<c:forEach var="menuListByRes" items="${menuListByRes}"> --%>
-<%-- 					<div class="row">${menuListByRes.menuName} - --%>
-<%-- 						${menuListByRes.menuPrice}원 - ${menuListByRes.menuContent}</div> --%>
-<!-- 					<div class="row"> -->
-<%-- 						<button class="btn menuSelect" data-menu-no="${menuListByRes.menuNo}"> --%>
-<!-- 							선택 -->
-<!-- 						</button> -->
-<!-- 					</div> -->
-<%-- 				</c:forEach> --%>
-<!-- 			</div> -->
+			<div class="row">
+				<c:forEach var="menuListByRes" items="${menuListByRes}">
+					<div class="row">${menuListByRes.menuName} -
+						${menuListByRes.menuPrice}원 - ${menuListByRes.menuContent}</div>
+					<div class="row">
+						<button class="btn btn-warning menuSelect" data-menu-no="${menuListByRes.menuNo}">
+							선택
+						</button>
+					</div>
+				</c:forEach>
+			</div>
 			<div class="row">
 				<c:forEach var="reviewByRes" items="${reviewByRes}">
 					<div class="row">${reviewByRes.reviewWriter} -
@@ -481,7 +481,7 @@ $(function(){
         var productNo = $(this).data("menu-no");
         
         $.ajax({
-            url: "/rest/basket/add",
+            url: "/rest/reservation/add",
             method: "post",
             data: { menuNo: menuNo },
             success: function(response) {
