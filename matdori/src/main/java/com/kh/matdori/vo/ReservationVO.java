@@ -1,9 +1,5 @@
 package com.kh.matdori.vo;
 
-import java.util.List;
-
-import com.kh.matdori.dto.MenuDto;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

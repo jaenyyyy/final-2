@@ -75,29 +75,29 @@
 		<!-- 주 내용 -->
 		<div class="col-9">
 			<div class="row">
-				<c:forEach var="ReservationDto" items="${rezList}">
+				<c:forEach var="reservationListDto" items="${rezList}">
 				    <div>
 				        <br>
 				    </div>
 				    <div class="row res-line p-4" style="margin-left: 100px;">
-				        <div class="col-3">
+				          <div class="col-3">
 				            사진자리
 				        </div>
 				        <div class="col-7">
-				            <input type="hidden" class="resNoInput" value="${ReservationDto.resNo}">
 				            <div class="row modal-title">
-				                ${RestaurantDto.resName}
+				                ${reservationListDto.resName}
 				            </div>
 				            <div class="row">
-				                예약일 : ${fn:substring(ClockDto.clockSelect, 0, 10)}
+				                예약일 : ${fn:substring(reservationListDto.clockSelect, 0, 10)}
 				            </div>
 				            <div class="row">
-				                예약시간 : ${fn:substring(ClockDto.clockSelect, 11, 16)}
+				                예약시간 : ${fn:substring(reservationListDto.clockSelect, 11, 16)}
 				            </div>
 				        </div>
 				        <div class="col-2 text-end">
 				            <div class="row mb-3">
 				                <a href="#" class="menu-tag">예약상세 ></a>
+
 				            </div>
 				            <div class="row">
 				                <a class="btn btn-warning btn-sm open-modal-review">리뷰작성</a>
@@ -108,82 +108,10 @@
 			</div>
 		</div>
 		
-		
-		<!-- 후기 작성 모달-->
-		<div class="modal fade" id="reviewModal" tabindex="-1" data-bs-backdrop="static">
-		    <div class="modal-dialog">
-		        <div class="modal-content">
-		            <div class="modal-header">
-		                <h1 class="modal-title fs-5">
-		                    [ ${RestaurantDto.resName} ] 리뷰 작성
-		                </h1>
-		                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-		            </div>
-		            <div class="modal-body" style="text-align: center;">
-                		<div class="rating" style="font-size: 30px; display: inline-block;">
-						    <i class="rating__star far fa-star" data-value="1" style="display: inline-block;"></i>
-						    <i class="rating__star far fa-star" data-value="2" style="display: inline-block;"></i>
-						    <i class="rating__star far fa-star" data-value="3" style="display: inline-block;"></i>
-						    <i class="rating__star far fa-star" data-value="4" style="display: inline-block;"></i>
-						    <i class="rating__star far fa-star" data-value="5" style="display: inline-block;"></i>
-						</div>
-		                <div class="mt-4">
-		                    <textarea class="form-control" id="reviewContent" rows="5"></textarea>
-		                </div>
-		                <div class="mt-4">
-		                	첨부파일 등록 <input type="file" id="attachFile" accept="image/*">
-		                </div>
-		            </div>
-		            <div class="modal-footer">
-		                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
-		                <button type="button" class="btn btn-warning" onclick="sendReview()">작성</button>
-		            </div>
-		        </div>
-		    </div>
-		</div>
-		
-		
-		
 	</div>
 </div>
 
 
-<script>
-
-	
-	
-	// 별찍기
-	$(document).ready(function() {
-	    executeRating(ratingStars);
-	});
-
-	const ratingStars = [...document.getElementsByClassName("rating__star")];
-
-	function executeRating(stars) {
-	  const starClassActive = "rating__star fas fa-star";
-	  const starClassInactive = "rating__star far fa-star";
-	  const starsLength = stars.length;
-	  let i;
-
-	  stars.map((star) => {
-	    star.onclick = () => {
-	      i = stars.indexOf(star);
-
-	      if (star.className===starClassInactive) {
-	        for (i; i >= 0; --i) stars[i].className = starClassActive;
-	      } else {
-	        for (i; i < starsLength; ++i) stars[i].className = starClassInactive;
-	      }
-	    };
-	  });
-	}
-
-	executeRating(ratingStars);
-
-
-
-
-</script>
 		
 
 

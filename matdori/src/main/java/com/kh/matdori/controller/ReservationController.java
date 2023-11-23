@@ -125,21 +125,21 @@ public class ReservationController {
 		ReservationDto rezDto = reservationDao.selectOne(rezNo);
 		
 		//계산을 위한 vo 생성
-//		PaymentSumVO vo = new PaymentSumVO();
+		PaymentSumVO vo = new PaymentSumVO();
 //		
 //		//rezDto 설정을 vo 가져오는걸로 설정
-//		vo.setReservationDto(rezDto);
-//		
-//		Float sumTotal = vo.getSumTotal();
-//		Float paymentTotal = vo.getPaymentTotal();
-//		int inputPoint = vo.getInputPoint();
+		vo.setReservationDto(rezDto);
+		
+		Float sumTotal = vo.getSumTotal();
+		Float paymentTotal = vo.getPaymentTotal();
+		int inputPoint = vo.getInputPoint();
 		
 		
 		
 		model.addAttribute("rezDto", rezDto);
-//		model.addAttribute("sumTotal", sumTotal);
-//	    model.addAttribute("paymentTotal", paymentTotal);
-//	    model.addAttribute("inputPoint", inputPoint);
+		model.addAttribute("sumTotal", sumTotal);
+	    model.addAttribute("paymentTotal", paymentTotal);
+	    model.addAttribute("inputPoint", inputPoint);
 	    
 	    log.debug("rezNo={}", rezNo);
 		

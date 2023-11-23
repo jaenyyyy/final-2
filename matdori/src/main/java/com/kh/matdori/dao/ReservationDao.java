@@ -3,6 +3,7 @@ package com.kh.matdori.dao;
 import java.util.List;
 
 import com.kh.matdori.dto.ReservationDto;
+import com.kh.matdori.dto.ReservationListDto;
 
 public interface ReservationDao {
 	int sequence();
@@ -13,6 +14,6 @@ public interface ReservationDao {
 	
 	boolean isInReservation(int rezResNo, int rezClockNo, int rezSeatNo);
 	
-	List<ReservationDto> rezList(String rezCustomerId); //회원별 예약조회
+	List<ReservationListDto> rezList(String rezCustomerId); //회원별 예약조회
 
 }

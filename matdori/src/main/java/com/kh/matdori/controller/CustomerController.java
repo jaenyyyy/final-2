@@ -280,10 +280,8 @@ public class CustomerController {
 	public String list(Model model, HttpSession session) {
 		String customerId = (String) session.getAttribute("name");
 
-		List<ReservationListDto> rezList = reservationDao.rezList(customerId);=
-		String customerId = (String)session.getAttribute("name");
+		List<ReservationListDto> rezList = reservationDao.rezList(customerId);
 		
-		List <ReservationDto> rezList = reservationDao.rezList(customerId);
 		model.addAttribute("rezList", rezList);
 
 		return "customer/rezList";
