@@ -31,11 +31,11 @@ public class PickRestController {
 		pickDto.setCustomerId(customerId);
 		
 		boolean isCheck = pickDao.check(pickDto);
-		//int count = pickDao.count(pickDto.getResNo());
+		int count = pickDao.count(pickDto.getResNo());
 		
 		PickVO vo = new PickVO();
 		vo.setCheck(isCheck);
-		//vo.setCount(count);
+		vo.setCount(count);
 		//return isCheck ? "Y" : "N";
 		return vo;
 	}
@@ -52,11 +52,11 @@ public class PickRestController {
 		else {//아니면
 			pickDao.insert(pickDto);//북마크 설정
 		}
-		//int count = pickDao.count(pickDto.getResNo());
+		int count = pickDao.count(pickDto.getResNo());
 		
 		PickVO vo = new PickVO();
 		vo.setCheck(!isCheck);
-		//vo.setCount(count);
+		vo.setCount(count);
 		
 		return vo;
 	}

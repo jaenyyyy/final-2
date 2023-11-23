@@ -522,6 +522,8 @@ $(function(){
                     } else {
                         $(".fa-bookmark").removeClass("fa-solid fa-regular").addClass("fa-regular");
                     }
+    				//전달받은 찜 개수를 북마크 뒤의 span에 출력
+    				$(".fa-bookmark").next("span").text(response.count);
                 }
             });
 
@@ -537,6 +539,8 @@ $(function(){
                         } else {
                             $(".fa-bookmark").removeClass("fa-solid fa-regular").addClass("fa-regular");
                         }
+        				//전달받은 찜 개수를 북마크 뒤의 span에 출력
+        				$(".fa-bookmark").next("span").text(response.count);
                     }
                 });
             });

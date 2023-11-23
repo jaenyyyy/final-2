@@ -1,6 +1,9 @@
 package com.kh.matdori.dao;
 
+import java.util.List;
+
 import com.kh.matdori.dto.PickDto;
+import com.kh.matdori.dto.RestaurantDto;
 
 public interface PickDao {
 
@@ -12,6 +15,8 @@ public interface PickDao {
 	boolean check(PickDto pickDto);
 	//찜 개수 조회(안쓸수도 있음)
 	int count(int resNo);
+	//찜한 식당 리스트 조회
+	List<RestaurantDto> pickList(String customerId);
 	
 
 }

@@ -186,7 +186,7 @@
 
 	<!-- 찜한 식당 내역 조회 -->
 	<!-- parameterType="String" resultType="RestaurantDto" -->
-	<select id="getPickResByUser">
+	<select id="getPickResByUser" >
 		SELECT r.*
 		FROM restaurant r
 		INNER JOIN pick p ON
