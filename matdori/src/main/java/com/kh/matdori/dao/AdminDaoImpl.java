@@ -131,7 +131,7 @@ public class AdminDaoImpl implements AdminDao{
 		}
 		
 		//사업자 차단 리스트
-	    @Override
+	    @Override 
 	    public List<BusinessBlockDto> getBusBlocklist(BusBlockPaginationVO vo) {
 	    	RowBounds rowBounds = new RowBounds(vo.getStartRow() - 1, vo.getSize());
 	        return sqlSession.selectList("admin.getBusBlocklist", null, rowBounds);

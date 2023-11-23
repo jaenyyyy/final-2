@@ -241,7 +241,7 @@ public class AdminController {
         System.out.println("페이지 카운트 : " + vo.getPageCount());
         System.out.println("전체페이지 카운트 : " + vo.getCount());
 	    // 페이징 정보 계산
-	    vo.calculatePageInfo();
+	    vo.calculatePageInfo(); 
     	
     	List<BusinessBlockDto> blockedBusinesses = adminDao.getBusBlocklist(vo);
 	    
