@@ -35,8 +35,8 @@ public class SeatDaoImpl implements SeatDao{
 	}
 	
 	@Override
-	public List<SeatDto> seatList() {
-		return sqlSession.selectList("seat.seatList");
+	public List<SeatDto> seatList(int seatResNo) {
+		return sqlSession.selectList("seat.seatList", seatResNo);
 	}
 	
 	@Override

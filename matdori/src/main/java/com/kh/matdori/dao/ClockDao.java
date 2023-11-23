@@ -8,8 +8,8 @@ public interface ClockDao {
 
 	void insert(ClockDto clockDto);
 	ClockDto selectOne(int clockNo);
-	List<ClockDto> clockList();
-//	List<ClockDto> clockList(int clockResNo);
+//	List<ClockDto> clockList();
+	List<ClockDto> clockList(int clockResNo);
 	List<ClockDto> getClockListByResNo(int clockResNo);
 
 }
