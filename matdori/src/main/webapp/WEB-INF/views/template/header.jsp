@@ -74,7 +74,7 @@
                         </a>
                         <ul class="dropdown-menu" id="subMenu" style="position: absolute; top: 100%; right: 0;">
                             <li class="dropdown-item"><a href="/customer/mypage">마이페이지</a></li>
-                            <li class="dropdown-item"><a href="#">북마크</a></li>
+                            <li class="dropdown-item"><a href="/customer/pick">북마크</a></li>
                             <li class="dropdown-item"><a href="#">추가</a></li>
                             <div class="dropdown-divider"></div>
                             <li class="dropdown-item"><a href="http://localhost:8080/customer/logout">로그아웃</a></li>

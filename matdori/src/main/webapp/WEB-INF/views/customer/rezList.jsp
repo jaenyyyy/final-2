@@ -62,7 +62,7 @@
 			</div>
 			<div class="row row-top">
 				<h2 class="bold">
-					<a class="menu-tag" href="rezList">예약내역</a>
+					<a class="menu-tag" style="color: #FFB416;" href="rezList">예약내역</a>
 				</h2>
 			</div>
 			<div class="row row-top">
