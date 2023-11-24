@@ -76,5 +76,8 @@ public class MenuDaoImpl implements MenuDao {
 		return sqlSession.selectOne("menu.findMenuImage", menuNo);
 	}
 
-
+	@Override
+	public MenuDto selectOneByMenuNo(int menuNo) {
+		return sqlSession.selectOne("menu.selectOneByMenuNo", menuNo);
+	}
 }

@@ -31,6 +31,11 @@
   <select id="selectListByMenuTypeNo" resultType="MenuDto" >
   select * from menu where menu_type_no=#{menuTypeNo}
   </select>
+  
+    <select id="selectOneByMenuNo" resultType="MenuDto" >
+  select * from menu where menu_no=#{menuNo}
+  </select>
+  
     <!-- 
   <select id="menuListByResNo" resultType="MenuByResDto">
   SELECT 
@@ -63,7 +68,7 @@
 </select>
 
 
-<!-- 메장별 메뉴 정보 조회 -->
+<!-- 매장별 메뉴 정보 조회 -->
 <select id="selectMenuByRes" resultType="MenuWithImagesVO">
   SELECT
     m.menu_no,

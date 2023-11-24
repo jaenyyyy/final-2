@@ -22,3 +22,7 @@ public class ReservationListDto {
 	
 	
 }
+
+
+
+//////////////폐기 처리 준비중

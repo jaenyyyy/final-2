@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 
@@ -60,6 +61,8 @@
 
 
 
+
+
 <div class="container"  id="homeSection" >
 	<div class="col">
 
@@ -79,19 +82,21 @@
 			</div>
 
 
-			<!-- 북마크 : 나중에 클릭하면 북마크 설정 되는거 / ajax로 값 전송 되게 구현할 예정 -->
+			<!-- 북마크 : 클릭하면 북마크 설정 / ajax로 값 전송 되게 구현할 예정 -->
 			<div class="col-6" style="text-align: right;">
 				<c:choose>
 					<c:when test="${pickDto.resNo != null}">
-						<i class="fa-solid fa-bookmark fa-3x" style="color: #ffb416;"></i>
+						<i class="fa-solid fa-bookmark fa-3x bookmark" style="color: #ffb416;"></i>
+						<br><span></span>
 					</c:when>
 					<c:otherwise>
-						<i class="fa-regular fa-bookmark fa-3x" style="color: #ffb416;"></i>
+						<i class="fa-regular fa-bookmark fa-3x bookmark" style="color: #ffb416;"></i>
+						<br><span></span>
 					</c:otherwise>
 				</c:choose>
 			</div>
 		</div>
-
+</div>
 
 		<!-- 사진 틀-->
 		<div class="row justify-content-center mb-3 mt-4">
@@ -116,7 +121,7 @@
 		<!-- 예약 버튼 -->
 		<div class="row justify-content-center mb-3 mt-4">
 			<div class="row justify-content-center">
-				<a href="/reservation/insert" class="btn btn-warning w-50 text-black"> 예약하기
+				<a href="/reservation/insert?rezResNo=${resDto.resNo}" class="btn btn-warning w-50 text-black"> 예약하기
 				</a>
 			</div>
 		</div>
@@ -412,7 +417,25 @@
 				</a></h5>
 			</div>
 		</div>
-		
+		-----------------------------반복문 지금 못써서 냅둔 자료  -------------------------------
+			<div class="row">
+				<c:forEach var="menuListByRes" items="${menuListByRes}">
+					<div class="row">${menuListByRes.menuName} -
+						${menuListByRes.menuPrice}원 - ${menuListByRes.menuContent}</div>
+					<div class="row">
+						<button class="btn btn-warning menuSelect" data-menu-no="${menuListByRes.menuNo}">
+							선택
+						</button>
+					</div>
+				</c:forEach>
+			</div>
+			<div class="row">
+				<c:forEach var="reviewByRes" items="${reviewByRes}">
+					<div class="row">${reviewByRes.reviewWriter} -
+						${reviewByRes.reviewContent} - ${reviewByRes.reviewWriteDate} -
+						${reviewByRes.reviewStarPoint}</div>
+				</c:forEach>
+			</div>
 		
 			
 		</div>
@@ -451,9 +474,81 @@ window.addEventListener('scroll', function() {
         navbar.style.transform = 'none'; 
     }
 });
+
+<!-- 메뉴 선택이다 임마 하 다 쓸모가 없어 졋구나 제기럴-->
+// $(function(){
+//     $(".menuSelect").click(function(e){
+//     	e.preventDefault();
+        
+//         // 상품 번호 가져오기
+//         var menuNo = $(this).data("menu-no");
+        
+//         $.ajax({
+//             url: "/rest/reservation/add",
+//             method: "post",
+//             data: { menuNo: menuNo },
+//             success: function(response) {
+//                     $("#modalMessage").text(response.message);
+// //                     openModal(); // 모달 열기
+
+//             },
+//             error: function (xhr) {
+//                 // 에러 처리
+//                 console.log(arguments);
+//                 $("#modalMessage").text(xhr.responseJSON.message);
+// //                 openModal(); // 모달 열기
+//             },
+            
+//         });
+//     });
+//  });
 </script>
 
 
+<!-- 북마크 설정/해제를 위한 --> 
+<c:if test="${sessionScope.name != null}">
+    <script>
+        $(function() {
+        	var params = new URLSearchParams(location.search);
+        	var resNo = params.get("resNo");
+
+        	/* console.log("resNo:", resNo); */
+
+            $.ajax({
+                url: "/rest/pick/check",
+                method: "post",
+                data: { resNo: resNo },
+                success: function(response) {
+                    if (response.check) {
+                        $(".fa-bookmark").removeClass("fa-solid fa-regular").addClass("fa-solid");
+                    } else {
+                        $(".fa-bookmark").removeClass("fa-solid fa-regular").addClass("fa-regular");
+                    }
+    				//전달받은 찜 개수를 북마크 뒤의 span에 출력
+                    $(".fa-bookmark").next("br").next("span").text(response.count + "명이 찜한 식당!");
+                }
+            });
+
+            $(".fa-bookmark").click(function() {
+            	console.log("북마크 클릭됨");
+                $.ajax({
+                    url: "/rest/pick/action",
+                    method: "post",
+                    data: { resNo: resNo },
+                    success: function(response) {
+                        if (response.check) {
+                            $(".fa-bookmark").removeClass("fa-solid fa-regular").addClass("fa-solid");
+                        } else {
+                            $(".fa-bookmark").removeClass("fa-solid fa-regular").addClass("fa-regular");
+                        }
+        				//전달받은 찜 개수를 북마크 뒤의 span에 출력
+                        $(".fa-bookmark").next("br").next("span").text(response.count + "명이 찜한 식당!");
+                    }
+                });
+            });
+        });
+    </script>
+</c:if>
 
 
 
@@ -461,26 +556,12 @@ window.addEventListener('scroll', function() {
 
 
 
-			-----------------------------반복문 지금 못써서 냅둔 자료  -------------------------------
-			<div class="row">
-				<c:forEach var="menuListByRes" items="${menuListByRes}">
-					<div class="row">${menuListByRes.menuName} -
-						${menuListByRes.menuPrice}원 - ${menuListByRes.menuContent}</div>
-<!-- 					<div class="row"> -->
-<%-- 						<button class="btn menuSelect" data-menu-no="${menuListByRes.menuNo}"> --%>
-<!-- 							선택 -->
-<!-- 						</button> -->
-<!-- 					</div> -->
-				</c:forEach>
-				이거 선택박스 만들어서 선택된거 넘겨야됨
-			</div>
-			<div class="row">
-				<c:forEach var="reviewByRes" items="${reviewByRes}">
-					<div class="row">${reviewByRes.reviewWriter} -
-						${reviewByRes.reviewContent} - ${reviewByRes.reviewWriteDate} -
-						${reviewByRes.reviewStarPoint}</div>
-				</c:forEach>
-			</div>
+
+
+
+
+			
+		
 			
 			
 

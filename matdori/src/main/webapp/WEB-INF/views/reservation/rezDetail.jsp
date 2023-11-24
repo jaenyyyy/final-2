@@ -49,9 +49,9 @@
 				            사진자리
 				        </div>
 				        <div class="col-7">
-				            <input type="hidden" class="resNoInput" value="${ReservationDto.resNo}">
+				            <input type="hidden" class="resNoInput" value="${ReservaitonDto.resNo}">
 				            <div class="row">
-				                ${rezDto.resName}
+				                ${RestaurantDto.resName}
 				            </div>
 				            <div class="row">
 				                예약일 : ${fn:substring(ClockDto.clockSelect, 0, 10)}
@@ -72,10 +72,10 @@
 					</div>
 					<div class="row">
 						<div class="col" style="font-weight: bold;">
-							${rezDto.customerName} 
+							${CustomerDto.customerName} 
 						</div>
 						<div class="col">
-							${rezDto.customerContact}
+							${CustomerDto.customerContact}
 						</div>
 					</div>
 					
@@ -94,15 +94,15 @@
 							</tr>
 							<tr>
 								<th>예약 일자</th>
-								<td>${fn:substring(rezDto.clockSelect, 0, 10)}</td>
+								<td>${fn:substring(ClockDto.clockSelect, 0, 10)}</td>
 							</tr>
 							<tr>
 								<th>예약 시간</th>
-								<td>${fn:substring(rezDto.clockSelect, 11, 16)}</td>
+								<td>${fn:substring(ClockDto.clockSelect, 11, 16)}</td>
 							</tr>
 							<tr>
 								<th>예약 메뉴</th>
-								<td>${rezDto.menuName} <fmt:formatNumber value="${rezDto.menuPrice}" pattern="#,##0"/> 원 (${rezDto.rezMenuQty}개)</td>
+								<td>${MenuDto.menuName} <fmt:formatNumber value="${MenuDto.menuPrice}" pattern="#,##0"/> 원 (${rezDto.rezMenuQty}개)</td>
 							</tr>
 							<tr>
 								<th>요청사항</th>
@@ -139,7 +139,7 @@
 					    <th>포인트 사용</th>
 					    <td>
 					        <input type="number" class="form-control w-50" id="inputPoint" name="inputPoint" oninput="updatePaymentTotal()" value="${inputPoint}">
-					        <span id="customerPoint">보유 포인트: <fmt:formatNumber value="${rezDto.customerPoint}" pattern="#,##0"/> pt </span>
+					        <span id="customerPoint">보유 포인트: <fmt:formatNumber value="${CustomerDto.customerPoint}" pattern="#,##0"/> pt </span>
 					    </td>
 					</tr>
 					<tr>
@@ -178,7 +178,7 @@
 		
 		
 							<th>좌석</th>
-							<td>${rezDto.seatName}</td>
+							<td>${SeatDto.seatName}</td>
 						
 							<th>좌석수</th>
 							<td>${rezDto.rezSeatQty}</td>

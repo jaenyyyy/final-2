@@ -6,7 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data @NoArgsConstructor @AllArgsConstructor @Builder
-public class HashtagDto {
-	private int hashNo;
-	private String hashComment;
+public class ResImagesDto {
+	private int resNo;
+	private int attachNo;
 }

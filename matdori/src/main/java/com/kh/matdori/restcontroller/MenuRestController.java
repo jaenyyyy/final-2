@@ -127,6 +127,16 @@ public class MenuRestController {
 			return ResponseEntity.notFound().build();
 		}
 	}
+	
+	@GetMapping("/selectOneByMenuNo/{menuNo}")
+	public ResponseEntity<MenuDto> selectOneByMenuNo(@PathVariable int menuNo) {
+		MenuDto menuDto = menuDao.selectOneByMenuNo(menuNo);
+		if (menuDto != null) {
+			return ResponseEntity.ok().body(menuDto);
+		} else {
+			return ResponseEntity.notFound().build();
+		}
+	}
 
 	@PutMapping("/{menuNo}")
 	public ResponseEntity<String> edit(@PathVariable int menuNo, @RequestBody MenuDto menuDto) {
@@ -135,26 +145,35 @@ public class MenuRestController {
 		return result ? ResponseEntity.ok().build() : ResponseEntity.notFound().build();
 	}
 
-	@PutMapping(value = "/{menuNo}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+	@PutMapping(value = "/edit/{menuNo}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 	public ResponseEntity<String> edit(@PathVariable int menuNo, @ModelAttribute MenuWithImagesVO vo) throws IllegalStateException, IOException {
 	    MenuDto menuDto = vo.getMenuDto();
 
 	    boolean result = menuDao.edit(menuNo, menuDto);
-	    log.debug("menuDto={}", menuDto);
+//	    log.debug("menuDto={}", menuDto);
 
-	    // 메뉴 이미지 처리
+	    // 메뉴 이미지 처리 ``dd
 	    MultipartFile menuImage = vo.getMenuImage();
 	    if (menuImage != null && !menuImage.isEmpty()) {
-	        int attachNo = attachDao.sequence();
-	        File target = new File(dir, String.valueOf(attachNo));
-	        menuImage.transferTo(target);
+	       AttachDto attachDto = menuDao.findMenuImage(menuNo);
+	       
+	       if(attachDto != null) {
+	    	   attachDao.delete(attachDto.getAttachNo());
+	    	   File target = new File(dir, String.valueOf(attachDto.getAttachNo()));
+	    	   target.delete();
+	       }
+	    	 	
+	    	
+	    	int attachNo = attachDao.sequence();
+	        File insertTarget = new File(dir, String.valueOf(attachNo));
+	        menuImage.transferTo(insertTarget);
 
-	        AttachDto attachDto = new AttachDto();
-	        attachDto.setAttachNo(attachNo);
-	        attachDto.setAttachName(menuImage.getOriginalFilename());
-	        attachDto.setAttachSize(menuImage.getSize());
-	        attachDto.setAttachType(menuImage.getContentType());
-	        attachDao.insert(attachDto);
+	        AttachDto insertAttachDto = new AttachDto();
+	        insertAttachDto.setAttachNo(attachNo);
+	        insertAttachDto.setAttachName(menuImage.getOriginalFilename());
+	        insertAttachDto.setAttachSize(menuImage.getSize());
+	        insertAttachDto.setAttachType(menuImage.getContentType());
+	        attachDao.insert(insertAttachDto);
 
 	        menuDao.insertMenuImage(menuNo, attachNo);
 	    }

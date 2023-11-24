@@ -5,8 +5,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Data @NoArgsConstructor @AllArgsConstructor @Builder
-public class HashtagDto {
-	private int hashNo;
-	private String hashComment;
+@Data @AllArgsConstructor @NoArgsConstructor @Builder
+public class PickDto {
+    private String customerId;
+    private int resNo;
 }
