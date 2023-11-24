@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 
 @Data @NoArgsConstructor @AllArgsConstructor @Builder
 public class ReservationListDto {
-	private int rezNo, resNo, menuNo, clockNo, seatNo;
+	private int rezNo, rezResNo, menuNo, clockNo, seatNo;// resNo사용 안되는듯?
 	private String rezCustomerId;
 	private String customerName;
 	private String customerContact;
