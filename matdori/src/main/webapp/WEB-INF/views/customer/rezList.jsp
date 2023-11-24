@@ -102,7 +102,7 @@
 
                         </div>
                         <div class="row">
-                            <a class="btn btn-warning btn-sm open-modal-review">리뷰작성</a>
+                            <a class="btn btn-warning btn-sm open-modal-review" href="/customer/reviewWrite?resNo=${reservationListDto.rezResNo}">리뷰작성</a>
                         </div>
                     </div>
                 </div>
