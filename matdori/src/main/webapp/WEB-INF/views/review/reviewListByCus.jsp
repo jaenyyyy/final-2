@@ -44,32 +44,37 @@
 	<div class="row" style="margin-top: 5%">
 
 		
+		<!-- 제목 -->
 		<div class="row mb-4">
 			<h1 class="bold">
-				<i class="fa-solid fa-user" style="color: #ffb416;"></i>
-				마이페이지
+				<a class="menu-tag" href="mypage">
+					<i class="fa-solid fa-user" style="color: #ffb416;"></i> 마이페이지
+				</a>
 			</h1>
 		</div>
-		
+
+
 		<!-- 마이페이지 탭 -->
 		<div class="col-3 page-line">
 			<div class="row">
 				<h2 class="bold">
-					<a class="menu-tag" href="">북마크</a>
+					<a class="menu-tag" href="pick">북마크</a>
 				</h2>
 			</div>
 			<div class="row row-top">
 				<h2 class="bold">
-					<a class="menu-tag" href="">예약내역</a>
-				
+					<a class="menu-tag" href="rezList">예약내역</a>
 				</h2>
 			</div>
-			<div class="row row-top" >
+			<div class="row row-top">
 				<h2 class="bold">
-						<a class="menu-tag" style="color:#FFB416;" href="">나의리뷰</a>
+					<a class="menu-tag" href="reviewListByCus">나의리뷰</a>
 				</h2>
 			</div>
 		</div>
+		
+		
+		
 		
 		<!-- 주 내용 -->
 		<div class="col-9">
