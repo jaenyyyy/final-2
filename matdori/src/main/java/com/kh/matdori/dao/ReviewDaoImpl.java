@@ -13,11 +13,11 @@ import com.kh.matdori.dto.ReviewDto;
 import com.kh.matdori.error.NoTargetException;
 
 @Repository
-public class ReviewDaoImpl implements ReviewDao{
-	
+public class ReviewDaoImpl implements ReviewDao {
+
 	@Autowired
 	private SqlSession sqlSession;
-	
+
 	@Override
 	public int sequence() {
 		return sqlSession.selectOne("review.sequence");
@@ -30,7 +30,7 @@ public class ReviewDaoImpl implements ReviewDao{
 
 	@Override
 	public boolean update(ReviewDto reviewDto) {
-		Map<String, Object> params = new HashMap <>();
+		Map<String, Object> params = new HashMap<>();
 		params.put("reviewNo", reviewDto.getReviewNo());
 		params.put("reviewDto", reviewDto);
 		return sqlSession.update("review.change", params) > 0;
@@ -56,8 +56,9 @@ public class ReviewDaoImpl implements ReviewDao{
 
 	@Override
 	public ReviewDto selectOne(int reviewNo) {
-		ReviewDto reviewDto = sqlSession.selectOne("review.detail", reviewNo);
-		if(reviewDto == null) throw new NoTargetException();
+		ReviewDto reviewDto = sqlSession.selectOne("review.reviewList", reviewNo);
+		if (reviewDto == null)
+			throw new NoTargetException();
 		return reviewDto;
 	}
 
@@ -72,6 +73,16 @@ public class ReviewDaoImpl implements ReviewDao{
 	@Override
 	public AttachDto findImage(int reviewNo) {
 		return sqlSession.selectOne("findImage", reviewNo);
+	}
+
+	@Override
+	public ReviewDto selectOneInfo(int reviewNo) {
+		  ReviewDto reviewDto = sqlSession.selectOne("review.reviewInfo", reviewNo);
+	        if(reviewDto == null) {
+	            throw new NoTargetException();
+	        }
+	        return reviewDto;
+
 	}
 
 }

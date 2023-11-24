@@ -29,9 +29,9 @@ import com.kh.matdori.dao.ReservationDao;
 import com.kh.matdori.dao.ReviewDao;
 import com.kh.matdori.dto.AttachDto;
 import com.kh.matdori.dto.CustomerDto;
+import com.kh.matdori.dto.ReservationDto;
 import com.kh.matdori.dto.ReservationListDto;
 import com.kh.matdori.dto.RestaurantDto;
-import com.kh.matdori.dto.ReservationDto;
 import com.kh.matdori.dto.ReviewDto;
 import com.kh.matdori.service.EmailService;
 
@@ -287,81 +287,84 @@ public class CustomerController {
       return "customer/rezList";
    }
 
-   @GetMapping("/reviewListByCus")
-   private String reviewListByCus() {
-      return "customer/reviewListByCus";
-   }
+
 
    // 나의리뷰
    @RequestMapping("/reviewListByCus")
-   public String list(Model model, @ModelAttribute ReviewDto reviewDto, @ModelAttribute CustomerDto customerDto,
-         HttpSession session) {
+   public String reviewList(Model model, HttpSession session) {
       String customerId = (String) session.getAttribute("name");
 
-      
-
-      List<ReviewDto> listByCus = reviewDao.selectListByCus(customerId);
-      model.addAttribute("listByCus", listByCus);
+      List<ReviewDto> reviewList = reviewDao.selectListByCus(customerId);
+      model.addAttribute("reviewList", reviewList);
 
       return "customer/reviewListByCus";
    }
 
-//   //나의리뷰
-//   @RequestMapping("/reviewListByCus")
-//   public String list(Model model,
-//                  @ModelAttribute ReviewDto reviewDto,
-//                  @ModelAttribute CustomerDto customerDto) {
-//      String customerId = customerDto.getCustomerId();
-//      reviewDto.setReviewWriter(customerId);
-//      
-//      List <ReviewDto> listByCus = reviewDao.selectListByCus(customerId);
-//      model.addAttribute("listByCus", listByCus);
-//      
-//      return "customer/reviewListByCus";
-//   }
 
-   @GetMapping("/reviewWrite")
-   private String reviewWrite() {
-      return "customer/reviewWrite";
+   
+   
+   @GetMapping("/reviewWrite") 
+   public String reviewWrite() {
+       return "/customer/reviewWrite";
    }
 
    @PostMapping("/reviewWrite")
-   public String insertReview(@ModelAttribute ReviewDto reviewDto, @RequestParam("attach") MultipartFile attach,
-         HttpSession session) {
-      String customerId = (String) session.getAttribute("name");
+   public void insert(@ModelAttribute ReviewDto reviewDto,
+                      @ModelAttribute RestaurantDto restaurantDto,
+                      HttpSession session,
+                      @RequestParam MultipartFile attach,
+                      @RequestParam int resNo,
+                      @RequestParam(required = false) Integer reviewNo) throws  IllegalStateException, IOException {
+       String customerId = (String) session.getAttribute("name");
+       
+       if (reviewNo == null) {
+           int newReviewNo = reviewDao.sequence();
+           reviewDto.setReviewNo(newReviewNo);
+       } else {
+           reviewDto.setReviewNo(reviewNo);
+       }
+       
+       reviewDto.setResNo(resNo);
+       reviewDto.setReviewWriter(customerId);
+       
+       reviewDao.insert(reviewDto);
+       
+       if(!attach.isEmpty()) {
+	        int attachNo = attachDao.sequence();
+	        
+	        String home = System.getProperty("user.home");
+	        File dir = new File(home, "upload");
+	        dir.mkdirs();
+	        File target = new File(dir, String.valueOf(attachNo));
+	        attach.transferTo(target);
+	        
+	        AttachDto attachDto = new AttachDto();
+	        attachDto.setAttachNo(attachNo);
+	        attachDto.setAttachName(attach.getOriginalFilename());
+	        attachDto.setAttachSize(attach.getSize());
+	        attachDto.setAttachType(attach.getContentType());
+	        attachDao.insert(attachDto);
+	        
+	        reviewDao.connect(reviewNo, attachNo);
+	    }
+	}
+  
 
-      int reviewNo = reviewDao.sequence();
-      reviewDto.setReviewNo(reviewNo);
-      reviewDto.setReviewWriter(customerId);
+   
+   
 
-      reviewDao.insert(reviewDto);
+	
+	// 상세 
+	@RequestMapping("/reviewDetail")
+	public String reviewDetail(@RequestParam int reviewNo, Model model) {
+		ReviewDto reviewDto = reviewDao.selectOne(reviewNo);
+		model.addAttribute("reviewDto", reviewDto);
+		 return "/customer/reviewDetail";
+	}
+	
+	
+	
 
-      if (!attach.isEmpty()) {
-         try {
-            int attachNo = attachDao.sequence();
-
-            String home = System.getProperty("user.home");
-            File dir = new File(home, "upload");
-            dir.mkdirs();
-            File target = new File(dir, String.valueOf(attachNo));
-            attach.transferTo(target);
-
-            AttachDto attachDto = new AttachDto();
-            attachDto.setAttachNo(attachNo);
-            attachDto.setAttachName(attach.getOriginalFilename());
-            attachDto.setAttachSize(attach.getSize());
-            attachDto.setAttachType(attach.getContentType());
-            attachDao.insert(attachDto);
-
-            reviewDao.connect(reviewNo, attachNo);
-         } catch (IllegalStateException | IOException e) {
-            // 예외 처리 로직 추가
-            e.printStackTrace();
-            // 필요한 경우 예외 처리에 따른 로직 추가
-         }
-      }
-      return "redirect:/customer/mypage";
-   }
 
    @RequestMapping("/delete")
    public String delete(@RequestParam int reviewNo, @ModelAttribute RestaurantDto restaurantDto,

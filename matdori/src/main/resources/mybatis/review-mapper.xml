@@ -23,6 +23,11 @@
 		)
 	</insert>
 	
+	<!--  리뷰 리스트  -->
+	<select id="reviewList" resultType="ReviewDto">
+		select * from review where review_writer = #{reviewWriter}
+	</select>
+	
 	<!-- 리뷰 목록 (매장)-->
 	<select id="listByRes" resultType="ReviewDto">
 		select rl.*, ri.attach_no
@@ -65,6 +70,10 @@
 		insert into review_image values (#{reviewNo}, #{attachNo})
 	</insert>
 	
+	<!--  리뷰 작성  -->
+	<select id="reviewInfo" resultType="ReviewDto">
+		select * from review where review_no = #{reviewNo}
+	</select>
 	
 	<!-- 이미지 찾기 -->
 	<select id="findImage" resultType="AttachDto">
