@@ -13,8 +13,10 @@ import org.springframework.stereotype.Repository;
 import com.kh.matdori.dto.CustomerAdminListDto;
 import com.kh.matdori.dto.CustomerBlockDto;
 import com.kh.matdori.dto.CustomerDto;
+import com.kh.matdori.dto.PaymentDto;
 import com.kh.matdori.error.NoTargetException;
 import com.kh.matdori.vo.CusAdminVO;
+import com.kh.matdori.vo.CusLevelUpVO;
 import com.kh.matdori.vo.PaymentSumVO;
 
 import lombok.extern.slf4j.Slf4j;
@@ -264,10 +266,10 @@ public class CustomerDaoImpl implements CustomerDao {
 	public List<CustomerAdminListDto> selectCustomerListByPage(CusAdminVO vo) {
 		return sqlSession.selectList("customer.countList", vo);
 	}
-}
-
 	
-
-
-
-
+	
+	@Override
+	public List<PaymentDto> successList(CusLevelUpVO vo) {
+		return sqlSession.selectList("customer.rezCount", vo);
+	}
+}

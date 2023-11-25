@@ -201,6 +201,28 @@
 		FROM pick
 		WHERE res_no = #{resNo}
 	</select>
+	
+	
+	<!-- 예약 횟수 조회 (등급 변경을 위한 조회) -->
+	<select id="rezCount" resultType="CusLevelUpVO">
+        <![CDATA[
+            SELECT 
+			    p.payment_customer AS customer_id,
+			    COUNT(p.payment_no) AS payment_success
+			FROM 
+			    payment p
+			JOIN 
+			    customer c ON p.payment_customer = c.customer_id
+			WHERE 
+			    p.payment_status = '예약완료'
+			    AND p.payment_time >= TRUNC(SYSDATE, 'MONTH') 
+			    AND p.payment_time < ADD_MONTHS(TRUNC(SYSDATE, 'MONTH'), 1) 
+			GROUP BY 
+			    p.payment_customer;
+        ]]>
+    </select>
+
+
 
 
 </mapper>
