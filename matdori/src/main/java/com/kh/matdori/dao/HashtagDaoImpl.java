@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.kh.matdori.dto.HashtagDto;
+import com.kh.matdori.dto.HashtagListDto;
 import com.kh.matdori.dto.ResHashtagDto;
 import com.kh.matdori.error.NoTargetException;
 
@@ -17,8 +18,8 @@ public class HashtagDaoImpl implements HashtagDao{
 	private SqlSession sqlSession;
 
 	@Override
-	public List<HashtagDto> hashList(int hashNo) {
-		return sqlSession.selectList("hashtag.hashList", hashNo);
+	public List<HashtagDto> hashList() {
+	    return sqlSession.selectList("hashtag.hashList");
 	}
 
 	@Override
@@ -33,8 +34,12 @@ public class HashtagDaoImpl implements HashtagDao{
 	}
 
 	@Override
-	public List<ResHashtagDto> resHashList(int resNo) {
+	public List<HashtagListDto> resHashList(int resNo) {
 		return sqlSession.selectList("hashtag.resHashList", resNo);
 	}
-
+	
+	@Override
+	public List<ResHashtagDto> resHashtagCount(int resNo) {
+		return sqlSession.selectList("hashtag.resHashCount", resNo);
+	}
 }

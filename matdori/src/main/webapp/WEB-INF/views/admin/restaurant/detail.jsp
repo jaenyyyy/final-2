@@ -187,7 +187,7 @@
 		<!-- 매장 차단 모달-->
 		<div class="modal fade" id="blockModal" tabindex="-1"
 			data-bs-backdrop="static">
-			<div class="modal-dialog">
+			<div class="modal-dialog modal-dialog-centered">
 				<div class="modal-content">
 					<div class="modal-header">
 						<h1 class="modal-title fs-5">매장 차단 사유</h1>
@@ -211,7 +211,7 @@
 		<!-- 차단 해제 모달-->
 		<div class="modal fade" id="cancelModal" tabindex="-1"
 			data-bs-backdrop="static">
-			<div class="modal-dialog">
+			<div class="modal-dialog modal-dialog-centered">
 				<div class="modal-content">
 					<div class="modal-header">
 						<button type="button" class="btn-close" data-bs-dismiss="modal"
@@ -236,7 +236,7 @@
 			<div>
 			    <input type="hidden" id="resJudgeNo" value="${restaurantJudgeDto.resJudgeNo}">
 			</div>
-			<div class="modal-dialog">
+			<div class="modal-dialog modal-dialog-centered">
 				<div class="modal-content">
 					<div class="modal-header">
 						<h1 class="modal-title fs-5">매장 심사</h1>

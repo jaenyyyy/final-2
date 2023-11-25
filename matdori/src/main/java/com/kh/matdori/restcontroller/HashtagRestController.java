@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.kh.matdori.dao.HashtagDao;
 import com.kh.matdori.dto.HashtagDto;
+import com.kh.matdori.dto.HashtagListDto;
 import com.kh.matdori.dto.ResHashtagDto;
 
 @CrossOrigin
@@ -26,8 +27,8 @@ public class HashtagRestController {
 	
 	
 	@GetMapping("/list")
-	public List<HashtagDto> hashList(@PathVariable int hashNo){
-		return hashtagDao.hashList(hashNo);
+	public List<HashtagDto> hashList(){
+	    return hashtagDao.hashList();
 	}
 	
 	@PostMapping("/insert")
@@ -41,7 +42,12 @@ public class HashtagRestController {
 	}
 	
 	@GetMapping("/resList/{resNo}")
-	public List<ResHashtagDto> resHashList(@PathVariable int resNo){
+	public List<HashtagListDto> resHashList(@PathVariable int resNo){
 		return hashtagDao.resHashList(resNo);
+	}
+	
+	@GetMapping("/count/{resNo}")
+	public List<ResHashtagDto> count(@PathVariable int resNo){
+		return hashtagDao.resHashtagCount(resNo);
 	}
 }

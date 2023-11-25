@@ -18,7 +18,7 @@
    
    <!-- 전체 조회 : 비즈니스에서 추가 할 때 검색 되도록 -->
    <select id="hashList" resultType="HashTagDto">
-      select * from hashtag
+      select * from hashtag order by hash_comment asc
    </select>
    
    <!-- 삭제 -->
@@ -38,14 +38,18 @@
    </delete>
    
    <!-- 사업자가 등록한 해시태그 리스트 -->
-   <select id="resHashList" parameterType="int" resultType="ResHashtagDto">
+   <select id="resHashList" parameterType="int" resultType="HashtagListDto">
 	    SELECT rh.hash_no, h.hash_comment, rh.res_no
 	    FROM res_hashtag rh
 	    JOIN hashtag h ON rh.hash_no = h.hash_no
 	    WHERE rh.res_no = #{resNo}
+	    order by hash_comment asc
 	</select>
    
-   
+   <!-- 카운트 -->
+   <select id="resHashCount" resultType="resHashtagDto">
+		select count(*) from res_hashtag where res_no = #{resNo}
+   </select>
    
    <!-- 조회: 복합검색 구문 (작성 필요) -->
 </mapper>
