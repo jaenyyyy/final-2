@@ -1,6 +1,8 @@
 package com.kh.matdori.dao;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -69,39 +71,36 @@ public class RestaurantDaoImpl implements RestaurantDao {
     public int sequenceAttach() {
         return sqlSession.selectOne("restaurant.sequenceAttach");
     }
-    @Override
-    public void insertResImage(int resNo, List<MultipartFile> resImages) {
-        for (MultipartFile file : resImages) {
-            if (!file.isEmpty()) {
-                // attach_no 시퀀스를 가져옵니다.
-                int attachNo = sqlSession.selectOne("restaurant.sequenceAttach");
-                // 파일을 서버에 저장하는 로직을 추가해야 합니다.
-                // 예: file.transferTo(new File(dir, file.getOriginalFilename()));
 
-                // attach 테이블에 이미지 메타데이터를 저장합니다.
-                AttachDto attachDto = new AttachDto();
-                attachDto.setAttachNo(attachNo);
-                attachDto.setAttachName(file.getOriginalFilename());
-                attachDto.setAttachSize(file.getSize());
-                attachDto.setAttachType(file.getContentType());
-                sqlSession.insert("restaurant.insertAttach", attachDto);
-
-                // restaurant_images 테이블에 이미지 삽입
-                ResImagesDto resImage = new ResImagesDto();
-                resImage.setResNo(resNo);
-                resImage.setAttachNo(attachNo);
-                sqlSession.insert("restaurant.insertResImage", resImage);
-            }
-        }
-    }
 	@Override
-	public List<ResImagesDto> selectResImagesByResNo(int resNo) {
-		return sqlSession.selectList("restaurant.selectResImagesList", resNo);
+	public List<Integer> findImageNoByRes(int resNo) {
+		return sqlSession.selectList("restaurant.findImageNoByRes", resNo);
 	}
 
 	@Override
-	public boolean deleteResImage(int attachNo) {
-		return sqlSession.delete("restaurant.deleteResImage", attachNo) > 0;
+	public void deleteByResNo(int resNo) {
+		// TODO Auto-generated method stub
+		
 	}
 
+	@Override
+	public void insertResImage(int resNo, int attachNo) {
+		Map<String, Object> params = new HashMap<>();
+		params.put("resNo", resNo);
+		params.put("attachNo", attachNo);
+		sqlSession.insert("restaurant.insertResImage",params);
+	}
+
+	@Override
+	public void deleteResImage(int attachNo) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public AttachDto findImageByNo(int attachNo) {
+		return sqlSession.selectOne("restaurant.findImageByNo",attachNo);
+	}
+
+	
 }

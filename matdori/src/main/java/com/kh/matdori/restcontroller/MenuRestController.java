@@ -152,7 +152,7 @@ public class MenuRestController {
 	    boolean result = menuDao.edit(menuNo, menuDto);
 //	    log.debug("menuDto={}", menuDto);
 
-	    // 메뉴 이미지 처리 ``dd
+	    // 메뉴 이미지 처리 
 	    MultipartFile menuImage = vo.getMenuImage();
 	    if (menuImage != null && !menuImage.isEmpty()) {
 	       AttachDto attachDto = menuDao.findMenuImage(menuNo);
