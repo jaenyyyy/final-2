@@ -85,12 +85,22 @@
 				<div class="row">
 					<h1 class="text-left title">${resDto.resName}</h1>
 				</div>
-				<!-- 별점 -->
-				<div class="row">
-					<i class="fa-solid fa-star fa-2x" style="color: #ff2424;"> <span
-						class="star-avg">별점평균추가</span>
-					</i>
-				</div>
+<!-- 별점 -->
+<div class="row">
+    <span class="star-avg">
+        <span class="rating__star ${averageRating >= 1 ? 'fas' : 'far'} fa-star"></span>
+        <span class="rating__star ${averageRating >= 2 ? 'fas' : 'far'} fa-star"></span>
+        <span class="rating__star ${averageRating >= 3 ? 'fas' : 'far'} fa-star"></span>
+        <span class="rating__star ${averageRating >= 4 ? 'fas' : 'far'} fa-star"></span>
+        <span class="rating__star ${averageRating >= 5 ? 'fas' : 'far'} fa-star"></span>
+        ${String.format("%.1f", averageRating)}점 식장
+    </span>
+</div>
+
+
+
+
+
 			</div>
 
 
@@ -344,8 +354,10 @@
 
 
 
-<!-- 리뷰 -->
-<div class="row justify-content-center text-center list-border info-margin" id="reviewSection">
+	<!-- 리뷰 -->
+	<div
+		class="row justify-content-center text-center list-border info-margin"
+		id="reviewSection">
 		<!-- 제목 -->
 		<div class="row text-start">
 			<h3>
@@ -388,17 +400,17 @@
 			</div>
 		</div>
 
-    <!-- 더보기 버튼 -->
-    <div class="row mt-4">
-        <h5>
-            <a class="under-line text-badge">리뷰 더보기<i
-                class="fa-solid fa-angles-right" style="color: #000000;"></i>
-            </a>
-        </h5>
-    </div>
-</div>
+		<!-- 더보기 버튼 -->
+		<div class="row mt-4">
+			<h5>
+				<a class="under-line text-badge">리뷰 더보기<i
+					class="fa-solid fa-angles-right" style="color: #000000;"></i>
+				</a>
+			</h5>
+		</div>
+	</div>
 
-<script>
+	<script>
 //메뉴 누르면 부드럽게 이동하는거
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
@@ -460,9 +472,9 @@ window.addEventListener('scroll', function() {
 </script>
 
 
-<!-- 북마크 설정/해제를 위한 -->
-<c:if test="${sessionScope.name != null}">
-	<script>
+	<!-- 북마크 설정/해제를 위한 -->
+	<c:if test="${sessionScope.name != null}">
+		<script>
         $(function() {
         	var params = new URLSearchParams(location.search);
         	var resNo = params.get("resNo");
@@ -503,7 +515,7 @@ window.addEventListener('scroll', function() {
             });
         });
     </script>
-</c:if>
+	</c:if>
 
 
 
@@ -520,4 +532,4 @@ window.addEventListener('scroll', function() {
 
 
 
-<jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
+	<jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>

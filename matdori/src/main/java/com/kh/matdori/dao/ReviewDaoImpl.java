@@ -85,4 +85,10 @@ public class ReviewDaoImpl implements ReviewDao {
 
 	}
 
+	//별점평균계산
+    @Override
+    public double getAverageRatingByRes(int resNo) {
+        return sqlSession.selectOne("review.startevg", resNo);
+    }
+
 }

@@ -44,6 +44,10 @@ public class RestaurantController {
 		model.addAttribute("resDto", resDto);
 		model.addAttribute("menuListByRes", menuListByRes);
 		model.addAttribute("reviewByRes", reviewByRes);
+		
+	    // 별점 평균 조회
+        double averageRating = reviewDao.getAverageRatingByRes(resNo);
+        model.addAttribute("averageRating", averageRating);
 //		log.debug("list= {}",resDto);
 //		log.debug("list= {}",menuListByRes);
 //		log.debug("list= {}",reviewByRes);

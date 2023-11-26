@@ -22,5 +22,6 @@ public interface ReviewDao {
 	void connect(int reviewNo, int attacchNo);
 	//리뷰 사진찾기
 	AttachDto findImage(int reviewNo);
+	double getAverageRatingByRes(int resNo);
 	
 }
