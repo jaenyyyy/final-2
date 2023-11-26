@@ -89,15 +89,15 @@
 					<div class="row res-line p-4" style="margin-left: 100px;">
 						<div class="col-3">
 							<!-- 사진자리 -->
-<c:choose>
-    <c:when test="${not empty reviewDto}">
-        <img src="image?reviewNo=${reviewDto.reviewNo}" width="100" height="100">
-    </c:when>
-    <c:otherwise>
-        <!-- 아무것도 표시하지 않음 -->
-    </c:otherwise>
-</c:choose>
-
+							<c:choose>
+								<c:when test="${not empty reviewDto}">
+									<img src="image?reviewNo=${reviewDto.reviewNo}" width="100"
+										height="100">
+								</c:when>
+								<c:otherwise>
+									<img src="https://dummyimage.com/100x100/000/fff">
+								</c:otherwise>
+							</c:choose>
 						</div>
 						<div class="col-7">
 							<div class="row modal-title">
