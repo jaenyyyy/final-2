@@ -16,15 +16,21 @@
       values (#{hashComment})
    </insert>
    
+   <!-- 삭제 -->
+   <delete id="hashDelete">
+      delete from hashtag where hash_no = #{hashNo}
+   </delete>	
+   
+   <!-- 상세 -->
+   <select id="hashOne" resultType="HashtagDto">
+		select * from hashtag where hash_no = #{hashNo}
+   </select>
+   
    <!-- 전체 조회 : 비즈니스에서 추가 할 때 검색 되도록 -->
    <select id="hashList" resultType="HashTagDto">
       select * from hashtag order by hash_comment asc
    </select>
    
-   <!-- 삭제 -->
-   <delete id="hashDelete">
-      delete from hashtag where hash_no = #{hashNo}
-   </delete>
    
    
    <!-- 사업자 해시태그 인서트 -->

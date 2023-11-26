@@ -16,6 +16,7 @@ import com.kh.matdori.dao.AdminDao;
 import com.kh.matdori.dao.BusinessDao;
 import com.kh.matdori.dao.BusinessJudgeDao;
 import com.kh.matdori.dao.CustomerDao;
+import com.kh.matdori.dao.HashtagDao;
 import com.kh.matdori.dao.RestaurantDao;
 import com.kh.matdori.dto.BusinessBlockDto;
 import com.kh.matdori.dto.BusinessBlockListDto;
@@ -25,6 +26,7 @@ import com.kh.matdori.dto.BusinessJudgeListDto;
 import com.kh.matdori.dto.CustomerAdminListDto;
 import com.kh.matdori.dto.CustomerBlockDto;
 import com.kh.matdori.dto.CustomerDto;
+import com.kh.matdori.dto.HashtagDto;
 import com.kh.matdori.dto.NoticeDto;
 import com.kh.matdori.dto.RestaurantAdminListDto;
 import com.kh.matdori.dto.RestaurantBlockDto;
@@ -62,6 +64,8 @@ public class AdminController {
    @Autowired
    private CustomerDao customerDao;
    
+   @Autowired
+   private HashtagDao hashtagDao;
    
    
    @RequestMapping("/")
@@ -114,21 +118,6 @@ public class AdminController {
     }
     
 
-    
-//    restController로 옮김
-//    //레스토랑 차단 기능
-//    @RequestMapping("/restaurant/block")
-//    public String resBlock(@RequestParam int resNo) {
-//       adminDao.insertResBlock(resNo);
-//       return "redirect:/admin/restaurant/detail";
-//    }
-//    
-//    //레스토랑 차단 해제
-//    @RequestMapping("/restaurant/cancel")
-//    public String resCancel(@RequestParam int resNo) {
-//       adminDao.deleteResBlock(resNo);
-//       return "redirect:/admin/restaurant/detail";
-//    }
     
     
     //레스토랑 관리자 시점 (+차단 +심사 리스트)
@@ -200,41 +189,21 @@ public class AdminController {
         blockDto.setBusBlockComment(blockComment);
         blockDto.setBusBlockStatus(blockStatus);
         
-        //System.out.println("전달받은 데이터1: " + blockComment);
-        //System.out.println("전달받은 데이터2: " + blockStatus);
-
-        // adminDao를 직접 호출하여 업데이트
         adminDao.updateBusBlock(blockDto);
-        //System.out.println("상태: " + blockDto.getBusBlockStatus());
-        //System.out.println("전달받는 아이디: " + blockDto.getBusId());
         
         return "redirect:/admin/business/blockManager/list";
     }
     
   
-
-
-
-
+    //관리자 시점 해시태그 관리
+    @RequestMapping("/restaurant/hashtag")
+    public String list(Model model) {
+    	List<HashtagDto> hashtagList = hashtagDao.hashList();
+        model.addAttribute("hashtagList", hashtagList); 
+        return "/admin/restaurant/hashtag"; 
+    }
     
-    
-//    
-// // 이용자 차단 구문(restcontroller)
-//    @RequestMapping("customer/block")
-//    public String cusBlock(@RequestParam String customerId) {
-//       customerDao.insertBlock(customerId);
-//           return "redirect:list";
-//    }
-//    
-//    
-//    @RequestMapping("customer/cancle")
-//    public String cusCancel(@RequestParam String customerId) {
-//       customerDao.deleteBlock(customerId);
-//       return "redirect:list";
-//    }
 
-    
-    
 
     
     // 이용자 차단 관리자 목록 
@@ -289,6 +258,7 @@ public class AdminController {
 //         return "redirect:error";
 //      }
 //   }
+    
 }
 
 

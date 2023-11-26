@@ -1,8 +1,6 @@
 package com.kh.matdori.vo;
 
-import com.kh.matdori.dto.CustomerDto;
-import com.kh.matdori.dto.PaymentDto;
-import com.kh.matdori.dto.ReservationDto;
+import java.sql.Date;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,7 +9,16 @@ import lombok.NoArgsConstructor;
 
 @Data @NoArgsConstructor @AllArgsConstructor @Builder
 public class CusLevelUpVO {
-	private CustomerDto customerDto;
-	private PaymentDto paymentDto;
-	private ReservationDto reservationDto;
+	 private String paymentCustomer;
+    private String customerId;
+    private String paymentStatus;
+    private Date paymentTime;
+    private int paymentSuccess;
+    private String customerLevel;
+    
+    
+    
+    public void resetPaymentSuccess() {
+        paymentSuccess = 0;
+    }
 }

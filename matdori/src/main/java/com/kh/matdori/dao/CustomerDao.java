@@ -5,7 +5,6 @@ import java.util.List;
 import com.kh.matdori.dto.CustomerAdminListDto;
 import com.kh.matdori.dto.CustomerBlockDto;
 import com.kh.matdori.dto.CustomerDto;
-import com.kh.matdori.dto.PaymentDto;
 import com.kh.matdori.vo.CusAdminVO;
 import com.kh.matdori.vo.CusLevelUpVO;
 import com.kh.matdori.vo.PaymentSumVO;
@@ -82,5 +81,6 @@ public interface CustomerDao {
 
 	
 	// 회원 등급 업데이트를 위한 결제완료 상태 조회
-	List<PaymentDto> successList(CusLevelUpVO vo);
+	List<CusLevelUpVO> successList();
+	
 }

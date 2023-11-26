@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -13,7 +12,6 @@ import org.springframework.stereotype.Repository;
 import com.kh.matdori.dto.CustomerAdminListDto;
 import com.kh.matdori.dto.CustomerBlockDto;
 import com.kh.matdori.dto.CustomerDto;
-import com.kh.matdori.dto.PaymentDto;
 import com.kh.matdori.error.NoTargetException;
 import com.kh.matdori.vo.CusAdminVO;
 import com.kh.matdori.vo.CusLevelUpVO;
@@ -266,10 +264,15 @@ public class CustomerDaoImpl implements CustomerDao {
 	public List<CustomerAdminListDto> selectCustomerListByPage(CusAdminVO vo) {
 		return sqlSession.selectList("customer.countList", vo);
 	}
+
 	
 	
+	
+	//이용횟수 조회해서 레벨업 하기 위한 카운트 구문
 	@Override
-	public List<PaymentDto> successList(CusLevelUpVO vo) {
-		return sqlSession.selectList("customer.rezCount", vo);
+	public List<CusLevelUpVO> successList() {
+		return sqlSession.selectList("customer.rezSuccessCount");
 	}
+	
+	
 }
