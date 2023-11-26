@@ -91,8 +91,39 @@
 			</if>
 		</where>
 		ORDER BY customer_id DESC
+		
 
 
+	</select>
+	
+	
+	
+<select id="list" resultType="CustomerDto">
+	    <!-- 검색 -->
+	    <choose>
+	        <when test="search">
+	            <![CDATA[
+	                select * from (
+	                    select rownum rn, TMP.* from (
+	                        select * from customer
+	                        where instr(customer_name, #{keyword}) > 0
+	                        order by customer_id desc
+	                    ) TMP
+	                ) where rn between #{startRow} and #{finishRow}
+	            ]]>
+	        </when>
+	        <!-- 검색 없이 목록 -->
+	        <otherwise>
+	            <![CDATA[
+	                select * from (
+	                    select rownum rn, TMP.* from (
+	                        select * from customer_admin_list
+	                        order by customer_id desc
+	                    ) TMP
+	                ) where rn between #{startRow} and #{finishRow}
+	            ]]>
+	        </otherwise>
+	    </choose>
 	</select>
 
 

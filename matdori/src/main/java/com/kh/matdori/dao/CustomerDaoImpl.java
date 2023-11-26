@@ -48,14 +48,19 @@ public class CustomerDaoImpl implements CustomerDao {
 	
 	@Override
 	public boolean delete(String customerId) {
-		int result = sqlSession.delete("customer.delete", customerId);
-		if(result == 0) throw new NoTargetException();
-		return false;
+		return sqlSession.delete("customer.delete", customerId) > 0;
+	
 	}
 
 
 	@Override
 	public CustomerDto selectOne(String customerId) {
+		return sqlSession.selectOne("customer.detail", customerId);
+
+	}
+	
+	@Override
+	public CustomerDto selectTwo(String customerId) {
 		CustomerDto customerDto = sqlSession.selectOne("customer.detail", customerId);
 		if(customerDto == null) throw new NoTargetException();
 		return customerDto;

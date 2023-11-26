@@ -40,7 +40,33 @@
 		WHERE rnum BETWEEN #{start} AND #{end}
 	</select>
 
-
+<select id="list2" resultType="CustomerDto">
+	    <!-- 검색 -->
+	    <choose>
+	        <when test="search">
+	            <![CDATA[
+	                select * from (
+	                    select rownum rn, TMP.* from (
+	                        select * from customer
+	                        where instr(customer_name, #{keyword}) > 0
+	                        order by customer_id desc
+	                    ) TMP
+	                ) where rn between #{startRow} and #{finishRow}
+	            ]]>
+	        </when>
+	        <!-- 검색 없이 목록 -->
+	        <otherwise>
+	            <![CDATA[
+	                select * from (
+	                    select rownum rn, TMP.* from (
+	                        select * from customer
+	                        order by customer_id desc
+	                    ) TMP
+	                ) where rn between #{startRow} and #{finishRow}
+	            ]]>
+	        </otherwise>
+	    </choose>
+	</select>
 
 
 	<!-- 이용자 상세 정보 조회 -->
@@ -50,7 +76,7 @@
 	</select>
 
 
- 
+
 	<update id="edit" parameterType="map">
 		UPDATE customer
 		<set>
@@ -110,7 +136,8 @@
 
 
 	<!-- 리스트 구하는 vo -->
-	<select id="countList" parameterType="CusAdminVO" resultType="int">
+	<select id="countList" parameterType="CusAdminVO"
+		resultType="int">
     <![CDATA[
     SELECT *
     FROM (
@@ -128,12 +155,22 @@
 
 
 	<!-- 검색이 아닐 때 사용되는 카운트 vo -->
-	<select id="count" parameterType="CusAdminVO"
-		resultType="int">
+	<select id="count" parameterType="CusAdminVO" resultType="int">
+		<choose>
+
+			<when test="keyword != null">
      <![CDATA[
-    SELECT count(*)
-    FROM customer
+    select count(*)
+    from customer when instr(customer_id, #{keyword}) > 0
     ]]>
+			</when>
+			<otherwise>
+	            <![CDATA[
+	                select count(*) from customer
+	            ]]>
+			</otherwise>
+		</choose>
+
 	</select>
 
 	<select id="getCustomerByEmail" resultType="CustomerDto">
@@ -180,18 +217,21 @@
 		resultType="Integer">
 		SELECT COUNT(*)
 		FROM pick
-		WHERE customer_id = #{customerId} AND res_no = #{resNo}
+		WHERE customer_id = #{customerId}
+		AND res_no = #{resNo}
 	</select>
 
 
 	<!-- 찜한 식당 내역 조회 -->
-	<!-- parameterType="String"  -->
-	<select id="getPickResByUser"  resultType="RestaurantDto">
+	<!-- parameterType="String" -->
+	<select id="getPickResByUser" resultType="RestaurantDto">
 		SELECT r.*
-		FROM restaurant r
+		FROM
+		restaurant r
 		INNER JOIN pick p ON
 		r.res_no = p.res_no
-		WHERE p.customer_id = #{customerId}
+		WHERE p.customer_id
+		= #{customerId}
 	</select>
 
 	<!-- 특정 레스토랑의 찜 개수 조회 -->

@@ -30,7 +30,6 @@ import com.kh.matdori.dao.ReservationDao;
 import com.kh.matdori.dao.ReviewDao;
 import com.kh.matdori.dto.AttachDto;
 import com.kh.matdori.dto.CustomerDto;
-import com.kh.matdori.dto.ReservationDto;
 import com.kh.matdori.dto.ReservationListDto;
 import com.kh.matdori.dto.RestaurantDto;
 import com.kh.matdori.dto.ReviewDto;
