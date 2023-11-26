@@ -84,5 +84,9 @@
 		)
 	</select>
 	
+	<select id="countOfReviews" resultType="ReviewDto">
+	 SELECT COUNT(*) FROM reviews WHERE customer_id = #{customerId}
+	</select>
+	
 	
 </mapper>

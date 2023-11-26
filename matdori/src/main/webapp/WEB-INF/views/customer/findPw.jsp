@@ -138,17 +138,44 @@
 
 		});
 
-		$("[name=customerPw]")
-				.blur(
-						function() {
-							var regex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$])[A-Za-z0-9!@#$]{8,20}$/;
-							var inputPw = $(this).val();
+		$("[name=customerPw]").blur(function() {
+            var regex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$])[A-Za-z0-9!@#$]{8,20}$/;
+            var inputPw = $(this).val();
 
-							var isValid = regex.test(inputPw);
-							$(this).removeClass("success fail");
-							$(this).addClass(isValid ? "success" : "fail");
-							status.pw = isValid;
-						});
+            var isValid = regex.test(inputPw);
+            $(this).removeClass("success fail");
+            $(this).addClass(isValid ? "success" : "fail");
+            status.pw = isValid;
+        });
+
+        $(".btn-cert").click(function() {
+            var email = $("[name=customerEmail]").val();
+            var number = $(".cert-input").val();
+
+            $.ajax({
+                url: "http://localhost:8080/rest/cert/check",
+                method: "post",
+                data: {
+                    certEmail: email,
+                    certNumber: number,
+                },
+                success: function(response) {
+                    if (number.length == 0) {
+                        $(".cert-input").removeClass("success fail fail2").addClass("fail2");
+                        status.emailOk = false;
+                    } else if (response.result) {
+                        $(".cert-input").removeClass("success fail fail2").addClass("success");
+                        status.emailOk = true;
+                        $(".btn-cert").prop("disabled", true);
+                        // 여기서 인증번호가 일치하므로 'success' 작업을 수행합니다.
+                        $(".cert-wrapper").append('<a href="changePw" class="btn btn-change-password">비밀번호 변경하기</a>');
+                    } else {
+                        $(".cert-input").removeClass("success fail fail2").addClass("fail");
+                        status.emailOk = false;
+                    }
+                },
+            });
+        });
 
 		$("[name=customerName]").blur(function() {
 			var regex = /^[가-힣]{2,7}$/;
@@ -258,41 +285,26 @@
 	});
 </script>
 
-
-
 <style>
-.row-top {
-	margin-top: 20%;
+.container {
+	max-width: 500px; /* 변경 가능한 폭 설정 */
+	margin: 0 auto; /* 가운데 정렬 */
 }
 
-.page-line {
-	border-right: 3px solid #ffb416;
-}
-
-.bold {
-	font-weight: bold;
-}
-
-.menu-tag {
+.tag-none {
 	text-decoration: none;
 	color: black;
 }
 
-.menu-tag:hover {
-	color: #FFB416;
-}
-
-.res-line {
+.line {
 	border-top: 1px solid #ffb416;
-	border-bottom: 1px solid #ffb416;
-	width: 70%;
 }
 
-.border-line {
-	border: 2px solid #ffb416;
-	border-radius: 10px;
+.tag-none:hover {
+	color: #FF3300; /* 원하는 호버 시 색상으로 변경 */
 }
 </style>
+
 
 
 
@@ -309,6 +321,10 @@
 		</div>
 		
 		
+		계정의 이메일 주소를 입력해주세요  <br> 비밀번호 재설정을 위해 이메일의 인증번호를 확인해주세요 <br>
+		인증번호는 계정의 이메일 주소로 발송됩니다 <br> 
+		
+		<br><br>
 		<div class="row line"></div>
 
 
@@ -317,20 +333,21 @@
 				name="customerEmail" placeholder="test@kh.com">
 			<div class="fail-feedback">이메일 형식이 잘못되었습니다</div>
 			<div class="fail2-feedback">이미 이 이메일로 아이디를 만드셨습니다</div>
+			<div class="success-feedback"> 올바른 이메일 형식입니다 </div>
 		
 		</div>
 
 
-		<div class="row flex-container">
-			<div class="w-50">
-				<button type="button" class="btn btn-send btn-positive"
+		<div class="row mv-30 mt-4">
+		
+				<button type="button" class="btn btn-send btn-warning "
 					onclick="sendCertNumber()">
 					<i class="fa-solid fa-spinner fa-spin"></i> <span>인증번호 보내기</span>
 				</button>
 			</div>
 
 			<br> <br>
-			<div class="row line"></div>
+
 			<br>
 			
 			<!-- 기존 코드에 버튼을 추가합니다 -->
@@ -338,20 +355,19 @@
 			
 
 
-			<div class="row flex-container">
-				인증번호 입력 <input type="text" class="form-control cert-input" placeholder="인증번호 입력">
-				<div class="cert-wrapper right">
-					<button type="button" class="btn btn-cert btn-positive"
+			<div class="row mt-4">
+			 <input type="text" class="form-control cert-input" placeholder="인증번호 입력">
+			<br>인증번호를 입력해주세요 
+				<div class="cert-wrapper right row mv-30 mt-4">
+				
+					<button type="button" class="btn btn-cert btn-warning"
 						onclick="checkCertNumber()">확인</button>
 
 					<div class="fail2-feedback">인증번호를 입력해주세요</div>
 					<div class="fail-feedback">인증번호 잘못 입력하셨습니다</div>
 					<div class="success-feedback">인증 성공!</div>
 					<div class="row flex-container">
-    <!-- 이 부분에 비밀번호 변경 페이지로의 링크를 추가합니다 -->
-    <div class="w-50">
-        <a href="changePw" class="btn btn-change-password">비밀번호 변경하기</a>
-    </div>
+   
 </div>
 				</div>
 			</div>

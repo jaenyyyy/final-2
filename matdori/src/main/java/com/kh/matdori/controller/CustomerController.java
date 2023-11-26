@@ -152,11 +152,19 @@ public class CustomerController {
 
 			inputDto.setCustomerId(customerId);
 			customerDao.edit(customerId, inputDto);
-			return "redirect:mypage";
+			return "redirect:changeFinish";
 		} else {
 			return "redirect:change?error";
 		}
 	}
+	
+	// 개인정보 변경 완료 
+	@RequestMapping("/changeFinish")
+	public String changeFinish() {
+		return "customer/changeFinish";
+	}
+
+	
 
 	// 비밀번호 찾기 ?
 	@GetMapping("/findPw")

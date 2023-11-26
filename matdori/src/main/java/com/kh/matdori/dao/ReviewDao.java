@@ -21,5 +21,6 @@ public interface ReviewDao {
 	//리뷰 사진등록
 	void connect(int reviewNo, int attacchNo);
 	AttachDto findImage(int reviewNo);
+	int getCountOfReviewsByCustomerId(String customerId);
 	
 }
