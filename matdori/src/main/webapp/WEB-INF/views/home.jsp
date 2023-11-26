@@ -79,55 +79,27 @@
           <div class="col-lg-6 col-md-6 col-sm-6 col-12 d-flex align-items-center justify-content-around">
               <div class="d-flex flex-column align-items-center">
                   <a href="#카테고리 링크">
-                      <img src="/images/category.png" width="100px" height="100px">
+                      <img src="/images/korea.png" width="100px" height="100px">
                   </a>
-                  <a href="#카테고리 링크" class="categoryTag">카테고리</a>
+                  <a href="#카테고리 링크" class="categoryTag">한식</a>
               </div>
               <div class="d-flex flex-column align-items-center">
                   <a href="#카테고리 링크">
-                      <img src="/images/category.png" width="100px" height="100px">
+                      <img src="/images/steak.png" width="100px" height="100px">
                   </a>
-                  <a href="#카테고리 링크" class="categoryTag">카테고리</a>
+                  <a href="#카테고리 링크" class="categoryTag">양식</a>
               </div>
               <div class="d-flex flex-column align-items-center">
                   <a href="#카테고리 링크">
-                      <img src="/images/category.png" width="100px" height="100px">
+                      <img src="/images/dumpling.png" width="100px" height="100px">
                   </a>
-                  <a href="#카테고리 링크" class="categoryTag">카테고리</a>
+                  <a href="#카테고리 링크" class="categoryTag">중식</a>
               </div>
               <div class="d-flex flex-column align-items-center">
                   <a href="#카테고리 링크">
-                      <img src="/images/category.png" width="100px" height="100px">
+                      <img src="/images/japan.png" width="100px" height="100px">
                   </a>
-                  <a href="#카테고리 링크" class="categoryTag">카테고리</a>
-              </div>
-          </div>
-      </div>
-      <div class="row justify-content-center" style="margin-top: 30px;">
-          <div class="col-lg-6 col-md-6 col-sm-6 col-12 d-flex align-items-center justify-content-around">
-              <div class="d-flex flex-column align-items-center">
-                  <a href="#카테고리 링크">
-                      <img src="/images/category.png" width="100px" height="100px">
-                  </a>
-                  <a href="#카테고리 링크" class="categoryTag">카테고리</a>
-              </div>
-              <div class="d-flex flex-column align-items-center">
-                  <a href="#카테고리 링크">
-                      <img src="/images/category.png" width="100px" height="100px">
-                  </a>
-                  <a href="#카테고리 링크" class="categoryTag">카테고리</a>
-              </div>
-              <div class="d-flex flex-column align-items-center">
-                  <a href="#카테고리 링크">
-                      <img src="/images/category.png" width="100px" height="100px">
-                  </a>
-                  <a href="#카테고리 링크" class="categoryTag">카테고리</a>
-              </div>
-              <div class="d-flex flex-column align-items-center">
-                  <a href="#카테고리 링크">
-                      <img src="/images/category.png" width="100px" height="100px">
-                  </a>
-                  <a href="#카테고리 링크" class="categoryTag">카테고리</a>
+                  <a href="#카테고리 링크" class="categoryTag">일식</a>
               </div>
           </div>
       </div>
@@ -135,27 +107,55 @@
           <div class="col-lg-6 col-md-6 col-sm-6 col-12 d-flex align-items-center justify-content-around">
               <div class="d-flex flex-column align-items-center">
                   <a href="#카테고리 링크">
-                      <img src="/images/category.png" width="100px" height="100px">
+                      <img src="/images/salmon.png" width="100px" height="100px">
                   </a>
-                  <a href="#카테고리 링크" class="categoryTag">카테고리</a>
+                  <a href="#카테고리 링크" class="categoryTag">오마카세</a>
               </div>
               <div class="d-flex flex-column align-items-center">
                   <a href="#카테고리 링크">
-                      <img src="/images/category.png" width="100px" height="100px">
+                      <img src="/images/meat.png" width="100px" height="100px">
                   </a>
-                  <a href="#카테고리 링크" class="categoryTag">카테고리</a>
+                  <a href="#카테고리 링크" class="categoryTag">우마카세</a>
               </div>
               <div class="d-flex flex-column align-items-center">
                   <a href="#카테고리 링크">
-                      <img src="/images/category.png" width="100px" height="100px">
+                      <img src="/images/sool.png" width="100px" height="100px">
                   </a>
-                  <a href="#카테고리 링크" class="categoryTag">카테고리</a>
+                  <a href="#카테고리 링크" class="categoryTag">이자카야</a>
               </div>
               <div class="d-flex flex-column align-items-center">
                   <a href="#카테고리 링크">
-                      <img src="/images/category.png" width="100px" height="100px">
+                      <img src="/images/red-wine.png" width="100px" height="100px">
                   </a>
-                  <a href="#카테고리 링크" class="categoryTag">카테고리</a>
+                  <a href="#카테고리 링크" class="categoryTag">콜키지</a>
+              </div>
+          </div>
+      </div>
+      <div class="row justify-content-center" style="margin-top: 30px;">
+          <div class="col-lg-6 col-md-6 col-sm-6 col-12 d-flex align-items-center justify-content-around">
+              <div class="d-flex flex-column align-items-center">
+                  <a href="#카테고리 링크">
+                      <img src="/images/couple.png" width="100px" height="100px">
+                  </a>
+                  <a href="#카테고리 링크" class="categoryTag">데이트</a>
+              </div>
+              <div class="d-flex flex-column align-items-center">
+                  <a href="#카테고리 링크">
+                      <img src="/images/rooftop.png" width="100px" height="100px">
+                  </a>
+                  <a href="#카테고리 링크" class="categoryTag">루프탑</a>
+              </div>
+              <div class="d-flex flex-column align-items-center">
+                  <a href="#카테고리 링크">
+                      <img src="/images/dessert.png" width="100px" height="100px">
+                  </a>
+                  <a href="#카테고리 링크" class="categoryTag">디저트</a>
+              </div>
+              <div class="d-flex flex-column align-items-center">
+                  <a href="#카테고리 링크">
+                      <img src="/images/teamwork.png" width="100px" height="100px">
+                  </a>
+                  <a href="#카테고리 링크" class="categoryTag">단체</a>
               </div>
           </div>
       </div>

@@ -1,8 +1,10 @@
 package com.kh.matdori.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import com.kh.matdori.dto.AttachDto;
+import com.kh.matdori.dto.ResSearchListDto;
 import com.kh.matdori.dto.RestaurantDto;
 import com.kh.matdori.vo.RestaurantDetailVO;
 
@@ -36,4 +38,10 @@ public interface RestaurantDao{
 
     // 특정 resNo와 attachNo의 연결을 끊는 메서드
     void deleteResImage(int attachNo);
+    
+    
+    
+    
+    //복합검색 리스트
+    List<ResSearchListDto> resSearchList(Map<String, String> searchParams);
 }

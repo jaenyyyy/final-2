@@ -12,8 +12,8 @@
    
    <!-- 등록 -->
    <insert id="hashInsert">
-      insert into hashtag (hash_comment)
-      values (#{hashComment})
+      insert into hashtag (hash_no , hash_comment)
+      values (#{hashNo}, #{hashComment})
    </insert>
    
    <!-- 삭제 -->

@@ -216,7 +216,7 @@ public class CustomerDaoImpl implements CustomerDao {
 	public boolean paybackPoint(PaymentSumVO vo) {
 		Map<String, Object> params = new HashMap<>();
 		params.put("customerId", vo.getCustomerDto().getCustomerId());
-		params.put("customerPoint",	vo.getLevelByPayback());
+//		params.put("customerPoint",	vo.getLevelByPayback());
 		
 		return sqlSession.update("customer.paybackPoint", vo) > 0;
 	}

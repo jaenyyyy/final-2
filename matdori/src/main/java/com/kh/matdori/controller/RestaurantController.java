@@ -1,16 +1,22 @@
 package com.kh.matdori.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.kh.matdori.dao.HashtagDao;
 import com.kh.matdori.dao.MenuDao;
 import com.kh.matdori.dao.RestaurantDao;
 import com.kh.matdori.dao.ReviewDao;
+import com.kh.matdori.dto.HashtagListDto;
+import com.kh.matdori.dto.ResSearchListDto;
 import com.kh.matdori.dto.RestaurantDto;
 import com.kh.matdori.dto.ReviewDto;
 import com.kh.matdori.vo.MenuWithImagesVO;
@@ -27,6 +33,8 @@ public class RestaurantController {
 	private MenuDao menuDao;
 	@Autowired
 	private ReviewDao reviewDao;
+	@Autowired
+	private HashtagDao hashtagDao;
 
 	
 	@RequestMapping("/detail")
@@ -35,6 +43,7 @@ public class RestaurantController {
 		RestaurantDto resDto = restaurantDao.selectOne(resNo);
 		List<MenuWithImagesVO> menuListByRes = menuDao.getMenuByRes(resNo);
 		List<ReviewDto> reviewByRes = reviewDao.selectListByRes(resNo);
+		List<HashtagListDto> resHashDto = hashtagDao.resHashList(resNo);
 		
 
 //		model.addAttribute("resDetail", resDetail);
@@ -44,13 +53,33 @@ public class RestaurantController {
 		model.addAttribute("resDto", resDto);
 		model.addAttribute("menuListByRes", menuListByRes);
 		model.addAttribute("reviewByRes", reviewByRes);
+		model.addAttribute("resHashDto", resHashDto);
 //		log.debug("list= {}",resDto);
 //		log.debug("list= {}",menuListByRes);
 //		log.debug("list= {}",reviewByRes);
 
 		
 		return "restaurant/detail";
-		
-		
 	}
+	
+	
+	//복합검색
+	@RequestMapping("/resSearchList")
+	public String list(
+	        @RequestParam(required = false) String resName,
+	        @RequestParam(required = false) String regionName,
+	        @RequestParam(required = false) String hashComment,
+	        Model model,
+	        @ModelAttribute RestaurantDto restaurantDto) {
+
+	    Map<String, String> searchParams = new HashMap<>();
+	    searchParams.put("resName", resName);
+	    searchParams.put("regionName", regionName);
+	    searchParams.put("hashComment", hashComment);
+
+	    List<ResSearchListDto> resSearchList = restaurantDao.resSearchList(searchParams);
+	    model.addAttribute("resSearchList", resSearchList);
+	    return "restaurant/resSearchList";
+	}
+	
 }
