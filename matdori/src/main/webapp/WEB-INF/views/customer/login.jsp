@@ -1,9 +1,10 @@
-로그인
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
+
 <style>
 .container {
 	max-width: 500px; /* 변경 가능한 폭 설정 */
@@ -22,6 +23,10 @@
 .tag-none:hover {
 	color: #FF3300; /* 원하는 호버 시 색상으로 변경 */
 }
+ .form-control {
+        border: 2px solid #F7B731; /* Yellow border with #F7B731 color and 2px width */
+        border-radius: 8px; /* Rounded corners */
+    }
 </style>
 
 
