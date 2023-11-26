@@ -1,8 +1,16 @@
 package com.kh.matdori.restcontroller;
 
+import java.io.File;
+import java.io.IOException;
 import java.net.URI;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -12,10 +20,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.kh.matdori.configuration.FileUploadProperties;
 import com.kh.matdori.dao.AdminDao;
+import com.kh.matdori.dao.AttachDao;
 import com.kh.matdori.dao.RestaurantDao;
+import com.kh.matdori.dto.AttachDto;
 import com.kh.matdori.dto.RestaurantDto;
 import com.kh.matdori.vo.RestaurantJudgeVO;
 
@@ -33,6 +46,11 @@ public class RestaurantRestController {
 	@Autowired
 	private AdminDao adminDao;
 	
+	@Autowired
+	private AttachDao attachDao;
+	
+	
+		
 	@PostMapping("/")
 	public ResponseEntity<?> insert(@RequestBody RestaurantJudgeVO vo) {
 		 // 디버그 로그 출력
@@ -74,5 +92,87 @@ public class RestaurantRestController {
 	public RestaurantDto find(@PathVariable int resNo) {
 		return restaurantDao.selectOne(resNo);
 	}
+	// 초기 디렉터리 설정
+			@Autowired
+			private FileUploadProperties props;
+			private File dir;
 
+			@PostConstruct
+			public void init() {
+				dir = new File(props.getHome());
+				dir.mkdirs();
+			}
+//    // 이미지 업로드
+	@PostMapping(value = "/upload/resNo/{resNo}/image", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+	public ResponseEntity<?> uploadImage(@PathVariable int resNo, @RequestPart List<MultipartFile> resImages) {
+	    if (resImages == null || resImages.isEmpty()) {
+	        return ResponseEntity.badRequest().body("No images provided.");
+	    }
+
+	    try {
+	        for (MultipartFile file : resImages) {
+	            if (!file.isEmpty()) {
+	                int attachNo = attachDao.sequence(); // 첨부파일 번호 생성
+	                File target = new File(dir, String.valueOf(attachNo));
+	                file.transferTo(target);
+
+	                AttachDto attachDto = new AttachDto();
+	                attachDto.setAttachNo(attachNo);
+	                attachDto.setAttachName(file.getOriginalFilename());
+	                attachDto.setAttachSize(file.getSize());
+	                attachDto.setAttachType(file.getContentType());
+	                
+	                log.debug("attachDto={}",attachDto);
+	                attachDao.insert(attachDto);
+
+	                restaurantDao.insertResImage(resNo, attachNo); // 매장 이미지 정보 저장
+	            }
+	        }
+	        return ResponseEntity.ok("Images uploaded successfully.");
+	    } catch (IOException e) {
+	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error during image upload.");
+	    }
+	}
+    // 이미지 삭제
+    @DeleteMapping("/deleteImage/{attachNo}")
+    public ResponseEntity<?> deleteImage(@PathVariable int attachNo) {
+        try {
+            AttachDto attachDto = attachDao.selectOne(attachNo); // selectOne() 메서드 필요
+            if (attachDto != null) {
+                File target = new File(dir, String.valueOf(attachDto.getAttachNo()));
+                if (target.delete()) {
+                    attachDao.delete(attachNo); // delete() 메서드 구현 필요
+                    // 여기에 resNo와 attachNo의 연결을 끊는 로직 추가 (예: resImageDao.deleteResImage(attachNo);)
+                    return ResponseEntity.ok("Deleted successfully.");
+                }
+            }
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Image not found.");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Delete failed.");
+        }
+    }
+
+    // resNo별 이미지 리스트 조회
+	@GetMapping("/image/{resNo}")
+	public ResponseEntity<?> getImagesByRes(@PathVariable int resNo) {
+	    try {
+	        List<Integer> imagesNo = restaurantDao.findImageNoByRes(resNo);
+	        List<AttachDto> image = new ArrayList<>();
+
+	        for (Integer imageNo : imagesNo) {
+	            AttachDto attachDto = attachDao.selectOne(imageNo);
+	            if (attachDto != null) {
+	                image.add(attachDto);
+	            }
+	        }
+
+	        if (!image.isEmpty()) {
+	            return ResponseEntity.ok(image);
+	        } else {
+	            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No images found.");
+	        }
+	    } catch (Exception e) {
+	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error retrieving images.");
+	    }
+	}
 }

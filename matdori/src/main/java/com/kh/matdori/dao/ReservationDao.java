@@ -4,7 +4,11 @@ import java.util.List;
 
 import com.kh.matdori.dto.ReservationDto;
 import com.kh.matdori.dto.ReservationListDto;
+
 import com.kh.matdori.vo.MenuWithImagesVO;
+
+import com.kh.matdori.dto.ReviewDto;
+
 
 public interface ReservationDao {
    int sequence();
@@ -17,6 +21,9 @@ public interface ReservationDao {
    
    List<ReservationListDto> rezList(String rezCustomerId); //회원별 예약조회
    
+
    List<MenuWithImagesVO> menuList(int rezNo); //다수의 메뉴
+
+
 
 }

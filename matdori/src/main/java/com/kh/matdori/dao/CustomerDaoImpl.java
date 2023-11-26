@@ -13,8 +13,10 @@ import org.springframework.stereotype.Repository;
 import com.kh.matdori.dto.CustomerAdminListDto;
 import com.kh.matdori.dto.CustomerBlockDto;
 import com.kh.matdori.dto.CustomerDto;
+import com.kh.matdori.dto.PaymentDto;
 import com.kh.matdori.error.NoTargetException;
 import com.kh.matdori.vo.CusAdminVO;
+import com.kh.matdori.vo.CusLevelUpVO;
 import com.kh.matdori.vo.PaymentSumVO;
 
 import lombok.extern.slf4j.Slf4j;
@@ -46,14 +48,19 @@ public class CustomerDaoImpl implements CustomerDao {
 	
 	@Override
 	public boolean delete(String customerId) {
-		int result = sqlSession.delete("customer.delete", customerId);
-		if(result == 0) throw new NoTargetException();
-		return false;
+		return sqlSession.delete("customer.delete", customerId) > 0;
+	
 	}
 
 
 	@Override
 	public CustomerDto selectOne(String customerId) {
+		return sqlSession.selectOne("customer.detail", customerId);
+
+	}
+	
+	@Override
+	public CustomerDto selectTwo(String customerId) {
 		CustomerDto customerDto = sqlSession.selectOne("customer.detail", customerId);
 		if(customerDto == null) throw new NoTargetException();
 		return customerDto;
@@ -264,10 +271,10 @@ public class CustomerDaoImpl implements CustomerDao {
 	public List<CustomerAdminListDto> selectCustomerListByPage(CusAdminVO vo) {
 		return sqlSession.selectList("customer.countList", vo);
 	}
-}
-
 	
-
-
-
-
+	
+	@Override
+	public List<PaymentDto> successList(CusLevelUpVO vo) {
+		return sqlSession.selectList("customer.rezCount", vo);
+	}
+}

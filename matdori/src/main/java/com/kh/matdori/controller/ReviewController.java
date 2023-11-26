@@ -132,72 +132,72 @@ public class ReviewController {
 	
 	
 	
-	//상세 - 상세는 모달로 구현(레스트로 옮겨야 할듯)
-	@RequestMapping("/detail") 
-	public String detail(@RequestParam int reviewNo, Model model) {
-		ReviewDto reviewDto = reviewDao.selectOne(reviewNo);
-		model.addAttribute("reiewDto", reviewDto);
-		
-		String reviewWriter = reviewDto.getReviewWriter();
-		if(reviewWriter != null) {
-			CustomerDto customerDto = customerDao.selectOne(reviewWriter);
-			model.addAttribute("reviewWriterDto", customerDto);
-		}
-		return "비동기로 쓰면 없어질 주소";
-	}
+//	//상세 - 상세는 모달로 구현(레스트로 옮겨야 할듯)
+//	@RequestMapping("/detail") 
+//	public String detail(@RequestParam int reviewNo, Model model) {
+//		ReviewDto reviewDto = reviewDao.selectOne(reviewNo);
+//		model.addAttribute("reiewDto", reviewDto);
+//		
+//		String reviewWriter = reviewDto.getReviewWriter();
+//		if(reviewWriter != null) {
+//			CustomerDto customerDto = customerDao.selectOne(reviewWriter);
+//			model.addAttribute("reviewWriterDto", customerDto);
+//		}
+//		return "비동기로 쓰면 없어질 주소";
+//	}
 	
 	
-	//수정
-	@GetMapping("/edit")
-	public String edit(@RequestParam int reviewNo, Model model,
-					@ModelAttribute RestaurantDto restaurantDto) {
-		
-		int resNo = restaurantDto.getResNo();
-		ReviewDto reviewDto = reviewDao.selectOne(reviewNo);
-		
-		reviewDto.setResNo(resNo);
-		
-		model.addAttribute("reviewDto", reviewDto);
-		return "이거도 비동기라 없어질 주소";
-	}
-	
-	
-	@PostMapping("/edit")
-	public String edit(@ModelAttribute ReviewDto reviewDto,
-						@RequestParam MultipartFile attach,
-						@ModelAttribute RestaurantDto restaurantDto) throws IllegalStateException, IOException{
-		reviewDao.update(reviewDto);
-		int resNo = restaurantDto.getResNo();
-		reviewDto.setResNo(resNo);
-		
-		if(!attach.isEmpty()) { //파일이 있으면
-			//파익삭제
-			AttachDto attachDto = reviewDao.findImage(reviewDto.getReviewNo());
-			String home = System.getProperty("user.home");
-			File dir = new File(home, "fado");
-			
-			if(attachDto != null) {
-				attachDao.delete(attachDto.getAttachNo());
-				File target = new File(dir, String.valueOf(attachDto.getAttachNo()));
-				target.delete();
-			}
-			
-			//파일 추가 및 연결
-			int attachNo = attachDao.sequence();
-			
-			File insertTarget = new File(dir, String.valueOf(attachNo));
-			attach.transferTo(insertTarget);
-			
-			AttachDto insertDto = new AttachDto();
-			insertDto.setAttachNo(attachNo);
-			insertDto.setAttachName(attach.getOriginalFilename());
-			insertDto.setAttachSize(attach.getSize());
-			insertDto.setAttachType(attach.getContentType());
-			attachDao.insert(insertDto);
-			reviewDao.connect(reviewDto.getReviewNo(), attachNo);
-		}
-		return "비동기라 없어질 주소";
-	}
+//	//수정
+//	@GetMapping("/edit")
+//	public String edit(@RequestParam int reviewNo, Model model,
+//					@ModelAttribute RestaurantDto restaurantDto) {
+//		
+//		int resNo = restaurantDto.getResNo();
+//		ReviewDto reviewDto = reviewDao.selectOne(reviewNo);
+//		
+//		reviewDto.setResNo(resNo);
+//		
+//		model.addAttribute("reviewDto", reviewDto);
+//		return "이거도 비동기라 없어질 주소";
+//	}
+//	
+//	
+//	@PostMapping("/edit")
+//	public String edit(@ModelAttribute ReviewDto reviewDto,
+//						@RequestParam MultipartFile attach,
+//						@ModelAttribute RestaurantDto restaurantDto) throws IllegalStateException, IOException{
+//		reviewDao.update(reviewDto);
+//		int resNo = restaurantDto.getResNo();
+//		reviewDto.setResNo(resNo);
+//		
+//		if(!attach.isEmpty()) { //파일이 있으면
+//			//파익삭제
+//			AttachDto attachDto = reviewDao.findImage(reviewDto.getReviewNo());
+//			String home = System.getProperty("user.home");
+//			File dir = new File(home, "fado");
+//			
+//			if(attachDto != null) {
+//				attachDao.delete(attachDto.getAttachNo());
+//				File target = new File(dir, String.valueOf(attachDto.getAttachNo()));
+//				target.delete();
+//			}
+//			
+//			//파일 추가 및 연결
+//			int attachNo = attachDao.sequence();
+//			
+//			File insertTarget = new File(dir, String.valueOf(attachNo));
+//			attach.transferTo(insertTarget);
+//			
+//			AttachDto insertDto = new AttachDto();
+//			insertDto.setAttachNo(attachNo);
+//			insertDto.setAttachName(attach.getOriginalFilename());
+//			insertDto.setAttachSize(attach.getSize());
+//			insertDto.setAttachType(attach.getContentType());
+//			attachDao.insert(insertDto);
+//			reviewDao.connect(reviewDto.getReviewNo(), attachNo);
+//		}
+//		return "비동기라 없어질 주소";
+//	}
 	
 	@RequestMapping("/delete")
 	public String delete(@RequestParam int reviewNo,

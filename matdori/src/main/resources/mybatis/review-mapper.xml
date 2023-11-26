@@ -19,9 +19,14 @@
 			)
 		values(
 			#{reviewNo}, #{resNo}, #{reviewWriter}, #{reviewContent},
-			#{reviewWriteDate}, #{reviewStarPoint}
+			SYSDATE, #{reviewStarPoint}
 		)
 	</insert>
+	
+	<!--  리뷰 리스트  -->
+	<select id="reviewList" resultType="ReviewDto">
+		select * from review where review_writer = #{reviewWriter}
+	</select>
 	
 	<!-- 리뷰 목록 (매장)-->
 	<select id="listByRes" resultType="ReviewDto">
@@ -35,8 +40,8 @@
 	<select id="listByCus" resultType="ReviewDto">
 		select rl.*, ri.attach_no
 		from review_list rl
-			left outer join review_image ri on rl.review_no = ri.review_no
-		where review_writer = #{reviewWriter} order by res.res_no asc
+			left outer join review_images ri on rl.review_no = ri.review_no
+		where review_writer = #{reviewWriter} ORDER BY rl.review_no desc
 	</select>
 	
 	<!-- 리뷰 상세 -->
@@ -65,6 +70,10 @@
 		insert into review_image values (#{reviewNo}, #{attachNo})
 	</insert>
 	
+	<!--  리뷰 작성  -->
+	<select id="reviewInfo" resultType="ReviewDto">
+		select * from review where review_no = #{reviewNo}
+	</select>
 	
 	<!-- 이미지 찾기 -->
 	<select id="findImage" resultType="AttachDto">

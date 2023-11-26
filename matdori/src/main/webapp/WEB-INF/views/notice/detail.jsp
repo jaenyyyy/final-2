@@ -38,6 +38,7 @@
 		
 		
 		<!-- 버튼 -->
+		<c:if test="${sessionScope.level == '관리자'}">
 		<div class="col text-center">
 	   		<a class="btn btn-warning btn-edit" href="edit?noticeNo=${noticeDto.noticeNo}">
 	   		수정
@@ -45,6 +46,9 @@
 	   		<a class="btn btn-warning btn-delete" href="delete?noticeNo=${noticeDto.noticeNo}">
 	   		삭제
 	   		</a>
+	   		
+	   		</c:if>
+	   			<div class="col text-center">
 	   		<a class="btn btn-secondary" href="list">
 	   		목록
 	   		</a>

@@ -8,5 +8,5 @@ import lombok.NoArgsConstructor;
 @Data @NoArgsConstructor @AllArgsConstructor @Builder
 public class HashtagDto {
 	private int hashNo;
-	private String hashComment;;
+	private String hashComment;
 }

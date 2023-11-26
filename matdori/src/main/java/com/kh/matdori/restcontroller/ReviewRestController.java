@@ -46,67 +46,70 @@ public class ReviewRestController {
 
 	
 	
-	@PostMapping("/write")
-	public void insert(@ModelAttribute ReviewDto reviewDto,
-	                   @ModelAttribute RestaurantDto restaurantDto, HttpSession session,
-	                   @RequestParam MultipartFile attach) throws  IllegalStateException, IOException {
-	    String customerId = (String) session.getAttribute("name");
-	    
-	    int reviewNo = reviewDao.sequence();
-	    int resNo = restaurantDto.getResNo();
-	    
-	    reviewDto.setReviewNo(reviewNo);
-	    reviewDto.setResNo(resNo);
-	    reviewDto.setReviewWriter(customerId);
-	    
-	    reviewDao.insert(reviewDto);
-	    
-	    // 사진 등록
-	    if(!attach.isEmpty()) {
-	        int attachNo = attachDao.sequence();
-	        
-	        String home = System.getProperty("user.home");
-	        File dir = new File(home, "upload");
-	        dir.mkdirs();
-	        File target = new File(dir, String.valueOf(attachNo));
-	        attach.transferTo(target);
-	        
-	        AttachDto attachDto = new AttachDto();
-	        attachDto.setAttachNo(attachNo);
-	        attachDto.setAttachName(attach.getOriginalFilename());
-	        attachDto.setAttachSize(attach.getSize());
-	        attachDto.setAttachType(attach.getContentType());
-	        attachDao.insert(attachDto);
-	        
-	        reviewDao.connect(reviewNo, attachNo);
-	    }
-	}
-	
-	//파일 다운로드
-		@ResponseBody
-		@RequestMapping("/image")
-		public ResponseEntity<ByteArrayResource> image(@RequestParam int reviewNo) throws IOException{
-			AttachDto attachDto = reviewDao.findImage(reviewNo);
-			if(attachDto == null) {
-				return ResponseEntity.notFound().build();   //404반환
-			}
-			
-			String home = System.getProperty("user.home");
-			File dir = new File(home, "upload");
-			File target = new File(dir, String.valueOf(attachDto.getAttachNo()));
-			
-			byte[] data = FileUtils.readFileToByteArray(target); //실제 파일정보 불러오기
-			ByteArrayResource resource = new ByteArrayResource(data);
-			
-			return ResponseEntity.ok()
-							  .header(HttpHeaders.CONTENT_ENCODING, StandardCharsets.UTF_8.name())
-							  .contentLength(attachDto.getAttachSize())
-							  .header(HttpHeaders.CONTENT_TYPE, attachDto.getAttachType())
-							  .header(HttpHeaders.CONTENT_DISPOSITION, ContentDisposition.attachment()
-									  .filename(attachDto.getAttachName(), StandardCharsets.UTF_8)
-									  .build().toString())
-							  .body(resource);
-		}
+//	@PostMapping("/write")
+//	public void insert(@ModelAttribute ReviewDto reviewDto,
+//	                   @ModelAttribute RestaurantDto restaurantDto, HttpSession session,
+//	                   @RequestParam MultipartFile attach) throws  IllegalStateException, IOException {
+//	    String customerId = (String) session.getAttribute("name");
+//	    
+//	    int reviewNo = reviewDao.sequence();
+//	    int resNo = restaurantDto.getResNo();
+//	    
+//	    reviewDto.setReviewNo(reviewNo);
+//	    reviewDto.setResNo(resNo);
+//	    reviewDto.setReviewWriter(customerId);
+//	    
+//	    System.out.print(reviewDto.getResNo());
+//	    System.out.print(reviewDto.getReviewContent());
+//	    
+//	    reviewDao.insert(reviewDto);
+//	    
+//	    // 사진 등록
+//	    if(!attach.isEmpty()) {
+//	        int attachNo = attachDao.sequence();
+//	        
+//	        String home = System.getProperty("user.home");
+//	        File dir = new File(home, "upload");
+//	        dir.mkdirs();
+//	        File target = new File(dir, String.valueOf(attachNo));
+//	        attach.transferTo(target);
+//	        
+//	        AttachDto attachDto = new AttachDto();
+//	        attachDto.setAttachNo(attachNo);
+//	        attachDto.setAttachName(attach.getOriginalFilename());
+//	        attachDto.setAttachSize(attach.getSize());
+//	        attachDto.setAttachType(attach.getContentType());
+//	        attachDao.insert(attachDto);
+//	        
+//	        reviewDao.connect(reviewNo, attachNo);
+//	    }
+//	}
+//	
+//	//파일 다운로드
+//		@ResponseBody
+//		@RequestMapping("/image")
+//		public ResponseEntity<ByteArrayResource> image(@RequestParam int reviewNo) throws IOException{
+//			AttachDto attachDto = reviewDao.findImage(reviewNo);
+//			if(attachDto == null) {
+//				return ResponseEntity.notFound().build();   //404반환
+//			}
+//			
+//			String home = System.getProperty("user.home");
+//			File dir = new File(home, "upload");
+//			File target = new File(dir, String.valueOf(attachDto.getAttachNo()));
+//			
+//			byte[] data = FileUtils.readFileToByteArray(target); //실제 파일정보 불러오기
+//			ByteArrayResource resource = new ByteArrayResource(data);
+//			
+//			return ResponseEntity.ok()
+//							  .header(HttpHeaders.CONTENT_ENCODING, StandardCharsets.UTF_8.name())
+//							  .contentLength(attachDto.getAttachSize())
+//							  .header(HttpHeaders.CONTENT_TYPE, attachDto.getAttachType())
+//							  .header(HttpHeaders.CONTENT_DISPOSITION, ContentDisposition.attachment()
+//									  .filename(attachDto.getAttachName(), StandardCharsets.UTF_8)
+//									  .build().toString())
+//							  .body(resource);
+//		}
 	
 	
 }

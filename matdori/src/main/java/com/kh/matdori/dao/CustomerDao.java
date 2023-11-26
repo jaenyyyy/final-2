@@ -5,7 +5,9 @@ import java.util.List;
 import com.kh.matdori.dto.CustomerAdminListDto;
 import com.kh.matdori.dto.CustomerBlockDto;
 import com.kh.matdori.dto.CustomerDto;
+import com.kh.matdori.dto.PaymentDto;
 import com.kh.matdori.vo.CusAdminVO;
+import com.kh.matdori.vo.CusLevelUpVO;
 import com.kh.matdori.vo.PaymentSumVO;
 
 public interface CustomerDao {
@@ -22,6 +24,9 @@ public interface CustomerDao {
 	
 	// 이용자 아이디로 조회 
 	CustomerDto selectOne(String CustomerId);
+	
+	// 회원 탈퇴시 사용
+	CustomerDto selectTwo(String customerId);
 	
 	// 이용자 정보 모두 조회 
 	List<CustomerDto> selectList();
@@ -78,7 +83,7 @@ public interface CustomerDao {
 	
 	boolean updatePoint(String customerId, int customerPoint);
 
-
-}
 	
-
+	// 회원 등급 업데이트를 위한 결제완료 상태 조회
+	List<PaymentDto> successList(CusLevelUpVO vo);
+}
