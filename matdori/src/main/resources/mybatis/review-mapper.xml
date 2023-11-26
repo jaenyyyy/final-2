@@ -45,20 +45,20 @@
 	</select>
 	
 	<!-- 리뷰 상세 -->
-	<select id="detail" resultType="ReviewDto">
+<!-- 	<select id="detail" resultType="ReviewDto">
 		select r.*, ri.attach_no
 		from review r
-			left outer join review_image ri on r.review_no = ri.review_no
+			left outer join review_images ri on r.review_no = ri.review_no
 		where review_no =#{reviewNo}
-	</select>
+	</select> -->
 	
 	<!-- 리뷰 수정 -->
-	<update id="change">
+<!-- 	<update id="change">
 		update review 
 		set review_content = #{reviewContent},
 			review_star_point = #{reviewStarPoint}
 		where review_no = #{reviewNo}
-	</update>
+	</update> -->
 	
 	<!-- 리뷰 삭제 -->
 	<delete id="delete">
@@ -67,7 +67,7 @@
 	
 	<!-- 이미지 연결 -->
 	<insert id="connect">
-		insert into review_image values (#{reviewNo}, #{attachNo})
+		insert into review_images values (#{reviewNo}, #{attachNo})
 	</insert>
 	
 	<!--  리뷰 작성  -->
@@ -79,7 +79,7 @@
 	<select id="findImage" resultType="AttachDto">
 		select * from attach
 		where attach_no = (
-			select attach_no from review_image
+			select attach_no from review_images
 			where review_no = #{reviewNo}
 		)
 	</select>

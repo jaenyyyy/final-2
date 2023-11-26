@@ -3,12 +3,18 @@ package com.kh.matdori.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 import javax.mail.MessagingException;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.http.ContentDisposition;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -20,6 +26,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.matdori.dao.AttachDao;
@@ -305,16 +312,18 @@ public class CustomerController {
 		return "customer/pickList";
 	}
 
-	// 나의리뷰
+	// 리뷰 목록 가져오기
 	@RequestMapping("/reviewListByCus")
 	public String reviewList(Model model, HttpSession session) {
-		String customerId = (String) session.getAttribute("name");
+	    String customerId = (String) session.getAttribute("name");
 
-		List<ReviewDto> reviewList = reviewDao.selectListByCus(customerId);
-		model.addAttribute("reviewList", reviewList);
+	    List<ReviewDto> reviewList = reviewDao.selectListByCus(customerId);
 
-		return "review/reviewListByCus";
+	    model.addAttribute("reviewList", reviewList);
+
+	    return "review/reviewListByCus";
 	}
+
 
 	@GetMapping("/reviewWrite")
 	public String reviewWrite() {
@@ -329,17 +338,11 @@ public class CustomerController {
 
 		int resNo = restaurantDto.getResNo();
 		
-		if (reviewNo == null) {
-			int newReviewNo = reviewDao.sequence();
-			reviewDto.setReviewNo(newReviewNo);
-		} else {
-			reviewDto.setReviewNo(reviewNo);
-		}
-
-		reviewDto.setResNo(resNo);
-		reviewDto.setReviewWriter(customerId);
+			int ReviewNo2 = reviewDao.sequence();
+			reviewDto.setReviewNo(ReviewNo2);
 		
-		//Integer reviewNo = reviewDto.getReviewNo();;
+		reviewDto.setResNo(resNo);
+		reviewDto.setReviewWriter(customerId);	
 
 		reviewDao.insert(reviewDto);
 
@@ -358,60 +361,40 @@ public class CustomerController {
 			attachDto.setAttachSize(attach.getSize());
 			attachDto.setAttachType(attach.getContentType());	
 			attachDao.insert(attachDto);
-			System.out.println("리뷰번호"+reviewNo);
-			System.out.println("파일번호"+attachNo);
-			//if (reviewNo != null && !attach.isEmpty());
-			reviewDao.connect(reviewNo, attachNo);
+			reviewDao.connect(ReviewNo2, attachNo);	
+			//System.out.println("첨부파일번호 = "+reviewDto.getReviewAttachNo());
 		}
-		
+		//System.out.println("첨부파일번호 첨부 안할시 = "+reviewDto.getReviewAttachNo());
 	    // 리뷰 작성 후 리뷰 리스트 페이지로 이동
 	    return "redirect:/customer/reviewListByCus";
 	}
+	
+    @ResponseBody
+    @RequestMapping("/image")
+    public ResponseEntity<ByteArrayResource> image(@RequestParam int reviewNo) throws IOException {
+        AttachDto attachDto = reviewDao.findImage(reviewNo);
+        if (attachDto == null) {
+            return ResponseEntity.notFound().build(); // 404 반환
+        }
 
-	/*
-	 * @PostMapping("/reviewWrite") public void insertReview(@ModelAttribute
-	 * ReviewDto reviewDto,
-	 * 
-	 * @ModelAttribute RestaurantDto restaurantDto, HttpSession session,
-	 * 
-	 * @RequestParam MultipartFile attach,
-	 * 
-	 * @RequestParam int resNo,
-	 * 
-	 * @RequestParam(required = false) Integer reviewNo) throws
-	 * IllegalStateException, IOException { String customerId = (String)
-	 * session.getAttribute("name");
-	 * 
-	 * if (reviewNo == null) { int newReviewNo = reviewDao.sequence();
-	 * reviewDto.setReviewNo(newReviewNo); } else { reviewDto.setReviewNo(reviewNo);
-	 * }
-	 * 
-	 * reviewDto.setResNo(resNo); reviewDto.setReviewWriter(customerId);
-	 * 
-	 * reviewDao.insert(reviewDto);
-	 * 
-	 * if(!attach.isEmpty()) { int attachNo = attachDao.sequence();
-	 * 
-	 * String home = System.getProperty("user.home"); File dir = new File(home,
-	 * "upload"); dir.mkdirs(); File target = new File(dir,
-	 * String.valueOf(attachNo)); attach.transferTo(target);
-	 * 
-	 * AttachDto attachDto = new AttachDto(); attachDto.setAttachNo(attachNo);
-	 * attachDto.setAttachName(attach.getOriginalFilename());
-	 * attachDto.setAttachSize(attach.getSize());
-	 * attachDto.setAttachType(attach.getContentType());
-	 * attachDao.insert(attachDto);
-	 * 
-	 * reviewDao.connect(reviewNo, attachNo); } }
-	 */
+        String home = System.getProperty("user.home");
+        File dir = new File(home, "upload");
+        File target = new File(dir, String.valueOf(attachDto.getAttachNo()));
 
-	// 상세
-	@RequestMapping("/reviewDetail")
-	public String reviewDetail(@RequestParam int reviewNo, Model model) {
-		ReviewDto reviewDto = reviewDao.selectOne(reviewNo);
-		model.addAttribute("reviewDto", reviewDto);
-		return "/customer/reviewDetail";
-	}
+        byte[] data = FileUtils.readFileToByteArray(target); // 실제 파일정보 불러오기
+        ByteArrayResource resource = new ByteArrayResource(data);
+
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_ENCODING, StandardCharsets.UTF_8.name())
+                .contentLength(attachDto.getAttachSize())
+                .header(HttpHeaders.CONTENT_TYPE, attachDto.getAttachType())
+                .header(HttpHeaders.CONTENT_DISPOSITION, ContentDisposition.attachment()
+                        .filename(attachDto.getAttachName(), StandardCharsets.UTF_8)
+                        .build().toString())
+                .body(resource);
+    }
+    
+
 
 	//삭제
 	@RequestMapping("/delete")
@@ -422,15 +405,14 @@ public class CustomerController {
 
 		AttachDto attachDto = reviewDao.findImage(reviewNo);
 		reviewDao.delete(reviewNo);
-
 		if (attachDto != null) {
 			String home = System.getProperty("user.home");
 			File dir = new File(home, "matdori");
 			File target = new File(dir, String.valueOf(attachDto.getAttachNo()));
 			target.delete(); // 실제 파일 삭제
+			attachDao.delete(attachDto.getAttachNo()); // 파일정보 삭제
 		}
-		attachDao.delete(attachDto.getAttachNo()); // 파일정보 삭제
 
-		return "redirect:/customer/mypage";
+		return "redirect:/customer/reviewListByCus";
 	}
 }

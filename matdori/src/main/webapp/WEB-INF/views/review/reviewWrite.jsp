@@ -39,7 +39,7 @@
 					<textarea name="reviewContent" rows="10" class="form-control"
 						placeholder="내용을 입력해주세요."></textarea>
 					<!-- 이미지를 업로드할 input 필드 -->
-					<input type="file" name="attach">
+					<input type="file" name="attach" accept="image/*">
 				</div>
 
 				<!-- hidden field로 resNo 값을 전송 -->

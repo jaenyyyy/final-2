@@ -87,7 +87,18 @@
 						<br>
 					</div>
 					<div class="row res-line p-4" style="margin-left: 100px;">
-						<div class="col-3">사진자리</div>
+						<div class="col-3">
+							<!-- 사진자리 -->
+<c:choose>
+    <c:when test="${not empty reviewDto}">
+        <img src="image?reviewNo=${reviewDto.reviewNo}" width="100" height="100">
+    </c:when>
+    <c:otherwise>
+        <!-- 아무것도 표시하지 않음 -->
+    </c:otherwise>
+</c:choose>
+
+						</div>
 						<div class="col-7">
 							<div class="row modal-title">
 								<span> ${reviewDto.reviewWriteDate} <span
@@ -109,8 +120,16 @@
 							<div class="row mb-3">
 								<a href="/restaurant/detail?resNo=${reviewDto.resNo}"
 									class="menu-tag">매장가기</a>
+								<form action="/customer/delete" method="post">
+									<input type="hidden" name="reviewNo"
+										value="${reviewDto.reviewNo}">
+									<button type="submit" class="menu-tag"
+										style="background: none; border: none; color: red;">
+										리뷰 삭제</button>
+								</form>
 							</div>
 						</div>
+
 					</div>
 				</c:forEach>
 			</div>
