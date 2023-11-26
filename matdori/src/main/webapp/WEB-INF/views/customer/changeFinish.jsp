@@ -10,7 +10,7 @@
 		<div class="row" style="margin-top: 20%;">
 			<h1>
 				<i class="fa-solid fa-circle-user" style="color: #ffb416;"></i>
-				비밀번호 변경 완료!
+				개인정보 변경 완료!
 			</h1>
 		</div>
 	<div class="row">

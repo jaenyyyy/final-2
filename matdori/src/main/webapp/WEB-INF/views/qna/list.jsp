@@ -21,11 +21,16 @@
 		        </h1>
 		    </div>
 		    
-<%-- 		    <c:if test="${sessionScope.name != null && sessionScope.level == '관리자'}"> --%>
-		    <div class="col-md-6 mt-4 text-md-end text-center"> 
-		        <a href="write" class="btn btn-warning">작성</a>
-		    </div>
-<%-- 			</c:if> --%>
+		    
+	<%-- 글쓰기는 로그인 상태인 경우에만 출력 --%>
+	<c:if test="${sessionScope.level == '관리자'}">
+		<div class="col-md-6 mt-4 text-md-end text-center">
+			<a href="write" class="btn btn-warning"> <i
+				class="fa-solid fa-write"></i> 작성하기
+			</a>
+		</div>
+	</c:if>
+
 		</div>
 	
 	<div class="row justify-content-center"> 

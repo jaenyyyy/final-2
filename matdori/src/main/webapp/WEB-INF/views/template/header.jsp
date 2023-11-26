@@ -26,8 +26,9 @@
    <!-- swiper cdn -->
    <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
-   
-
+   	
+   <!--  css  -->
+   <link rel="stylesheet" type="text/css" href="/css/commons.css">
    <!-- jquery cdn -->
    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
    

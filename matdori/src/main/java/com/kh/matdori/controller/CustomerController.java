@@ -139,7 +139,7 @@ public class CustomerController {
    }
 
    @PostMapping("/change")
-   public String change(@ModelAttribute CustomerDto inputDto, HttpSession session) {
+   public String change(@ModelAttribute CustomerDto inputDto, HttpSession session, Model model) {
       String customerId = (String) session.getAttribute("name");
       CustomerDto findDto = customerDao.selectOne(customerId);
 
@@ -153,11 +153,19 @@ public class CustomerController {
 
          inputDto.setCustomerId(customerId);
          customerDao.edit(customerId, inputDto);
-         return "redirect:mypage";
+         session.invalidate();
+         return "redirect:changeFinish";
       } else {
+    	  model.addAttribute("error", "비밀번호 변경에 실패했습니다. 입력한 비밀번호를 확인하세요.");
          return "redirect:change?error";
       }
    }
+   
+   @RequestMapping("/changeFinish")
+   public String changeFinish() {
+      return "customer/changeFinish";
+   }
+
 
    // 비밀번호 찾기 ?
    @GetMapping("/findPw")
@@ -238,7 +246,7 @@ public class CustomerController {
          // 비밀번호 변경 완료 후 세션 무효화 및 로그아웃
          session.invalidate();
 
-         return "customer/changePw";
+         return "customer/changePwFinish";
       } else {
          model.addAttribute("error", "비밀번호 변경에 실패했습니다. 입력한 비밀번호를 확인하세요.");
          return "redirect:changePw?error";
@@ -257,22 +265,23 @@ public class CustomerController {
       return "customer/exit";
    }
 
-   @PostMapping("/exit")
-   public String exit(HttpSession session, @RequestParam String customerPw) {
-      String customerId = (String) session.getAttribute("name");
-      CustomerDto customerDto = customerDao.selectOne(customerId);
-      // 사용자가 입력한 비밀번호를 암호화
-      String encryptedInputPassword = encoder.encode(customerPw);
 
-      if (encoder.matches(customerPw, customerDto.getCustomerPw())) {
-         // 삭제할 때도 암호화된 비밀번호를 사용
-         customerDao.delete(customerId);
-         session.removeAttribute("name");
-         return "redirect:exitFinish";
-      } else {
-         return "redirect:exit?error";
-      }
-   }
+	@PostMapping("/exit")
+	public String exit(HttpSession session, @RequestParam String customerPw) {
+		String customerId = (String) session.getAttribute("name");
+		CustomerDto customerDto = customerDao.selectOne(customerId);
+		// 사용자가 입력한 비밀번호를 암호화
+		String encryptedInputPassword = encoder.encode(customerPw);
+
+		if (encoder.matches(customerPw, customerDto.getCustomerPw())) {
+			// 삭제할 때도 암호화된 비밀번호를 사용
+			customerDao.delete(customerId);
+			session.removeAttribute("name");
+			return "redirect:exitFinish";
+		} else {
+			return "redirect:exit?error";
+		}
+	}
 
    @RequestMapping("/exitFinish")
    public String exitFinish() {
