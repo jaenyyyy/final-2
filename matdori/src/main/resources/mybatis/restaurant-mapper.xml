@@ -62,24 +62,35 @@
 		WHERE res_no = #{resNo}
 	</update>
 	
+<!-- ///////////////이미지 내용입니다//////////////////-->
 	
-    <!-- 이미지 삽입 -->
-    <insert id="insertResImage">
-        INSERT INTO res_images (attach_no, res_no)
-        VALUES (#{attachNo}, #{resNo})
-    </insert>
+	<!-- res_images 테이블에 새로운 이미지 정보를 연결 -->
+<insert id="insertResImage">
+    INSERT INTO restaurant_images (res_no, attach_no) VALUES (#{resNo}, #{attachNo})
+</insert>
 
-    <!-- 레스토랑별 이미지 조회 -->
-    <select id="selectResImagesByResNo" resultType="ResImagesDto">
-        SELECT * FROM res_images
-        WHERE res_no = #{resNo}
-    </select>
+<!-- res_images 테이블에서 특정 매장의 모든 이미지 번호를 조회 -->
+<select id="findImageNoByRes" resultType="int">
+    SELECT attach_no FROM restaurant_images WHERE res_no = #{resNo}
+</select>
 
-    <!-- 이미지 삭제 -->
-    <delete id="deleteResImage">
-        DELETE FROM res_images
-        WHERE attach_no = #{attachNo}
-    </delete>
+<select id="findImageByNo" resultType="int">
+    SELECT attach_no FROM restaurant_images WHERE attach_no = #{attachNo}
+</select>
+
+<!-- res_images 테이블에서 특정 매장에 연결된 이미지 정보를 삭제 -->
+<delete id="deleteResImage">
+    DELETE FROM res_images WHERE attach_no = #{attachNo}
+</delete>
+
+<!-- attach 테이블에서 특정 번호의 이미지 정보 삭제 -->
+<delete id="deleteImageByResNo" parameterType="int">
+    DELETE FROM attach WHERE attach_no IN (
+        SELECT attach_no FROM res_images WHERE res_no = #{resNo}
+    )
+</delete>
+
+
 </mapper>
 	
 	

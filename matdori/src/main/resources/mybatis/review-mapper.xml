@@ -19,7 +19,7 @@
 			)
 		values(
 			#{reviewNo}, #{resNo}, #{reviewWriter}, #{reviewContent},
-			#{reviewWriteDate}, #{reviewStarPoint}
+			SYSDATE, #{reviewStarPoint}
 		)
 	</insert>
 	
@@ -40,8 +40,8 @@
 	<select id="listByCus" resultType="ReviewDto">
 		select rl.*, ri.attach_no
 		from review_list rl
-			left outer join review_image ri on rl.review_no = ri.review_no
-		where review_writer = #{reviewWriter} order by res.res_no asc
+			left outer join review_images ri on rl.review_no = ri.review_no
+		where review_writer = #{reviewWriter} ORDER BY rl.review_no desc
 	</select>
 	
 	<!-- 리뷰 상세 -->

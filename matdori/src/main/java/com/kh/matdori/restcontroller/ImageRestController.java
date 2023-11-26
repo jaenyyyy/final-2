@@ -3,6 +3,8 @@ package com.kh.matdori.restcontroller;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.annotation.PostConstruct;
 
@@ -82,6 +84,31 @@ public class ImageRestController {
 
 	            .body(resource);
 	   }
+	   
+	   @GetMapping("/restaurant/image/{resNo}")
+	   public ResponseEntity<List<byte[]>> downloadRestaurantImages(@PathVariable int resNo) throws IOException {
+	       List<Integer> attachNos = restaurantDao.findImageNoByRes(resNo);
+
+	       if (attachNos == null || attachNos.isEmpty()) {
+	           return ResponseEntity.notFound().build();
+	       }
+
+	       List<byte[]> imageDataList = new ArrayList<>();
+	       for (int attachNo : attachNos) {
+	           AttachDto attachDto = restaurantDao.findImageByNo(attachNo);
+
+	           if (attachDto != null) {
+	               File target = new File(dir, String.valueOf(attachDto.getAttachNo()));
+	               byte[] data = FileUtils.readFileToByteArray(target);
+	               imageDataList.add(data);
+	           }
+	       }
+
+	       return ResponseEntity.ok()
+	               .contentType(MediaType.APPLICATION_JSON)
+	               .body(imageDataList);
+	   }
+
 	   
 //	   @GetMapping("/movieMain/{movieNo}")
 //	   public ResponseEntity<ByteArrayResource>downloadMovieMainImage(@PathVariable int movieNo) throws IOException{

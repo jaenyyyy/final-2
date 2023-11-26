@@ -44,31 +44,33 @@
    <div class="row" style="margin-top: 5%">
    
       <!-- 제목 -->
-      <div class="row mb-4">
-         <h1 class="bold">
-            <i class="fa-solid fa-user" style="color: #ffb416;"></i>
-            마이페이지
-         </h1>
-      </div>
+		<div class="row mb-4">
+			<h1 class="bold">
+				<a class="menu-tag" href="mypage">
+					<i class="fa-solid fa-user" style="color: #ffb416;"></i> 마이페이지
+				</a>
+			</h1>
+		</div>
 
-      <!-- 마이페이지 탭 -->
-      <div class="col-3 page-line">
-         <div class="row">
-            <h2 class="bold">
-               <a class="menu-tag" href="">북마크</a>
-            </h2>
-         </div>
-         <div class="row row-top">
-            <h2 class="bold">
-               <a class="menu-tag" style="color:#FFB416;" href="">예약내역</a>
-            </h2>
-         </div>
-         <div class="row row-top" >
-            <h2 class="bold">
-               <a class="menu-tag" href="">나의리뷰</a>
-            </h2>
-         </div>
-      </div>
+
+		<!-- 마이페이지 탭 -->
+		<div class="col-3 page-line">
+			<div class="row">
+				<h2 class="bold">
+					<a class="menu-tag" href="pick">북마크</a>
+				</h2>
+			</div>
+			<div class="row row-top">
+				<h2 class="bold">
+					<a class="menu-tag" style="color: #FFB416;" href="rezList">예약내역</a>
+				</h2>
+			</div>
+			<div class="row row-top">
+				<h2 class="bold">
+					<a class="menu-tag" href="reviewListByCus">나의리뷰</a>
+				</h2>
+			</div>
+		</div>
       
       
       
@@ -100,7 +102,7 @@
 
                         </div>
                         <div class="row">
-                            <a class="btn btn-warning btn-sm open-modal-review">리뷰작성</a>
+                            <a class="btn btn-warning btn-sm open-modal-review" href="/customer/reviewWrite?resNo=${reservationListDto.rezResNo}">리뷰작성</a>
                         </div>
                     </div>
                 </div>

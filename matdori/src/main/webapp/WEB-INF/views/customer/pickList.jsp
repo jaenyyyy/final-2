@@ -50,7 +50,9 @@
 		<!-- 제목 -->
 		<div class="row mb-4">
 			<h1 class="bold">
-				<i class="fa-solid fa-user" style="color: #ffb416;"></i> 마이페이지
+				<a class="menu-tag" href="mypage">
+					<i class="fa-solid fa-user" style="color: #ffb416;"></i> 마이페이지
+				</a>
 			</h1>
 		</div>
 
