@@ -14,11 +14,11 @@
 	<insert id="booking">
 		insert into reservation
 		(rez_no, rez_customer_id, rez_res_no, 
-		 rez_clock_no, rez_seat_no, rez_menu_no,
-		 rez_customer_count, rez_menu_qty, rez_seat_qty, rez_request) 
+		 rez_clock_no, rez_seat_no,
+		 rez_customer_count, rez_seat_qty, rez_request) 
 		values
          (#{rezNo}, #{rezCustomerId}, #{rezResNo}, #{rezClockNo},
-         #{rezSeatNo}, #{rezMenuNo}, #{rezCustomerCount}, #{rezMenuQty},
+         #{rezSeatNo}, #{rezCustomerCount},
          #{rezSeatQty}, #{rezRequest})
     	
 	</insert>
@@ -39,6 +39,11 @@
 		select 
 		from reservation 
 		where rez_no = #{reservationVO.rezNo}
+	</select>
+	
+	<!-- 다수의 메뉴를 위한 조회 -->
+	<select id="menuListByRez" resultType="ReservationDto">
+		select * from menu_list_by_rez where rez_no = #{rezNo}
 	</select>
 	
 	<!-- 예약 중복 방지 조회 -->
