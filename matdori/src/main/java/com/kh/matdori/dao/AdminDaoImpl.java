@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.matdori.dto.BusinessBlockDto;
 import com.kh.matdori.dto.BusinessJudgeListDto;
+import com.kh.matdori.dto.HashtagDto;
 import com.kh.matdori.dto.RestaurantAdminListDto;
 import com.kh.matdori.dto.RestaurantBlockDto;
 import com.kh.matdori.dto.RestaurantJudgeDto;
@@ -153,7 +154,38 @@ public class AdminDaoImpl implements AdminDao{
 	            sqlSession.update("admin.updateBusBlock", params);
 	        }
 	    }
+	    
+	    
+	    
+	    
+	    //관리자 해시태그 시퀀스 생성
+	    @Override
+	    public int hashSequence() {
+	    	return sqlSession.selectOne("hashtag.sequence");
+	    }
+	    
+	    
+	    //관리자 해시태그 등록
+	    @Override
+	    public void insertHashtag(HashtagDto hashtagDto) {
+	    	sqlSession.insert("hashtag.hashInsert", hashtagDto);
+	    }
+	    
+	    
+	    //관리자 해시태그 삭제
+	    @Override
+	    public boolean deleteHashtag(int hashNo) {
+	    	return sqlSession.delete("hashtag.hashDelete", hashNo) > 0;
+	    }
 
-
+	    @Override
+	    public List<HashtagDto> hashList() {
+	    	return sqlSession.selectList("hashtag.hashList");
+	    }
+	    
+	    @Override
+	    public HashtagDto hashtagOne(int hashNo) {
+	    	return sqlSession.selectOne("hashtag.hashOne", hashNo);
+	    }
 
 }

@@ -244,7 +244,7 @@
 	
 	
 	<!-- 예약 횟수 조회 (등급 변경을 위한 조회) -->
-	<select id="rezCount" resultType="CusLevelUpVO">
+	<select id="rezSuccessCount" resultType="CusLevelUpVO">
         <![CDATA[
             SELECT 
 			    p.payment_customer AS customer_id,
