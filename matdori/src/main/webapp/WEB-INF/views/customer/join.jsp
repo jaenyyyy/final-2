@@ -22,6 +22,11 @@
 .tag-none:hover {
 	color: #FF3300; /* 원하는 호버 시 색상으로 변경 */
 }
+ .form-control {
+        border: 2px solid #F7B731; /* Yellow border with #F7B731 color and 2px width */
+        border-radius: 8px; /* Rounded corners */
+    }
+
 </style>
 
 
@@ -34,7 +39,7 @@
 			<h1>
 				<i class="fa-solid fa-circle-user" style="color: #ffb416;"></i> Join
 			</h1>
-		</div>
+		</div><br>
 		<div class="row line"></div>
 
 		<div class="row mt-4">
@@ -47,7 +52,7 @@
 
 
 		<div class="row mt-4">
-			비밀번호  <br><br><input class="form-control" type="text" name="customerPw"
+			비밀번호  <br><br><input class="form-control" type="password" name="customerPw"
 				placeholder="영문,숫자,특수문자 반드시 1개 이상 포함">
 			<div class="success-feedback">올바른 비밀번호 형식입니다.</div>
 			<div class="fail-feedback">비밀번호를 형식에 맞게 입력해주세요.</div>
@@ -72,7 +77,7 @@
 
 		</div>
 
-		<div class="row mv-30 mt-4">
+		<div class="row mt-4">
 			<div class="w-50">
 				<button type="button" class="btn btn-send btn-warning"
 					onclick="sendCertNumber()">
@@ -111,16 +116,23 @@
 
 
 
-				<div class="row mt-4">
-
+			<div class="row mv-30 mt-4 form-control">
+	
 				
-			성별 <br><br>
-			<label>
-						<input type="radio" id="male" name="customerGender" value="남자"
-							class="customer-gender-radio"> 남자 
-				<input type="radio" id="female" name="customerGender" value="여자"
-							class="customer-gender-radio"> 여자 
-			</label>
+		 <div class="flex-radio">
+                <div class="radio-control">
+                    <input class="radio-group" type="radio" name="customerGender">남성
+                </div>
+                <div class="radio-control">
+                    <input class="radio-group" type="radio" name="customerGender">여성 
+                </div>
+            </div>
+            <div><br>
+                <input class="check-control" type="checkbox">이용약관 개인정보 수집 및 이용, 마케팅 활용 선택에 모두 동의합니다.
+            </div>
+            <div>
+
+				</div>
 
 				</div>
 

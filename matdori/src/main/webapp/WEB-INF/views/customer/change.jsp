@@ -6,8 +6,27 @@
 
 <style>
 .container {
-	max-width: 700px; /* 변경 가능한 폭 설정 */
+	max-width: 500px; /* 변경 가능한 폭 설정 */
 	margin: 0 auto; /* 가운데 정렬 */
+}
+
+.tag-none {
+	text-decoration: none;
+	color: black;
+}
+
+.line {
+	border-top: 1px solid #ffb416;
+}
+
+.tag-none:hover {
+	color: #FF3300; /* 원하는 호버 시 색상으로 변경 */
+}
+
+.form-control {
+	border: 2px solid #F7B731;
+	/* Yellow border with #F7B731 color and 2px width */
+	border-radius: 8px; /* Rounded corners */
 }
 </style>
 
@@ -60,7 +79,7 @@
 					certEmail : email
 				},
 				success : function() {
-				    console.log(response);
+					console.log(response);
 					$(".btn-send").prop("disabled", false);
 					$(".btn-send").find(".fa-spinner").hide();
 					$(".btn-send").find("span").text("인증번호 보내기");
@@ -72,35 +91,36 @@
 
 		});
 
-		 //확인 버튼을 누르면 이메일과 인증번호를 서버로 전달하여 검사
-        $(".btn-cert").click(function(){
-            //var email = $("[name=memberEmail]").val();
-            var email = window.email;
-            var number = $(".cert-input").val();
-            if(email.length == 0 || number.length == 0) return;
+		//확인 버튼을 누르면 이메일과 인증번호를 서버로 전달하여 검사
+		$(".btn-cert").click(
+				function() {
+					//var email = $("[name=memberEmail]").val();
+					var email = window.email;
+					var number = $(".cert-input").val();
+					if (email.length == 0 || number.length == 0)
+						return;
 
-            $.ajax({
-                url:"http://localhost:8080/rest/cert/check",
-                method:"post",
-                data: {
-                    certEmail : email,
-                    certNumber : number
-                },
-                success:function(response){
-                    console.log(response);
-                    if(response.result) {//인증 성공
-                        $(".cert-input").removeClass("success fail")
-                                                .addClass("success");
-                        $(".btn-cert").prop("disabled", true);
-                        //상태객체에 상태 저장하는 코드
-                    }
-                    else {
-                        $(".cert-input").removeClass("success fail")
-                                                .addClass("fail");
-                        //상태객체에 상태 저장하는 코드
-									}
-								},
-							});
+					$.ajax({
+						url : "http://localhost:8080/rest/cert/check",
+						method : "post",
+						data : {
+							certEmail : email,
+							certNumber : number
+						},
+						success : function(response) {
+							console.log(response);
+							if (response.result) {//인증 성공
+								$(".cert-input").removeClass("success fail")
+										.addClass("success");
+								$(".btn-cert").prop("disabled", true);
+								//상태객체에 상태 저장하는 코드
+							} else {
+								$(".cert-input").removeClass("success fail")
+										.addClass("fail");
+								//상태객체에 상태 저장하는 코드
+							}
+						},
+					});
 				});
 
 		$("[name=customerId]").blur(function(e) {
@@ -255,15 +275,14 @@
 		});
 
 	});
-	
-	$(function() {
-	    // 이메일 수정 버튼 클릭 시 해당 폼 표시
-	    $(".edit-btn").click(function() {
-	        var target = $(this).data("target");
-	        $("#" + target + "-form").toggle();
-	    });
-	});
 
+	$(function() {
+		// 이메일 수정 버튼 클릭 시 해당 폼 표시
+		$(".edit-btn").click(function() {
+			var target = $(this).data("target");
+			$("#" + target + "-form").toggle();
+		});
+	});
 </script>
 
 
@@ -288,59 +307,74 @@
 					<i class="fa-solid fa-user" style="color: #ffb416;"></i> 개인정보 변경
 				</h1>
 			</div>
- 
-			
+			<br> <br>
+			<div class="row mt-4">
 
-	기존 이메일 ${customerDto.customerEmail}
+				기존 이메일
+				<div class="form-control"
+					style="border: 1px solid #ccc; padding: 10px;">${customerDto.customerEmail}</div>
+
+			</div>
 
 
 			<div class="row mt-4"></div>
 			변경 할 이메일 <input class="form-control" type="text" name="customerEmail"
 				placeholder="test@kh.com">
 			<div class="fail-feedback">이메일 형식이 잘못되었습니다</div>
-			<div class="fail2-feedback">중복 된 아이디 존재 </div>
+			<div class="fail2-feedback">중복 된 아이디 존재</div>
 
 		</div>
-
-
-
-
-			<div class="row mt-4">
-				<label class="col-form-label mt-4" for="inputDefault">연락처</label> <input
-					type="tel" name="customerContact" class="form-control"
-					value="${customerDto.customerContact}" placeholder="( - ) 제외"
-					id="inputDefault">
-				<div class="fail-feedback">전화번호 형식이 올바르지 않습니다</div>
-			</div>
-
-			<div class="form-group">
-				<label class="col-form-label mt-4" for="inputDefault">생년월일</label> <input
-					type="date" name="customerBirth" class="form-control"
-					value="${customerDto.customerBirth}">
-				<div class="fail-feedback">잘못된 날짜를 선택하셨습니다</div>
-			</div>
-
-			<div class="form-group mb-4">
-				<label class="col-form-label mt-4" for="inputDefault">비밀번호
-					확인</label> <input type="password" name="customerPw" class="form-control"
-					placeholder="비밀번호를 입력해주세요">
-			</div>
-
-
-			<!-- 버튼 -->
-			<div class="row ms-1 mt-2">
-				<button type="submit" class="btn btn-warning">변경하기</button>
-			</div>
-
-			<c:if test="${param.error != null}">
-				<div class="row important">
-					<span class="text-danger">입력하신 비밀번호가 일치하지 않습니다</span>
-				</div>
-			</c:if>
-
-
+		<br>
+		<div class="row mt-4">
+			<br> 기존 연락처
+			<div class="form-control"
+				style="border: 1px solid #ccc; padding: 10px;">${customerDto.customerContact}</div>
 		</div>
+
+		<div class="row mt-4">
+			변경 할 연락처<input type="tel" name="customerContact" class="form-control"
+				value="${customerDto.customerContact}" placeholder="( - ) 제외"
+				id="inputDefault">
+			<div class="fail-feedback">전화번호 형식이 올바르지 않습니다</div>
+		</div>
+		<br>
+		<div class="row mt-4">
+			<br> 기존 생년월일
+			<div class="form-control"
+				style="border: 1px solid #ccc; padding: 10px;">${customerDto.customerBirth}</div>
+		</div>
+
+		<div class="row mt-4">
+			변경 할 생년월일 <input type="date" name="customerBirth"
+				class="form-control" value="${customerDto.customerBirth}">
+			<div class="fail-feedback">잘못된 날짜를 선택하셨습니다</div>
+		</div>
+
+		<div class="row mt-4">
+			<label class="col-form-label mt-4" for="inputDefault">
+			비밀번호 확인</label>
+			<input type="password" name="customerPw" class="form-control"
+				placeholder="비밀번호를 입력해주세요">
+		</div>
+		<br>
+
+		<div class="row line"></div>
+		<br>
+
+		<!-- 버튼 -->
+		<div class="row ms-1 mt-2">
+			<button type="submit" class="btn btn-warning">변경하기</button>
+		</div>
+
+		<c:if test="${param.error != null}">
+			<div class="row important">
+				<span class="text-danger">입력하신 비밀번호가 일치하지 않습니다</span>
+			</div>
+		</c:if>
+
+
 	</div>
+
 
 </form>
 

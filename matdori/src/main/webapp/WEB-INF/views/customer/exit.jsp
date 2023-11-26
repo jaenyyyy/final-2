@@ -95,8 +95,9 @@ $(".join-form").submit(function(e) {
 				Delete MemberShip
 			</h1>
 		</div>
+		<br>
 		<div class="row line"></div>
-
+<br>
 		<div class="row mt-4">
 
 			<label> <i class="fa-solid fa-asterisk red"></i> 탈퇴 버튼 선택 시 <br>
@@ -122,6 +123,8 @@ $(".join-form").submit(function(e) {
 		<br>
 		<div class="row line"></div>
 		<div class="row">
+			<br>
+			<div class="row line"></div>
 			<br>
 			<button type="submit" class="btn btn-warning text-black">탈퇴하기</button>
 		</div>
