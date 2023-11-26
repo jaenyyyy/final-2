@@ -1,6 +1,7 @@
 package com.kh.matdori.controller;
 
 import java.net.URISyntaxException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -16,12 +17,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.kh.matdori.dao.ClockDao;
 import com.kh.matdori.dao.CustomerDao;
+import com.kh.matdori.dao.MenuByReservationDao;
 import com.kh.matdori.dao.MenuDao;
 import com.kh.matdori.dao.PaymentDao;
 import com.kh.matdori.dao.ReservationDao;
 import com.kh.matdori.dao.RestaurantDao;
 import com.kh.matdori.dao.SeatDao;
 import com.kh.matdori.dto.ClockDto;
+import com.kh.matdori.dto.MenuByReservationDto;
 import com.kh.matdori.dto.MenuDto;
 import com.kh.matdori.dto.PaymentDto;
 import com.kh.matdori.dto.ReservationDto;
@@ -34,7 +37,6 @@ import com.kh.matdori.vo.KakaoPayApproveResponseVO;
 import com.kh.matdori.vo.KakaoPayCancelRequestVO;
 import com.kh.matdori.vo.KakaoPayCancelResponseVO;
 import com.kh.matdori.vo.MenuWithImagesVO;
-import com.kh.matdori.vo.PaymentSumVO;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -58,6 +60,8 @@ public class ReservationController {
 	private PaymentDao paymentDao;
 	@Autowired
 	private KakaoPayService kakaoPayService;
+	@Autowired
+	private MenuByReservationDao menuByReservationDao;
 	
 //	    List<PurchaseVO> list = listVO.getProduct();
 //		for(PurchaseVO vo : list) {
@@ -73,17 +77,22 @@ public class ReservationController {
 	
 	@GetMapping("/insert")
 	public String insert(Model model
+						 ,HttpSession session
 						 ,@RequestParam("rezResNo") int rezResNo
 						) {
 		// clockList, seatList를 데이터베이스에서 조회
 		RestaurantDto resDto = restaurantDao.selectOne(rezResNo);
 		List<ClockDto> clockList = clockDao.clockList(rezResNo);
 		List<SeatDto> seatList = seatDao.seatList(rezResNo);
+		List<MenuWithImagesVO> menuList = menuDao.getMenuByRes(rezResNo);
+		
+		session.setAttribute("rezResNo", rezResNo);
 		
 	    // 모델에 clockList, seatList를 추가
 		model.addAttribute("resDto", resDto);
 	    model.addAttribute("clockList", clockList);
 	    model.addAttribute("seatList", seatList);
+	    model.addAttribute("menuList", menuList);
 		return "reservation/booking";
 	}
 	@PostMapping("/insert")
@@ -91,29 +100,77 @@ public class ReservationController {
 						 @ModelAttribute ReservationDto reservationDto,
 //						 @RequestParam("rezResNo") int rezResNo,
 	                     @RequestParam("selectedClock") int clockNo,
-	                     @RequestParam("selectedSeat") int seatNo) {
-		int rezNo = reservationDao.sequence();
+	                     @RequestParam("selectedSeat") int seatNo,
+	                     @RequestParam("selectedMenus") ArrayList<Integer> selectedMenuNos,
+	                     @RequestParam("selectedQtys") ArrayList<Integer> selectedQtys) 
+	{
+//		log.debug("clockNo={}",clockNo);
+//		log.debug("seatNo={}",seatNo);
+//		log.debug("selectedMenuNos={}",selectedMenuNos);
+//		log.debug("selectedQtys={}",selectedQtys);
+	    
 		
-		reservationDto.setRezNo(rezNo);
-		log.debug("rezNo={}",rezNo);
+		int rezNo = reservationDao.sequence();
+				reservationDto.setRezNo(rezNo);
+//				log.debug("rezNo={}",rezNo);
 		
 		//회원별 예약 처리
 		String rezCustomerId = (String)session.getAttribute("name");
 		reservationDto.setRezCustomerId(rezCustomerId);
-		//매장별 처리
+		
+//		int rezResNo = (int) session.getAttribute("rezResNo"); // 어떻게든 rezResNo 값을 가져와야 함
 //		reservationDto.setRezResNo(rezResNo);
+//		log.debug("rezResNo={}",rezResNo);
+		
 		
 	    // 선택한 시간,좌석 값으로 시간,좌석 정보 조회
 	    ClockDto selectedClock = clockDao.selectOne(clockNo);
 	    SeatDto selectedSeat = seatDao.selectOne(seatNo);
-	    // 시간 정보를 ReservationDto에 설정
+//	    List<MenuWithImagesVO> selectedMenus = reservationDao.menuList(rezNo); 
+//	     시간 정보를 ReservationDto에 설정
 	    if (selectedClock != null && selectedSeat != null) {
 	        reservationDto.setRezClockNo(selectedClock.getClockNo());
 	        reservationDto.setRezSeatNo(selectedSeat.getSeatNo());
 	    }
-
+	    log.debug("reservationDto={}", reservationDto);
+	    
 	    reservationDao.insert(reservationDto);
-//	    log.debug("dto={}",reservationDto);
+	 // MenuByReservationDto를 사용하여 여러 메뉴를 데이터베이스에 등록
+	    
+	    List<MenuByReservationDto> menuList = new ArrayList<>();
+
+		 // 각 메뉴에 대한 번호와 수량을 리스트로 관리
+		 for (int i = 0; i < selectedMenuNos.size(); i++) {
+		     int menuNo = selectedMenuNos.get(i);
+		     int qty = selectedQtys.get(i);
+	
+		     menuList.add(MenuByReservationDto.mbrDto(rezNo, menuNo, qty));
+		     // 메뉴 정보를 조회하고 MenuByReservationDto에 추가
+//		     MenuWithImagesVO menuWithImagesVO = menuDao.selectOne(menuNo);
+//		     if (menuWithImagesVO != null) {
+//		         MenuDto menuDto = menuWithImagesVO.getMenuDto();
+//	
+//		         // MenuByReservationDto를 새로 생성하여 초기화
+//		         MenuByReservationDto menuByReservationDto = new MenuByReservationDto();
+//		         menuByReservationDto.setRezNo(rezNo);
+//		         menuByReservationDto.getMenuNos().add(menuDto.getMenuNo());
+//		         menuByReservationDto.getMenuQtys().add(qty);
+//	
+//		         // 각 메뉴 번호와 예약 번호의 조합을 데이터베이스에 등록
+//		         menuByReservationDao.insert(menuByReservationDto);
+//		         
+//		         // 생성된 객체를 리스트에 추가
+//		         menuList.add(menuByReservationDto);
+//		     }
+//		     log.debug("menuList={}", menuList);
+		 }
+		 
+		 for(MenuByReservationDto mbr : menuList) {
+			 menuByReservationDao.insert(mbr);
+		 }
+		 log.debug("menuList={}", menuList);
+
+
 	    return "redirect:detail?rezNo="+reservationDto.getRezNo();
 	}
 	
