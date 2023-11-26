@@ -4,6 +4,25 @@
 
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 
+<style>
+.container {
+	max-width: 500px; /* 변경 가능한 폭 설정 */
+	margin: 0 auto; /* 가운데 정렬 */
+}
+
+.tag-none {
+	text-decoration: none;
+	color: black;
+}
+
+.line {
+	border-top: 1px solid #ffb416;
+}
+
+.tag-none:hover {
+	color: #FF3300; /* 원하는 호버 시 색상으로 변경 */
+}
+</style>
 
 <script>
 

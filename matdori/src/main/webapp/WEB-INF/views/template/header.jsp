@@ -104,18 +104,18 @@
                             <li class="nav-item">
                                 <a class="nav-link me-3" href="/reservation/insert">예약</a>
                             </li>
+                            <c:if test="${sessionScope.level == '관리자'}">
                             <li class="nav-item">
                                 <a class="nav-link me-3" href="/admin/">관리자</a>
                             </li>
+                            </c:if>
                             <li class="nav-item">
                                 <a class="nav-link me-3" href="/notice/list">공지사항</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link me-3" href="/qna/list">Q&A</a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link me-3" href="/customer/findPw">비밀번호 찾기</a>
-                            </li>
+                          
                         </ul>
                     </div>
                     <div class="d-flex ms-auto">
