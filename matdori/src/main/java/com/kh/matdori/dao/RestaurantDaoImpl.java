@@ -11,6 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.matdori.dto.AttachDto;
 import com.kh.matdori.dto.ResImagesDto;
+import com.kh.matdori.dto.ResSearchListDto;
 import com.kh.matdori.dto.RestaurantDto;
 import com.kh.matdori.error.NoTargetException;
 import com.kh.matdori.vo.RestaurantDetailVO;
@@ -102,5 +103,11 @@ public class RestaurantDaoImpl implements RestaurantDao {
 		return sqlSession.selectOne("restaurant.findImageByNo",attachNo);
 	}
 
+	
+	//복합검색 리스트
+	@Override
+	public List<ResSearchListDto> resSearchList(Map<String, String> searchParams) {
+	    return sqlSession.selectList("restaurant.searchResList", searchParams);
+	}
 	
 }
