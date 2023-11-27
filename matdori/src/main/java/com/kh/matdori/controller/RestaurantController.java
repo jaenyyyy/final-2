@@ -65,6 +65,16 @@ public class RestaurantController {
 		return "restaurant/detail";
 	}
 	
+	// 해당 식당의 리뷰 리스트 가져오기
+	@RequestMapping("/reviewList")
+	public String reviewList(Model model, @RequestParam int resNo) {
+	    List<ReviewDto> reviewListByRes = reviewDao.selectListByRes(resNo);
+	    model.addAttribute("reviewListByRes", reviewListByRes);
+	    
+	    return "restaurant/reviewList"; // reviewList.jsp로 이동
+	}
+
+	
 	
 	//복합검색
 	@RequestMapping("/resSearchList")
