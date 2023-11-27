@@ -1,25 +1,25 @@
-package com.kh.matdori.vo;
-
-import com.kh.matdori.dto.CustomerDto;
-import com.kh.matdori.dto.MenuDto;
-import com.kh.matdori.dto.ReservationDto;
-
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
-@Data @NoArgsConstructor @AllArgsConstructor @Builder
-public class PaymentSumVO {
-	private ReservationDto reservationDto;
-	private CustomerDto customerDto; 
-	private MenuDto menuDto;
-	private int inputPoint;
-//	private float getSumTotal;
-//	private float getPaymentTotal;
-//	private float getLevelByPayback;
-	
-	
+//package com.kh.matdori.vo;
+//
+//import com.kh.matdori.dto.CustomerDto;
+//import com.kh.matdori.dto.MenuDto;
+//import com.kh.matdori.dto.ReservationDto;
+//
+//import lombok.AllArgsConstructor;
+//import lombok.Builder;
+//import lombok.Data;
+//import lombok.NoArgsConstructor;
+//
+//@Data @NoArgsConstructor @AllArgsConstructor @Builder
+//public class PaymentSumVO {
+//	private ReservationDto reservationDto;
+//	private CustomerDto customerDto; 
+//	private MenuDto menuDto;
+//	private int inputPoint;
+////	private float getSumTotal;
+////	private float getPaymentTotal;
+////	private float getLevelByPayback;
+//	
+//	
 //	//합계 금액 (메뉴가격 * 메뉴개수)
 //	public Float getSumTotal() {
 //		return menuDto.getMenuPrice() 
@@ -32,7 +32,7 @@ public class PaymentSumVO {
 //		return getSumTotal() - inputPoint;
 //	}
 //	
-	
+//	
 //	//레벨 별 페이백
 //	public Float getLevelByPayback() {
 //		String level = customerDto.getCustomerLevel();
@@ -53,4 +53,4 @@ public class PaymentSumVO {
 //		}
 //	
 //	}
-}
+//}
