@@ -46,11 +46,14 @@ public interface RestaurantDao{
     String findNotice(int resNo);
 
     // 공지 등록/수정
-    void updateNotice(@Param("resNo") int resNo, @Param("resNotice") String resNotice);
+    void updateNotice(RestaurantDto restaurantDto);
     
     
     
     
     //복합검색 리스트
+    //List<ResSearchListDto> resSearchList(Map<String, String> searchParams);
+
     List<ResSearchListDto> resSearchList(ResSearchListVO vo);
+
 }

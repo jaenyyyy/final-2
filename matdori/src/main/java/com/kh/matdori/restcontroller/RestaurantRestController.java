@@ -192,10 +192,16 @@ public class RestaurantRestController {
 
 
     // 공지 등록/수정
-    @PutMapping("/notice/{resNo}")
-    public ResponseEntity<?> updateNotice(@PathVariable int resNo, @RequestBody String notice) {
-        restaurantDao.updateNotice(resNo, notice);
-        return ResponseEntity.ok("Notice updated successfully for resNo: " + resNo);
-    }
+	@PutMapping("/notice/update/{resNo}")
+	public ResponseEntity<?> updateNotice(@PathVariable int resNo, @RequestBody RestaurantDto restaurantDto) {
+	    try {
+	        restaurantDto.setResNo(resNo); // 업데이트할 레스토랑 번호 설정
+	        restaurantDao.updateNotice(restaurantDto); // DAO에 업데이트 요청 전달
+	        return ResponseEntity.ok("Notice updated successfully for resNo: " + resNo);
+	    } catch (Exception e) {
+	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to update notice for resNo: " + resNo);
+	    }
+	}
+
 
 }
