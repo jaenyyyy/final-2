@@ -1,6 +1,7 @@
 package com.kh.matdori.vo;
 
 import com.kh.matdori.dto.CustomerDto;
+import com.kh.matdori.dto.MenuByReservationDto;
 import com.kh.matdori.dto.MenuDto;
 import com.kh.matdori.dto.ReservationDto;
 
@@ -14,6 +15,7 @@ public class PaymentSumVO {
 	private ReservationDto reservationDto;
 	private CustomerDto customerDto; 
 	private MenuDto menuDto;
+	private MenuByReservationDto mbrDto;
 	private int inputPoint;
 //	private float getSumTotal;
 //	private float getPaymentTotal;
@@ -23,7 +25,7 @@ public class PaymentSumVO {
 	//합계 금액 (메뉴가격 * 메뉴개수)
 	public Float getSumTotal() {
 		return menuDto.getMenuPrice() 
-				* reservationDto.getRezMenuQty();
+				* mbrDto.getMenuQty();
 	}
 	
 	

@@ -80,4 +80,9 @@ public class MenuDaoImpl implements MenuDao {
 	public MenuDto selectOneByMenuNo(int menuNo) {
 		return sqlSession.selectOne("menu.selectOneByMenuNo", menuNo);
 	}
+	
+	@Override
+	public List<MenuWithImagesVO> selectList(List<Integer> menuNos) {
+		return sqlSession.selectList("menu.selectListByMenuNos", menuNos);
+	}
 }
