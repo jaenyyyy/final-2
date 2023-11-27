@@ -152,7 +152,7 @@ public class CustomerController {
 
 			inputDto.setCustomerId(customerId);
 			customerDao.edit(customerId, inputDto);
-			return "redirect:changeFinish";
+			return "customer/changeFinish";
 		} else {
 			return "redirect:change?error";
 		}

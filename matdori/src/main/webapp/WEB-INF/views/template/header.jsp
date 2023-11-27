@@ -8,6 +8,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <br>
     <title>matdori</title>
          <!-- 아이콘 사용을 위한 Font Awesome 6 CDN -->
     <link rel="stylesheet" type="text/css"
@@ -40,7 +41,10 @@
    .dropdown-item a {
        text-decoration: none;
        color: black;
-   }
+   }   
+    .nav-item a {
+        font-weight: bold;
+    }
 </style>
 
 

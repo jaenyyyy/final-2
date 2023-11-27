@@ -9,33 +9,33 @@
 //
 //import com.kh.matdori.error.AuthorityException;
 //
-//
-///** 
-// * 관리자 외 접근 차단
+///**
+// * 예약 차단 인터셉터
 // */
 //@Component
-//public class AdminInterceptor implements HandlerInterceptor{
+//public class ReservationInterceptor implements HandlerInterceptor {
 //	
+//
 //	@Override
 //	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 //			throws Exception {
-//		
-//		
-//		// session의 level 항목이 관리자인지 확인하여 통과 및 차단 
+//
 //		HttpSession session = request.getSession();
-//		String level = (String) session.getAttribute("level");
-//		
-//		boolean isAdmin = level != null && level.equals("관리자");
-//		
-//		if(isAdmin) { // 관리자 
+//
+//		String customerId = (String) session.getAttribute("name");
+//		boolean isLogin = customerId != null;
+//		if(isLogin) { // 회원 
 //			return true;
 //		}
-//		else { // 관리자 아니면 (나무수저, 은수저, 금수저, 다이아수저, 맛도리수저) 
-//			throw new AuthorityException("관리자만 이용 가능");
+//		else { // 비회원 
+//			// 차단 + 로그인페이지로 리다이렉트
+//			// response.sendRedirect("customer/login");
+//			
+//			// 권한 없음 오류 발생
+//			// response.sendError(401);
+//			// return false;
+//			throw new AuthorityException("로그인 후 이용해주세요");
 //		}
+//	
 //	}
 //}
-//		
-//
-//
-//	

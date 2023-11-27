@@ -60,7 +60,7 @@
 					certEmail : email
 				},
 				success : function() {
-				    console.log(response);
+					console.log(response);
 					$(".btn-send").prop("disabled", false);
 					$(".btn-send").find(".fa-spinner").hide();
 					$(".btn-send").find("span").text("인증번호 보내기");
@@ -72,35 +72,36 @@
 
 		});
 
-		 //확인 버튼을 누르면 이메일과 인증번호를 서버로 전달하여 검사
-        $(".btn-cert").click(function(){
-            //var email = $("[name=memberEmail]").val();
-            var email = window.email;
-            var number = $(".cert-input").val();
-            if(email.length == 0 || number.length == 0) return;
+		//확인 버튼을 누르면 이메일과 인증번호를 서버로 전달하여 검사
+		$(".btn-cert").click(
+				function() {
+					//var email = $("[name=memberEmail]").val();
+					var email = window.email;
+					var number = $(".cert-input").val();
+					if (email.length == 0 || number.length == 0)
+						return;
 
-            $.ajax({
-                url:"http://localhost:8080/rest/cert/check",
-                method:"post",
-                data: {
-                    certEmail : email,
-                    certNumber : number
-                },
-                success:function(response){
-                    console.log(response);
-                    if(response.result) {//인증 성공
-                        $(".cert-input").removeClass("success fail")
-                                                .addClass("success");
-                        $(".btn-cert").prop("disabled", true);
-                        //상태객체에 상태 저장하는 코드
-                    }
-                    else {
-                        $(".cert-input").removeClass("success fail")
-                                                .addClass("fail");
-                        //상태객체에 상태 저장하는 코드
-									}
-								},
-							});
+					$.ajax({
+						url : "http://localhost:8080/rest/cert/check",
+						method : "post",
+						data : {
+							certEmail : email,
+							certNumber : number
+						},
+						success : function(response) {
+							console.log(response);
+							if (response.result) {//인증 성공
+								$(".cert-input").removeClass("success fail")
+										.addClass("success");
+								$(".btn-cert").prop("disabled", true);
+								//상태객체에 상태 저장하는 코드
+							} else {
+								$(".cert-input").removeClass("success fail")
+										.addClass("fail");
+								//상태객체에 상태 저장하는 코드
+							}
+						},
+					});
 				});
 
 		$("[name=customerId]").blur(function(e) {
@@ -255,15 +256,14 @@
 		});
 
 	});
-	
-	$(function() {
-	    // 이메일 수정 버튼 클릭 시 해당 폼 표시
-	    $(".edit-btn").click(function() {
-	        var target = $(this).data("target");
-	        $("#" + target + "-form").toggle();
-	    });
-	});
 
+	$(function() {
+		// 이메일 수정 버튼 클릭 시 해당 폼 표시
+		$(".edit-btn").click(function() {
+			var target = $(this).data("target");
+			$("#" + target + "-form").toggle();
+		});
+	});
 </script>
 
 
@@ -273,65 +273,133 @@
 .fail-feedback, .fail2-feedback, .success-feedback {
 	display: none;
 }
+
+.line {
+	border-top: 1px solid #ffb416;
+}
+
+/* 추가한 스타일 */
+/* 컨테이너에 테두리 스타일 추가 */
+.container {
+    border: 3px solid #ffb416; /* 테두리 스타일 및 색상 설정 */
+    border-radius: 20px; /* 테두리 모서리를 둥글게 만듭니다 */
+    padding: 80px 60px 60px; /* 내부 여백 설정 - 여기서 첫 번째 값은 상단 패딩입니다 */
+}
+
 </style>
 
 
 
+
 <form action="change" method="post" autocomplete="off">
+<br><br><br>
 	<div class="container justify-content-center"
-		style="margin-bottom: 6%;">
-		<div class="row" style="margin-top: 20%;">
+		style="margin-bottom: 20%;">
+		<div class="row" style="margin-top: 10%;">
 
 			<!-- 제목 -->
-			<div class="row mb-4">
+			<div class="row mb-4 text-center">
 				<h1 class="bold">
-					<i class="fa-solid fa-user" style="color: #ffb416;"></i> 개인정보 변경
+					<i class="fa-solid fa-user" style="color: #ffb416;"></i> <span
+						style="font-weight: bold;">Change Info</span>
 				</h1>
 			</div>
- 
-			
+			<div class="text-center">
+				<br> <br> <span style="font-weight: bold;"> 회원님의
+					개인정보를 안전하게 보호하고, <br> 개인정보 도용으로 인한 피해를 예방하기 위해 비밀번호를 변경해주세요
+				</span> <br>
+				<br>
+				<div class="row line"></div>
 
-	기존 이메일 ${customerDto.customerEmail}
-
-
-			<div class="row mt-4"></div>
-			변경 할 이메일 <input class="form-control" type="text" name="customerEmail"
-				placeholder="test@kh.com">
-			<div class="fail-feedback">이메일 형식이 잘못되었습니다</div>
-			<div class="fail2-feedback">중복 된 아이디 존재 </div>
-
-		</div>
-
-
-
+			</div>
 
 			<div class="row mt-4">
-				<label class="col-form-label mt-4" for="inputDefault">연락처</label> <input
-					type="tel" name="customerContact" class="form-control"
-					value="${customerDto.customerContact}" placeholder="( - ) 제외"
-					id="inputDefault">
+				<div class="input-group">
+					<div class="input-group-prepend">
+						<span class="input-group-text" id="basic-addon1">기존 이메일</span>
+					</div>
+					<input type="text" class="form-control"
+						value="${customerDto.customerEmail}" aria-label="Username"
+						aria-describedby="basic-addon1" disabled>
+				</div>
+			</div>
+
+			<div class="row mt-4">
+				<div class="input-group">
+					<div class="input-group-prepend">
+						<span class="input-group-text" id="basic-addon2">변경 할 이메일</span>
+					</div>
+					<input type="text" class="form-control" name="customerEmail"
+						placeholder="test@kh.com" aria-label="Recipient's username"
+						aria-describedby="basic-addon2">
+				</div>
+				<div class="fail-feedback">이메일 형식이 잘못되었습니다</div>
+				<div class="fail2-feedback">중복 된 아이디 존재</div>
+			</div>
+
+			<div class="row mt-4">
+				<div class="input-group">
+					<div class="input-group-prepend">
+						<span class="input-group-text" id="basic-addon3">기존 연락처</span>
+					</div>
+					<input type="text" class="form-control"
+						value="${customerDto.customerContact}"
+						aria-label="Recipient's username" aria-describedby="basic-addon3"
+						disabled>
+				</div>
+			</div>
+
+			<div class="row mt-4">
+				<div class="input-group">
+					<div class="input-group-prepend">
+						<span class="input-group-text" id="basic-addon4">연락처</span>
+					</div>
+					<input type="tel" class="form-control" name="customerContact"
+						value="${customerDto.customerContact}" placeholder="( - ) 제외"
+						aria-label="Recipient's username" aria-describedby="basic-addon4">
+				</div>
 				<div class="fail-feedback">전화번호 형식이 올바르지 않습니다</div>
 			</div>
 
-			<div class="form-group">
-				<label class="col-form-label mt-4" for="inputDefault">생년월일</label> <input
-					type="date" name="customerBirth" class="form-control"
-					value="${customerDto.customerBirth}">
-				<div class="fail-feedback">잘못된 날짜를 선택하셨습니다</div>
+			<div class="row mt-4">
+				<div class="input-group">
+					<div class="input-group-prepend">
+						<span class="input-group-text" id="basic-addon5">기존 생년월일</span>
+
+					</div>
+					<input type="text" class="form-control"
+						value="${customerDto.customerBirth}"
+						aria-label="Recipient's username" aria-describedby="basic-addon5"
+						disabled>
+				</div>
 			</div>
 
-			<div class="form-group mb-4">
-				<label class="col-form-label mt-4" for="inputDefault">비밀번호
-					확인</label> <input type="password" name="customerPw" class="form-control"
+			<div class="row mt-4">
+				<div class="input-group">
+					<div class="input-group-prepend">
+						<span class="input-group-text" id="basic-addon6">생년월일</span>
+					</div>
+					<input type="date" class="form-control" name="customerBirth"
+						value="${customerDto.customerBirth}"
+						aria-label="Recipient's username" aria-describedby="basic-addon6">
+				</div>
+				<div class="fail-feedback">잘못된 날짜를 선택하셨습니다</div>
+			</div>
+			<div class="row mt-4">
+				<label class="col-form-label mt-4" for="inputDefault">
+					<h4>* 비밀번호 확인 *</h4>
+				</label> <input type="password" name="customerPw" class="form-control"
 					placeholder="비밀번호를 입력해주세요">
 			</div>
 
-
 			<!-- 버튼 -->
-			<div class="row ms-1 mt-2">
-				<button type="submit" class="btn btn-warning">변경하기</button>
+			<div class="row mv-30 mt-4">
+				<button type="submit" class="btn btn-warning text-black">
+					개인정보 변경</button>
 			</div>
-
+			<div class="row mt-4">
+				<a class="btn btn-outline-warning" href="mypage">취소</a>
+			</div>
 			<c:if test="${param.error != null}">
 				<div class="row important">
 					<span class="text-danger">입력하신 비밀번호가 일치하지 않습니다</span>

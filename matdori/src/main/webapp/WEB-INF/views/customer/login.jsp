@@ -1,4 +1,4 @@
-로그인
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -286,7 +286,8 @@
 				Login
 			</h1>
 		</div>
-
+		<br> matdori 사이트의 다양한 서비스와 혜택을 누리세요.<br>
+		<br>
 		<div class="row line"></div>
 
 
@@ -316,12 +317,15 @@
 		<!-- 링크 -->
 		<div class="row text-center mt-4">
 			<div class="col">
-				<a href="/customer/join" class="tag-none">회원가입 하기</a> <br>
+				<a href="/customer/join" class="tag-none" style="font-weight: bold;">회원가입
+					하기</a> <br>
 			</div>
 			<div class="col">
-				<a href="/customer/findPw" class="tag-none">비밀번호 찾기</a>
+				<a href="/customer/findPw" class="tag-none"
+					style="font-weight: bold;">비밀번호 찾기</a>
 			</div>
 		</div>
+
 	</div>
 
 

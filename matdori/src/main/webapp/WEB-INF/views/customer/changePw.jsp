@@ -12,7 +12,7 @@
 }
 
 .tag-none {
-	text-decoration: none;
+	text-decoration: none
 	color: black;
 }
 
@@ -23,26 +23,38 @@
 .tag-none:hover {
 	color: #FF3300; /* 원하는 호버 시 색상으로 변경 */
 }
+.container {
+    border: 3px solid #ffb416; /* 테두리 스타일 및 색상 설정 */
+    border-radius: 20px; /* 테두리 모서리를 둥글게 만듭니다 */
+    padding: 80px 60px 60px; /* 내부 여백 설정 - 여기서 첫 번째 값은 상단 패딩입니다 */
+}
 </style>
 
 <form action="changePw" method="post" autocomplete="off">
-
+<br><br><br>
 
 	<div class="container justify-content-center"
-		style="margin-bottom: 6%;">
+		style="margin-bottom: 20%;">
 
 
-		<div class="row" style="margin-top: 20%;">
-			<h1>
-				<i class="fa-solid fa-circle-user" style="color: #ffb416;"></i>
-				Change Pw
-			</h1>
-		</div>
+		
+    <div class="row text-center mt-5">
+        <h1>
+            <i class="fa-solid fa-circle-user" style="color: #ffb416;"></i>
+            <span style="font-weight: bold;">Change Pw</span>
+        </h1>
+    </div>
+    <br>
 
-		안전한 비밀번호로 내정보를 보호하세요 <br> 다른 아이디/사이트에서 사용한 적 없는 비밀번호<br> 이전에
-		사용한 적 없는 비밀번호가 안전합니다.<br>
-		<br>
-		<div class="row line"></div>
+    <div class="text-center">
+        <span style="font-weight: bold;">
+            안전한 비밀번호로 내 정보를 보호하세요 <br>
+            다른 아이디/사이트에서 사용한 적 없는 비밀번호<br>
+            이전에 사용한 적 없는 비밀번호가 안전합니다.
+        </span>
+        <br><br>
+        <div class="row line"></div>
+    </div>
 
 
 		<div class="row mt-4">
