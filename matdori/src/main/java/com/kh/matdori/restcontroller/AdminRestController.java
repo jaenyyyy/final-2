@@ -1,11 +1,15 @@
 package com.kh.matdori.restcontroller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.kh.matdori.dao.AdminDao;
+import com.kh.matdori.dto.HashtagDto;
 import com.kh.matdori.dto.RestaurantBlockDto;
 import com.kh.matdori.dto.RestaurantJudgeDto;
 
@@ -42,6 +46,21 @@ public class AdminRestController {
     	adminDao.updateResJudge(restaurantJudgeDto);
     }
     
+    
+ // 해시태그 추가 기능
+    @PostMapping("/hashtag/insert")
+    public void insert(@ModelAttribute HashtagDto hashtagDto) {
+    	int hashNo = adminDao.hashSequence();
+    	hashtagDto.setHashNo(hashNo);
+    	adminDao.insertHashtag(hashtagDto);
+    }
+    
+    //해시태그 삭제 기능
+    @PostMapping("/hashtag/delete")
+    public void delete(@RequestParam int hashNo) {
+    	adminDao.deleteHashtag(hashNo);
+    	
+    }
     
     
 }

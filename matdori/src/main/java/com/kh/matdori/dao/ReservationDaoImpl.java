@@ -10,7 +10,11 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.matdori.dto.ReservationDto;
 import com.kh.matdori.dto.ReservationListDto;
+
 import com.kh.matdori.vo.MenuWithImagesVO;
+
+import com.kh.matdori.dto.ReviewDto;
+
 
 @Repository
 public class ReservationDaoImpl implements ReservationDao{
@@ -62,3 +66,4 @@ public class ReservationDaoImpl implements ReservationDao{
 	}
 
 }
+

@@ -22,4 +22,50 @@
 <!-- 	<select id="getClockListByResNo" resultType="ClockDto" parameterType="int"> -->
 <!-- 	    SELECT * FROM clock WHERE clockResNo = #{clockResNo} -->
 <!-- 	</select> -->
+
+
+
+
+<!-- 영업요일 추가 -->
+	<insert id="addWorkday">
+	insert into workday(workday_no, workday_name, not_workday, work_res_no) 
+	values(workday_seq.nextval, #{workdayName}, #{notWorkday}, #{workResNo})	
+	</insert>
+
+<!--휴일 추가
+	<insert id="addHoliday">
+	insert into holiday(holiday_no, holiday_begin, holiday_end, holiday_name, holi_res_no) 
+	values(holiday_seq.nextval, #{holidayBegin}, #{holidayEnd}, #{holidayName}, #{holiResNo})
+	</insert> -->
+	
+<!--  매장별 시간 조회 -->
+<select id="selectByResNo" resultType="ClockByResVO">
+   SELECT * FROM clock
+   JOIN workday ON clock.res_no = workday.res_no
+   JOIN holiday ON clock.res_no = holiday.res_no
+   WHERE clock.res_no = #{resNo};
+</select>
+
+<!-- 매장별 특정 시간 선택
+<select id="selectOneAvailableTime" resultType="ClockByResVO">
+    SELECT 
+        c.*, 
+        w.*, 
+        h.* 
+    FROM clock c
+    LEFT JOIN workday w ON c.res_no = w.work_res_no
+    LEFT JOIN holiday h ON c.res_no = h.restaurant_no
+    WHERE c.res_no = #{resNo}
+    AND c.clock_select = #{selectedDate}
+    AND NOT EXISTS (
+        SELECT 1 FROM holiday WHERE restaurant_no = c.res_no AND holiday_date = #{selectedDate}
+    )
+    AND EXISTS (
+        SELECT 1 FROM workday WHERE work_res_no = c.res_no AND workday_name = DAYNAME(c.clock_select) AND not_workday = 'N'
+    )
+    LIMIT 1;
+</select> -->
+
+
+
 </mapper>

@@ -1,9 +1,17 @@
 package com.kh.matdori.dao;
 
+import java.util.List;
+import java.util.Map;
+
+import org.apache.ibatis.annotations.Param;
+
+import com.kh.matdori.dto.AttachDto;
+import com.kh.matdori.dto.ResSearchListDto;
 import com.kh.matdori.dto.RestaurantDto;
 import com.kh.matdori.vo.RestaurantDetailVO;
+import com.kh.matdori.vo.resSearchListVO;
 
-public interface RestaurantDao {
+public interface RestaurantDao{
 
 	void insert(RestaurantDto restaurantDto);
 
@@ -17,6 +25,32 @@ public interface RestaurantDao {
 	
 	int sequence();
 	
+	int sequenceAttach();
+
 	
-	
+	 public AttachDto findImageByNo(int attachNo);
+
+    // 특정 resNo에 속하는 모든 이미지 정보를 조회하는 메서드
+    public List<Integer> findImageNoByRes(int resNo);
+    
+    // 특정 resNo에 해당하는 이미지 정보를 삭제하는 메서드
+    void deleteByResNo(int resNo);
+
+    // 특정 resNo와 attachNo를 연결하는 메서드
+    void insertResImage(int resNo, int attachNo);
+
+    // 특정 resNo와 attachNo의 연결을 끊는 메서드
+    void deleteResImage(int attachNo);
+    
+    // 공지 조회
+    String findNotice(int resNo);
+
+    // 공지 등록/수정
+    void updateNotice(@Param("resNo") int resNo, @Param("resNotice") String resNotice);
+    
+    
+    
+    
+    //복합검색 리스트
+    List<ResSearchListDto> resSearchList(resSearchListVO vo);
 }

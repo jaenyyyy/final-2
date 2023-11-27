@@ -28,6 +28,11 @@
             <h3><a class="nav-link" href="/admin/business/judge/list">사업자 심사</a></h3>
         </div>
     </div>
+    <div class="col-6">
+        <div class="alert alert-dismissible alert-warning">
+            <h3><a class="nav-link" href="/admin/restaurant/hashtag">해시태그 관리</a></h3>
+        </div>
+    </div>
 
 </div>
 

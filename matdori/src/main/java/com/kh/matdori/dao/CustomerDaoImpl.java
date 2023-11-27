@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -15,6 +14,7 @@ import com.kh.matdori.dto.CustomerBlockDto;
 import com.kh.matdori.dto.CustomerDto;
 import com.kh.matdori.error.NoTargetException;
 import com.kh.matdori.vo.CusAdminVO;
+import com.kh.matdori.vo.CusLevelUpVO;
 import com.kh.matdori.vo.PaymentSumVO;
 
 import lombok.extern.slf4j.Slf4j;
@@ -46,14 +46,19 @@ public class CustomerDaoImpl implements CustomerDao {
 	
 	@Override
 	public boolean delete(String customerId) {
-		int result = sqlSession.delete("customer.delete", customerId);
-		if(result == 0) throw new NoTargetException();
-		return false;
+		return sqlSession.delete("customer.delete", customerId) > 0;
+	
 	}
 
 
 	@Override
 	public CustomerDto selectOne(String customerId) {
+		return sqlSession.selectOne("customer.detail", customerId);
+
+	}
+	
+	@Override
+	public CustomerDto selectTwo(String customerId) {
 		CustomerDto customerDto = sqlSession.selectOne("customer.detail", customerId);
 		if(customerDto == null) throw new NoTargetException();
 		return customerDto;
@@ -211,7 +216,7 @@ public class CustomerDaoImpl implements CustomerDao {
 	public boolean paybackPoint(PaymentSumVO vo) {
 		Map<String, Object> params = new HashMap<>();
 		params.put("customerId", vo.getCustomerDto().getCustomerId());
-		params.put("customerPoint",	vo.getLevelByPayback());
+//		params.put("customerPoint",	vo.getLevelByPayback());
 		
 		return sqlSession.update("customer.paybackPoint", vo) > 0;
 	}
@@ -264,10 +269,15 @@ public class CustomerDaoImpl implements CustomerDao {
 	public List<CustomerAdminListDto> selectCustomerListByPage(CusAdminVO vo) {
 		return sqlSession.selectList("customer.countList", vo);
 	}
-}
 
 	
-
-
-
-
+	
+	
+	//이용횟수 조회해서 레벨업 하기 위한 카운트 구문
+	@Override
+	public List<CusLevelUpVO> successList() {
+		return sqlSession.selectList("customer.rezSuccessCount");
+	}
+	
+	
+}

@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 
 @Data @NoArgsConstructor @AllArgsConstructor @Builder
 public class ReservationListDto {
-	private int rezNo, resNo, menuNo, clockNo, seatNo;
+	private int rezNo, rezResNo, menuNo, clockNo, seatNo;// resNo사용 안되는듯?
 	private String rezCustomerId;
 	private String customerName;
 	private String customerContact;
@@ -18,11 +18,10 @@ public class ReservationListDto {
 	private String clockSelect, seatName;
 	private int rezMenuQty, rezCustomerCount, rezSeatQty;
 	private String rezRequest;
+	
+	private boolean reviewWritten; // 리뷰 작성 여부를 나타내는 필드 추가
 //	private Date rezDay;
 	
 	
 }
 
-
-
-//////////////폐기 처리 준비중

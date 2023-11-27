@@ -21,5 +21,11 @@ public class RestaurantDto {
 	private String resPost, resAddr1, resAddr2;
 	private Timestamp resRegDate;
 	private String resNotice;
-
+	
+    // 생성자 추가
+    public RestaurantDto(int resNo, String resNotice) {
+        this.resNo = resNo;
+        this.resNotice = resNotice;
+    }
+	
 }

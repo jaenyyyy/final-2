@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.kh.matdori.dto.BusinessBlockDto;
 import com.kh.matdori.dto.BusinessJudgeListDto;
+import com.kh.matdori.dto.HashtagDto;
 import com.kh.matdori.dto.RestaurantAdminListDto;
 import com.kh.matdori.dto.RestaurantBlockDto;
 import com.kh.matdori.dto.RestaurantJudgeDto;
@@ -50,5 +51,20 @@ public interface AdminDao {
 	//사업자 차단 상태 업데이트
 	void updateBusBlock(BusinessBlockDto blockDto);
 	
+	
+	//관리자 해시태그 시퀀스 등록
+	int hashSequence();
+	
+	//관리자 해시태그 등록
+	void insertHashtag(HashtagDto hashtagDto);
+	
+	//관리자 해시태그 삭제
+	boolean deleteHashtag(int hashNo);
+	
+	//관리자 해시태그 리스트
+	List<HashtagDto> hashList();
+	
+	//관리자 해시태그 상세
+	HashtagDto hashtagOne(int hashNo);
 	
 }

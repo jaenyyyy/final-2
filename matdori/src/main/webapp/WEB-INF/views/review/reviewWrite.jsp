@@ -1,108 +1,149 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<style>
+.row-top {
+	margin-top: 20%;
+}
 
+.page-line {
+	border-right: 3px solid #ffb416;
+}
 
+.bold {
+	font-weight: bold;
+}
+
+.menu-tag {
+	text-decoration: none;
+	color: black;
+}
+
+.menu-tag:hover {
+	color: #FFB416;
+}
+
+.res-line {
+	border-top: 1px solid #ffb416;
+	border-bottom: 1px solid #ffb416;
+	width: 70%;
+}
+
+.rating {
+	width: 100%;
+}
+
+.rating__star {
+	cursor: pointer;
+	color: #FFB416;
+}
+</style>
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 
+<div class="container">
+	<div class="row justify-content-center" style="margin-top: 2%;">
 
-<form action="reviewWrite" method="post" enctype="multipart/form-data">
-	<div class="row justify-content-center">
-		<div class="col-md-4">
+		<div class="col-md-8">
 
-			<h1>Write a Review</h1>
-
-			<div class="row left">
-				<label class="form-label mt-4" for="readOnlyInput">차단일</label> <input
-					class="form-control mb-4" id="readOnlyInput3" type="text"
-					value="${reviewDto.reviewWriter}" disabled>
+			<div class="mt-4">
+				<h1 class="text-start">
+					<i class="fa-solid fa-pen-to-square" style="color: #ffb416;"></i>
+					리뷰작성
+				</h1>
 			</div>
-			<label> 
-				방문식당 <i class="fa-solid fa-asterisk red"></i>
-			</label> 
-			<label>
-				예약날짜 <i class="fa-solid fa-asterisk red"></i>
-			</label> 
-			<label> 
-				작성자 <i class="fa-solid fa-asterisk red"></i>
-			</label>
+
+			<div class="mt-4">
+				<!-- 별 -->
+				<div class="rating" style="font-size: 30px; display: inline-block;">
+					<i class="rating__star far fa-star" data-value="1"
+						style="display: inline-block;"></i> <i
+						class="rating__star far fa-star" data-value="2"
+						style="display: inline-block;"></i> <i
+						class="rating__star far fa-star" data-value="3"
+						style="display: inline-block;"></i> <i
+						class="rating__star far fa-star" data-value="4"
+						style="display: inline-block;"></i> <i
+						class="rating__star far fa-star" data-value="5"
+						style="display: inline-block;"></i>
+				</div>
+			</div>
+
+			<form action="reviewWrite" method="post" autocomplete="off"
+				enctype="multipart/form-data">
+
+				<div class="mt-4">
+					<textarea name="reviewContent" rows="10" class="form-control"
+						placeholder="내용을 입력해주세요."></textarea>
+					<!-- 이미지를 업로드할 input 필드 -->
+					<input type="file" name="attach" accept="image/*">
+				</div>
+
+				<!-- hidden field로 resNo 값을 전송 -->
+				<input type="hidden" id="resNo" name="resNo" value="${param.resNo}">
+
+
+				<!-- hidden field로 별점 값을 전송 -->
+				<input type="hidden" id="reviewStarPoint" name="reviewStarPoint"
+					value="5">
+
+				<div class="text-end mt-4">
+					<a class="btn btn-secondary btn-list"
+						href="/customer/reviewListByCus">목록</a>
+					<button class="btn btn-warning">작성</button>
+				</div>
+			</form>
+
 		</div>
 
-
-
-
-		<!-- 별 -->
-		<div class="rating" style="font-size: 30px; display: inline-block;">
-		    <i class="rating__star far fa-star" data-value="1" style="display: inline-block;"></i>
-		    <i class="rating__star far fa-star" data-value="2" style="display: inline-block;"></i>
-		    <i class="rating__star far fa-star" data-value="3" style="display: inline-block;"></i>
-		    <i class="rating__star far fa-star" data-value="4" style="display: inline-block;"></i>
-		    <i class="rating__star far fa-star" data-value="5" style="display: inline-block;"></i>
-		</div>
-
-		<label>리뷰 내용 <i class="fa-solid fa-asterisk red"></i></label>
-		<textarea name="reviewContent" rows="4" cols="50">  </textarea>
-		<br> 리뷰 내용은 반드시 작성해주세요 <br> <br>
-
-		<div class="row right">
-			<span class="len red">0</span> / 1000
-		</div>
-
-		<br> <br> <label>사진 첨부</label><br> <input type="file"
-			name="attach"><br> <br> <br>
 	</div>
-
-
-
-
-
-	<div class="row right"></div>
-	<button type="submit" class="btn btn-positive">
-		<i class="fa-solid fa-pen"></i> 작성
-	</button>
-	<a href="/customer/reviewListByCus" class="btn"> <i
-		class="fa-solid fa-list"></i> 목록
-	</a> 
-	<a href="/customer/delete?reviewNo=${reviewDto.reviewNo}"
-		class="btn btn-negative btn-small">삭제하기</a>
-
-
-</form>
-
-
+</div>
 
 <script>
-	
-	// 별찍기
-	$(document).ready(function() {
-	    executeRating(ratingStars);
-	});
 
-	const ratingStars = [...document.getElementsByClassName("rating__star")];
+	// URL에서 resNo 가져오기
+	const queryString = window.location.search;
+	const urlParams = new URLSearchParams(queryString);
+	const resNo = urlParams.get('resNo');
 
-	function executeRating(stars) {
-	  const starClassActive = "rating__star fas fa-star";
-	  const starClassInactive = "rating__star far fa-star";
-	  const starsLength = stars.length;
-	  let i;
-
-	  stars.map((star) => {
-	    star.onclick = () => {
-	      i = stars.indexOf(star);
-
-	      if (star.className===starClassInactive) {
-	        for (i; i >= 0; --i) stars[i].className = starClassActive;
-	      } else {
-	        for (i; i < starsLength; ++i) stars[i].className = starClassInactive;
-	      }
-	    };
-	  });
-	}
-
-	executeRating(ratingStars);
+	// resNo 값을 resNo 필드에 설정
+	document.getElementById('resNo').value = resNo;
 
 
+    // 별찍기
+    $(document).ready(function() {
+        executeRating(ratingStars);
+    });
+
+    const ratingStars = [...document.getElementsByClassName("rating__star")];
+
+    function executeRating(stars) {
+        const starClassActive = "rating__star fas fa-star";
+        const starClassInactive = "rating__star far fa-star";
+        const starsLength = stars.length;
+        let i;
+
+        stars.map((star, index) => {
+            star.onclick = () => {
+                i = stars.indexOf(star);
+
+                if (star.className === starClassInactive) {
+                    for (i; i >= 0; --i) {
+                        stars[i].className = starClassActive;
+                    }
+                } else {
+                    for (i; i < starsLength; ++i) {
+                        stars[i].className = starClassInactive;
+                    }
+                }
+
+                // 폼 필드에 별점 값 설정
+                const selectedStars = index + 1;
+                document.getElementById('reviewStarPoint').value = selectedStars;
+            };
+        });
+    }
+
+    executeRating(ratingStars);
 </script>
-
-
 
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>

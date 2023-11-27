@@ -28,6 +28,7 @@
 		select * from customer
 	</select>
 
+
 	<select id="selectCustomerListByPage"
 		resultType="CustomerAdminListDto" parameterType="map">
 		SELECT * FROM (
@@ -39,6 +40,33 @@
 		WHERE rnum BETWEEN #{start} AND #{end}
 	</select>
 
+<select id="list2" resultType="CustomerDto">
+	    <!-- 검색 -->
+	    <choose>
+	        <when test="search">
+	            <![CDATA[
+	                select * from (
+	                    select rownum rn, TMP.* from (
+	                        select * from customer
+	                        where instr(customer_name, #{keyword}) > 0
+	                        order by customer_id desc
+	                    ) TMP
+	                ) where rn between #{startRow} and #{finishRow}
+	            ]]>
+	        </when>
+	        <!-- 검색 없이 목록 -->
+	        <otherwise>
+	            <![CDATA[
+	                select * from (
+	                    select rownum rn, TMP.* from (
+	                        select * from customer
+	                        order by customer_id desc
+	                    ) TMP
+	                ) where rn between #{startRow} and #{finishRow}
+	            ]]>
+	        </otherwise>
+	    </choose>
+	</select>
 
 
 	<!-- 이용자 상세 정보 조회 -->
@@ -93,8 +121,23 @@
 		where customer_id = #{customerId}
 	</update>
 
+
+	<!-- 삭제 -->
+	<delete id="delete">
+		delete customer where customer_id = #{customerId}
+	</delete>
+
+	<update id="changePassword" parameterType="map">
+		UPDATE customer
+		SET
+		customer_pw = #{customerPw}
+		WHERE customer_id = #{customerId}
+	</update>
+
+
 	<!-- 리스트 구하는 vo -->
-	<select id="countList" parameterType="CusAdminVO" resultType="int">
+	<select id="countList" parameterType="CusAdminVO"
+		resultType="int">
     <![CDATA[
     SELECT *
     FROM (
@@ -112,29 +155,23 @@
 
 
 	<!-- 검색이 아닐 때 사용되는 카운트 vo -->
-	<select id="count" parameterType="CusAdminVO"
-		resultType="int">
+	<select id="count" parameterType="CusAdminVO" resultType="int">
+		<choose>
+
+			<when test="keyword != null">
      <![CDATA[
-    SELECT count(*)
-    FROM customer
+    select count(*)
+    from customer when instr(customer_id, #{keyword}) > 0
     ]]>
+			</when>
+			<otherwise>
+	            <![CDATA[
+	                select count(*) from customer
+	            ]]>
+			</otherwise>
+		</choose>
+
 	</select>
-
-
-
-
-	<!-- 삭제 -->
-	<delete id="delete">
-		delete customer where customer_id = #{customerId}
-	</delete>
-
-	<update id="changePassword" parameterType="map">
-		UPDATE customer
-		SET
-		customer_pw = #{customerPw}
-		WHERE customer_id = #{customerId}
-	</update>
-
 
 	<select id="getCustomerByEmail" resultType="CustomerDto">
 		SELECT * FROM
@@ -156,6 +193,75 @@
 	    UPDATE customer SET customer_point = customer_point + #{customerPoint} WHERE customer_id = #{customerId}
 	  ]]>
 	</update>
+
+
+
+	<!-- 북마크 관련 -->
+
+	<!-- 찜하기 -->
+	<insert id="pickInsert" parameterType="PickDto">
+		INSERT INTO pick
+		(customer_id, res_no)
+		VALUES (#{customerId}, #{resNo})
+	</insert>
+
+	<!-- 찜하기 취소 -->
+	<delete id="pickDelete" parameterType="PickDto">
+		DELETE FROM pick
+		WHERE
+		res_no = #{resNo} AND customer_id = #{customerId}
+	</delete>
+
+	<!-- 찜했는지 확인 -->
+	<select id="checkPick" parameterType="PickDto"
+		resultType="Integer">
+		SELECT COUNT(*)
+		FROM pick
+		WHERE customer_id = #{customerId}
+		AND res_no = #{resNo}
+	</select>
+
+
+	<!-- 찜한 식당 내역 조회 -->
+	<!-- parameterType="String" -->
+	<select id="getPickResByUser" resultType="RestaurantDto">
+		SELECT r.*
+		FROM
+		restaurant r
+		INNER JOIN pick p ON
+		r.res_no = p.res_no
+		WHERE p.customer_id
+		= #{customerId}
+	</select>
+
+	<!-- 특정 레스토랑의 찜 개수 조회 -->
+	<select id="getPicksCount" parameterType="Integer"
+		resultType="Integer">
+		SELECT COUNT(*)
+		FROM pick
+		WHERE res_no = #{resNo}
+	</select>
+	
+	
+	<!-- 예약 횟수 조회 (등급 변경을 위한 조회) -->
+	<select id="rezSuccessCount" resultType="CusLevelUpVO">
+        <![CDATA[
+            SELECT 
+			    p.payment_customer AS customer_id,
+			    COUNT(p.payment_no) AS payment_success
+			FROM 
+			    payment p
+			JOIN 
+			    customer c ON p.payment_customer = c.customer_id
+			WHERE 
+			    p.payment_status = '예약완료'
+			    AND p.payment_time >= TRUNC(SYSDATE, 'MONTH') 
+			    AND p.payment_time < ADD_MONTHS(TRUNC(SYSDATE, 'MONTH'), 1) 
+			GROUP BY 
+			    p.payment_customer;
+        ]]>
+    </select>
+
 
 
 

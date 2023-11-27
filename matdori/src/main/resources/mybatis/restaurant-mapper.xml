@@ -3,62 +3,158 @@
 <!DOCTYPE mapper
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
-    
-    <mapper namespace ="restaurant">
-    
-    <!--  시퀀스 생성 -->
-    <select id="sequence" resultType="int">
-    	select restaurant_seq.nextval from dual
-    </select>
-    
-    <!-- 등록 -->
-   <insert id="save">
-  insert into restaurant
-  (res_no, bus_id, res_region_no, res_reg_no, res_name, res_tel, res_open_time, res_post, res_addr1, res_addr2) 
-  values(#{resNo}, #{busId}, #{resRegionNo}, #{resRegNo},
-  #{resName}, #{resTel}, #{resOpenTime}, #{resPost}, 
-  #{resAddr1}, #{resAddr2})
-</insert>
+
+<mapper namespace="restaurant">
+
+	<!-- 시퀀스 생성 -->
+	<select id="sequence" resultType="int">
+		select restaurant_seq.nextval
+		from dual
+	</select>
+
+	<!-- 사진 시퀀스 생성 -->
+	<select id="sequenceAttach" resultType="int">
+		select attach_seq.nextval
+		from dual
+	</select>
+
+	<!-- 등록 -->
+	<insert id="save">
+		insert into restaurant
+		(res_no, bus_id, res_region_no,
+		res_reg_no, res_name, res_tel, res_open_time,
+		res_post, res_addr1,
+		res_addr2)
+		values(#{resNo}, #{busId}, #{resRegionNo}, #{resRegNo},
+		#{resName}, #{resTel}, #{resOpenTime}, #{resPost},
+		#{resAddr1},
+		#{resAddr2})
+	</insert>
 
 
-    
-    <!-- 삭제 -->
-    <delete id="deleteByResNo">
-    delete restaurant where res_no =#{resNo}
-    </delete>
-    
-    <!-- 조회 -->
-    <select id="find" resultType="RestaurantDto">
-    select * from restaurant where res_no = #{resNo}
-    </select>
-    
-    <!-- 매장 상세조회 -->
-    <select id="resDetail" resultType="RestaurantDetailVO">
-    select 
-    r.res_no, r.res_name, r.res_tel, r.res_open_time,
-    r.res_post, r.res_addr1, r.res_addr2,
-<!--     r.res_post, r.res_addr1, r.res_addr2, r.res_notice, -->
-    m.menu_name, m.menu_price, m.menu_content,
-    re.review_writer, re.review_content, re.review_write_date, re.review_star_point 
-    from restaurant r 
-    left join menu m on r.res_no = m.res_no 
-    left join review re on r.res_no = re.res_no 
-    where r.res_no = #{resNo}
-    </select>
-    
-    <!-- 정보 수정 (사업자번호 제외) -->
+
+	<!-- 삭제 -->
+	<delete id="deleteByResNo">
+		delete restaurant where res_no =#{resNo}
+	</delete>
+
+	<!-- 조회 -->
+	<select id="find" resultType="RestaurantDto">
+		select * from restaurant where
+		res_no = #{resNo}
+	</select>
+
+	<!-- 매장 상세조회 -->
+	<select id="resDetail" resultType="RestaurantDetailVO">
+		select
+		r.res_no, r.res_name, r.res_tel, r.res_open_time,
+		r.res_post,
+		r.res_addr1, r.res_addr2,
+		<!-- r.res_post, r.res_addr1, r.res_addr2, r.res_notice, -->
+		m.menu_name, m.menu_price, m.menu_content,
+		re.review_writer,
+		re.review_content, re.review_write_date, re.review_star_point
+		from
+		restaurant r
+		left join menu m on r.res_no = m.res_no
+		left join review re
+		on r.res_no = re.res_no
+		where r.res_no = #{resNo}
+	</select>
+
+	<!-- 정보 수정 (사업자번호 제외) -->
 	<update id="editResInfo">
 		UPDATE restaurant SET
-		res_name = #{resName, jdbcType=VARCHAR},
+		res_name = #{resName,
+		jdbcType=VARCHAR},
 		res_tel = #{resTel},
 		res_post = #{resPost},
-		res_addr1 = #{resAddr1},
+		res_addr1
+		= #{resAddr1},
 		res_addr2 = #{resAddr2}
 		WHERE res_no = #{resNo}
 	</update>
+
+	<!-- ///////////////이미지 내용입니다////////////////// -->
+
+	<!-- res_images 테이블에 새로운 이미지 정보를 연결 -->
+	<insert id="insertResImage">
+		INSERT INTO restaurant_images (res_no, attach_no)
+		VALUES (#{resNo},
+		#{attachNo})
+	</insert>
+
+	<!-- res_images 테이블에서 특정 매장의 모든 이미지 번호를 조회 -->
+	<select id="findImageNoByRes" resultType="int">
+		SELECT attach_no FROM
+		restaurant_images WHERE res_no = #{resNo}
+	</select>
+
+	<select id="findImageByNo" resultType="int">
+		SELECT attach_no FROM
+		restaurant_images WHERE attach_no = #{attachNo}
+	</select>
+
+	<!-- res_images 테이블에서 특정 매장에 연결된 이미지 정보를 삭제 -->
+	<delete id="deleteResImage">
+		DELETE FROM res_images WHERE attach_no = #{attachNo}
+	</delete>
+
+	<!-- attach 테이블에서 특정 번호의 이미지 정보 삭제 -->
+	<delete id="deleteImageByResNo" parameterType="int">
+		DELETE FROM attach
+		WHERE attach_no IN (
+		SELECT attach_no FROM res_images WHERE res_no =
+		#{resNo}
+		)
+	</delete>
+
+
+
+	<!-- 복합검색 : 매장이름 / 해시태그 / 지역이름 -->
+	<select id="searchResList" parameterType="map"
+		resultType="ResSearchListDto">
+		SELECT * FROM res_search_list
+		<where>
+			<if test="regionName != null">
+				region_name = #{regionName}
+			</if>
+			<if test="hashComment != null">
+				AND hash_comment LIKE '%' || #{hashComment} || '%'
+			</if>
+			<if test="resName != null">
+				AND res_name LIKE '%' || #{resName} || '%'
+			</if>
+		</where>
+	</select>
+
+	<!-- 공지조회 -->
+	<select id="findNotice"  resultType="string">
+		SELECT res_notice FROM restaurant WHERE res_no = #{resNo}
+	</select>
+
+	<!-- 공지등록수정 -->
+	<update id="updateNotice">
+		UPDATE restaurant SET res_notice = #{resNotice} WHERE res_no = #{resNo}
+	</update>
+
+	<select id="searchResList" parameterType="map" resultType="ResSearchListDto">
+    SELECT * FROM res_search_list
+    <where>
+        <if test="keyword != null and keyword != ''">
+            and instr(res_name, #{resName}) > 0
+        </if>
+        <if test="regionName != null">
+            and region_name = #{regionName}
+        </if>
+        <if test="keyword != null and keyword != ''">
+            and instr(hash_comment, #{hashComment}) > 0
+        </if>
+    </where>
+</select>
+
+
+</mapper>
 	
 	
-	
-	
-    
-    </mapper>
+   
