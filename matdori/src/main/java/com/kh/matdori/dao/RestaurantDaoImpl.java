@@ -109,5 +109,17 @@ public class RestaurantDaoImpl implements RestaurantDao {
 	public List<ResSearchListDto> resSearchList(Map<String, String> searchParams) {
 	    return sqlSession.selectList("restaurant.searchResList", searchParams);
 	}
+
+    // 공지 조회
+    @Override
+    public String findNotice(int resNo) {
+        return sqlSession.selectOne("restaurant.findNotice", resNo);
+    }
+
+    // 공지 등록/수정
+    @Override
+    public void updateNotice(int resNo, String resNotice) {
+    	sqlSession.update("updateNotice", new RestaurantDto(resNo, resNotice));
+    }
 	
 }

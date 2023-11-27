@@ -246,8 +246,7 @@
 		<!-- 공지내용 -->
 		<div class="row text-start">
 			<div class="row">
-				${resDto.resNotice} 공지사항 넣는 칸 모두 화이팅 !!! 여러분 힘내요 <br> 영국에서.. 온
-				.. 편지<br> 프론트 프론트 <br>
+				${resDto.resNotice}
 			</div>
 		</div>
 	</div>
