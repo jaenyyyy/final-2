@@ -141,14 +141,14 @@
 	<select id="searchResList" parameterType="map" resultType="ResSearchListDto">
     SELECT * FROM res_search_list
     <where>
-        <if test="keyword != null and keyword != ''">
+        <if test="resName != null and resName != ''">
             and instr(res_name, #{resName}) > 0
+        </if>
+        <if test="hashComment != null and hashComment != ''">
+            or instr(hash_comment, #{hashComment}) > 0
         </if>
         <if test="regionName != null">
             and region_name = #{regionName}
-        </if>
-        <if test="keyword != null and keyword != ''">
-            and instr(hash_comment, #{hashComment}) > 0
         </if>
     </where>
 </select>

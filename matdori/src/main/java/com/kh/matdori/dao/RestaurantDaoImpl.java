@@ -15,7 +15,7 @@ import com.kh.matdori.dto.ResSearchListDto;
 import com.kh.matdori.dto.RestaurantDto;
 import com.kh.matdori.error.NoTargetException;
 import com.kh.matdori.vo.RestaurantDetailVO;
-import com.kh.matdori.vo.resSearchListVO;
+import com.kh.matdori.vo.ResSearchListVO;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -107,7 +107,7 @@ public class RestaurantDaoImpl implements RestaurantDao {
 	
 	//복합검색 리스트
 	@Override
-	public List<ResSearchListDto> resSearchList(resSearchListVO vo) {
+	public List<ResSearchListDto> resSearchList(ResSearchListVO vo) {
 	    return sqlSession.selectList("restaurant.searchResList", vo);
 	}
 
