@@ -292,10 +292,10 @@
 
 
 <form action="change" method="post" autocomplete="off">
-<br><br><br>
+<br><br><br><br><br><br>
 	<div class="container justify-content-center"
 		style="margin-bottom: 20%;">
-		<div class="row" style="margin-top: 10%;">
+		<div class="row" style="margin-top: 20%;">
 
 			<!-- 제목 -->
 			<div class="row mb-4 text-center">

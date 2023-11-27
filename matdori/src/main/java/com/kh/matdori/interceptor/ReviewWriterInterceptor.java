@@ -12,10 +12,7 @@
 //import com.kh.matdori.dao.ReviewDao;
 //import com.kh.matdori.dto.ReviewDto;
 //
-//
-///**
-// * 리뷰 차단 인터셉터 
-// */
+
 //@Component
 //	public class ReviewWriterInterceptor implements HandlerInterceptor {
 //

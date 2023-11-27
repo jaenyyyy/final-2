@@ -152,17 +152,14 @@ public class CustomerController {
 
 			inputDto.setCustomerId(customerId);
 			customerDao.edit(customerId, inputDto);
+
 			return "customer/changeFinish";
+
 		} else {
 			return "redirect:change?error";
 		}
 	}
-	
-	// 개인정보 변경 완료 
-	@RequestMapping("/changeFinish")
-	public String changeFinish() {
-		return "customer/changeFinish";
-	}
+
 
 	
 
@@ -245,7 +242,7 @@ public class CustomerController {
 			// 비밀번호 변경 완료 후 세션 무효화 및 로그아웃
 			session.invalidate();
 
-			return "customer/changePw";
+			return "redirect:changePwFinish";
 		} else {
 			model.addAttribute("error", "비밀번호 변경에 실패했습니다. 입력한 비밀번호를 확인하세요.");
 			return "redirect:changePw?error";
