@@ -60,6 +60,15 @@
 	height: 200px;
 	border: 2px solid #000000;
 }
+
+.rating {
+	width: 100%;
+}
+
+.rating__star {
+	cursor: pointer;
+	color: #FFB416;
+}
 </style>
 
 
@@ -76,13 +85,18 @@
 				<div class="row">
 					<h1 class="text-left title">${resDto.resName}</h1>
 				</div>
-				<!-- 별점 -->
-				<div class="row">
-					<i class="fa-solid fa-star fa-2x" style="color: #ff2424;"> <span
-						class="star-avg">별점평균추가</span>
-					</i>
-				</div>
-			</div>
+
+<!-- 별점 -->
+<div class="row">
+    <span class="star-avg">
+        <span class="rating__star ${averageRating >= 1 ? 'fas' : 'far'} fa-star"></span>
+        <span class="rating__star ${averageRating >= 2 ? 'fas' : 'far'} fa-star"></span>
+        <span class="rating__star ${averageRating >= 3 ? 'fas' : 'far'} fa-star"></span>
+        <span class="rating__star ${averageRating >= 4 ? 'fas' : 'far'} fa-star"></span>
+        <span class="rating__star ${averageRating >= 5 ? 'fas' : 'far'} fa-star"></span>
+        ${String.format("%.1f", averageRating)}점 식장
+    </span>
+</div>
 
 
 			<!-- 북마크 : 클릭하면 북마크 설정 / ajax로 값 전송 되게 구현할 예정 -->
@@ -132,6 +146,7 @@
 				class="btn btn-warning w-50 text-black"> 예약하기 </a>
 		</div>
 	</div>
+
 
 	<!-- 시간버튼 : 없어질 수 있음 -->
 	<div class="row justify-content-center mb-3 mt-4 text-center"
@@ -201,12 +216,176 @@
 					</h4>
 				</div>
 			</c:forEach>
-
 		</div>
-
+	</div>
+	</div>
+  
+	<!-- 공지사항 -->
+	<div
+		class="row justify-content-center text-center list-border info-margin "
+		id="noticeSection">
+		<!-- 제목 -->
+		<div class="row text-start">
+			<h3>
+				<span class="badge rounded-pill bg-warning text-black">공지사항</span>
+			</h3>
+		</div>
+		<!-- 공지내용 -->
+		<div class="row text-start">
+			<div class="row">
+				${resDto.resNotice} 공지사항 넣는 칸 모두 화이팅 !!! 여러분 힘내요 <br> 영국에서.. 온
+				.. 편지<br> 프론트 프론트 <br>
+			</div>
+		</div>
 	</div>
 
 
+
+	<!-- 메뉴 -->
+	<div
+		class="row justify-content-center text-center list-border info-margin"
+		id="menuSection">
+		<!-- 제목 -->
+		<div class="row text-start">
+			<h3>
+				<span class="badge rounded-pill bg-warning text-black">메뉴</span>
+			</h3>
+		</div>
+		<!-- 메뉴리스트 : list [0]~[3] 번쨰만 꺼내야할듯 -->
+		<div class="container">
+			<div class="row">
+				<!-- 첫 번째 : 나중에 반복문으로처리 / 위치 잡으려고 네개 해놓음 -->
+				<div class="col-md-6">
+					<div class="row">
+						<div class="col-6">
+							<img src="/images/dummy.png" class="sub-images">
+						</div>
+						<div class="col-6">
+							<div class="row text-badge text-start">
+								<h5 class="text-badge">메뉴이름</h5>
+							</div>
+							<div class="row">메뉴설명</div>
+							<div class="row" style="color: red;">가격</div>
+						</div>
+					</div>
+				</div>
+				<!-- 두 번째 : 나중에 반복문으로처리 / 위치 잡으려고 네개 해놓음 -->
+				<div class="col-md-6">
+					<div class="row">
+						<div class="col-6">
+							<img src="/images/dummy.png" class="sub-images">
+						</div>
+						<div class="col-6">
+							<div class="row text-badge text-start">
+								<h5 class="text-badge">메뉴이름</h5>
+							</div>
+							<div class="row">메뉴설명</div>
+							<div class="row" style="color: red;">가격</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<!-- 세 번째 : 나중에 반복문으로처리 / 위치 잡으려고 네개 해놓음 -->
+				<div class="col-md-6">
+					<div class="row">
+						<div class="col-6">
+							<img src="/images/dummy.png" class="sub-images">
+						</div>
+						<div class="col-6">
+							<div class="row text-badge text-start">
+								<h5 class="text-badge">메뉴이름</h5>
+							</div>
+							<div class="row">메뉴설명</div>
+							<div class="row" style="color: red;">가격</div>
+						</div>
+					</div>
+				</div>
+				<!-- 네 번째 : 나중에 반복문으로처리 / 위치 잡으려고 네개 해놓음 -->
+				<div class="col-md-6">
+					<div class="row">
+						<div class="col-6">
+							<img src="/images/dummy.png" class="sub-images">
+						</div>
+						<div class="col-6">
+							<div class="row text-badge text-start">
+								<h5 class="text-badge">메뉴이름</h5>
+							</div>
+							<div class="row">메뉴설명</div>
+							<div class="row" style="color: red;">가격</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- 상세로 가는 a태그 -->
+		<div class="row mt-4">
+			<h5>
+				<a href="" class="under-line text-badge"> 메뉴 더보기<i
+					class="fa-solid fa-angles-right" style="color: #000000;"></i>
+				</a>
+			</h5>
+		</div>
+	</div>
+
+
+
+	<!-- 리뷰 -->
+<%-- 	<div
+		class="row justify-content-center text-center list-border info-margin"
+		id="reviewSection">
+		<!-- 제목 -->
+		<div class="row text-start">
+			<h3>
+				<span class="badge rounded-pill bg-warning text-black">리뷰</span>
+			</h3>
+		</div>
+		<div class="row text-start">
+			<div class="row">
+				<div class="col">
+					<c:choose>
+						<c:when test="${customerDto.customerLevel == '어쩌고수저'}">
+							<i class="fa-solid fa-spoon" style="color: #b5b5b5;"></i>
+						</c:when>
+					</c:choose>
+					${reviewDto.reviewWriter}
+				</div>
+			</div>
+			<div class="row">
+				<c:forEach var="ReviewDto" items="${reviewByRes}">
+					<div class="col-2">
+						<img
+							src="http://localhost:8080/customer/image?reviewNo=${ReviewDto.reviewNo}"
+							width="100" height="100" class="">
+					</div>
+					<div class="col-10 text-left">
+						<span> <span
+							class="rating__star ${ReviewDto.reviewStarPoint >= 1 ? 'fas' : 'far'} fa-star"></span>
+							<span
+							class="rating__star ${ReviewDto.reviewStarPoint >= 2 ? 'fas' : 'far'} fa-star"></span>
+							<span
+							class="rating__star ${ReviewDto.reviewStarPoint >= 3 ? 'fas' : 'far'} fa-star"></span>
+							<span
+							class="rating__star ${ReviewDto.reviewStarPoint >= 4 ? 'fas' : 'far'} fa-star"></span>
+							<span
+							class="rating__star ${ReviewDto.reviewStarPoint >= 5 ? 'fas' : 'far'} fa-star"></span>
+							${ReviewDto.reviewWriteDate}
+						</span> <br>${ReviewDto.reviewContent}
+					</div>
+				</c:forEach>
+			</div>
+		</div> --%>
+
+		<!-- 더보기 버튼 -->
+		<div class="row mt-4">
+			<h5>
+				<a class="under-line text-badge">리뷰 더보기<i
+					class="fa-solid fa-angles-right" style="color: #000000;"></i>
+				</a>
+			</h5>
+		</div>
+	</div>
 
 	<!-- 공지사항 -->
 	<div
@@ -530,21 +709,9 @@ window.addEventListener('scroll', function() {
             });
         });
     </script>
-</c:if>
+	</c:if>
 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-<jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
+	<jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>

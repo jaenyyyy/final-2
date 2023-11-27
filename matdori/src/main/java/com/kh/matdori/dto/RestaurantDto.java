@@ -21,5 +21,5 @@ public class RestaurantDto {
 	private String resPost, resAddr1, resAddr2;
 	private Timestamp resRegDate;
 	private String resNotice;
-
+	
 }

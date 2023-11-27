@@ -47,7 +47,7 @@
 <div class="container">
 	<div class="row" style="margin-top: 5%">
 
-		<!-- 제목 -->
+      <!-- 제목 -->
 		<div class="row mb-4">
 			<h1 class="bold">
 				<a class="menu-tag" href="mypage">
@@ -70,7 +70,7 @@
 			</div>
 			<div class="row row-top">
 				<h2 class="bold">
-					<a class="menu-tag" href="">나의리뷰</a>
+					<a class="menu-tag" href="reviewListByCus">나의리뷰</a>
 				</h2>
 			</div>
 		</div>
