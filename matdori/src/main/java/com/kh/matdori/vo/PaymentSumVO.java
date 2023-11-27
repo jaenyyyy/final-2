@@ -18,17 +18,18 @@ public class PaymentSumVO {
 	private MenuDto menuDto;
 	private MenuByReservationDto mbrDto;
 	private int inputPoint;
+}
 //	private float getSumTotal;
 //	private float getPaymentTotal;
 //	private float getLevelByPayback;
 	
 	
-
-	//합계 금액 (메뉴가격 * 메뉴개수)
-	public Float getSumTotal() {
-		return menuDto.getMenuPrice() 
-				* mbrDto.getMenuQty();
-	}
+//
+//	//합계 금액 (메뉴가격 * 메뉴개수)
+//	public Float getSumTotal() {
+//		return menuDto.getMenuPrice() 
+//				* mbrDto.getMenuQty();
+//	}
 
 	
 
