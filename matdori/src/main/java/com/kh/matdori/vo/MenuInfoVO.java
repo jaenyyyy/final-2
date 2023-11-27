@@ -11,6 +11,6 @@ public class MenuInfoVO {
 	private int resNo;
 	private String menuName;
 	private int menuQty;
-	private float menuPrice;
+	private int menuPrice;
 
 }

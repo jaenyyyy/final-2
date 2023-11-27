@@ -161,25 +161,6 @@
       </div>
 
 
-      <!-- 시간버튼 : 없어질 수 있음 -->
-      <div class="row justify-content-center mb-3 mt-4 text-center"
-         style="margin-left: 50px; margin-right: 50px;">
-         <div class="row justify-content-center">
-            <!-- 이거 반복문으로 시간 선택하게 하기 가능한건 위에꺼 불가능한건 밑에꺼 disabled처리한거 쓰면됨-->
-            <div class="col">
-               <button class="btn btn-outline-warning">12 : 00</button>
-            </div>
-            <div class="col">
-               <button class="btn btn-outline-secondary disabled">12 : 30</button>
-            </div>
-            <div class="col">
-               <button class="btn btn-outline-warning">13 : 00</button>
-            </div>
-            <div class="col">
-               <button class="btn btn-outline-warning">13 : 30</button>
-            </div>
-         </div>
-      </div>
 
 
       <!-- 메뉴버튼 : 네비바로 사용함 -->
