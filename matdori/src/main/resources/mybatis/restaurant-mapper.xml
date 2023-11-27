@@ -138,6 +138,7 @@
 		UPDATE restaurant SET res_notice = #{resNotice} WHERE res_no = #{resNo}
 	</update>
 
+<!-- 
 	<select id="searchResList" parameterType="map" resultType="ResSearchListDto">
     SELECT * FROM res_search_list
     <where>
@@ -152,6 +153,7 @@
         </if>
     </where>
 </select>
+-->
 
 
 </mapper>
