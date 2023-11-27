@@ -176,15 +176,19 @@ public class RestaurantRestController {
 		}
 	}
 	
+	// 공지 조회
 	@GetMapping("/notice/{resNo}")
-    public ResponseEntity<?> getNotice(@PathVariable int resNo) {
-        String notice = restaurantDao.findNotice(resNo);
-        if (notice != null) {
-            return ResponseEntity.ok(notice);
-        } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Notice not found for resNo: " + resNo);
-        }
-    }
+	public ResponseEntity<?> getNotice(@PathVariable int resNo) {
+	    String notice = restaurantDao.findNotice(resNo);
+	    
+	    System.out.println("공지내용"+notice);
+	    if (notice != null) {
+	        return ResponseEntity.ok().body(notice); 
+	        
+	    } else {
+	        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Notice not found for resNo: " + resNo);
+	    }
+	}
 
 
     // 공지 등록/수정
