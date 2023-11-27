@@ -7,7 +7,7 @@ import com.kh.matdori.dto.CustomerBlockDto;
 import com.kh.matdori.dto.CustomerDto;
 import com.kh.matdori.vo.CusAdminVO;
 import com.kh.matdori.vo.CusLevelUpVO;
-import com.kh.matdori.vo.PaymentSumVO;
+//import com.kh.matdori.vo.PaymentSumVO;
 
 public interface CustomerDao {
 	
@@ -74,12 +74,12 @@ public interface CustomerDao {
 
 	boolean updateBlock(String customerStatus);
 	
-	//포인트 차감 (마이너스)
-	boolean minusPoint(PaymentSumVO vo);
-	
-	//포인트 페이백 (플러스)
-	boolean paybackPoint(PaymentSumVO vo);
-	
+//	//포인트 차감 (마이너스)
+//	boolean minusPoint(PaymentSumVO vo);
+//	
+//	//포인트 페이백 (플러스)
+//	boolean paybackPoint(PaymentSumVO vo);
+//	
 	boolean updatePoint(String customerId, int customerPoint);
 
 	

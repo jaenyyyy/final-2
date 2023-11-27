@@ -1,8 +1,6 @@
 package com.kh.matdori.controller;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,8 +18,7 @@ import com.kh.matdori.dto.ResSearchListDto;
 import com.kh.matdori.dto.RestaurantDto;
 import com.kh.matdori.dto.ReviewDto;
 import com.kh.matdori.vo.MenuWithImagesVO;
-import com.kh.matdori.vo.ResAdminVO;
-import com.kh.matdori.vo.resSearchListVO;
+import com.kh.matdori.vo.ResSearchListVO;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -80,9 +77,11 @@ public class RestaurantController {
 	
 	//복합검색
 	@RequestMapping("/resSearchList")
-	public String list(@ModelAttribute("vo") resSearchListVO vo, Model model
+	public String list(@ModelAttribute("vo") ResSearchListVO vo, Model model
 			) {
 	    List<ResSearchListDto> resSearchList = restaurantDao.resSearchList(vo);
+	    
+	    
 	    model.addAttribute("resSearchList", resSearchList);
 	    return "restaurant/resSearchList";
 	}

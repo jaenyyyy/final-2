@@ -217,7 +217,7 @@ public class AdminController {
        vo.setCount(count);
        model.addAttribute("vo", vo);
       
-        return "/admin/list";
+        return "/admin/customer/list";
     }   
 
     
@@ -242,7 +242,7 @@ public class AdminController {
        vo.setCount(count);
        model.addAttribute("vo", vo);
        
-       return "/admin/detail";
+       return "/admin/customer/detail";
        }
    
 
