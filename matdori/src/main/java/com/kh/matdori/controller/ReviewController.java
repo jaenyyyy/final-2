@@ -127,24 +127,22 @@ public class ReviewController {
 //		return "비동기라 없어질 주소";
 //	}
 	
-	@RequestMapping("/delete")
-	public String delete(@RequestParam int reviewNo,
-						@ModelAttribute RestaurantDto restaurantDto,
-						@ModelAttribute ReviewDto reviewDto) {
-		int resNo = restaurantDto.getResNo();
-		reviewDto.setResNo(resNo);
-		
-		AttachDto attachDto = reviewDao.findImage(reviewNo);
-		reviewDao.delete(reviewNo);
-		
-		if(attachDto != null) {
-			String home = System.getProperty("user.home");
-			File dir = new File(home, "fado");
-			File target = new File(dir, String.valueOf(attachDto.getAttachNo()));
-			target.delete(); //실제 파일 삭제
-		}
-		attachDao.delete(attachDto.getAttachNo()); //파일정보 삭제
-		
-		return "어디로 보낼까용";
-	}
+	/*
+	 * @RequestMapping("/delete") public String delete(@RequestParam int reviewNo,
+	 * 
+	 * @ModelAttribute RestaurantDto restaurantDto,
+	 * 
+	 * @ModelAttribute ReviewDto reviewDto) { int resNo = restaurantDto.getResNo();
+	 * reviewDto.setResNo(resNo);
+	 * 
+	 * AttachDto attachDto = reviewDao.findImage(reviewNo);
+	 * reviewDao.delete(reviewNo);
+	 * 
+	 * if(attachDto != null) { String home = System.getProperty("user.home"); File
+	 * dir = new File(home, "fado"); File target = new File(dir,
+	 * String.valueOf(attachDto.getAttachNo())); target.delete(); //실제 파일 삭제 }
+	 * attachDao.delete(attachDto.getAttachNo()); //파일정보 삭제
+	 * 
+	 * return "어디로 보낼까용"; }
+	 */
 }
