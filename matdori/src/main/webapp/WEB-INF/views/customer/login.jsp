@@ -4,7 +4,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
-
+ 
 <style>
 .container {
 	max-width: 500px; /* 변경 가능한 폭 설정 */
@@ -23,10 +23,20 @@
 .tag-none:hover {
 	color: #FF3300; /* 원하는 호버 시 색상으로 변경 */
 }
+.container {
+    border: 3px solid #ffb416; /* 테두리 스타일 및 색상 설정 */
+    border-radius: 20px; /* 테두리 모서리를 둥글게 만듭니다 */
+    padding: 80px 60px 60px; /* 내부 여백 설정 - 여기서 첫 번째 값은 상단 패딩입니다 */
+}
  .form-control {
         border: 2px solid #F7B731; /* Yellow border with #F7B731 color and 2px width */
         border-radius: 8px; /* Rounded corners */
     }
+    
+    .bold-text {
+    font-weight: bold;
+}
+    
 </style>
 
 
@@ -281,17 +291,21 @@
 
 
 <form action="login" method="post" autocomplete="off">
+<br><br><br>
 	<div class="container justify-content-center"
-		style="margin-bottom: 6%;">
+		style="margin-bottom: 20%;">
 
 		<!-- 제목 -->
-		<div class="row" style="margin-top: 20%;">
+		<div class="row" style="margin-top: 10%;">
 			<h1>
 				<i class="fa-solid fa-circle-user" style="color: #ffb416;"></i>
-				Login
+				 <span style="font-weight: bold;">Login</span>
 			</h1>
 		</div>
-		<br> matdori 사이트의 다양한 서비스와 혜택을 누리세요.<br>
+	<br>
+<span class="bold-text">matdori 사이트의 다양한 서비스와 혜택을 누리세요.</span>
+<br>
+
 		<br>
 		<div class="row line"></div>
 

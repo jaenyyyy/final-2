@@ -308,7 +308,9 @@
     border-radius: 20px; /* 테두리 모서리를 둥글게 만듭니다 */
     padding: 80px 60px 60px; /* 내부 여백 설정 - 여기서 첫 번째 값은 상단 패딩입니다 */
 }
-
+  .bold-text {
+    font-weight: bold;
+}
 </style>
 
 
@@ -321,14 +323,14 @@
 		style="margin-bottom: 20%;">
 		<div class="row" style="margin-top: 10%;">
 			<h1>
-				<i class="fa-solid fa-circle-user" style="color: #ffb416;"></i> Find
-				Pw
+				<i class="fa-solid fa-circle-user" style="color: #ffb416;"></i>  <span style="font-weight: bold;">Find
+				Pw</span>
 			</h1>
 		</div>
 		
 		
-		계정의 이메일 주소를 입력해주세요  <br> 비밀번호 재설정을 위해 이메일의 인증번호를 확인해주세요 <br>
-		인증번호는 계정의 이메일 주소로 발송됩니다 <br> 
+		<span class="bold-text">계정의 이메일 주소를 입력해주세요  <br> 비밀번호 재설정을 위해 이메일의 인증번호를 확인해주세요 <br>
+		인증번호는 계정의 이메일 주소로 발송됩니다 <br> </span>
 		
 		<br><br>
 		<div class="row line"></div>

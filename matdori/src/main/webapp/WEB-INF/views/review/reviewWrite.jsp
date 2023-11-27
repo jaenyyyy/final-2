@@ -4,6 +4,18 @@
 
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 
+<style>
+/* Target filled stars to change color to yellow */
+    .rating__star.fas {
+        color: #F7B731; /* Yellow color */
+    }
+
+    /* Target empty stars to change color to yellow */
+    .rating__star.far {
+        color: #F7B731; /* Yellow color */
+        
+</style>
+
 <div class="container">
 	<div class="row justify-content-center" style="margin-top: 2%;">
 
@@ -12,7 +24,7 @@
 			<div class="mt-4">
 				<h1 class="text-start">
 					<i class="fa-solid fa-pen-to-square" style="color: #ffb416;"></i>
-					리뷰작성
+					<span style="font-weight: bold;">리뷰작성</span>
 				</h1>
 			</div>
 

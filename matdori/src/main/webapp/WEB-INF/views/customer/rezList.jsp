@@ -85,10 +85,14 @@
       <!-- 주 내용 -->
       <div class="col-9">
          <div class="row">
+         
+         <br>  <br>
+         <h4 class="bold"> 예약 내역 </h4>
             <c:forEach var="reservationListDto" items="${rezList}">
                 <div>
                     <br>
                 </div>
+                
                 <div class="row res-line p-4" style="margin-left: 100px;">
                       <div class="col-3">
                         사진자리

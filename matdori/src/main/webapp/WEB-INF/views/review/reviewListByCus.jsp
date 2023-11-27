@@ -48,9 +48,9 @@
 	<div class="row" style="margin-top: 5%">
 
 
-	
 
-<!-- 마이페이지 탭 -->
+
+		<!-- 마이페이지 탭 -->
 		<div class="col-3 page-line">
 			<div class="row">
 
@@ -62,12 +62,9 @@
 						</a>
 					</h2>
 				</div>
-				<br>
-				<br>
-				<br>	<br>
-				<br>
-				<br>
-		
+				<br> <br> <br> <br> <br> <br>
+
+
 				<h4 class="bold">
 					<a class="menu-tag" href="pick">북마크</a>
 				</h4>
@@ -88,6 +85,9 @@
 		<!-- 주 내용 -->
 		<div class="col-9">
 			<div class="row">
+
+				<br> <br>
+				<h4 class="bold">나의 리뷰</h4>
 				<c:forEach var="reviewDto" items="${reviewList}">
 					<div>
 						<br>
