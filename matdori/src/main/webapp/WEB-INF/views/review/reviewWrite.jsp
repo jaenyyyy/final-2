@@ -1,7 +1,43 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<style>
+.row-top {
+	margin-top: 20%;
+}
 
+.page-line {
+	border-right: 3px solid #ffb416;
+}
+
+.bold {
+	font-weight: bold;
+}
+
+.menu-tag {
+	text-decoration: none;
+	color: black;
+}
+
+.menu-tag:hover {
+	color: #FFB416;
+}
+
+.res-line {
+	border-top: 1px solid #ffb416;
+	border-bottom: 1px solid #ffb416;
+	width: 70%;
+}
+
+.rating {
+	width: 100%;
+}
+
+.rating__star {
+	cursor: pointer;
+	color: #FFB416;
+}
+</style>
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 
 <style>
@@ -51,7 +87,7 @@
 					<textarea name="reviewContent" rows="10" class="form-control"
 						placeholder="내용을 입력해주세요."></textarea>
 					<!-- 이미지를 업로드할 input 필드 -->
-					<input type="file" name="attach">
+					<input type="file" name="attach" accept="image/*">
 				</div>
 
 				<!-- hidden field로 resNo 값을 전송 -->

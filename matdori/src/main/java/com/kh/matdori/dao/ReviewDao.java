@@ -18,9 +18,15 @@ public interface ReviewDao {
 	ReviewDto selectOneInfo(int reviewNo); // 작성
 	
 	
-	//리뷰 사진등록
+	//리뷰 사진연결
 	void connect(int reviewNo, int attacchNo);
+	//리뷰 사진찾기
 	AttachDto findImage(int reviewNo);
+
+	//리뷰 평균 별점계산
+	double getAverageRatingByRes(int resNo);
+
 	int getCountOfReviewsByCustomerId(String customerId);
+
 	
 }

@@ -1,7 +1,6 @@
 package com.kh.matdori.restcontroller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -50,10 +49,10 @@ public class AdminRestController {
     
  // 해시태그 추가 기능
     @PostMapping("/hashtag/insert")
-    public void insert(@RequestBody HashtagDto hashtagDto) {
+    public void insert(@ModelAttribute HashtagDto hashtagDto) {
     	int hashNo = adminDao.hashSequence();
     	hashtagDto.setHashNo(hashNo);
-        adminDao.insertHashtag(hashtagDto);
+    	adminDao.insertHashtag(hashtagDto);
     }
     
     //해시태그 삭제 기능

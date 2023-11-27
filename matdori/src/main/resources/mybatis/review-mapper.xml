@@ -3,90 +3,108 @@
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-    
+
 <mapper namespace="review">
-	
+
 	<!-- 시퀀스 등록 -->
 	<select id="sequence" resultType="int">
-		select review_seq.nextval from dual
+		select review_seq.nextval from
+		dual
 	</select>
-	
+
 	<!-- 리뷰 작성 -->
-	<insert id ="write">
+	<insert id="write">
 		insert into review(
-			review_no, res_no, review_writer, review_content,
-			review_write_date, review_star_point
-			)
+		review_no, res_no, review_writer,
+		review_content,
+		review_write_date, review_star_point
+		)
 		values(
-			#{reviewNo}, #{resNo}, #{reviewWriter}, #{reviewContent},
-			SYSDATE, #{reviewStarPoint}
+		#{reviewNo}, #{resNo}, #{reviewWriter}, #{reviewContent},
+		SYSDATE,
+		#{reviewStarPoint}
 		)
 	</insert>
-	
-	<!--  리뷰 리스트  -->
+
+	<!-- 리뷰 리스트 -->
 	<select id="reviewList" resultType="ReviewDto">
-		select * from review where review_writer = #{reviewWriter}
+		select * from review where
+		review_writer = #{reviewWriter}
 	</select>
-	
-	<!-- 리뷰 목록 (매장)-->
+
+	<!-- 리뷰 목록 (매장) -->
 	<select id="listByRes" resultType="ReviewDto">
 		select rl.*, ri.attach_no
-		from review_list rl
-			left outer join review_images ri on rl.review_no = ri.review_no
-		where res_no = #{resNo} order by rl.review_no desc
+		from
+		review_list rl
+		left outer join review_images ri on rl.review_no =
+		ri.review_no
+		where
+		res_no = #{resNo} order by rl.review_no desc
 	</select>
-	
+
 	<!-- 리뷰 목록 (이용자) + 리뷰리스트, 리뷰이미지 -->
 	<select id="listByCus" resultType="ReviewDto">
 		select rl.*, ri.attach_no
-		from review_list rl
-			left outer join review_images ri on rl.review_no = ri.review_no
-		where review_writer = #{reviewWriter} ORDER BY rl.review_no desc
+		from
+		review_list rl
+		left outer join review_images ri on rl.review_no =
+		ri.review_no
+		where
+		review_writer = #{reviewWriter} ORDER BY rl.review_no
+		desc
 	</select>
-	
+
+
+
 	<!-- 리뷰 상세 -->
-	<select id="detail" resultType="ReviewDto">
-		select r.*, ri.attach_no
-		from review r
-			left outer join review_image ri on r.review_no = ri.review_no
-		where review_no =#{reviewNo}
-	</select>
-	
+	<!-- <select id="detail" resultType="ReviewDto"> select r.*, ri.attach_no 
+		from review r left outer join review_images ri on r.review_no = ri.review_no 
+		where review_no =#{reviewNo} </select> -->
+
 	<!-- 리뷰 수정 -->
-	<update id="change">
-		update review 
-		set review_content = #{reviewContent},
-			review_star_point = #{reviewStarPoint}
-		where review_no = #{reviewNo}
-	</update>
-	
+	<!-- <update id="change"> update review set review_content = #{reviewContent}, 
+		review_star_point = #{reviewStarPoint} where review_no = #{reviewNo} </update> -->
+
 	<!-- 리뷰 삭제 -->
 	<delete id="delete">
 		delete review where review_no = #{reviewNo}
 	</delete>
-	
+
 	<!-- 이미지 연결 -->
 	<insert id="connect">
-		insert into review_image values (#{reviewNo}, #{attachNo})
+		insert into review_images values (#{reviewNo},
+		#{attachNo})
 	</insert>
-	
-	<!--  리뷰 작성  -->
+
+	<!-- 리뷰 작성 -->
 	<select id="reviewInfo" resultType="ReviewDto">
-		select * from review where review_no = #{reviewNo}
+		select * from review where
+		review_no = #{reviewNo}
 	</select>
-	
+
+<!-- 별점 평균 -->
+<select id="startevg" resultType="double">
+    SELECT SUM(review_star_point) / COUNT(*) AS average_rating
+    FROM review
+    WHERE res_no = #{resNo}
+    GROUP BY res_no
+</select>
+
+
 	<!-- 이미지 찾기 -->
 	<select id="findImage" resultType="AttachDto">
 		select * from attach
-		where attach_no = (
-			select attach_no from review_image
-			where review_no = #{reviewNo}
+		where
+		attach_no = (
+		select attach_no from review_images
+		where review_no =
+		#{reviewNo}
 		)
 	</select>
-	
+
 	<select id="countOfReviews" resultType="ReviewDto">
 	 SELECT COUNT(*) FROM reviews WHERE customer_id = #{customerId}
 	</select>
-	
 	
 </mapper>

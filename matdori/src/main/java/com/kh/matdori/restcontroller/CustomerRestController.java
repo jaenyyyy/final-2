@@ -37,7 +37,6 @@ public class CustomerRestController {
 	// 아이디 중복 여부 체크
 	@PostMapping("/idCheck")
 	public String idCheck(@RequestParam String customerId) {
-		log.debug("customerId={}", customerId);
 		CustomerDto customerDto = customerDao.selectOne(customerId);
 		
 		if (customerDto == null) {
