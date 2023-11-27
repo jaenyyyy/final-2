@@ -20,6 +20,8 @@ import com.kh.matdori.dto.ResSearchListDto;
 import com.kh.matdori.dto.RestaurantDto;
 import com.kh.matdori.dto.ReviewDto;
 import com.kh.matdori.vo.MenuWithImagesVO;
+import com.kh.matdori.vo.ResAdminVO;
+import com.kh.matdori.vo.resSearchListVO;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -65,19 +67,9 @@ public class RestaurantController {
 	
 	//복합검색
 	@RequestMapping("/resSearchList")
-	public String list(
-	        @RequestParam(required = false) String resName,
-	        @RequestParam(required = false) String regionName,
-	        @RequestParam(required = false) String hashComment,
-	        Model model,
-	        @ModelAttribute RestaurantDto restaurantDto) {
-
-	    Map<String, String> searchParams = new HashMap<>();
-	    searchParams.put("resName", resName);
-	    searchParams.put("regionName", regionName);
-	    searchParams.put("hashComment", hashComment);
-
-	    List<ResSearchListDto> resSearchList = restaurantDao.resSearchList(searchParams);
+	public String list(@ModelAttribute("vo") resSearchListVO vo, Model model
+			) {
+	    List<ResSearchListDto> resSearchList = restaurantDao.resSearchList(vo);
 	    model.addAttribute("resSearchList", resSearchList);
 	    return "restaurant/resSearchList";
 	}

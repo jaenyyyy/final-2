@@ -98,20 +98,19 @@
 	
 	<!-- 복합검색 : 매장이름 / 해시태그 / 지역이름 -->
 	<select id="searchResList" parameterType="map" resultType="ResSearchListDto">
-	    SELECT * FROM res_search_list
-	    <where>
-	        <if test="regionName != null">
-	            region_name = #{regionName}
-	        </if>
-	        <if test="hashComment != null">
-	            AND hash_comment LIKE '%' || #{hashComment} || '%'
-	        </if>
-	        <if test="resName != null">
-	            AND res_name LIKE '%' || #{resName} || '%'
-	        </if>
-	    </where>
-	</select>
-
+    SELECT * FROM res_search_list
+    <where>
+        <if test="keyword != null and keyword != ''">
+            and instr(res_name, #{resName}) > 0
+        </if>
+        <if test="regionName != null">
+            and region_name = #{regionName}
+        </if>
+        <if test="keyword != null and keyword != ''">
+            and instr(hash_comment, #{hashComment}) > 0
+        </if>
+    </where>
+</select>
 
 </mapper>
 	
