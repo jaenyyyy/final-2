@@ -355,7 +355,7 @@
 
 
 	<!-- 리뷰 -->
-	<div
+<%-- 	<div
 		class="row justify-content-center text-center list-border info-margin"
 		id="reviewSection">
 		<!-- 제목 -->
@@ -398,7 +398,7 @@
 					</div>
 				</c:forEach>
 			</div>
-		</div>
+		</div> --%>
 
 		<!-- 더보기 버튼 -->
 		<div class="row mt-4">
