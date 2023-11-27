@@ -22,29 +22,42 @@
 .tag-none:hover {
 	color: #FF3300; /* 원하는 호버 시 색상으로 변경 */
 }
- .form-control {
-        border: 2px solid #F7B731; /* Yellow border with #F7B731 color and 2px width */
-        border-radius: 8px; /* Rounded corners */
-    }
+
+input[type="text"], input[type="password"], input[type="tel"], input[type="date"]
+	{
+	border-color: #F7B731 !important; /* Change the border color */
+}
+.container {
+    border: 3px solid #ffb416; /* 테두리 스타일 및 색상 설정 */
+    border-radius: 20px; /* 테두리 모서리를 둥글게 만듭니다 */
+    padding: 80px 120px 60px; /* 내부 여백 설정 - 여기서 첫 번째 값은 상단 패딩입니다 */
+
+    margin: 0 auto 20px; /*
+}
 
 </style>
 
 
 <form action="join" method="post" autocomplete="off">
+<br><br><br>
 	<div class="container justify-content-center"
-		style="margin-bottom: 6%;">
+		style="margin-bottom: 20%;">
 
 		<!-- 제목 -->
-		<div class="row" style="margin-top: 20%;">
+		<div class="row" style="margin-top: 15%;">
 			<h1>
-				<i class="fa-solid fa-circle-user" style="color: #ffb416;"></i> Join
+				<i class="fa-solid fa-circle-user" style="color: #ffb416;"></i> 
+<span style="font-weight: bold;">Join</span>
 			</h1>
-		</div><br>
+		</div>
+		<br>
 		<div class="row line"></div>
 
+		
+		<br>
 		<div class="row mt-4">
-			아이디  <br><br><input class="form-control" type="text" name="customerId"
-				placeholder="영문 소문자, 숫자 4~19자">
+			아이디 <br> <br> <input class="form-control" type="text"
+				name="customerId" placeholder="영문 소문자, 숫자 4~19자">
 			<div class="success-feedback">올바른 아이디 형식입니다.</div>
 			<div class="fail-feedback">아이디를 형식에 맞게 입력해주세요.</div>
 			<div class="fail2-feedback">이미 사용중인 아이디입니다.</div>
@@ -52,101 +65,96 @@
 
 
 		<div class="row mt-4">
-			비밀번호  <br><br><input class="form-control" type="password" name="customerPw"
-				placeholder="영문,숫자,특수문자 반드시 1개 이상 포함">
+			비밀번호 <br> <br> <input class="form-control" type="text"
+				name="customerPw" placeholder="영문,숫자,특수문자 반드시 1개 이상 포함">
 			<div class="success-feedback">올바른 비밀번호 형식입니다.</div>
 			<div class="fail-feedback">비밀번호를 형식에 맞게 입력해주세요.</div>
 		</div>
 
 
+
+
 		<div class="row mt-4">
-			이름  <br><br><input class="form-control" type="text" name="customerName"
-				placeholder="한글 2~7자 입력">
+			이름 <br> <br> <input class="form-control" type="text"
+				name="customerName" placeholder="한글 2~7자 입력">
 			<div class="success-feedback">올바른 형식입니다.</div>
 			<div class="fail-feedback">형식에 맞게 입력해주세요.</div>
-		</div>
 
 
 
-		<div class="row mt-4">
-			이메일  <br><br><input class="form-control" type="text" name="customerEmail"
-				placeholder="test@kh.com">
-			<div class="fail-feedback">이메일 형식이 잘못되었습니다</div>
-			<div class="fail2-feedback">이미 이 이메일로 아이디를 만드셨습니다</div>
-			<div class="success-feedback">올바른 이메일 형식입니다</div>
-
-		</div>
-
-		<div class="row mt-4">
-			<div class="w-50">
-				<button type="button" class="btn btn-send btn-warning"
-					onclick="sendCertNumber()">
-					<i class="fa-solid fa-spinner fa-spin"></i> <span>인증번호 보내기</span>
-				</button>
-			</div>
-		</div>
-
-
-		<div class="row mt-4">
-			<input type="text" class="form-control cert-input"
-				placeholder="인증번호 입력">
-			<div class="cert-wrapper right">
-				<button type="button" class="btn btn-cert btn-warning"
-					onclick="checkCertNumber()">확인</button>
-
-				<div class="fail2-feedback">인증번호를 입력해주세요</div>
-				<div class="fail-feedback">인증번호 잘못 입력하셨습니다</div>
-				<div class="success-feedback">인증 성공!</div>
-				<div class="row flex-container"></div>
-
-
-				<div class="row mt-4">
-					연락처 <br><br> <input class="form-control" type="tel" name="customerContact"
-						placeholder="010******** (-없이)">
-					<div class="fail-feedback">전화번호 형식이 올바르지 않습니다.</div>
-				</div>
-
-
-				<div class="row mt-4">
-					생년월일 <br><br> <input class="form-control" type="date" name="customerBirth">
-					<div class="fail-feedback">형식을 다시 한번 확인해주세요.</div>
-				</div>
-
-				<br> <br>
-
-
-
-			<div class="row mv-30 mt-4 form-control">
-	
-				
-		 <div class="flex-radio">
-                <div class="radio-control">
-                    <input class="radio-group" type="radio" name="customerGender">남성
-                </div>
-                <div class="radio-control">
-                    <input class="radio-group" type="radio" name="customerGender">여성 
-                </div>
-            </div>
-            <div><br>
-                <input class="check-control" type="checkbox">이용약관 개인정보 수집 및 이용, 마케팅 활용 선택에 모두 동의합니다.
-            </div>
-            <div>
-
-				</div>
-
-				</div>
+			<div class="row mt-4">
+				이메일 <br> <br> <input class="form-control" type="text"
+					name="customerEmail" placeholder="test@kh.com">
+				<div class="fail-feedback">이메일 형식이 잘못되었습니다</div>
+				<div class="fail2-feedback">이미 이 이메일로 아이디를 만드셨습니다</div>
+				<div class="success-feedback">올바른 이메일 형식입니다</div>
 
 			</div>
-		</div>
+
+			<div class="row mv-30 mt-4">
+				<div class="w-50">
+					<button type="button" class="btn btn-send btn-warning"
+						onclick="sendCertNumber()">
+						<i class="fa-solid fa-spinner fa-spin"></i> <span>인증번호 보내기</span>
+					</button>
+				</div>
+			</div>
 
 
-		
-		
-		<div class="row mv-30 mt-4">
-			<button type="submit" class="btn btn-warning text-black">
-				가입하기 </button>
+			<div class="row mt-4">
+				<input type="text" class="form-control cert-input"
+					placeholder="인증번호 입력">
+				<div class="cert-wrapper right">
+					<button type="button" class="btn btn-cert btn-warning"
+						onclick="checkCertNumber()">확인</button>
+
+					<div class="fail2-feedback">인증번호를 입력해주세요</div>
+					<div class="fail-feedback">인증번호 잘못 입력하셨습니다</div>
+					<div class="success-feedback">인증 성공!</div>
+					<div class="row flex-container"></div>
+
+
+					<div class="row mt-4">
+						연락처 <br> <br> <input class="form-control" type="tel"
+							name="customerContact" placeholder="010******** (-없이)">
+						<div class="fail-feedback">전화번호 형식이 올바르지 않습니다.</div>
+					</div>
+
+
+					<div class="row mt-4">
+						생년월일 <br> <br> <input class="form-control" type="date"
+							name="customerBirth">
+						<div class="fail-feedback">형식을 다시 한번 확인해주세요.</div>
+					</div>
+
+					<br> <br>
+
+
+
+					<div class="row mt-4">
+
+
+						성별 <br> <br> <label> <input type="radio"
+							id="male" name="customerGender" value="남자"
+							class="customer-gender-radio"> 남자 <input type="radio"
+							id="female" name="customerGender" value="여자"
+							class="customer-gender-radio"> 여자
+						</label>
+
+					</div>
+
+				</div>
+			</div>
+
+			<div class="row line"></div>
+			<br>
+			<div class="row mv-30 mt-4">
+				<button type="submit" class="btn btn-warning text-black">
+					가입하기</button>
+			</div>
 		</div>
-		</div>
+	</div>
+
 </form>
 
 <script>
