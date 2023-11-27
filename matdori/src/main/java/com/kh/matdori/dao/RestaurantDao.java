@@ -9,7 +9,6 @@ import com.kh.matdori.dto.AttachDto;
 import com.kh.matdori.dto.ResSearchListDto;
 import com.kh.matdori.dto.RestaurantDto;
 import com.kh.matdori.vo.RestaurantDetailVO;
-import com.kh.matdori.vo.resSearchListVO;
 
 public interface RestaurantDao{
 
@@ -46,11 +45,13 @@ public interface RestaurantDao{
     String findNotice(int resNo);
 
     // 공지 등록/수정
-    void updateNotice(@Param("resNo") int resNo, @Param("resNotice") String resNotice);
+    void updateNotice(RestaurantDto restaurantDto);
     
     
     
     
     //복합검색 리스트
-    List<ResSearchListDto> resSearchList(resSearchListVO vo);
+    List<ResSearchListDto> resSearchList(Map<String, String> searchParams);
+
+	
 }
