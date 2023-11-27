@@ -127,5 +127,22 @@
     <insert id="insertMenuImage">
     insert into menu_images(menu_no, attach_no) values (#{menuNo}, #{attachNo})
 </insert>
+
+<select id="selectListByMenuNos" parameterType="java.util.List" resultType="MenuWithImagesVO">
+        SELECT
+            m.menu_no AS menuNo,
+            m.menu_name AS menuName,
+            m.menu_price AS menuPrice,
+            mi.attach_no AS attachNo 
+        FROM
+            menu m
+        JOIN
+            menu_images mi ON m.menu_no = mi.menu_no
+        WHERE
+            m.menu_no IN
+            <foreach collection="list" item="menuNo" open="(" separator="," close=")">
+                #{menuNo}
+            </foreach>
+    </select>
     
     </mapper>
