@@ -10,4 +10,5 @@ public class HashtagListDto {
 	private int hashNo;
     private String hashComment;
     private int resNo;
+    private String hashComments;
 }

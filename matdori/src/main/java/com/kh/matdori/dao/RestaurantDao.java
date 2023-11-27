@@ -7,7 +7,7 @@ import com.kh.matdori.dto.AttachDto;
 import com.kh.matdori.dto.ResSearchListDto;
 import com.kh.matdori.dto.RestaurantDto;
 import com.kh.matdori.vo.RestaurantDetailVO;
-import com.kh.matdori.vo.resSearchListVO;
+import com.kh.matdori.vo.ResSearchListVO;
 
 public interface RestaurantDao{
 
@@ -44,5 +44,5 @@ public interface RestaurantDao{
     
     
     //복합검색 리스트
-    List<ResSearchListDto> resSearchList(resSearchListVO vo);
+    List<ResSearchListDto> resSearchList(ResSearchListVO vo);
 }
