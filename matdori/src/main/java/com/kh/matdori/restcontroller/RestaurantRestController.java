@@ -45,37 +45,34 @@ public class RestaurantRestController {
 
 	@Autowired
 	private AdminDao adminDao;
-	
+
 	@Autowired
 	private AttachDao attachDao;
-	
-	
-		
+
 	@PostMapping("/")
 	public ResponseEntity<?> insert(@RequestBody RestaurantJudgeVO vo) {
-		 // 디버그 로그 출력
+		// 디버그 로그 출력
 		log.debug("Received busId: {}", vo.getRestaurantDto().getBusId());
-		//시퀀스 꺼냄
+		// 시퀀스 꺼냄
 		int resNo = restaurantDao.sequence();
 		int judgeNo = adminDao.sequence();
-		
-		 log.debug("Generated resNo: {}, judgeNo: {}", resNo, judgeNo);
-		
-		vo.getRestaurantDto().setResNo(resNo);
-		
-		//등록함
-		 restaurantDao.insert(vo.getRestaurantDto());
 
-	    // 시퀀스 값을 받아옴
-	    
-	    //resNo+judgeNo 설정
-	    vo.getRestaurantJudgeDto().setResNo(resNo);
-	    vo.getRestaurantJudgeDto().setResJudgeNo(judgeNo);
-	    
-	   
-	    adminDao.insertResJudge(vo.getRestaurantJudgeDto());
+		log.debug("Generated resNo: {}, judgeNo: {}", resNo, judgeNo);
+
+		vo.getRestaurantDto().setResNo(resNo);
+
+		// 등록함
+		restaurantDao.insert(vo.getRestaurantDto());
+
+		// 시퀀스 값을 받아옴
+
+		// resNo+judgeNo 설정
+		vo.getRestaurantJudgeDto().setResNo(resNo);
+		vo.getRestaurantJudgeDto().setResJudgeNo(judgeNo);
+
+		adminDao.insertResJudge(vo.getRestaurantJudgeDto());
 		return ResponseEntity.created(URI.create("/restaurant/" + resNo)).build();
-		}
+	}
 
 	@DeleteMapping("/{resNo}")
 	public void delete(@PathVariable int resNo) {
@@ -92,87 +89,113 @@ public class RestaurantRestController {
 	public RestaurantDto find(@PathVariable int resNo) {
 		return restaurantDao.selectOne(resNo);
 	}
-	// 초기 디렉터리 설정
-			@Autowired
-			private FileUploadProperties props;
-			private File dir;
 
-			@PostConstruct
-			public void init() {
-				dir = new File(props.getHome());
-				dir.mkdirs();
-			}
+	// 초기 디렉터리 설정
+	@Autowired
+	private FileUploadProperties props;
+	private File dir;
+
+	@PostConstruct
+	public void init() {
+		dir = new File(props.getHome());
+		dir.mkdirs();
+	}
+
 //    // 이미지 업로드
 	@PostMapping(value = "/upload/resNo/{resNo}/image", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 	public ResponseEntity<?> uploadImage(@PathVariable int resNo, @RequestPart List<MultipartFile> resImages) {
-	    if (resImages == null || resImages.isEmpty()) {
-	        return ResponseEntity.badRequest().body("No images provided.");
-	    }
+		if (resImages == null || resImages.isEmpty()) {
+			return ResponseEntity.badRequest().body("No images provided.");
+		}
 
-	    try {
-	        for (MultipartFile file : resImages) {
-	            if (!file.isEmpty()) {
-	                int attachNo = attachDao.sequence(); // 첨부파일 번호 생성
-	                File target = new File(dir, String.valueOf(attachNo));
-	                file.transferTo(target);
+		try {
+			for (MultipartFile file : resImages) {
+				if (!file.isEmpty()) {
+					int attachNo = attachDao.sequence(); // 첨부파일 번호 생성
+					File target = new File(dir, String.valueOf(attachNo));
+					file.transferTo(target);
 
-	                AttachDto attachDto = new AttachDto();
-	                attachDto.setAttachNo(attachNo);
-	                attachDto.setAttachName(file.getOriginalFilename());
-	                attachDto.setAttachSize(file.getSize());
-	                attachDto.setAttachType(file.getContentType());
-	                
-	                log.debug("attachDto={}",attachDto);
-	                attachDao.insert(attachDto);
+					AttachDto attachDto = new AttachDto();
+					attachDto.setAttachNo(attachNo);
+					attachDto.setAttachName(file.getOriginalFilename());
+					attachDto.setAttachSize(file.getSize());
+					attachDto.setAttachType(file.getContentType());
 
-	                restaurantDao.insertResImage(resNo, attachNo); // 매장 이미지 정보 저장
-	            }
-	        }
-	        return ResponseEntity.ok("Images uploaded successfully.");
-	    } catch (IOException e) {
-	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error during image upload.");
-	    }
+					log.debug("attachDto={}", attachDto);
+					attachDao.insert(attachDto);
+
+					restaurantDao.insertResImage(resNo, attachNo); // 매장 이미지 정보 저장
+				}
+			}
+			return ResponseEntity.ok("Images uploaded successfully.");
+		} catch (IOException e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error during image upload.");
+		}
 	}
-    // 이미지 삭제
-    @DeleteMapping("/deleteImage/{attachNo}")
-    public ResponseEntity<?> deleteImage(@PathVariable int attachNo) {
-        try {
-            AttachDto attachDto = attachDao.selectOne(attachNo); // selectOne() 메서드 필요
-            if (attachDto != null) {
-                File target = new File(dir, String.valueOf(attachDto.getAttachNo()));
-                if (target.delete()) {
-                    attachDao.delete(attachNo); // delete() 메서드 구현 필요
-                    // 여기에 resNo와 attachNo의 연결을 끊는 로직 추가 (예: resImageDao.deleteResImage(attachNo);)
-                    return ResponseEntity.ok("Deleted successfully.");
-                }
-            }
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Image not found.");
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Delete failed.");
-        }
-    }
 
-    // resNo별 이미지 리스트 조회
+	// 이미지 삭제
+	@DeleteMapping("/deleteImage/{attachNo}")
+	public ResponseEntity<?> deleteImage(@PathVariable int attachNo) {
+		try {
+			AttachDto attachDto = attachDao.selectOne(attachNo); // selectOne() 메서드 필요
+			if (attachDto != null) {
+				File target = new File(dir, String.valueOf(attachDto.getAttachNo()));
+				if (target.delete()) {
+					attachDao.delete(attachNo); // delete() 메서드 구현 필요
+					// 여기에 resNo와 attachNo의 연결을 끊는 로직 추가 (예: resImageDao.deleteResImage(attachNo);)
+					return ResponseEntity.ok("Deleted successfully.");
+				}
+			}
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Image not found.");
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Delete failed.");
+		}
+	}
+
+	// resNo별 이미지 리스트 조회
 	@GetMapping("/image/{resNo}")
 	public ResponseEntity<?> getImagesByRes(@PathVariable int resNo) {
-	    try {
-	        List<Integer> imagesNo = restaurantDao.findImageNoByRes(resNo);
-	        List<AttachDto> image = new ArrayList<>();
+		try {
+			List<Integer> imagesNo = restaurantDao.findImageNoByRes(resNo);
+			List<AttachDto> image = new ArrayList<>();
 
-	        for (Integer imageNo : imagesNo) {
-	            AttachDto attachDto = attachDao.selectOne(imageNo);
-	            if (attachDto != null) {
-	                image.add(attachDto);
-	            }
-	        }
+			for (Integer imageNo : imagesNo) {
+				AttachDto attachDto = attachDao.selectOne(imageNo);
+				if (attachDto != null) {
+					image.add(attachDto);
+				}
+			}
 
-	        if (!image.isEmpty()) {
-	            return ResponseEntity.ok(image);
-	        } else {
-	            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No images found.");
-	        }
-	    } catch (Exception e) {
-	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error retrieving images.");
+			if (!image.isEmpty()) {
+				return ResponseEntity.ok(image);
+			} else {
+				return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No images found.");
+			}
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error retrieving images.");
+		}
+	}
+	
+	// 공지 조회
+	@GetMapping("/notice/{resNo}")
+	public ResponseEntity<?> getNotice(@PathVariable int resNo) {
+	    String notice = restaurantDao.findNotice(resNo);
+	    
+	    System.out.println("공지내용"+notice);
+	    if (notice != null) {
+	        return ResponseEntity.ok().body(notice); 
+	        
+	    } else {
+	        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Notice not found for resNo: " + resNo);
 	    }
 	}
+
+
+    // 공지 등록/수정
+    @PutMapping("/notice/{resNo}")
+    public ResponseEntity<?> updateNotice(@PathVariable int resNo, @RequestBody String notice) {
+        restaurantDao.updateNotice(resNo, notice);
+        return ResponseEntity.ok("Notice updated successfully for resNo: " + resNo);
+    }
+
 }

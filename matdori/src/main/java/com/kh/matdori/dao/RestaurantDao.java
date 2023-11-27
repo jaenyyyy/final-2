@@ -3,6 +3,8 @@ package com.kh.matdori.dao;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.kh.matdori.dto.AttachDto;
 import com.kh.matdori.dto.ResSearchListDto;
 import com.kh.matdori.dto.RestaurantDto;
@@ -39,6 +41,12 @@ public interface RestaurantDao{
 
     // 특정 resNo와 attachNo의 연결을 끊는 메서드
     void deleteResImage(int attachNo);
+    
+    // 공지 조회
+    String findNotice(int resNo);
+
+    // 공지 등록/수정
+    void updateNotice(@Param("resNo") int resNo, @Param("resNotice") String resNotice);
     
     
     

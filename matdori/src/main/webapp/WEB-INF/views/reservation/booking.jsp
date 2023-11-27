@@ -5,6 +5,8 @@
 
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 
+
+
 <div class="row" style="margin-top:2%;">
 	<div class="col">
 		<form action="insert" method="post" >

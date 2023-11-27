@@ -1,8 +1,56 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<style>
+.row-top {
+	margin-top: 20%;
+}
 
+.page-line {
+	border-right: 3px solid #ffb416;
+}
+
+.bold {
+	font-weight: bold;
+}
+
+.menu-tag {
+	text-decoration: none;
+	color: black;
+}
+
+.menu-tag:hover {
+	color: #FFB416;
+}
+
+.res-line {
+	border-top: 1px solid #ffb416;
+	border-bottom: 1px solid #ffb416;
+	width: 70%;
+}
+
+.rating {
+	width: 100%;
+}
+
+.rating__star {
+	cursor: pointer;
+	color: #FFB416;
+}
+</style>
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
+
+<style>
+/* Target filled stars to change color to yellow */
+    .rating__star.fas {
+        color: #F7B731; /* Yellow color */
+    }
+
+    /* Target empty stars to change color to yellow */
+    .rating__star.far {
+        color: #F7B731; /* Yellow color */
+        
+</style>
 
 <div class="container">
 	<div class="row justify-content-center" style="margin-top: 2%;">
@@ -12,7 +60,7 @@
 			<div class="mt-4">
 				<h1 class="text-start">
 					<i class="fa-solid fa-pen-to-square" style="color: #ffb416;"></i>
-					리뷰작성
+					<span style="font-weight: bold;">리뷰작성</span>
 				</h1>
 			</div>
 

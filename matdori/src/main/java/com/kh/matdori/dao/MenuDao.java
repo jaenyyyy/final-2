@@ -3,8 +3,8 @@ package com.kh.matdori.dao;
 import java.util.List;
 
 import com.kh.matdori.dto.AttachDto;
-import com.kh.matdori.dto.MenuByResDto;
 import com.kh.matdori.dto.MenuDto;
+import com.kh.matdori.vo.MenuInfoVO;
 import com.kh.matdori.vo.MenuWithImagesVO;
 
 public interface MenuDao {
@@ -30,5 +30,9 @@ public interface MenuDao {
 	AttachDto findMenuImage(int menuNo);
 
 	MenuDto selectOneByMenuNo(int menuNo);
+
+	List<MenuWithImagesVO> selectList(List<Integer> menuNos);
+	
+	
 
 }

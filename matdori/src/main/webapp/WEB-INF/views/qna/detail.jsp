@@ -55,6 +55,14 @@
 	   </div>
 		
 		</c:if>
+		
+		<c:if test="${sessionScope.level ne '관리자'}">
+    <div class="col text-center">
+        <a class="btn btn-secondary" href="list">
+            목록
+        </a>
+    </div>
+</c:if>
 	
 	</div>
 </div>

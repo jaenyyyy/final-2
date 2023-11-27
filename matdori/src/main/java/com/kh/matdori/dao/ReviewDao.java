@@ -23,7 +23,7 @@ public interface ReviewDao {
 	//리뷰 사진찾기
 	AttachDto findImage(int reviewNo);
 
-  //리뷰 평균 별점계산
+	//리뷰 평균 별점계산
 	double getAverageRatingByRes(int resNo);
 
 	int getCountOfReviewsByCustomerId(String customerId);

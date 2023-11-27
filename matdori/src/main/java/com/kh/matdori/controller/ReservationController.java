@@ -24,8 +24,8 @@ import com.kh.matdori.dao.ReservationDao;
 import com.kh.matdori.dao.RestaurantDao;
 import com.kh.matdori.dao.SeatDao;
 import com.kh.matdori.dto.ClockDto;
+import com.kh.matdori.dto.CustomerDto;
 import com.kh.matdori.dto.MenuByReservationDto;
-import com.kh.matdori.dto.MenuDto;
 import com.kh.matdori.dto.PaymentDto;
 import com.kh.matdori.dto.ReservationDto;
 import com.kh.matdori.dto.RestaurantDto;
@@ -36,6 +36,7 @@ import com.kh.matdori.vo.KakaoPayApproveRequestVO;
 import com.kh.matdori.vo.KakaoPayApproveResponseVO;
 import com.kh.matdori.vo.KakaoPayCancelRequestVO;
 import com.kh.matdori.vo.KakaoPayCancelResponseVO;
+import com.kh.matdori.vo.MenuInfoVO;
 import com.kh.matdori.vo.MenuWithImagesVO;
 
 import lombok.extern.slf4j.Slf4j;
@@ -165,6 +166,10 @@ public class ReservationController {
 //		     log.debug("menuList={}", menuList);
 		 }
 		 
+		// 예약 번호와 선택한 메뉴 정보를 세션에 저장
+		 session.setAttribute("selectedMenuNos", selectedMenuNos);
+		 session.setAttribute("selectedQtys", selectedQtys);
+		 
 		 for(MenuByReservationDto mbr : menuList) {
 			 menuByReservationDao.insert(mbr);
 		 }
@@ -174,38 +179,130 @@ public class ReservationController {
 	    return "redirect:detail?rezNo="+reservationDto.getRezNo();
 	}
 	
-	@RequestMapping("/detail")
-	public String detail(
-//			HttpSession session,
-						  @RequestParam int rezNo,
-						 Model model) {
+	@GetMapping("/detail")
+	public String detail(Model model,
+						 HttpSession session,
+						 @RequestParam int rezNo
+						 ) {
+		List<Integer> selectedMenuNos = (List<Integer>) session.getAttribute("selectedMenuNos");
+		List<Integer> selectedQtys = (List<Integer>) session.getAttribute("selectedQtys");
+//		ReservationDto rezDto = reservationDao.selectOne(rezNo);
+//		List<MenuByReservationDto> mbrDtoList = menuByReservationDao.selectList(rezNo);
+//		List<MenuWithImagesVO> menuVOs = new ArrayList<>();
+//		for (MenuByReservationDto mbrDto : mbrDtoList) {
+//		    int menuNo = mbrDto.getMenuNo();
+//		    MenuWithImagesVO menuVO = menuDao.selectOne(menuNo);
+//		    if (menuVO != null) {
+//		        menuVOs.add(menuVO);
+//		    }
+//		}
 		
-		ReservationDto rezDto = reservationDao.selectOne(rezNo);
-		
+		String rezCustomerId = (String)session.getAttribute("name");
+		// 예약 정보 조회
+	    ReservationDto reservationDto = reservationDao.selectOne(rezNo);
+	    CustomerDto customerDto = customerDao.selectOne(rezCustomerId);
+	    // 매장 정보, 이용자 아이디, 시간, 좌석 정보를 조회 및 model에 추가
+	    ClockDto selectedClock = clockDao.selectOne(reservationDto.getRezClockNo());
+	    SeatDto selectedSeat = seatDao.selectOne(reservationDto.getRezSeatNo());
+	    
+	    List<MenuInfoVO> menuInfo = menuByReservationDao.menuInfo(rezNo);
+	    // 예약에 해당하는 메뉴 정보 조회
+	    List<MenuByReservationDto> menuList = menuByReservationDao.selectList(rezNo);
+	    
+	    // 선택한 메뉴 정보를 사용하여 메뉴 목록에 수량 정보 추가
+	    for (MenuByReservationDto menuByReservationDto : menuList) {
+	        int menuNo = menuByReservationDto.getMenuNo();
+	        MenuWithImagesVO menuVO = menuDao.selectOne(menuNo);
+	        
+	        // 선택한 메뉴 목록에서 해당 메뉴의 인덱스 찾기
+	        int index = selectedMenuNos.indexOf(menuNo);
+	        
+	        // 선택한 메뉴 목록에 포함되어 있으면 해당 수량을 가져와 설정
+	        if (index != -1) {
+	            int qty = selectedQtys.get(index);
+	            menuByReservationDto.setMenuQty(qty);
+//	            float menuPrice = menuVO.getMenuDto().getMenuPrice();
+//	            float menuTotalPrice = menuPrice * qty;
+	        }
+	    }
+	    
+	    float sumTotal = 0; // 선택된 메뉴의 가격 총합을 저장할 변수
 
-//		int rezNo = vo.getReservationDto().getRezNo();  //rezNo = 예약 번호인데, 이걸 listDto에서 넘버 꺼내와서 담아옴
+	    for (MenuByReservationDto menuByReservationDto : menuList) {
+	        int menuNo = menuByReservationDto.getMenuNo();
+	        MenuWithImagesVO menuVO = menuDao.selectOne(menuNo);
+
+	        // 선택한 메뉴 목록에서 해당 메뉴의 인덱스 찾기
+	        int index = selectedMenuNos.indexOf(menuNo);
+
+	        // 선택한 메뉴 목록에 포함되어 있으면 해당 수량을 가져와 설정
+	        if (index != -1) {
+	            int qty = selectedQtys.get(index);
+	            menuByReservationDto.setMenuQty(qty);
+
+	            // 메뉴의 가격과 수량을 곱하여 총 가격을 계산하고 sumTotal에 더함
+	            float menuPrice = menuVO.getMenuDto().getMenuPrice();
+	            float menuTotalPrice = menuPrice * qty;
+	            sumTotal += menuTotalPrice;
+	        }
+	    }
+	    
+
+
+	    model.addAttribute("reservationDto", reservationDto);
+	    model.addAttribute("customerDto", customerDto);
+	    model.addAttribute("selectedClock", selectedClock);
+	    model.addAttribute("selectedSeat", selectedSeat);
+	    model.addAttribute("menuInfo", menuInfo);
+//	    model.addAttribute("menuVOs", confirmedMenuVOs);
+	    model.addAttribute("menuList", menuList);
+	    model.addAttribute("sumTotal", sumTotal);
+
+	    
+	    return "reservation/rezDetail";
+	}
+//	@PostMapping("/detail")
+//	public String detail(
+////			HttpSession session,
+//						  @RequestParam int rezNo,
+//						  @RequestParam List<Integer> menuNos,
+//						 Model model) {
+//	    
+//	    int sumTotal = 0;
+//	    for (MenuWithImagesVO menuVO : menuVOs) {
+//	        for (MenuByReservationDto mbrDto : mbrDtoList) {
+//	            if (mbrDto.getMenuNo() == menuVO.getMenuDto().getMenuNo()) {
+//	                int qty = mbrDto.getMenuQty();
+//	                float menuPrice = menuVO.getMenuDto().getMenuPrice();
+//	                sumTotal += menuPrice * qty;
+//	            }
+//	        }
+//	    }
+//	    log.debug("sumTotal={}", sumTotal);
+//		
+//
+//
+////		int rezNo = vo.getReservationDto().getRezNo();  //rezNo = 예약 번호인데, 이걸 listDto에서 넘버 꺼내와서 담아옴
 //		//계산을 위한 vo 생성
 //		PaymentSumVO vo = new PaymentSumVO();
 //		
 //		//rezDto 설정을 vo 가져오는걸로 설정
 //		vo.setReservationDto(rezDto);
+//		Float paymentTotal = (float) (sumTotal - vo.getInputPoint());
 //		
-//		Float sumTotal = vo.getSumTotal();
-//		Float paymentTotal = vo.getPaymentTotal();
+////		Float sumTotal = vo.getSumTotal();
+////		Float paymentTotal = vo.getPaymentTotal();
 //		int inputPoint = vo.getInputPoint();
-		
-		
-		
-		model.addAttribute("rezDto", rezDto);
-
+//
 //		model.addAttribute("sumTotal", sumTotal);
 //	    model.addAttribute("paymentTotal", paymentTotal);
 //	    model.addAttribute("inputPoint", inputPoint);
 //	    
-	    log.debug("rezNo={}", rezNo);
-		
-		return "reservation/rezDetail";
-	}
+//	    log.debug("rezNo={}", rezNo);
+//	    log.debug("paymentTotal={}", paymentTotal);
+//		
+//		
+//	}
 	
 	
 	
