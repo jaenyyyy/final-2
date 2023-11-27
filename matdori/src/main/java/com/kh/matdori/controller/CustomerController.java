@@ -37,7 +37,6 @@ import com.kh.matdori.dao.ReservationDao;
 import com.kh.matdori.dao.ReviewDao;
 import com.kh.matdori.dto.AttachDto;
 import com.kh.matdori.dto.CustomerDto;
-import com.kh.matdori.dto.ReservationDto;
 import com.kh.matdori.dto.ReservationListDto;
 import com.kh.matdori.dto.RestaurantDto;
 import com.kh.matdori.dto.ReviewDto;
@@ -160,11 +159,14 @@ public class CustomerController {
 
 			inputDto.setCustomerId(customerId);
 			customerDao.edit(customerId, inputDto);
-			return "redirect:mypage";
+			return "customer/mypage";
 		} else {
 			return "redirect:change?error";
 		}
 	}
+
+
+	
 
 	// 비밀번호 찾기 ?
 	@GetMapping("/findPw")
@@ -245,7 +247,7 @@ public class CustomerController {
 			// 비밀번호 변경 완료 후 세션 무효화 및 로그아웃
 			session.invalidate();
 
-			return "customer/changePw";
+			return "redirect:changePwFinish";
 		} else {
 			model.addAttribute("error", "비밀번호 변경에 실패했습니다. 입력한 비밀번호를 확인하세요.");
 			return "redirect:changePw?error";

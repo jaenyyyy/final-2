@@ -85,6 +85,7 @@
 				<div class="row">
 					<h1 class="text-left title">${resDto.resName}</h1>
 				</div>
+
 <!-- 별점 -->
 <div class="row">
     <span class="star-avg">
@@ -96,12 +97,6 @@
         ${String.format("%.1f", averageRating)}점 식장
     </span>
 </div>
-
-
-
-
-
-			</div>
 
 
 			<!-- 북마크 : 클릭하면 북마크 설정 / ajax로 값 전송 되게 구현할 예정 -->
@@ -151,6 +146,7 @@
 				class="btn btn-warning w-50 text-black"> 예약하기 </a>
 		</div>
 	</div>
+
 
 	<!-- 시간버튼 : 없어질 수 있음 -->
 	<div class="row justify-content-center mb-3 mt-4 text-center"
@@ -212,37 +208,18 @@
 		</div>
 		<!-- 해시태그 : 이거도 해시태그 불러와서 forEach 써야함 -->
 		<div class="row justify-content-center mt-4 text-center">
-			<div class="col">
-				<h4>
-					<span class="badge rounded-pill bg-light text-black">#루프탑</span>
-				</h4>
-			</div>
-			<div class="col">
-				<h4>
-					<span class="badge rounded-pill bg-light text-black">#혼술</span>
-				</h4>
-			</div>
-			<div class="col">
-				<h4>
-					<span class="badge rounded-pill bg-light text-black">#주차</span>
-				</h4>
-			</div>
-			<div class="col">
-				<h4>
-					<span class="badge rounded-pill bg-light text-black">#노키즈존</span>
-				</h4>
-			</div>
-			<div class="col">
-				<h4>
-					<span class="badge rounded-pill bg-light text-black">#흡연실</span>
-				</h4>
-			</div>
+			<c:forEach var="hashDto" items="${resHashDto}">
+				<div class="col">
+					<h4>
+					<span class="badge rounded-pill bg-light text-black">#
+						${hashDto.hashComment}</span>
+					</h4>
+				</div>
+			</c:forEach>
 		</div>
-
 	</div>
-
-
-
+	</div>
+  
 	<!-- 공지사항 -->
 	<div
 		class="row justify-content-center text-center list-border info-margin "
@@ -410,7 +387,224 @@
 		</div>
 	</div>
 
-	<script>
+	<!-- 공지사항 -->
+	<div
+		class="row justify-content-center text-center list-border info-margin "
+		id="noticeSection">
+		<!-- 제목 -->
+		<div class="row text-start">
+			<h3>
+				<span class="badge rounded-pill bg-warning text-black">공지사항</span>
+			</h3>
+		</div>
+		<!-- 공지내용 -->
+		<div class="row text-start">
+			<div class="row">
+				${resDto.resNotice} 공지사항 넣는 칸 모두 화이팅 !!! 여러분 힘내요 <br> 영국에서.. 온
+				.. 편지<br> 프론트 프론트 <br>
+			</div>
+		</div>
+	</div>
+
+
+
+	<!-- 메뉴 -->
+	<div
+		class="row justify-content-center text-center list-border info-margin"
+		id="menuSection">
+		<!-- 제목 -->
+		<div class="row text-start">
+			<h3>
+				<span class="badge rounded-pill bg-warning text-black">메뉴</span>
+			</h3>
+		</div>
+		<!-- 메뉴리스트 : list [0]~[3] 번쨰만 꺼내야할듯 -->
+		<div class="container">
+			<div class="row">
+				<!-- 첫 번째 : 나중에 반복문으로처리 / 위치 잡으려고 네개 해놓음 -->
+				<div class="col-md-6">
+					<div class="row">
+						<div class="col-6">
+							<img src="/images/dummy.png" class="sub-images">
+						</div>
+						<div class="col-6">
+							<div class="row text-badge text-start">
+								<h5 class="text-badge">메뉴이름</h5>
+							</div>
+							<div class="row">메뉴설명</div>
+							<div class="row" style="color: red;">가격</div>
+						</div>
+					</div>
+				</div>
+				<!-- 두 번째 : 나중에 반복문으로처리 / 위치 잡으려고 네개 해놓음 -->
+				<div class="col-md-6">
+					<div class="row">
+						<div class="col-6">
+							<img src="/images/dummy.png" class="sub-images">
+						</div>
+						<div class="col-6">
+							<div class="row text-badge text-start">
+								<h5 class="text-badge">메뉴이름</h5>
+							</div>
+							<div class="row">메뉴설명</div>
+							<div class="row" style="color: red;">가격</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<!-- 세 번째 : 나중에 반복문으로처리 / 위치 잡으려고 네개 해놓음 -->
+				<div class="col-md-6">
+					<div class="row">
+						<div class="col-6">
+							<img src="/images/dummy.png" class="sub-images">
+						</div>
+						<div class="col-6">
+							<div class="row text-badge text-start">
+								<h5 class="text-badge">메뉴이름</h5>
+							</div>
+							<div class="row">메뉴설명</div>
+							<div class="row" style="color: red;">가격</div>
+						</div>
+					</div>
+				</div>
+				<!-- 네 번째 : 나중에 반복문으로처리 / 위치 잡으려고 네개 해놓음 -->
+				<div class="col-md-6">
+					<div class="row">
+						<div class="col-6">
+							<img src="/images/dummy.png" class="sub-images">
+						</div>
+						<div class="col-6">
+							<div class="row text-badge text-start">
+								<h5 class="text-badge">메뉴이름</h5>
+							</div>
+							<div class="row">메뉴설명</div>
+							<div class="row" style="color: red;">가격</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- 상세로 가는 a태그 -->
+		<div class="row mt-4">
+			<h5>
+				<a href="" class="under-line text-badge"> 메뉴 더보기<i
+					class="fa-solid fa-angles-right" style="color: #000000;"></i>
+				</a>
+			</h5>
+		</div>
+	</div>
+
+
+
+	<!-- 리뷰 -->
+	<div
+		class="row justify-content-center text-center list-border info-margin"
+		id="reviewSection">
+		<!-- 제목 -->
+		<div class="row text-start">
+			<h3>
+				<span class="badge rounded-pill bg-warning text-black">리뷰</span>
+			</h3>
+		</div>
+		<!-- 리뷰  : 나중에 반복문으로 수정 / 스푼도... 이거 하드코딩 해야하나..?-->
+		<div class="row text-start">
+			<div class="row">
+				<div class="col">
+					<c:choose>
+						<c:when test="${customerDto.customerLevel == '어쩌고수저'}">
+							<i class="fa-solid fa-spoon" style="color: #b5b5b5;"></i>
+						</c:when>
+					</c:choose>
+					${reviewDto.reviewWriter}
+				</div>
+				<div class="col">
+					<c:choose>
+						<c:when test="${reviewDto.reviewStarPoint == 1}">
+							<i class="fa-solid fa-star" style="color: #ffb416;"></i>
+							<i class="fa-regular fa-star" style="color: #ffb416;"></i>
+							<i class="fa-regular fa-star" style="color: #ffb416;"></i>
+							<i class="fa-regular fa-star" style="color: #ffb416;"></i>
+							<i class="fa-regular fa-star" style="color: #ffb416;"></i>
+						</c:when>
+						<c:when test="${reviewDto.reviewStarPoint == 2}">
+							<i class="fa-solid fa-star" style="color: #ffb416;"></i>
+							<i class="fa-solid fa-star" style="color: #ffb416;"></i>
+							<i class="fa-regular fa-star" style="color: #ffb416;"></i>
+							<i class="fa-regular fa-star" style="color: #ffb416;"></i>
+							<i class="fa-regular fa-star" style="color: #ffb416;"></i>
+						</c:when>
+						<c:when test="${reviewDto.reviewStarPoint == 3}">
+							<i class="fa-solid fa-star" style="color: #ffb416;"></i>
+							<i class="fa-solid fa-star" style="color: #ffb416;"></i>
+							<i class="fa-solid fa-star" style="color: #ffb416;"></i>
+							<i class="fa-regular fa-star" style="color: #ffb416;"></i>
+							<i class="fa-regular fa-star" style="color: #ffb416;"></i>
+						</c:when>
+						<c:when test="${reviewDto.reviewStarPoint == 4}">
+							<i class="fa-solid fa-star" style="color: #ffb416;"></i>
+							<i class="fa-solid fa-star" style="color: #ffb416;"></i>
+							<i class="fa-solid fa-star" style="color: #ffb416;"></i>
+							<i class="fa-solid fa-star" style="color: #ffb416;"></i>
+							<i class="fa-regular fa-star" style="color: #ffb416;"></i>
+						</c:when>
+						<c:when test="${reviewDto.reviewStarPoint == 5}">
+							<i class="fa-solid fa-star" style="color: #ffb416;"></i>
+							<i class="fa-solid fa-star" style="color: #ffb416;"></i>
+							<i class="fa-solid fa-star" style="color: #ffb416;"></i>
+							<i class="fa-solid fa-star" style="color: #ffb416;"></i>
+							<i class="fa-solid fa-star" style="color: #ffb416;"></i>
+						</c:when>
+					</c:choose>
+				</div>
+				<div class="col text-end">( ${reivewDto.reviewWriteDate} 작성 )
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-4">
+					<img src="/images/dummy.png" class="sub-images">
+				</div>
+				<div class="col-8 text-start">${reviewDto.reviewContent}</div>
+			</div>
+		</div>
+
+		<!-- 상세로 가는 a태그 -->
+		<div class="row mt-4">
+			<h5>
+				<a href="" class="under-line text-badge"> 리뷰 더보기<i
+					class="fa-solid fa-angles-right" style="color: #000000;"></i>
+				</a>
+			</h5>
+		</div>
+	</div>
+	-----------------------------반복문 지금 못써서 냅둔 자료
+	-------------------------------
+	<div class="row">
+		<c:forEach var="menuListByRes" items="${menuListByRes}">
+			<div class="row">${menuListByRes.menuName}-
+				${menuListByRes.menuPrice}원 - ${menuListByRes.menuContent}</div>
+			<div class="row">
+				<button class="btn btn-warning menuSelect"
+					data-menu-no="${menuListByRes.menuNo}">선택</button>
+			</div>
+		</c:forEach>
+	</div>
+	<div class="row">
+		<c:forEach var="reviewByRes" items="${reviewByRes}">
+			<div class="row">${reviewByRes.reviewWriter}-
+				${reviewByRes.reviewContent} - ${reviewByRes.reviewWriteDate} -
+				${reviewByRes.reviewStarPoint}</div>
+		</c:forEach>
+	</div>
+
+
+</div>
+</div>
+
+
+
+<script>
 //메뉴 누르면 부드럽게 이동하는거
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
@@ -472,9 +666,9 @@ window.addEventListener('scroll', function() {
 </script>
 
 
-	<!-- 북마크 설정/해제를 위한 -->
-	<c:if test="${sessionScope.name != null}">
-		<script>
+<!-- 북마크 설정/해제를 위한 -->
+<c:if test="${sessionScope.name != null}">
+	<script>
         $(function() {
         	var params = new URLSearchParams(location.search);
         	var resNo = params.get("resNo");
@@ -516,18 +710,6 @@ window.addEventListener('scroll', function() {
         });
     </script>
 	</c:if>
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

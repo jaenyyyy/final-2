@@ -23,6 +23,7 @@ public class MenuWithImagesVO {
 	  @JsonIgnore
 	   public MenuDto getMenuDto() {
 	      return MenuDto.builder()
+	    		.menuNo(menuNo)
 	            .menuName(menuName)
 	            .menuPrice(menuPrice)
 	            .menuContent(menuContent)

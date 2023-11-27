@@ -18,6 +18,9 @@ import com.kh.matdori.dao.CustomerDao;
 import com.kh.matdori.dto.CustomerBlockDto;
 import com.kh.matdori.dto.CustomerDto;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @CrossOrigin
 @RestController
 @RequestMapping("/rest/customer")
@@ -35,7 +38,9 @@ public class CustomerRestController {
 	@PostMapping("/idCheck")
 	public String idCheck(@RequestParam String customerId) {
 		CustomerDto customerDto = customerDao.selectOne(customerId);
+		
 		if (customerDto == null) {
+			log.debug("customerDto={}", customerDto);
 			return "Y";
 		} else {
 			return "N";

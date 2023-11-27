@@ -129,7 +129,7 @@ $("[name=join]").click(function() {
                     status.id=true;
                 }
                 else{//사용불가(중복)
-                    $(e.target).addClass("fail2");
+                    $(e.target).addClass("fail1");
                     status.id=false;
                 }
             },

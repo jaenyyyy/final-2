@@ -85,8 +85,8 @@
 
    
    <!--  단일메뉴 조회-->
-  <!-- <select id="menuByMenuNo" resultType="MenuWithImagesVO">
-  )SELECT 
+  <select id="menuByMenuNo" resultType="MenuWithImagesVO">
+  SELECT 
     m.menu_no,	
     m.menu_name,
     m.menu_price,
@@ -98,7 +98,7 @@
   LEFT JOIN attach a ON mi.attach_no = a.attach_no
   WHERE 
     m.menu_no = #{menuNo}
-</select> -->
+</select>
 
 <select id="findMenuImage" resultType="AttachDto">
 	  	select*from attach where attach_no=(

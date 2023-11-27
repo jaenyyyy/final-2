@@ -11,11 +11,11 @@
 		<div class="row justify-content-center">
 			<div class="card mb-3" style="max-width:50rem;">
 				<div class="card-body">
-<%-- 					<input type="hidden" name="rezNo" value="${rezNo}"> --%>
+<%-- 					<input type="hidden" name="rezNo" value="${ReservationDto.rezNo}"> --%>
 <!-- 					<label class="form-label mt-4" for="readOnlyInput">아이디</label> -->
-<!-- 	    			<input class="form-control" type="text" name="rezCustomerId"> -->
-					<label class="form-label mt-4" for="readOnlyInput">매장</label>
-	    			<input class="form-control" type="number" name="rezResNo">
+<%-- 	    			<input type="hidden" name="rezCustomerId" value="${rezCustomerId}"> --%>
+<!-- 					<label class="form-label mt-4" for="readOnlyInput">매장</label> -->
+	    			<input type="hidden" name="rezResNo" value="${rezResNo}">
 	    			
 					<label class="form-label mt-4" for="readOnlyInput">시간</label>
 	    			<select class="form-control" name="selectedClock">
@@ -43,11 +43,18 @@
 					<label class="form-label mt-4" for="readOnlyInput">좌석수</label>
 	    			<input class="form-control" type="number" name="rezSeatQty">
 	    			
-					<label class="form-label mt-4" for="readOnlyInput">메뉴</label>
-	    			<input class="form-control" type="number" name="rezMenuNo">
+					<label class="form-label mt-4" for="readOnlyInput">메뉴</label><br>
+			        <c:forEach var="MenuWithImagesVO" items="${menuList}">
+			            <label>
+			                <input type="checkbox" name="selectedMenus"
+			                 value="${MenuWithImagesVO.menuNo}">
+			                ${MenuWithImagesVO.menuName} (가격 : ${MenuWithImagesVO.menuPrice})
+			            </label><br>
+						<label class="form-label mt-1" for="readOnlyInput">수량</label>
+		    			<input class="form-control" type="number" name="selectedQtys">
+			            <br>
+			        </c:forEach>
 	    			
-					<label class="form-label mt-4" for="readOnlyInput">메뉴수량</label>
-	    			<input class="form-control" type="number" name="rezMenuQty">
 	    			
 					<label class="form-label mt-4" for="readOnlyInput">요청사항</label>
 	    			<input class="form-control" type="text" name="rezRequest">

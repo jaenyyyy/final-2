@@ -10,7 +10,11 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.matdori.dto.ReservationDto;
 import com.kh.matdori.dto.ReservationListDto;
+
+import com.kh.matdori.vo.MenuWithImagesVO;
+
 import com.kh.matdori.dto.ReviewDto;
+
 
 @Repository
 public class ReservationDaoImpl implements ReservationDao{
@@ -54,6 +58,12 @@ public class ReservationDaoImpl implements ReservationDao{
       List<ReservationListDto> rezList = sqlSession.selectList("reservation.rezList", rezCustomerId);
       return rezList;
    }
+   
+   //다수의 메뉴
+   @Override
+	public List<MenuWithImagesVO> menuList(int rezNo) {
+		return sqlSession.selectList("reservation.menuListByRez", rezNo);
+	}
 
 }
 

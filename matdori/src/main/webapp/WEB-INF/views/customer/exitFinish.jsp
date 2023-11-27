@@ -2,12 +2,47 @@
     pageEncoding="UTF-8"%>
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 
-<h2>회원 탈퇴 완료</h2>
 
-<h3>그동안 이용해주셔서 감사합니다</h3>
+<style>
+.container {
+	max-width: 500px; /* 변경 가능한 폭 설정 */
+	margin: 0 auto; /* 가운데 정렬 */
+}
 
-<h3><a href="/">메인페이지로 이동</a></h3>
-<h3><a href="https://www.google.com">구글로 이동</a></h3>
-<h3><a href="https://www.naver.com">네이버로 이동</a></h3>
+.tag-none {
+	text-decoration: none;
+	color: black;
+}
+
+.line {
+	border-top: 1px solid #ffb416;
+}
+
+.tag-none:hover {
+	color: #FF3300; /* 원하는 호버 시 색상으로 변경 */
+}
+</style>
+
+
+<form action="join" method="post" autocomplete="off">
+	<div class="container justify-content-center"
+		style="margin-bottom: 6%;">
+
+		<!-- 제목 -->
+		<div class="row" style="margin-top: 20%;">
+			<h1>
+				<i class="fa-solid fa-circle-user" style="color: #ffb416;"></i> 회원탈퇴가 <br>완료되었습니다. 
+			</h1>
+		</div>
+		
+		그동안 맛도리 사이트를 이용해주셔서 감사합니다. <br><br><br>
+		<div class="row line"></div>
+<br><br>
+<h5><a href="/">main page</a></h5>
+<h5><a href="https://www.google.com">google</a></h5>
+<h5><a href="https://www.naver.com">naver</a></h5>
+</div>
+</form>
+
 
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>

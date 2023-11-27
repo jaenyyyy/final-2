@@ -36,6 +36,10 @@
 			</div>
 		</div>
 		
+			<%-- 글쓰기는 로그인 상태인 경우에만 출력 --%>
+	<c:if test="${sessionScope.level == '관리자'}">
+	
+
 		
 		<!-- 버튼 -->
 		<div class="col text-center">
@@ -45,13 +49,13 @@
 	   		<a class="btn btn-warning btn-delete" href="delete?qnaNo=${qnaDto.qnaNo}">
 	   		삭제
 	   		</a>
-	   		<a class="btn btn-secondary" href="list">
+	   <a class="btn btn-secondary" href="list">
 	   		목록
 	   		</a>
 	   </div>
 		
-		
-		
+		</c:if>
+	
 	</div>
 </div>
 

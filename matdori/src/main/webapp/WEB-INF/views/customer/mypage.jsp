@@ -156,6 +156,6 @@
 
 	</div>
 </div>
-<a href="reviewWrite">리뷰작성</a>
+
 
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
