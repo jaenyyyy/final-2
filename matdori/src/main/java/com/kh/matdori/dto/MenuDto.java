@@ -12,6 +12,6 @@ public class MenuDto {
 	private int menuTypeNo;
 	private int resNo;
 	private String menuName;
-	private Float menuPrice;
+	private int menuPrice;
 	private String menuContent;
 }

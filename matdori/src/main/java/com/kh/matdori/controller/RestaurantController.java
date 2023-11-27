@@ -45,9 +45,6 @@ public class RestaurantController {
 		List<HashtagListDto> resHashDto = hashtagDao.resHashList(resNo);
 		
 
-//		model.addAttribute("resDetail", resDetail);
-//		model.addAttribute("menuList", menuList);
-//		model.addAttribute("reviewList", reviewList); 
 
 		model.addAttribute("resDto", resDto);
 		model.addAttribute("menuListByRes", menuListByRes);
@@ -56,9 +53,6 @@ public class RestaurantController {
         double averageRating = reviewDao.getAverageRatingByRes(resNo);
         model.addAttribute("averageRating", averageRating);
 		model.addAttribute("resHashDto", resHashDto);
-//		log.debug("list= {}",resDto);
-//		log.debug("list= {}",menuListByRes);
-//		log.debug("list= {}",reviewByRes);
 
 		
 		return "restaurant/detail";

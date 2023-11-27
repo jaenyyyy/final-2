@@ -121,7 +121,6 @@ public class CustomerController {
 	@RequestMapping("/mypage")
 	public String mypage(HttpSession session, Model model) {
 		String customerId = (String) session.getAttribute("name");
-		log.debug("마이페이지 접속 = {}", customerId);
 		CustomerDto customerDto = customerDao.selectOne(customerId);
 		model.addAttribute("customerDto", customerDto);
 

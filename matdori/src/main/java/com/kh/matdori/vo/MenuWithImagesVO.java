@@ -16,7 +16,7 @@ import lombok.NoArgsConstructor;
 public class MenuWithImagesVO {
 	  private int menuNo;
 	  private String menuName;
-	  private Float menuPrice;
+	  private int menuPrice;
 	  private String menuContent;
 	  private MultipartFile menuImage;
 	  

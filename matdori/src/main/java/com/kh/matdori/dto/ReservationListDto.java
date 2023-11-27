@@ -14,7 +14,7 @@ public class ReservationListDto {
 	private int customerPoint;
 	private String customerLevel;
 	private String resName, menuName;
-	private Float menuPrice;
+	private int  menuPrice;
 	private String clockSelect, seatName;
 	private int rezMenuQty, rezCustomerCount, rezSeatQty;
 	private String rezRequest;

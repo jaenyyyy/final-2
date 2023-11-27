@@ -12,7 +12,7 @@ public class MenuByResDto {
     private String menuTypeName;
     private int menuNo;
     private String menuName;
-    private Float menuPrice;
+    private int menuPrice;
     private String menuContent;
     private int imageId;
 }

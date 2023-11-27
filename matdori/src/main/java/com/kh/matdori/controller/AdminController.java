@@ -19,7 +19,6 @@ import com.kh.matdori.dao.CustomerDao;
 import com.kh.matdori.dao.HashtagDao;
 import com.kh.matdori.dao.RestaurantDao;
 import com.kh.matdori.dto.BusinessBlockDto;
-import com.kh.matdori.dto.BusinessBlockListDto;
 import com.kh.matdori.dto.BusinessDto;
 import com.kh.matdori.dto.BusinessJudgeDto;
 import com.kh.matdori.dto.BusinessJudgeListDto;
@@ -27,18 +26,14 @@ import com.kh.matdori.dto.CustomerAdminListDto;
 import com.kh.matdori.dto.CustomerBlockDto;
 import com.kh.matdori.dto.CustomerDto;
 import com.kh.matdori.dto.HashtagDto;
-import com.kh.matdori.dto.NoticeDto;
 import com.kh.matdori.dto.RestaurantAdminListDto;
 import com.kh.matdori.dto.RestaurantBlockDto;
 import com.kh.matdori.dto.RestaurantDto;
 import com.kh.matdori.dto.RestaurantJudgeDto;
-import com.kh.matdori.dto.ReviewDto;
 import com.kh.matdori.vo.BusBlockPaginationVO;
 import com.kh.matdori.vo.BusPaginationVO;
 import com.kh.matdori.vo.CusAdminVO;
-import com.kh.matdori.vo.PaginationVO;
 import com.kh.matdori.vo.ResAdminVO;
-
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -210,7 +205,6 @@ public class AdminController {
     @RequestMapping("/customer/list")
     public String list(@ModelAttribute("vo") CusAdminVO vo, Model model) {
         List<CustomerAdminListDto> list = customerDao.cusAdminList(vo); // 해당 레코드를 가져옴
-        log.debug("list ={}s", list);
         model.addAttribute("list", list);
         
        int count = customerDao.countList(vo);
@@ -226,16 +220,13 @@ public class AdminController {
     public String detail(@RequestParam String customerId, @ModelAttribute CusAdminVO vo, Model model) {
        
        CustomerBlockDto customerBlockDto = customerDao.selectBlockOne(customerId);
-       log.debug("customerBlockDto ={}s", customerBlockDto);
        model.addAttribute("customerBlockDto", customerBlockDto);
        
        
        CustomerAdminListDto customerAdminListDto = customerDao.cusAdminOne(customerId);
-       log.debug("customerAdminListDto ={}s", customerAdminListDto);
        model.addAttribute("customerAdminListDto", customerAdminListDto);
     
        CustomerDto customerDto = customerDao.selectOne(customerId);
-       log.debug("customerDto ={}s", customerDto);
        model.addAttribute("customerDto", customerDto);
        
        int count = customerDao.countList(vo);

@@ -17,12 +17,12 @@
 		insert into payment(
 			payment_no, payment_rez_no, payment_customer,
 			payment_tid, payment_name, payment_price,
-			payment_remain, payment_time, payment_status
+			payment_remain
 		)
 		values (
 			#{paymentNo}, #{paymentRezNo}, #{paymentCustomer},
 			#{paymentTid}, #{paymentName}, #{paymentPrice},
-			#{paymentRemain}, #{paymentTime}, #{paymentStatus}	
+			#{paymentRemain}	
 		)
 	</insert>
 	
