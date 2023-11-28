@@ -15,6 +15,7 @@ import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -86,6 +87,26 @@ public class ImageRestController {
 	            .body(resource);
 	   }
 	   
+	   @GetMapping("/restaurant/image/{attachNo}")
+	   public ResponseEntity<ByteArrayResource> getImage(@PathVariable int attachNo) throws IOException {
+	       AttachDto attachDto = attachDao.selectOne(attachNo);
+	       if (attachDto == null) {
+	           return ResponseEntity.notFound().build();
+	       }
+
+	       File target = new File(dir, String.valueOf(attachNo));
+	       byte[] data = FileUtils.readFileToByteArray(target); // 실제 파일 정보 불러오기
+	       ByteArrayResource resource = new ByteArrayResource(data);
+
+	       return ResponseEntity.ok()
+	               .header(HttpHeaders.CONTENT_ENCODING, StandardCharsets.UTF_8.name())
+	               .contentLength(attachDto.getAttachSize())
+	               .header(HttpHeaders.CONTENT_TYPE, attachDto.getAttachType())
+	               .contentType(MediaType.parseMediaType(attachDto.getAttachType()))
+	               .header("Content-Disposition", "inline;filename=" + URLEncoder.encode(attachDto.getAttachName(), StandardCharsets.UTF_8.name()))
+	               .body(resource);
+	   }
+
 	   @GetMapping("/restaurant/image/first/{resNo}")
 	   public ResponseEntity<ByteArrayResource> getFirstImage(@PathVariable int resNo) throws IOException {
 	       List<Integer> attachNos = restaurantDao.findImageNoByRes(resNo); // resNo에 해당하는 모든 이미지 번호 조회
@@ -111,8 +132,21 @@ public class ImageRestController {
 	               .header("Content-Disposition", "inline;filename=" + URLEncoder.encode(attachDto.getAttachName(), StandardCharsets.UTF_8.name()))
 	               .body(resource);
 	   }
+	   @GetMapping("/restaurant/images/{resNo}")
+	   public String getImages(@PathVariable int resNo, Model model) {
+	       // resNo에 해당하는 모든 이미지 번호 조회
+	       List<Integer> attachNos = restaurantDao.findImageNoByRes(resNo);
+	       
+	       if (attachNos != null && !attachNos.isEmpty()) {
+	           // 첫 번째 이미지 번호를 제외합니다.
+	           attachNos.remove(0);
+	           // 나머지 이미지 번호 리스트를 모델에 추가합니다.
+	           model.addAttribute("imageNos", attachNos);
+	       }
 
-
+	       // JSP 페이지 이름을 반환합니다. 예를 들어, 'restaurantImages.jsp' 페이지가 있을 경우:
+	       return "menuList";
+	   }
 	   
 //	   @GetMapping("/movieMain/{movieNo}")
 //	   public ResponseEntity<ByteArrayResource>downloadMovieMainImage(@PathVariable int movieNo) throws IOException{
