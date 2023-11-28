@@ -75,7 +75,7 @@
 			<!-- 사업자 홈페이지 가는 주소 -->
 			<div class="icon-container">
 				<c:if test="${sessionScope.name == null}">
-					<a href="#사업자 홈페이지 가는 주소" class="me-4"> <i
+					<a href="http://localhost:3000/" class="me-4"> <i
 						class="fa-solid fa-user-tie fa-3x" style="color: #ffb416;"></i>
 					</a>
 					<a href="#북마크 주소" class="me-4"> <i
