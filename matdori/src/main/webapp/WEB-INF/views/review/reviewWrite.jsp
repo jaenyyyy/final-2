@@ -42,14 +42,14 @@
 
 <style>
 /* Target filled stars to change color to yellow */
-    .rating__star.fas {
-        color: #F7B731; /* Yellow color */
-    }
+.rating__star.fas {
+	color: #F7B731; /* Yellow color */
+}
 
-    /* Target empty stars to change color to yellow */
-    .rating__star.far {
-        color: #F7B731; /* Yellow color */
-        
+/* Target empty stars to change color to yellow */
+.rating__star.far {
+	color: #F7B731;
+} /* Yellow color */
 </style>
 
 <div class="container">
@@ -59,8 +59,8 @@
 
 			<div class="mt-4">
 				<h1 class="text-start">
-					<i class="fa-solid fa-pen-to-square" style="color: #ffb416;"></i>
-					<span style="font-weight: bold;">리뷰작성</span>
+					<i class="fa-solid fa-pen-to-square" style="color: #ffb416;"></i> <span
+						style="font-weight: bold;">리뷰작성</span>
 				</h1>
 			</div>
 
@@ -87,9 +87,11 @@
 					<textarea name="reviewContent" rows="10" class="form-control"
 						placeholder="내용을 입력해주세요."></textarea>
 					<!-- 이미지를 업로드할 input 필드 -->
-					<input type="file" name="attach" accept="image/*">
+					<br>
+					<div class="row left">
+						<input type="file" name="attach" accept="image/*">
+					</div>
 				</div>
-
 				<!-- hidden field로 resNo 값을 전송 -->
 				<input type="hidden" id="resNo" name="resNo" value="${param.resNo}">
 

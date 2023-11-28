@@ -14,7 +14,8 @@
 		<div class="row justify-content-center">
 			<div class="col-md-6 mt-4">
 				<h1 class="text-center">
-					<i class="fa-solid fa-bullhorn" style="color: #ffb416;"></i> 공지사항
+					<i class="fa-solid fa-bullhorn" style="color: #ffb416;"></i> <span
+					style="font-weight: bold;">공지사항</span><br><br>
 				</h1>
 			</div>
 		</div>

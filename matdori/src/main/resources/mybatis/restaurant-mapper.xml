@@ -129,53 +129,31 @@
 	</select>
 
 	<!-- 공지조회 -->
-	<select id="findNotice" resultType="string">
-		SELECT res_notice FROM
-		restaurant WHERE res_no = #{resNo}
+	<select id="findNotice"  resultType="string">
+		SELECT res_notice FROM restaurant WHERE res_no = #{resNo}
 	</select>
 
 	<!-- 공지등록수정 -->
 	<update id="updateNotice">
-		UPDATE restaurant SET res_notice = #{resNotice} WHERE
-		res_no = #{resNo}
+		UPDATE restaurant SET res_notice = #{resNotice} WHERE res_no = #{resNo}
 	</update>
 
-
-
-<!-- 	<select id="searchResList" parameterType="map"
-		resultType="ResSearchListDto">
-		SELECT * FROM res_search_list
-		<where>
-			<if test="keyword != null and keyword != ''">
-				and instr(res_name, #{resName}) > 0
-			</if>
-			<if test="regionName != null">
-				and region_name = #{regionName}
-			</if>
-			<if test="keyword != null and keyword != ''">
-				and instr(hash_comment, #{hashComment}) > 0
-			</if>
-		</where>
-	</select> 오류나서 주석처리함-->
-
-<!-- 	<select id="searchResList" parameterType="map" resultType="ResSearchListDto"> -->
-<!--     SELECT * FROM res_search_list -->
-<!--     <where> -->
-<!--         <if test="resName != null and resName != ''"> -->
-<!--             and instr(res_name, #{resName}) > 0 -->
-<!--         </if> -->
-<!--         <if test="hashComment != null and hashComment != ''"> -->
-<!--             or instr(hash_comment, #{hashComment}) > 0 -->
-<!--         </if> -->
-<!--         <if test="regionName != null"> -->
-<!--             and region_name = #{regionName} -->
-<!--         </if> -->
-<!--     </where> -->
-<!-- </select> -->
-
-
+<!-- 
+	<select id="searchResList" parameterType="map" resultType="ResSearchListDto">
+    SELECT * FROM res_search_list
+    <where>
+        <if test="resName != null and resName != ''">
+            and instr(res_name, #{resName}) > 0
+        </if>
+        <if test="hashComment != null and hashComment != ''">
+            or instr(hash_comment, #{hashComment}) > 0
+        </if>
+        <if test="regionName != null">
+            and region_name = #{regionName}
+        </if>
+    </where>
+</select>
+ -->
 
 </mapper>
 	
-	
-   
