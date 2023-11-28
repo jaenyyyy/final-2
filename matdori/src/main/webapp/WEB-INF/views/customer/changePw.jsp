@@ -90,10 +90,6 @@ $(function(){
     //-form 전송할 때는 beforeunload 이벤트를 제거
     $(".join-form").submit(function(e){
         $(".form-input").blur();
-        
-     
-        
-        
         if(!status.ok()){
             e.preventDefault();
         }
