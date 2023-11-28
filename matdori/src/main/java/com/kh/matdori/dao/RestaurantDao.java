@@ -55,5 +55,11 @@ public interface RestaurantDao{
     //List<ResSearchListDto> resSearchList(Map<String, String> searchParams);
 
     List<ResSearchListDto> resSearchList(ResSearchListVO vo);
+    
+    //bestResList
+    
+    //newResList
+    
+    //pickResList
 
 }

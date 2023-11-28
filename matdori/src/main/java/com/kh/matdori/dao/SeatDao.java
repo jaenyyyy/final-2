@@ -23,6 +23,4 @@ public interface SeatDao {
 
 	List<SeatDto> seatList(int rezResNo);
 	
-	
-
 }
