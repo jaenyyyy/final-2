@@ -32,6 +32,13 @@
 		review_writer = #{reviewWriter}
 	</select>
 
+	<!-- 리뷰 리스트 카운트 조회 -->
+	<select id="reviewCount" resultType="int">
+	            <![CDATA[
+	                select count(*) from review where review_Writer = #{reviewWriter}
+	            ]]>
+	</select>
+
 	<!-- 리뷰 목록 (매장) -->
 	<select id="listByRes" resultType="ReviewDto">
 		select rl.*, ri.attach_no
@@ -55,17 +62,6 @@
 		desc
 	</select>
 
-
-
-	<!-- 리뷰 상세 -->
-	<!-- <select id="detail" resultType="ReviewDto"> select r.*, ri.attach_no 
-		from review r left outer join review_images ri on r.review_no = ri.review_no 
-		where review_no =#{reviewNo} </select> -->
-
-	<!-- 리뷰 수정 -->
-	<!-- <update id="change"> update review set review_content = #{reviewContent}, 
-		review_star_point = #{reviewStarPoint} where review_no = #{reviewNo} </update> -->
-
 	<!-- 리뷰 삭제 -->
 	<delete id="delete">
 		delete review where review_no = #{reviewNo}
@@ -83,13 +79,13 @@
 		review_no = #{reviewNo}
 	</select>
 
-<!-- 별점 평균 -->
-<select id="startevg" resultType="double">
-    SELECT SUM(review_star_point) / COUNT(*) AS average_rating
-    FROM review
-    WHERE res_no = #{resNo}
-    GROUP BY res_no
-</select>
+	<!-- 별점 평균 -->
+	<select id="startevg" resultType="double">
+		SELECT SUM(review_star_point) / COUNT(*) AS average_rating
+		FROM review
+		WHERE res_no = #{resNo}
+		GROUP BY res_no
+	</select>
 
 
 	<!-- 이미지 찾기 -->
@@ -104,7 +100,7 @@
 	</select>
 
 	<select id="countOfReviews" resultType="ReviewDto">
-	 SELECT COUNT(*) FROM reviews WHERE customer_id = #{customerId}
+		SELECT COUNT(*) FROM reviews WHERE customer_id = #{customerId}
 	</select>
-	
+
 </mapper>
