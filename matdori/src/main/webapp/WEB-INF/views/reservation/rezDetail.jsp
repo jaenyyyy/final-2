@@ -154,8 +154,8 @@
 					</tr>
 					<tr>
 					    <th>결제금액</th>
-					    <td id="paymentAmount">
-					        <fmt:formatNumber value="${paymentTotal}" pattern="#,##0"/> 원
+					    <td id="paymentTotal">
+					        <fmt:formatNumber value="${sumTotal}" pattern="#,##0"/> 원
 					    </td>
 					</tr>
 					</table>
@@ -170,12 +170,12 @@
 					<input type="checkbox"> 동의하나요
 				</div>
 				<div>
-					전송되는 부분
-					<form method="post">
-						<input type="hidden" name="restaurant.productNo" value="${paymentSumVO.reservationListDto.productNo}">
-						<input type="hidden" name="restaurant.qty" value="${confirmVO.purchaseVO.qty}">
-					<button type="submit" class="btn btn-warning w-100">결제하기</button>
-					</form>
+				    <form id="paymentForm" method="post">
+				    	<input type="hidden" name="rezNo" id="hiddenRezNo">
+				        <input type="hidden" name="paymentTotal" id="hiddenPaymentTotal"> 
+				        
+				        <button type="button" class="btn btn-warning w-100" onclick="submitForm()">결제하기</button>
+				    </form>
 				</div>
 			</div>
 			
@@ -197,35 +197,46 @@
 <script>
 	//JavaScript
 	function updatePaymentTotal() {
-	    var inputPoint = parseFloat(document.getElementById("inputPoint").value); // 사용자가 입력한 포인트 값
-	    var sumTotal = parseFloat("${sumTotal}"); // VO에서 전달된 총 금액
-	    var paymentAmountElement = document.getElementById("paymentAmount");
-	    var customerPoint = parseInt("${rezDto.customerPoint}");
-	    
-	    var paymentTotal = sumTotal - inputPoint; // 결제금액 계산
-	    if (isNaN(inputPoint)) {
-	        paymentTotal = sumTotal; // 입력값이 없을 경우 총 금액으로 설정
-	    } else {
-	        paymentTotal = sumTotal - inputPoint; // 입력값이 있을 경우 결제금액 계산
-	        
-	        if (inputPoint > customerPoint) {
-	            alert("보유 포인트를 초과할 수 없습니다.");
-	            document.getElementById("inputPoint").value = customerPoint;
-	            inputPoint = customerPoint;
-	            paymentTotal = sumTotal - inputPoint; // 초과한 경우 다시 계산
-	        }
-	        
-	        if (paymentTotal < 0) {
-	            paymentTotal = 0;
-	        }
-	    }
+    var inputPoint = parseInt(document.getElementById("inputPoint").value); // 사용자가 입력한 포인트 값
+    var sumTotal = parseInt("${sumTotal}"); // VO에서 전달된 총 금액
+    var paymentAmountElement = document.getElementById("paymentAmount");
+    var customerPoint = parseInt("${rezDto.customerPoint}");
+    
+    var paymentTotal = sumTotal - inputPoint; // 결제금액 계산
+    if (isNaN(inputPoint)) {
+        paymentTotal = sumTotal; // 입력값이 없을 경우 총 금액으로 설정
+    } else {
+        paymentTotal = sumTotal - inputPoint; // 입력값이 있을 경우 결제금액 계산
+        
+        if (inputPoint > customerPoint) {
+            alert("보유 포인트를 초과할 수 없습니다.");
+            document.getElementById("inputPoint").value = customerPoint;
+            inputPoint = customerPoint;
+            paymentTotal = sumTotal - inputPoint; // 초과한 경우 다시 계산
+        }
+        
+        if (paymentTotal < 0) {
+            paymentTotal = 0;
+        }
+    }
 
 	    
 	    // 결제금액을 화면에 업데이트
 	    
-	    var paymentAmountElement = document.getElementById("paymentAmount");
-	    paymentAmountElement.textContent = paymentTotal.toLocaleString('ko-KR') + " 원";
-	}
+    var paymentAmountElement = document.getElementById("paymentTotal");
+    paymentAmountElement.textContent = paymentTotal.toLocaleString('ko-KR') + " 원";
+}
+
+function submitForm() {
+	
+    var paymentTotal = parseInt("${sumTotal}") - parseInt(document.getElementById("inputPoint").value);
+    
+    document.getElementById("hiddenPaymentTotal").value = paymentTotal;
+
+    // 폼 제출
+    document.getElementById("paymentForm").submit();
+}
+
 
 </script>
 		

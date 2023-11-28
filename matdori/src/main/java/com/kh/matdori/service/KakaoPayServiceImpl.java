@@ -126,37 +126,29 @@ public class KakaoPayServiceImpl implements KakaoPayService{
 				template.postForObject(uri, entity, KakaoPayCancelResponseVO.class);
 		return response;
 	}
-
+	
+	
 //	@Override
-//	public KakaoPayReadyRequestVO convert(PurchaseListVO listVO) {
-//		List<PurchaseVO> list = listVO.getProduct();  //구매목록 추출
-//		
-//		String name = null;  //상품명 구하는거
-//		int total = 0;  //일단 합계를 0원으로 설정
-//		
-//		//구매목록을 모두 조사하여 상품정보 추출 후 필요한 항목을 계산
-//		for(PurchaseVO vo : list) {  //vo를 꺼내와서 리스트로 받아라  
-//			//vo 안에는 (productNo)와 구매수량 (qty)가 있음
-//			ProductDto dto = productDao.selectOne(vo.getProductNo());
-//			if(name == null) { //이름이 없을떄만 이름을 넣어라 (최초 이름만 들어감)
-//				name = dto.getProductName();
-//			}
-//			total += dto.getProductPrice() * vo.getQty();  //상품가격과 수량을 곱해서 합산해라
-//		}
-//		
-//		//구매 수량이 2개 이상이라면 이름에 외 ?개를 추가
-//		if(list.size() >=2 ) {
-//			name += " 외 "+ (list.size()-1) + "건";
-//		}
-//		
-//		//partner_order_id에 결제번호를 집어넣으면 충돌도 없고 좋지 않을까?
-//		int paymentNo = paymentDao.sequence();
-//		return KakaoPayReadyRequestVO.builder()
-////									.partnerOrderId(UUID.randomUUID().toString())
-//									.partnerOrderId(String.valueOf(paymentNo))
-//									.itemName(name)
-//									.itemPrice(total)
-//									.build();
+//	public KakaoPayReadyRequestVO convert(PaymentSumVO sumVO) {
+//	    // PaymentSumVO에서 필요한 정보들을 가져와 KakaoPayReadyRequestVO로 변환하는 로직을 작성해야 합니다.
+//
+//	    // 예약 정보와 결제 정보를 가져와 KakaoPayReadyRequestVO에 설정하는 예시
+//	    ReservationDto reservationDto = sumVO.getReservationDto();
+//	    CustomerDto customerDto = sumVO.getCustomerDto();
+//
+//	    // 필요한 정보들을 가져와 KakaoPayReadyRequestVO에 설정
+//	    String itemName = reservationDao.selectOne(resName); // 상품명 설정
+//	    int itemPrice = 0; // 상품 가격 설정
+//
+//	    // 예약 정보, 고객 정보 등을 활용하여 itemName, itemPrice 등의 정보 설정
+//
+//	    int paymentNo = paymentDao.sequence(); // 결제 번호 생성
+//	    return KakaoPayReadyRequestVO.builder()
+//	            .partnerOrderId(String.valueOf(paymentNo))
+//	            .itemName(itemName)
+//	            .itemPrice(itemPrice)
+//	            .build();
 //	}
+
 	
 }

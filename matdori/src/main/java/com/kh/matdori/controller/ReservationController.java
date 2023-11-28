@@ -36,8 +36,11 @@ import com.kh.matdori.vo.KakaoPayApproveRequestVO;
 import com.kh.matdori.vo.KakaoPayApproveResponseVO;
 import com.kh.matdori.vo.KakaoPayCancelRequestVO;
 import com.kh.matdori.vo.KakaoPayCancelResponseVO;
+import com.kh.matdori.vo.KakaoPayReadyRequestVO;
+import com.kh.matdori.vo.KakaoPayReadyResponseVO;
 import com.kh.matdori.vo.MenuInfoVO;
 import com.kh.matdori.vo.MenuWithImagesVO;
+import com.kh.matdori.vo.PaymentSumVO;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -181,116 +184,114 @@ public class ReservationController {
 	}
 	
 	@GetMapping("/detail")
-	public String detail(Model model,
-						 HttpSession session,
-						 @RequestParam int rezNo
-						 ) {
-		List<Integer> selectedMenuNos = (List<Integer>) session.getAttribute("selectedMenuNos");
-		List<Integer> selectedQtys = (List<Integer>) session.getAttribute("selectedQtys");
-		
-		String rezCustomerId = (String)session.getAttribute("name");
-		// 예약 정보 조회
-	    ReservationDto reservationDto = reservationDao.selectOne(rezNo);
-	    CustomerDto customerDto = customerDao.selectOne(rezCustomerId);
-	    // 매장 정보, 이용자 아이디, 시간, 좌석 정보를 조회 및 model에 추가
-	    ClockDto selectedClock = clockDao.selectOne(reservationDto.getRezClockNo());
-	    SeatDto selectedSeat = seatDao.selectOne(reservationDto.getRezSeatNo());
-	    
-	    List<MenuInfoVO> menuInfo = menuByReservationDao.menuInfo(rezNo);
-	    // 예약에 해당하는 메뉴 정보 조회
-	    List<MenuByReservationDto> menuList = menuByReservationDao.selectList(rezNo);
-	    
-	    // 선택한 메뉴 정보를 사용하여 메뉴 목록에 수량 정보 추가
-	    for (MenuByReservationDto menuByReservationDto : menuList) {
-	        int menuNo = menuByReservationDto.getMenuNo();
-	        MenuWithImagesVO menuVO = menuDao.selectOne(menuNo);
-	        
-	        // 선택한 메뉴 목록에서 해당 메뉴의 인덱스 찾기
-	        int index = selectedMenuNos.indexOf(menuNo);
-	        
-	        // 선택한 메뉴 목록에 포함되어 있으면 해당 수량을 가져와 설정
-	        if (index != -1) {
-	            int qty = selectedQtys.get(index);
-	            menuByReservationDto.setMenuQty(qty);
-	        }
-	    }
-	    
-	    float sumTotal = 0; // 선택된 메뉴의 가격 총합을 저장할 변수
+	   public String detail(Model model,
+	                   HttpSession session,
+	                   @RequestParam int rezNo
+	                   ) {
+	      List<Integer> selectedMenuNos = (List<Integer>) session.getAttribute("selectedMenuNos");
+	      List<Integer> selectedQtys = (List<Integer>) session.getAttribute("selectedQtys");
+	      
+	      String rezCustomerId = (String)session.getAttribute("name");
+	      // 예약 정보 조회
+	       ReservationDto reservationDto = reservationDao.selectOne(rezNo);
+	       CustomerDto customerDto = customerDao.selectOne(rezCustomerId);
+	       // 매장 정보, 이용자 아이디, 시간, 좌석 정보를 조회 및 model에 추가
+	       ClockDto selectedClock = clockDao.selectOne(reservationDto.getRezClockNo());
+	       SeatDto selectedSeat = seatDao.selectOne(reservationDto.getRezSeatNo());
+	       
+	       List<MenuInfoVO> menuInfo = menuByReservationDao.menuInfo(rezNo);
+	       // 예약에 해당하는 메뉴 정보 조회
+	       List<MenuByReservationDto> menuList = menuByReservationDao.selectList(rezNo);
+	       
+	       // 선택한 메뉴 정보를 사용하여 메뉴 목록에 수량 정보 추가
+	       for (MenuByReservationDto menuByReservationDto : menuList) {
+	           int menuNo = menuByReservationDto.getMenuNo();
+	           MenuWithImagesVO menuVO = menuDao.selectOne(menuNo);
+	           
+	           // 선택한 메뉴 목록에서 해당 메뉴의 인덱스 찾기
+	           int index = selectedMenuNos.indexOf(menuNo);
+	           
+	           // 선택한 메뉴 목록에 포함되어 있으면 해당 수량을 가져와 설정
+	           if (index != -1) {
+	               int qty = selectedQtys.get(index);
+	               menuByReservationDto.setMenuQty(qty);
+	           }
+	       }
+	       
+	       int sumTotal = 0; // 선택된 메뉴의 가격 총합을 저장할 변수
 
-	    for (MenuByReservationDto menuByReservationDto : menuList) {
-	        int menuNo = menuByReservationDto.getMenuNo();
-	        MenuWithImagesVO menuVO = menuDao.selectOne(menuNo);
+	       for (MenuByReservationDto menuByReservationDto : menuList) {
+	           int menuNo = menuByReservationDto.getMenuNo();
+	           MenuWithImagesVO menuVO = menuDao.selectOne(menuNo);
 
-	        // 선택한 메뉴 목록에서 해당 메뉴의 인덱스 찾기
-	        int index = selectedMenuNos.indexOf(menuNo);
+	           // 선택한 메뉴 목록에서 해당 메뉴의 인덱스 찾기
+	           int index = selectedMenuNos.indexOf(menuNo);
 
-	        // 선택한 메뉴 목록에 포함되어 있으면 해당 수량을 가져와 설정
-	        if (index != -1) {
-	            int qty = selectedQtys.get(index);
-	            menuByReservationDto.setMenuQty(qty);
+	           // 선택한 메뉴 목록에 포함되어 있으면 해당 수량을 가져와 설정
+	           if (index != -1) {
+	               int qty = selectedQtys.get(index);
+	               menuByReservationDto.setMenuQty(qty);
 
-	            // 메뉴의 가격과 수량을 곱하여 총 가격을 계산하고 sumTotal에 더함
-	            float menuPrice = menuVO.getMenuDto().getMenuPrice();
-	            float menuTotalPrice = menuPrice * qty;
-	            sumTotal += menuTotalPrice;
-	        }
-	    }
-	    
+	               // 메뉴의 가격과 수량을 곱하여 총 가격을 계산하고 sumTotal에 더함
+	               int menuPrice = menuVO.getMenuDto().getMenuPrice();
+	               int menuTotalPrice = menuPrice * qty;
+	               sumTotal += menuTotalPrice;
+	           }
+	       }
+	       
+	       session.setAttribute("sumTotal", sumTotal);
 
+	       model.addAttribute("reservationDto", reservationDto);
+	       model.addAttribute("customerDto", customerDto);
+	       model.addAttribute("selectedClock", selectedClock);
+	       model.addAttribute("selectedSeat", selectedSeat);
+	       model.addAttribute("menuInfo", menuInfo);
+	       model.addAttribute("menuList", menuList);
+	       model.addAttribute("sumTotal", sumTotal);
 
-	    model.addAttribute("reservationDto", reservationDto);
-	    model.addAttribute("customerDto", customerDto);
-	    model.addAttribute("selectedClock", selectedClock);
-	    model.addAttribute("selectedSeat", selectedSeat);
-	    model.addAttribute("menuInfo", menuInfo);
-	    model.addAttribute("menuList", menuList);
-	    model.addAttribute("sumTotal", sumTotal);
+	       
+	       return "reservation/rezDetail";
+	   }
 
-	    
-	    return "reservation/rezDetail";
-	}
-//	@PostMapping("/detail")
-//	public String detail(
-////			HttpSession session,
-//						  @RequestParam int rezNo,
+	
+	
+	
+	
+	@PostMapping("/detail")
+	public String detail(
+							HttpSession session,
+						  @RequestParam int rezNo,
 //						  @RequestParam List<Integer> menuNos,
-//						 Model model) {
-//	    
-//	    int sumTotal = 0;
-//	    for (MenuWithImagesVO menuVO : menuVOs) {
-//	        for (MenuByReservationDto mbrDto : mbrDtoList) {
-//	            if (mbrDto.getMenuNo() == menuVO.getMenuDto().getMenuNo()) {
-//	                int qty = mbrDto.getMenuQty();
-//	                float menuPrice = menuVO.getMenuDto().getMenuPrice();
-//	                sumTotal += menuPrice * qty;
-//	            }
-//	        }
-//	    }
-//	    log.debug("sumTotal={}", sumTotal);
-//		
-//
-//
-////		int rezNo = vo.getReservationDto().getRezNo();  //rezNo = 예약 번호인데, 이걸 listDto에서 넘버 꺼내와서 담아옴
-//		//계산을 위한 vo 생성
-//		PaymentSumVO vo = new PaymentSumVO();
-//		
-//		//rezDto 설정을 vo 가져오는걸로 설정
-//		vo.setReservationDto(rezDto);
-//		Float paymentTotal = (float) (sumTotal - vo.getInputPoint());
-//		
-////		Float sumTotal = vo.getSumTotal();
-////		Float paymentTotal = vo.getPaymentTotal();
-//		int inputPoint = vo.getInputPoint();
-//
-//		model.addAttribute("sumTotal", sumTotal);
-//	    model.addAttribute("paymentTotal", paymentTotal);
-//	    model.addAttribute("inputPoint", inputPoint);
-//	    
-//	    log.debug("rezNo={}", rezNo);
-//	    log.debug("paymentTotal={}", paymentTotal);
-//		
-//		
-//	}
+						 Model model,
+						 @ModelAttribute PaymentSumVO sumVO) throws URISyntaxException {
+		
+		int sumTotal = (int) session.getAttribute("sumTotal");
+		int inputPoint = sumVO.getInputPoint();
+		int paymentTotal = sumTotal - inputPoint;
+		int paymentNo = paymentDao.sequence();
+		String customerId = (String)session.getAttribute("name");
+		
+		
+		KakaoPayReadyRequestVO request = new KakaoPayReadyRequestVO();  //리퀘스트 새로 생성
+
+		// 요청에 필드 설정
+		request.setPartnerOrderId(String.valueOf(paymentNo));
+		request.setItemName("맛도리 예약");
+		request.setItemPrice(paymentTotal);
+		request.setPartnerUserId(customerId);
+		
+		
+		KakaoPayReadyResponseVO response = kakaoPayService.ready(request);
+		
+		session.setAttribute("approve", KakaoPayApproveRequestVO.builder()
+				.partnerOrderId(request.getPartnerOrderId())
+				.partnerUserId(request.getPartnerUserId())
+				.tid(response.getTid())
+				.build());
+		session.setAttribute("sumVO", sumVO);
+		
+		return "redirect:"+response.getNextRedirectPcUrl();
+	}
 	
 	
 	
@@ -301,22 +302,28 @@ public class ReservationController {
 	
 	
 	//결제  --재은 구역--
-	@GetMapping("/payment/success")
+	@GetMapping("/detail/success")
 	public String paymentSuccess(HttpSession session,
+								@RequestParam int rezNo,
 								@RequestParam String pg_token) throws URISyntaxException {
+		 
 		KakaoPayApproveRequestVO request = (KakaoPayApproveRequestVO)session.getAttribute("approve");
 		
 		session.removeAttribute("approve");
 		
 		request.setPgToken(pg_token);  //토큰설정
 		KakaoPayApproveResponseVO response = kakaoPayService.approve(request); //승인요청
+			
+		log.debug("요청 값 = {}", response);
 		
 		//[1] 결제번호 생성
 		int paymentNo = Integer.parseInt(response.getPartnerOrderId());
+//		int paymentTotal = (int) session.getAttribute("paymentTotal");
 		
 		//[2] 결제정보 등록
 		paymentDao.insert(PaymentDto.builder()
 				.paymentNo(paymentNo)
+				.paymentRezNo(rezNo)
 				.paymentCustomer(response.getPartnerUserId())
 				.paymentTid(response.getTid())
 				.paymentName(response.getItemName())
@@ -326,6 +333,8 @@ public class ReservationController {
 		
 		
 		return "redirect:/successResult";
+		
+		
 	}
 	
 	@RequestMapping("/payment/successResult")
@@ -371,7 +380,6 @@ public class ReservationController {
 	@RequestMapping("/payment/delete")
 	public String test3cancel(HttpSession session) {
 		session.removeAttribute("approve");
-		session.removeAttribute("listVO");
 		
 		return "paymentDelete";
 	}
@@ -379,7 +387,6 @@ public class ReservationController {
 	@RequestMapping("/payment/fail")
 	public String test3fail(HttpSession session) {
 		session.removeAttribute("approve");
-		session.removeAttribute("listVO");
 		
 		return "paymentFail";
 	}

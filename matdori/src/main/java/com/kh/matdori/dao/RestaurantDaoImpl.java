@@ -105,11 +105,18 @@ public class RestaurantDaoImpl implements RestaurantDao {
 	}
 
 	
+//	//복합검색 리스트
+//	@Override
+//	public List<ResSearchListDto> resSearchList(resSearchListVO vo) {
+//	    return sqlSession.selectList("restaurant.searchResList", vo);
+//	}
+
 	//복합검색 리스트
 	@Override
 	public List<ResSearchListDto> resSearchList(ResSearchListVO vo) {
 	    return sqlSession.selectList("restaurant.searchResList", vo);
 	}
+
 
     // 공지 조회
     @Override
@@ -119,8 +126,15 @@ public class RestaurantDaoImpl implements RestaurantDao {
 
     // 공지 등록/수정
     @Override
-    public void updateNotice(int resNo, String resNotice) {
-    	sqlSession.update("updateNotice", new RestaurantDto(resNo, resNotice));
+    public void updateNotice(RestaurantDto restaurantDto) {
+        sqlSession.update("restaurant.updateNotice", restaurantDto);
     }
+
+
+//	@Override
+//	public List<ResSearchListDto> resSearchList(Map<String, String> searchParams) {
+//		// TODO Auto-generated method stub
+//		return null;
+//	}오류나서 임시 주석처리
 	
 }

@@ -22,15 +22,9 @@
 		            <div class="input-group-prepend">
 		                <span class="input-group-text">매장이름</span>
 		            </div>
-		            <input type="text" name="resName" value="${vo.resName}" class="form-control">
+		            <input type="text" name="resName" value="${restaurantAdminListDto.resName}" class="form-control">
 	        	</div>
-						
-				<div class="input-group mb-3">
-		            <div class="input-group-prepend">
-		                <span class="input-group-text">사업자번호</span>
-		            </div>
-		           <input type="number" name="resRegNo" value="${vo.resRegNo}" class="form-control" placeholder="( - )제외 숫자만 입력">
-	        	</div>
+				
 	        	
 	        	<div class="input-group mb-3">
 		            <div class="input-group-prepend">
@@ -81,7 +75,6 @@
 						<tr class="table-warning">
 							<th scope="col" class="col-md-2">등록일자</th>
 							<th scope="col" class="col-md-5">매장이름</th>
-							<th scope="col" class="col-md-3">사업자 번호</th>
 							<th scope="col" class="col-md-1">심사상태</th>
 							<th scope="col" class="col-md-1">차단여부</th>
 						</tr>
@@ -91,13 +84,6 @@
 					    <tr onClick="goToDetail(${restaurantAdminListDto.resNo})" style="cursor: pointer;">
 					        <td>${restaurantAdminListDto.resRegDate}</td>
 					        <th>${restaurantAdminListDto.resName}</th>
-							<td>
-								${fn:substring(restaurantAdminListDto.resRegNo, 0, 3)}
-								-
-								${fn:substring(restaurantAdminListDto.resRegNo, 3, 5)}
-								-
-								${fn:substring(restaurantAdminListDto.resRegNo, 5, 10)}
-							</td>
 					        <td>${restaurantAdminListDto.resJudgeStatus}</td>
 					        <td>${restaurantAdminListDto.resBlock}</td>
 					    </tr>

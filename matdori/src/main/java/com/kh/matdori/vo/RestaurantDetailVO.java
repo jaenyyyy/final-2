@@ -13,6 +13,6 @@ public class RestaurantDetailVO {
 	private String resPost, resAddr1, resAddr2;
 //	private String resNotice;
 	private String menuName, menuContent;
-	private Float menuPrice;
+	private int menuPrice;
 
 }
