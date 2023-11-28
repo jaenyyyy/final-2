@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+    
+<mapper namespace="seat2">
+
+    <select id = "sequence2" resultType="int">
+    select seat2_seq.nextval from dual
+    </select>
+
+
+	<!-- 좌석 등록 -->
+	<insert id = "insert2">
+		insert into seat2
+		(seat2_no, seat2_name) 
+		values(seat2_seq.nextval, #{seat2Name})
+	</insert>
+	
+	<insert id = "resSeat2Insert">
+	insert into res_seat2 values(#{seat2No}, #{resNo})
+	</insert>
+	<!-- 좌석 삭제 -->
+	<delete id="remove2">
+		delete seat2 where seat2_no = #{seat2No}
+	</delete>
+	
+	<!-- 좌석 수정 -->
+	<update id="edit2">
+		update seat2
+		set 
+		<if test="seat2Dto.seat2No > 0">
+		seat2_no=#{seatDto.seatNo}, 
+		</if>
+		<if test="seat2Dto.seat2Name != null">
+		seat2_name=#{seatDto.seatName}, 
+		</if>
+		<if test="seat2Dto.seat2Count > 0">
+		seat2_count=#{seat2Dto.seat2Count} 
+		</if>
+		where seat2_no=#{seat2No}
+	</update>
+	
+	<!-- 좌석 세부 조회 -->
+	<select id="oneOfSeat2" resultType="Seat2Dto">
+		select * from seat2 where seat2_no = #{seat2No}
+	</select>
+	
+	<!-- 전체 좌석 조회 -->
+	   <select id="seat2List" resultType="seat2Dto">
+      select * from seat2 order by seat2_no asc
+   </select>
+	
+	<!-- 매장별 좌석 조회 -->
+	<select id="resSeat2List" resultType="ResSeat2Dto">
+<!-- 		select * from seat  -->
+		select * from seat2 where res_no = #{resNo}
+	</select>
+</mapper>

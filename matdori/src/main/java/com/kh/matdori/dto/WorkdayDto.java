@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @Data @NoArgsConstructor @AllArgsConstructor @Builder
 public class WorkdayDto {
 	private int workdayNo;
+	private int workdayResNo;
 	private String workdayName;
 	private String notWorkday;
-	private int workResNo;
 }

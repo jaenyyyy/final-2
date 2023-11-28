@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+    <mapper namespace="clock2">
+    
+    <select id ="sequence" resultType="int">
+    select clock2_seq.nextval from dual
+    </select>
+
+  <!-- 레스토랑별 시간 추가 -->
+<!--   <insert id = "insertClock2"> -->
+<!--   	insert into clock2(clock2_no, clock2_res_no, clock2_select, clock2_eating_time)  -->
+<!--   	values( #{clock2No}, #{clock2ResNo}, #{clock2Select}, #{clock2EatingTime}) -->
+<!--   </insert> -->
+
+<insert id="insertClock2">
+    insert into clock2 (clock2_no, clock2_res_no, clock2_select, clock2_eating_time) 
+    values (
+        #{clock2No}, 
+        #{clock2ResNo}, 
+        TO_DATE(REPLACE(#{clock2Select}, 'T', ' '), 'YYYY-MM-DD HH24:MI'), 
+        #{clock2EatingTime}
+    )
+</insert>
+  
+  <!-- 레스토랑별 시간 삭제 -->
+    <delete id="deleteClock2">
+      delete from clock2 where clock2_no = #{clock2No}
+   </delete>
+  
+  <!-- 레스토랑별 시간 조회 -->
+   <select id="clock2List" resultType="Clock2Dto">
+	select * from clock2 where clock2_res_no=#{clock2ResNo}   
+   </select>
+  
+  
+    </mapper>

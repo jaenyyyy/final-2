@@ -26,18 +26,18 @@ import io.swagger.v3.oas.annotations.parameters.RequestBody;
 @RequestMapping("/clock")
 public class ClockRestController {
 
-	@Autowired
-	private ClockDao clockDao;
-	
-	@Autowired
-	private WorkdayDao workdayDao;
-	
+   @Autowired
+   private ClockDao clockDao;
+   
+   @Autowired
+   private WorkdayDao workdayDao;
+   
 
-	@PostMapping("/")
-	public void insert(@RequestBody ClockDto clockDto) {
-		clockDao.insert(clockDto);
-	}
-	 // 특정 Clock 데이터 조회
+   @PostMapping("/")
+   public void insert(@RequestBody ClockDto clockDto) {
+      clockDao.insert(clockDto);
+   }
+    // 특정 Clock 데이터 조회
     @GetMapping("/clock/one/{clockNo}")
     public ClockDto getOneClock(@PathVariable int clockNo) {
         return clockDao.getOneClock(clockNo);
@@ -68,4 +68,4 @@ public class ClockRestController {
 //    }
 
 }
-
+ 

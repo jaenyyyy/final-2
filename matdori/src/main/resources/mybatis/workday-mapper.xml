@@ -11,28 +11,27 @@
     </select>
     
 <!-- 영업요일 추가 -->
-	<insert id="addWorkday">
-	insert into workday(workday_no, workday_name, not_workday, work_res_no) 
-	values(workday_seq.nextval, #{workdayName}, #{notWorkday}, #{workResNo})	
+	<insert id="insertWorkday">
+	insert into workday(workday_no,workday_res_no, workday_name, not_workday) 
+	values(#{workdayNo}, #{workdayResNo}, #{workdayName},#{notWorkday})	
 	</insert>
 	
 	<delete id ="deleteWorkday">
-	delete from workday where where workday_no=#{workdayNo}
+	delete from workday where where workday_res_no=#{workdayResNo}
 	</delete>
 	
 	<select id="findWorkday" resultType="WorkdayDto">
-	select from workday where workday_no=#{workdayNo}
+	select * from workday where workday_no=#{workdayNo}
 		</select>
 	
 	<select id="findAllWorkday" resultType ="WorkdayDto">
-	select * from workday where work_res_no=#{workResNo}
+	select * from workday where workday_res_no=#{workdayResNo}
 	</select>
 	
-	<update id ="editWorkday">
-	UPDATE workday SET
-		workday_no = #{workdayNo},
-		workday_name = #{workdayName},
-		not_workday = #{notWorkday} 
-		 where work_res_no = #{workResNo}
-	</update>
+<update id="updateWorkday" parameterType="WorkdayDto">
+    UPDATE workday
+    SET not_workday = #{notWorkday}
+    WHERE workday_no = #{workdayNo}
+</update>
+	
 	</mapper>
