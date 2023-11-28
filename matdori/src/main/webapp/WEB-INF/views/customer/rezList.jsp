@@ -116,7 +116,7 @@
                     </div>
                     <div class="col-2 text-end">
                         <div class="row mb-3">
-                            <a href="#" class="menu-tag">예약상세 ></a>
+                            <a href="/reservation/payment/list?rezNo=${reservationListDto.rezNo}" class="menu-tag">예약상세 ></a>
                         </div>
         <div class="row">
             <c:choose>

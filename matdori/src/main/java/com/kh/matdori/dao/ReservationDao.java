@@ -8,6 +8,7 @@ import com.kh.matdori.vo.CusPaginationVO;
 import com.kh.matdori.vo.MenuWithImagesVO;
 
 import com.kh.matdori.dto.ReviewDto;
+import com.kh.matdori.dto.RezDetailListDto;
 
 public interface ReservationDao {
 	int sequence();
@@ -23,5 +24,7 @@ public interface ReservationDao {
 	int rezCount(CusPaginationVO vo);//페이지네이션?
 	
 	List<MenuWithImagesVO> menuList(int rezNo); // 다수의 메뉴
+	
+	RezDetailListDto selectDetail(int rezNo);  //결제상세
 
 }
