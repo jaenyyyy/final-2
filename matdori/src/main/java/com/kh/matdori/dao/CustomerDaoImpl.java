@@ -16,6 +16,7 @@ import com.kh.matdori.error.NoTargetException;
 import com.kh.matdori.vo.CusAdminVO;
 import com.kh.matdori.vo.CusLevelUpVO;
 //import com.kh.matdori.vo.PaymentSumVO;
+import com.kh.matdori.vo.CusPaginationVO;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -277,6 +278,12 @@ public class CustomerDaoImpl implements CustomerDao {
 	@Override
 	public List<CusLevelUpVO> successList() {
 		return sqlSession.selectList("customer.rezSuccessCount");
+	}
+
+	//찜 페이지네이션 
+	@Override
+	public int pickCount(CusPaginationVO vo) {
+		return sqlSession.selectOne("customer.pickCount",vo);
 	}
 	
 	
