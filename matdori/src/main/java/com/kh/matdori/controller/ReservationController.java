@@ -29,6 +29,7 @@ import com.kh.matdori.dto.MenuByReservationDto;
 import com.kh.matdori.dto.PaymentDto;
 import com.kh.matdori.dto.ReservationDto;
 import com.kh.matdori.dto.RestaurantDto;
+import com.kh.matdori.dto.RezDetailListDto;
 import com.kh.matdori.dto.SeatDto;
 import com.kh.matdori.error.NoTargetException;
 import com.kh.matdori.service.KakaoPayService;
@@ -289,6 +290,7 @@ public class ReservationController {
 				.tid(response.getTid())
 				.build());
 		session.setAttribute("sumVO", sumVO);
+		session.setAttribute("rezNo", rezNo);
 		
 		return "redirect:"+response.getNextRedirectPcUrl();
 	}
@@ -304,17 +306,19 @@ public class ReservationController {
 	//결제  --재은 구역--
 	@GetMapping("/detail/success")
 	public String paymentSuccess(HttpSession session,
-								@RequestParam int rezNo,
 								@RequestParam String pg_token) throws URISyntaxException {
 		 
 		KakaoPayApproveRequestVO request = (KakaoPayApproveRequestVO)session.getAttribute("approve");
 		
 		session.removeAttribute("approve");
 		
+		
+		int rezNo = (int) session.getAttribute("rezNo");
+		
+		
 		request.setPgToken(pg_token);  //토큰설정
 		KakaoPayApproveResponseVO response = kakaoPayService.approve(request); //승인요청
 			
-		log.debug("요청 값 = {}", response);
 		
 		//[1] 결제번호 생성
 		int paymentNo = Integer.parseInt(response.getPartnerOrderId());
@@ -331,51 +335,57 @@ public class ReservationController {
 				.paymentRemain(response.getAmount().getTotal())
 				.build());
 		
-		
-		return "redirect:/successResult";
+		return "redirect:/reservation/successResult";
 		
 		
 	}
 	
-	@RequestMapping("/payment/successResult")
-	public String paymentSuccessResult() {
+	@RequestMapping("/successResult")
+	public String paymentSuccessResult(HttpSession session) {
 		return "reservation/successResult";
 	}
 	
-//	@RequestMapping("/payment/list")  //사용자가 보는 구매목록
-	public String paymentList(Model model, HttpSession session) {
+	
+	
+	@RequestMapping("/payment/list")  //예약자가 보는상세 내역 보이는곳
+	public String paymentList(Model model, HttpSession session,@RequestParam int rezNo) {
+		
 		
 		String customerId = (String) session.getAttribute("name");
 		model.addAttribute("list", paymentDao.listByCustomer(customerId));
-		return "reservation/listByCustomer";
+		
+		RezDetailListDto rezDetailListDto = reservationDao.selectDetail(rezNo);
+		model.addAttribute("rezDetailListDto", rezDetailListDto);
+		
+		
+		return "reservation/paymentList";
 	}
 	
 	
 	
-	@RequestMapping("payment/cancel")
+	@RequestMapping("/payment/cancel")
 	public String paymentCancel(@RequestParam int paymentNo) throws URISyntaxException {
 		//1
 		PaymentDto paymentDto = paymentDao.selectOne(paymentNo);
-		if(paymentDto == null || paymentDto.getPaymentRemain() == 0) {
-			throw new NoTargetException("이미 취소된 결제입니다");
-		}
 		
 		//2
 		KakaoPayCancelRequestVO request = KakaoPayCancelRequestVO.builder()
-					.tid(paymentDto.getPaymentTid()) //거래번호
-					.cancelAmount(paymentDto.getPaymentRemain()) //잔여금액
-					.build();
+								.tid(paymentDto.getPaymentTid()) //거래번호
+								.cancelAmount(paymentDto.getPaymentPrice())
+								.build();
 		KakaoPayCancelResponseVO response = kakaoPayService.cancel(request);
 		
 		//3
 		paymentDao.cancelPayment(PaymentDto.builder()
-				.paymentNo(paymentNo).paymentRemain(0)
-				.build());
+				.paymentNo(paymentDto.getPaymentNo())
+	             .paymentPrice(0)
+	             .build());
 		
-		
-		return "redirect:listByCustomer";
+		return "redirect:reservation/payment/list";
 	}
-	
+
+
+
 	
 	@RequestMapping("/payment/delete")
 	public String test3cancel(HttpSession session) {

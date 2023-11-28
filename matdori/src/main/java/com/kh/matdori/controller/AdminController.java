@@ -68,6 +68,46 @@ public class AdminController {
       return "/admin/home";
    }
    
+
+   //레스토랑 관리자 시점 (+차단 +심사 리스트)
+   @RequestMapping("/restaurant/list")
+   public String list(@ModelAttribute("vo") ResAdminVO vo, Model model) {
+   	int count = adminDao.countList(vo);
+   	vo.setCount(count);
+   	
+   	List <RestaurantAdminListDto> list = adminDao.resAdminList(vo);
+   	model.addAttribute("list", list);
+   	return "/admin/restaurant/list";
+   }
+   
+   
+   //레스토랑 관리자 시점(+차단 +심사 상세)
+   @RequestMapping("/restaurant/detail")
+   public String detail(@RequestParam int resNo, Model model) {
+      
+      RestaurantAdminListDto restaurantAdminListDto
+         = adminDao.resAdminOne(resNo);
+      model.addAttribute("restaurantAdminListDto", restaurantAdminListDto);
+      
+      RestaurantDto restaurantDto = restaurantDao.selectOne(resNo);
+      model.addAttribute("restaurantDto", restaurantDto);
+      
+      RestaurantBlockDto blockDto = adminDao.selectBlockOne(resNo);
+      model.addAttribute("restaurantBlockDto", blockDto);
+      
+      RestaurantJudgeDto restaurantJudgeDto = adminDao.selectOne(resNo);
+      model.addAttribute("restaurantJudgeDto", restaurantJudgeDto);
+      
+      return "/admin/restaurant/detail";
+   }
+   
+   //관리자 시점 해시태그 관리
+   @RequestMapping("/restaurant/hashtag")
+   public String list(Model model) {
+   	List<HashtagDto> hashtagList = hashtagDao.hashList();
+       model.addAttribute("hashtagList", hashtagList); 
+       return "/admin/restaurant/hashtag"; 
+   }
    
 //   //심사 리스트
    @GetMapping("/business/judge/list")
@@ -115,34 +155,6 @@ public class AdminController {
 
     
     
-    //레스토랑 관리자 시점 (+차단 +심사 리스트)
-    @RequestMapping("/restaurant/list")
-    public String list(@ModelAttribute("vo") ResAdminVO vo, Model model) {
-       List <RestaurantAdminListDto> list = adminDao.resAdminList(vo);
-       model.addAttribute("list", list);
-       return "/admin/restaurant/list";
-    }
-    
-    
-    //레스토랑 관리자 시점(+차단 +심사 상세)
-    @RequestMapping("/restaurant/detail")
-    public String detail(@RequestParam int resNo, Model model) {
-       
-       RestaurantAdminListDto restaurantAdminListDto
-          = adminDao.resAdminOne(resNo);
-       model.addAttribute("restaurantAdminListDto", restaurantAdminListDto);
-       
-       RestaurantDto restaurantDto = restaurantDao.selectOne(resNo);
-       model.addAttribute("restaurantDto", restaurantDto);
-       
-       RestaurantBlockDto blockDto = adminDao.selectBlockOne(resNo);
-       model.addAttribute("restaurantBlockDto", blockDto);
-       
-       RestaurantJudgeDto restaurantJudgeDto = adminDao.selectOne(resNo);
-       model.addAttribute("restaurantJudgeDto", restaurantJudgeDto);
-       
-       return "/admin/restaurant/detail";
-    }
     
     
   //사업자 차단 관리 리스트
@@ -190,13 +202,7 @@ public class AdminController {
     }
     
   
-    //관리자 시점 해시태그 관리
-    @RequestMapping("/restaurant/hashtag")
-    public String list(Model model) {
-    	List<HashtagDto> hashtagList = hashtagDao.hashList();
-        model.addAttribute("hashtagList", hashtagList); 
-        return "/admin/restaurant/hashtag"; 
-    }
+   
     
 
 

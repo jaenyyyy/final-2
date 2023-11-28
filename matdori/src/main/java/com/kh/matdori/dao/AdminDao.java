@@ -34,6 +34,10 @@ public interface AdminDao {
 	//레스토랑 관리자 - 상세
 	RestaurantAdminListDto resAdminOne(int resNo);
 	
+	//레스토랑 관리자 - 목록 (페이지네이션) 
+	List<RestaurantAdminListDto> resAdminListPaging(ResAdminVO vo);
+	int countList(ResAdminVO vo);
+	
 	//사업자 차단 관리 리스트
 	List<BusinessBlockDto> getBusBlocklist(BusBlockPaginationVO vo);
 	

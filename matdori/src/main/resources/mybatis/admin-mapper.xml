@@ -194,7 +194,7 @@
 </select> -->
 
 
-
+	
 
 
 
@@ -291,6 +291,54 @@
 	    </where>
 	    order by res_reg_date desc
 <!-- 	    <include refid="pagingFooter"></include> -->
+	</select>
+	
+	<!-- 매장 목록 카운트 -->
+	<select id="resAdminListCount" resultType="int">
+		<!-- 검색일 때 -->
+		<choose>
+			<when test="keyword != null">
+	            <![CDATA[
+	                select count(*) from restaurant_admin_list 
+	                where instr(bus_id, #{keyword}) > 0
+	            ]]>
+			</when>
+			<!-- 검색이 아닐 때 -->
+			<otherwise>
+	            <![CDATA[
+	                select count(*) from restaurant_admin_list
+	            ]]>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<!-- 매장 목록 -->
+	<select id="resAdminListPaging" resultType="ResAdminVO">
+	    <!-- 검색 -->
+	    <choose>
+	        <when test="search">
+	            <![CDATA[
+	                select * from (
+	                    select rownum rn, TMP.* from (
+	                        select * from restaurant_admin_list
+	                        where instr(res_name, #{keyword}) > 0
+	                        order by res_no desc
+	                    ) TMP
+	                ) where rn between #{startRow} and #{finishRow}
+	            ]]>
+	        </when>
+	        <!-- 검색 없이 목록 -->
+	        <otherwise>
+	            <![CDATA[
+	                select * from (
+	                    select rownum rn, TMP.* from (
+	                        select * from restaurant_admi
+	                        order by res_no desc
+	                    ) TMP
+	                ) where rn between #{startRow} and #{finishRow}
+	            ]]>
+	        </otherwise>
+	    </choose>
 	</select>
 
 

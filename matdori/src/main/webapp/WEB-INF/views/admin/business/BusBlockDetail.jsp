@@ -21,7 +21,8 @@
 	<div class="card border-warning mb-3 " style="max-width: 50rem;">
 	
 				<div class="card-body">
-					<label class="form-label mt-4" for="readOnlyInput">사업자 아이디</label> <input
+					<label class="form-label mt-4" for="readOnlyInput">사업자 아이디</label> 
+					<input
 						class="form-control" id="readOnlyInput1" type="text"
 						value="${business.busId}" disabled> <label
 						class="form-label mt-4" for="readOnlyInput">사업자 번호</label> <input

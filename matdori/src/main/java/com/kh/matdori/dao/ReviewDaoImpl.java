@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 import com.kh.matdori.dto.AttachDto;
 import com.kh.matdori.dto.ReviewDto;
 import com.kh.matdori.error.NoTargetException;
+import com.kh.matdori.vo.CusPaginationVO;
 
 @Repository
 public class ReviewDaoImpl implements ReviewDao {
@@ -53,6 +54,20 @@ public class ReviewDaoImpl implements ReviewDao {
 		List<ReviewDto> listByCus = sqlSession.selectList("review.listByCus", reviewWriter);
 		return listByCus;
 	}
+	
+	//마이페이지 리뷰리스트(페이지네이션용)
+	@Override
+	public List<ReviewDto> selectListByCuspage(CusPaginationVO vo) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	//리뷰리스트 카운트(페이지네이션용)
+	@Override
+	public int reviewCount(CusPaginationVO vo) {
+		return sqlSession.selectOne("review.reviewCount", vo);
+	}
+	
 
 	@Override
 	public ReviewDto selectOne(int reviewNo) {
@@ -96,5 +111,6 @@ public class ReviewDaoImpl implements ReviewDao {
 	public int getCountOfReviewsByCustomerId(String customerId) {
 		return sqlSession.selectOne("review.countOfReviews", customerId);
 	}
+
 
 }

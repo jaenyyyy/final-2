@@ -80,11 +80,14 @@
 
       <!-- 제목 틀 -->
       <div class="row justify-content-center mb-3" style="margin-top: 70px;">
-         <div class="col-6">
-            <!-- 매장이름 -->
+         <div class="col-6 text-start">
+
+            <!— 매장이름 —>
             <div class="row">
-               <h1 class="text-left title">${resDto.resName}</h1>
+               <h1 class="text-left title" style="font-weight: bold;">${resDto.resName}</h1>
             </div>
+
+
 
             <!-- 별점 -->
             <div class="row">
@@ -100,35 +103,32 @@
                   class="rating__star ${averageRating >= 5 ? 'fas' : 'far'} fa-star"></span>
                   ${String.format("%.1f", averageRating)}점 식당
                </span>
-               <!-- 북마크 : 클릭하면 북마크 설정 / ajax로 값 전송 되게 구현할 예정 -->
+            </div>
+         </div>
+
+
+         <!-- 북마크 : 클릭하면 북마크 설정 / ajax로 값 전송 되게 구현할 예정 -->
+         <div class="col-6 text-end">
             <c:choose>
                <c:when test="${empty sessionScope.name}">
-                  <!-- 세션값이 없는 경우, 아무것도 출력하지 않음 -->
                </c:when>
                <c:otherwise>
-                  <div class="col-6" style="text-align: right;">
-                     <c:choose>
-                        <c:when test="${pickDto.resNo != null}">
-                           <i class="fa-solid fa-bookmark fa-3x bookmark"
-                              style="color: #ffb416;"></i>
-                           <br>
-                           <span></span>
-                        </c:when>
-                        <c:otherwise>
-                           <i class="fa-regular fa-bookmark fa-3x bookmark"
-                              style="color: #ffb416;"></i>
-                           <br>
-                           <span></span>
-                        </c:otherwise>
-                     </c:choose>
-                  </div>
+                  <c:choose>
+                     <c:when test="${pickDto.resNo != null}">
+                        <i class="fa-solid fa-bookmark fa-3x bookmark"
+                           style="color: #ffb416;"></i>
+                        <br>
+                        <span></span>
+                     </c:when>
+                     <c:otherwise>
+                        <i class="fa-regular fa-bookmark fa-3x bookmark"
+                           style="color: #ffb416;"></i>
+                        <br>
+                        <span></span>
+                     </c:otherwise>
+                  </c:choose>
                </c:otherwise>
             </c:choose>
-            </div>
-
-
-            
-
          </div>
       </div>
 
@@ -153,12 +153,15 @@
 
 
       <!-- 예약 버튼 -->
-      <div class="row justify-content-center mb-3 mt-4">
-         <div class="row justify-content-center">
-            <a href="/reservation/insert?rezResNo=${resDto.resNo}"
-               class="btn btn-warning w-50 text-black"> 예약하기 </a>
+      
+<%--       <c:if test="${sessionSope.name != null}"> --%>
+         <div class="row justify-content-center mb-3 mt-4">
+            <div class="row justify-content-center">
+               <a href="/reservation/insert?rezResNo=${resDto.resNo}"
+                  class="btn btn-warning w-50 text-black"> 예약하기 </a>
+            </div>
          </div>
-      </div>
+<%--       </c:if> --%>
 
 
 
@@ -226,9 +229,7 @@
       </div>
       <!-- 공지내용 -->
       <div class="row text-start">
-         <div class="row">
-            ${resDto.resNotice}
-         </div>
+         <div class="row">${resDto.resNotice}</div>
       </div>
    </div>
 
@@ -312,11 +313,10 @@
          </div>
       </div>
 
-      <!-- 메뉴 더보기 태그 -->
+      <!-- 상세로 가는 a태그 -->
       <div class="row mt-4">
          <h5>
-            <a href="/restaurant/menuList?resNo=${resDto.resNo}" 
-            class="under-line text-badge"> 메뉴 더보기<i
+            <a href="" class="under-line text-badge"> 메뉴 더보기<i
                class="fa-solid fa-angles-right" style="color: #000000;"></i>
             </a>
          </h5>
@@ -349,12 +349,12 @@
          <div class="row">
             <c:forEach var="ReviewDto" items="${reviewByRes}" varStatus="loop">
                <c:if test="${loop.index < 3}">
-                  <div class="col-2">
+                  <div class="col-2 mt-2">
                      <img
                         src="http://localhost:8080/customer/image?reviewNo=${ReviewDto.reviewNo}"
                         width="100" height="100" class="">
                   </div>
-                  <div class="col-10 text-left">
+                  <div class="col-10 text-left mt-2">
                      <span> <span
                         class="rating__star ${ReviewDto.reviewStarPoint >= 1 ? 'fas' : 'far'} fa-star"></span>
                         <span

@@ -17,8 +17,10 @@
 		    <div class="col-md-6 mt-4">
 		        <h1 class="text-md-start text-center"> 
 		            <i class="fa-solid fa-bullhorn" style="color: #ffb416;"></i>
-		            공지사항
+		             <span
+					style="font-weight: bold;"> 공지사항</span>
 		        </h1>
+		        <br><br>
 		    </div>
 		    
 		    <c:if test="${sessionScope.name != null && sessionScope.level == '관리자'}">
