@@ -159,15 +159,15 @@ public class RestaurantRestController {
 			List<Integer> imagesNo = restaurantDao.findImageNoByRes(resNo);
 			List<AttachDto> image = new ArrayList<>();
 
-			for (Integer imageNo : imagesNo) {
-				AttachDto attachDto = attachDao.selectOne(imageNo);
-				if (attachDto != null) {
-					image.add(attachDto);
-				}
-			}
+//			for (Integer imageNo : imagesNo) {
+//				AttachDto attachDto = attachDao.selectOne(imageNo);
+//				if (attachDto != null) {
+//					image.add(attachDto);
+//				}
+//			}
 
-			if (!image.isEmpty()) {
-				return ResponseEntity.ok(image);
+			if (!imagesNo.isEmpty()) {
+				return ResponseEntity.ok(imagesNo);
 			} else {
 				return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No images found.");
 			}

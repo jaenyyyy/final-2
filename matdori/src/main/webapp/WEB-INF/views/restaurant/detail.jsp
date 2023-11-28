@@ -312,10 +312,11 @@
          </div>
       </div>
 
-      <!-- 상세로 가는 a태그 -->
+      <!-- 메뉴 더보기 태그 -->
       <div class="row mt-4">
          <h5>
-            <a href="" class="under-line text-badge"> 메뉴 더보기<i
+            <a href="/restaurant/menuList?resNo=${resDto.resNo}" 
+            class="under-line text-badge"> 메뉴 더보기<i
                class="fa-solid fa-angles-right" style="color: #000000;"></i>
             </a>
          </h5>

@@ -32,6 +32,10 @@ public interface MenuDao {
 	MenuDto selectOneByMenuNo(int menuNo);
 
 	List<MenuWithImagesVO> selectList(List<Integer> menuNos);
+
+	List<MenuWithImagesVO> selectMenuByRes(int resNo);
+
+	List<MenuWithImagesVO> selectMenuByType(int menuTypeNo);
 	
 	
 
