@@ -131,10 +131,10 @@ public class RestaurantDaoImpl implements RestaurantDao {
     }
 
 
-	@Override
-	public List<ResSearchListDto> resSearchList(Map<String, String> searchParams) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+//	@Override
+//	public List<ResSearchListDto> resSearchList(Map<String, String> searchParams) {
+//		// TODO Auto-generated method stub
+//		return null;
+//	}오류나서 임시 주석처리
 	
 }

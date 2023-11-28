@@ -34,6 +34,7 @@ import com.kh.matdori.dto.ReservationListDto;
 import com.kh.matdori.dto.RestaurantDto;
 import com.kh.matdori.dto.ReviewDto;
 import com.kh.matdori.service.EmailService;
+import com.kh.matdori.vo.CusPaginationVO;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -284,12 +285,19 @@ public class CustomerController {
 
 	// 마이페이지에서 보는 예약 내역
 	@RequestMapping("/rezList")
-	public String list(Model model, HttpSession session) {
+	public String list(Model model, HttpSession session, @ModelAttribute(name = "vo") CusPaginationVO vo) {
+		int count = customerDao.pickCount(vo);
+		vo.setCount(count);
+		vo.calculatePageInfo();
+		
 		String customerId = (String) session.getAttribute("name");
 
-		List<ReservationListDto> rezList = reservationDao.rezList(customerId);
-
-		model.addAttribute("rezList", rezList);
+		//List<ReservationListDto> rezList = reservationDao.rezList(customerId);
+		List<ReservationListDto> rezList = reservationDao.rezList(vo);
+		
+		model.addAttribute("vo", vo);
+		//model.addAttribute("rezList", rezList);
+		//model.addAttribute("rezList2", rezList2);
 
 		return "customer/rezList";
 	}

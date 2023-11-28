@@ -40,10 +40,10 @@
 		WHERE rnum BETWEEN #{start} AND #{end}
 	</select>
 
-<select id="list2" resultType="CustomerDto">
-	    <!-- 검색 -->
-	    <choose>
-	        <when test="search">
+	<select id="list2" resultType="CustomerDto">
+		<!-- 검색 -->
+		<choose>
+			<when test="search">
 	            <![CDATA[
 	                select * from (
 	                    select rownum rn, TMP.* from (
@@ -53,9 +53,9 @@
 	                    ) TMP
 	                ) where rn between #{startRow} and #{finishRow}
 	            ]]>
-	        </when>
-	        <!-- 검색 없이 목록 -->
-	        <otherwise>
+			</when>
+			<!-- 검색 없이 목록 -->
+			<otherwise>
 	            <![CDATA[
 	                select * from (
 	                    select rownum rn, TMP.* from (
@@ -64,8 +64,8 @@
 	                    ) TMP
 	                ) where rn between #{startRow} and #{finishRow}
 	            ]]>
-	        </otherwise>
-	    </choose>
+			</otherwise>
+		</choose>
 	</select>
 
 
@@ -234,6 +234,13 @@
 		= #{customerId}
 	</select>
 
+	<!-- 이용자 찜 카운트 -->
+	<select id="pickCount" resultType="int">
+	            <![CDATA[
+	                select count(*) from pick
+	            ]]>
+	</select>
+
 	<!-- 특정 레스토랑의 찜 개수 조회 -->
 	<select id="getPicksCount" parameterType="Integer"
 		resultType="Integer">
@@ -241,8 +248,8 @@
 		FROM pick
 		WHERE res_no = #{resNo}
 	</select>
-	
-	
+
+
 	<!-- 예약 횟수 조회 (등급 변경을 위한 조회) -->
 	<select id="rezSuccessCount" resultType="CusLevelUpVO">
         <![CDATA[
@@ -260,7 +267,7 @@
 			GROUP BY 
 			    p.payment_customer;
         ]]>
-    </select>
+	</select>
 
 
 
