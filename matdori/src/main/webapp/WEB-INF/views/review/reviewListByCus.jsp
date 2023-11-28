@@ -95,16 +95,11 @@
 					<div class="row res-line p-4" style="margin-left: 100px;">
 						<div class="col-3">
 							<!-- 사진자리 -->
-							<c:choose>
-								<c:when test="${not empty reviewDto}">
+
 									<img id="reviewImage${reviewDto.reviewNo}"
 										src="image?reviewNo=${reviewDto.reviewNo}" width="100"
 										height="100">
-								</c:when>
-								<c:otherwise>
-									<!-- 이미지가 없는 경우 해당 이미지 태그를 표시하지 않습니다. -->
-								</c:otherwise>
-							</c:choose>
+
 
 						</div>
 						<div class="col-7">
