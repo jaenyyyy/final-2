@@ -13,7 +13,7 @@ import com.kh.matdori.dto.ReservationDto;
 import com.kh.matdori.dto.ReservationListDto;
 import com.kh.matdori.vo.CusPaginationVO;
 import com.kh.matdori.vo.MenuWithImagesVO;
-
+import com.kh.matdori.vo.WorkdayVO;
 import com.kh.matdori.dto.ReviewDto;
 
 
@@ -72,6 +72,12 @@ public class ReservationDaoImpl implements ReservationDao{
    @Override
 	public List<MenuWithImagesVO> menuList(int rezNo) {
 		return sqlSession.selectList("reservation.menuListByRez", rezNo);
+	}
+   
+   //선택된 날짜
+   @Override
+	public WorkdayVO selectDate(String inputDate) {
+		return sqlSession.selectOne("reservation.checkDate",inputDate);
 	}
 
 

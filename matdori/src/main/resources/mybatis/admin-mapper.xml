@@ -321,8 +321,27 @@
 	                select * from (
 	                    select rownum rn, TMP.* from (
 	                        select * from restaurant_admin_list
-	                        where instr(res_name, #{keyword}) > 0
-	                        order by res_no desc
+	                        ]]>
+	                        <where>
+						        <if test="resName != null">
+						        <![CDATA[
+						          res_name LIKE '%' || #{resName} || '%'
+						          ]]>
+						        </if>
+						        <if test="resRegNo != null">
+						        <![CDATA[
+						          res_reg_no LIKE '%' || #{resRegNo} || '%'
+						          ]]>
+						        </if>
+						        <if test="resBlock != null">
+						            and res_block = #{resBlock}
+						        </if>
+						        <if test="resJudgeStatus != null">
+						            and res_judge_status = #{resJudgeStatus}
+						        </if>
+						    </where>
+						    <![CDATA[
+						    order by res_reg_date desc
 	                    ) TMP
 	                ) where rn between #{startRow} and #{finishRow}
 	            ]]>
@@ -332,7 +351,7 @@
 	            <![CDATA[
 	                select * from (
 	                    select rownum rn, TMP.* from (
-	                        select * from restaurant_admi
+	                        select * from restaurant_admin_list
 	                        order by res_no desc
 	                    ) TMP
 	                ) where rn between #{startRow} and #{finishRow}

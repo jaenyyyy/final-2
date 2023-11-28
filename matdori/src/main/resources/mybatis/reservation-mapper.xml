@@ -53,4 +53,11 @@
 		and rez_clock_no = #{rezClockNo}
 		and rez_seat_no = #{rezSeatNo}
 	</select>
+	
+	<!-- 예약 시간 조회 -->
+	<select id="checkDate" resultType="String">
+		select work_name from workday 
+		where workday_name 
+		= to_char(to_date(#{inputDate}, 'YYYY-MM-DD'), 'DY');
+	</select>
 </mapper>

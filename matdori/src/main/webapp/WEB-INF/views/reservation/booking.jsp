@@ -4,6 +4,49 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script> 
+<script>
+$(function() {
+    $("[name=selectedDate]").on("change", function(e) {
+        var selectedDate = $(this).val();
+        var rezResNo = $("[name=rezResNo]").val();
+
+        $.ajax({
+            url: "http://localhost:8080/rest/reservation/checkDate",
+            method: "post",
+            data: {
+                selectedDate: selectedDate,
+                rezResNo: rezResNo  // 예약에 관련된 resNo 값 추가 (원하는 값으로 변경)
+            },
+            success: function(response) {
+                console.log("서버 응답:", response);  // 서버 응답을 콘솔에 출력 (디버깅 용도)
+
+                if (response === "Y") {
+                    console.log("영업 가능한 날짜입니다.");
+                    showSelect();  // select 요소를 보이게 함
+                } else if (response === "N") {
+                    console.log("영업 불가능한 날짜입니다.");
+                    hideSelect();  // select 요소를 숨김
+                } else {
+                    console.log("서버 응답이 올바르지 않습니다.");
+                }
+            },
+            error: function() {
+                console.error("영업 시간 확인 중 오류가 발생했습니다.");
+            }
+        });
+    });
+
+    // 선택한 날짜에 따라 select 요소를 보이게 또는 숨기는 함수
+    function showSelect() {
+        $("[name=selectedClock]").show();
+    }
+
+    function hideSelect() {
+        $("[name=selectedClock]").hide();
+    }
+});
+</script>
 
 
 
@@ -20,11 +63,12 @@
 	    			<input type="hidden" name="rezResNo" value="${rezResNo}">
 	    			
 					<label class="form-label mt-4" for="readOnlyInput">시간</label>
+					<input type="date" name="selectedDate">
 	    			<select class="form-control" name="selectedClock">
 				        <option>선택하세요</option>
 				        <c:forEach var="clockDto" items="${clockList}">				        	
-				            <option value="${clockDto.clockNo}">
-				            <fmt:formatDate value="${clockDto.clockSelect}" pattern="yyyy-MM-dd HH:mm"/>
+				            <option value="${clock2Dto.clock2No}">
+				            <fmt:formatDate value="${clock2Dto.clock2Select}" pattern="yyyy-MM-dd HH:mm"/>
 				            </option>
 				        </c:forEach>
 				   	</select>
