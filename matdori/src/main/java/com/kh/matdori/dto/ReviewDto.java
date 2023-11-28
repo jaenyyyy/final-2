@@ -15,4 +15,5 @@ public class ReviewDto {
 	private String reviewContent;
 	private Date reviewWriteDate;
 	private int reviewStarPoint;
+	private int reviewRezNo;
 }

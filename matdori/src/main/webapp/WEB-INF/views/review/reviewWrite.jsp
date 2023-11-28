@@ -95,6 +95,9 @@
 				<!-- hidden field로 resNo 값을 전송 -->
 				<input type="hidden" id="resNo" name="resNo" value="${param.resNo}">
 
+				<!-- hidden field로 rezNo 값을 전송 -->
+				<input type="hidden" id="reviewRezNo" name="reviewRezNo" value="${param.reviewRezNo}">
+
 
 				<!-- hidden field로 별점 값을 전송 -->
 				<input type="hidden" id="reviewStarPoint" name="reviewStarPoint"

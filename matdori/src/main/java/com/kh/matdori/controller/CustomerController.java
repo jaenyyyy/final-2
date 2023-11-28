@@ -326,7 +326,8 @@ public class CustomerController {
 		@PostMapping("/reviewWrite")
 		public String insertReview(@ModelAttribute ReviewDto reviewDto, @ModelAttribute RestaurantDto restaurantDto,
 				HttpSession session, @RequestParam MultipartFile attach,
-				@RequestParam(required = false) Integer reviewNo) throws IllegalStateException, IOException {
+				@RequestParam(required = false) Integer reviewNo,
+				@RequestParam(required = false) Integer reviewRezNo) throws IllegalStateException, IOException {
 			String customerId = (String) session.getAttribute("name");
 
 			int resNo = restaurantDto.getResNo();
@@ -335,8 +336,11 @@ public class CustomerController {
 				reviewDto.setReviewNo(ReviewNo2);
 			
 			reviewDto.setResNo(resNo);
-			reviewDto.setReviewWriter(customerId);	
-
+			reviewDto.setReviewWriter(customerId);
+			reviewDto.setReviewRezNo(reviewRezNo);
+			
+			System.out.println("rezNo = "+resNo);
+			System.out.println("ResNo = "+reviewRezNo);
 			reviewDao.insert(reviewDto);
 
 			if (!attach.isEmpty()) {
