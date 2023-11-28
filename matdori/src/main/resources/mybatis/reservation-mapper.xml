@@ -30,9 +30,21 @@
 	
 	
 	<!-- 회원별 예약 리스트 -->
- 	<select id="rezList" resultType="ReservationListDto">
-		select * from reservation_list where rez_customer_id = #{rezCustomerId}
-	</select> 
+<select id="rezList" resultType="ReservationListDto">
+    SELECT *
+    FROM (
+        SELECT rownum AS RN, A.*
+        FROM (
+            SELECT *
+            FROM reservation_list
+            WHERE rez_customer_id = #{rezCustomerId}
+            ORDER BY rez_no DESC
+        ) A
+    )
+    WHERE RN BETWEEN #{startRow} AND #{finishRow}
+</select>
+
+
 	
 	
 <!--  	<select id="rezList" resultType="ReservationListDto" parameterType="map">
