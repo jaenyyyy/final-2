@@ -15,12 +15,12 @@
 	<!-- 리뷰 작성 -->
 	<insert id="write">
 		insert into review(
-		review_no, res_no, review_writer,
+		review_no, res_no, review_rez_no,review_writer,
 		review_content,
 		review_write_date, review_star_point
 		)
 		values(
-		#{reviewNo}, #{resNo}, #{reviewWriter}, #{reviewContent},
+		#{reviewNo}, #{resNo}, #{reviewRezNo}, #{reviewWriter}, #{reviewContent},
 		SYSDATE,
 		#{reviewStarPoint}
 		)

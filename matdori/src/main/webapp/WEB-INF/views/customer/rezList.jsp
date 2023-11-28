@@ -110,14 +110,24 @@
                         <div class="row">
                             예약상태 : ${reservationListDto.paymentStatus}
                         </div>
+                        <div class="row">
+                            예약인원 : ${reservationListDto.rezCustomerCount}
+                        </div>
                     </div>
                     <div class="col-2 text-end">
                         <div class="row mb-3">
                             <a href="#" class="menu-tag">예약상세 ></a>
                         </div>
-                        <div class="row">
-                            <a class="btn btn-warning btn-sm open-modal-review" href="/customer/reviewWrite?resNo=${reservationListDto.rezResNo}">리뷰작성</a>
-                        </div>
+        <div class="row">
+            <c:choose>
+                <c:when test="${reservationListDto.rezNo eq review.rezNo}">
+                    <!-- 리뷰 작성 버튼을 안 보이도록 처리 -->
+                </c:when>
+                <c:otherwise>
+                    <a class="btn btn-warning btn-sm open-modal-review" href="/customer/reviewWrite?resNo=${reservationListDto.rezResNo}&reviewRezNo=${reservationListDto.rezNo}">리뷰작성</a>
+                </c:otherwise>
+            </c:choose>
+        </div>
                     </div>
                 </div>
             </c:forEach>

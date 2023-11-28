@@ -7,7 +7,8 @@
 <mapper namespace="reservation">
 
 	<select id="sequence" resultType="int">
-		select reservation_seq.nextval from dual
+		select reservation_seq.nextval
+		from dual
 	</select>
 
 	<!-- 예약 등록 -->
@@ -16,11 +17,14 @@
 		(rez_no, rez_customer_id,
 		rez_res_no,
 		rez_clock_no, rez_seat_no,
-		rez_customer_count, rez_seat_qty, rez_request)
+		rez_customer_count, rez_seat_qty,
+		rez_request)
 		values
-		(#{rezNo}, #{rezCustomerId}, #{rezResNo}, #{rezClockNo},
+		(#{rezNo}, #{rezCustomerId}, #{rezResNo},
+		#{rezClockNo},
 		#{rezSeatNo}, #{rezCustomerCount},
-		#{rezSeatQty}, #{rezRequest, jdbcType=VARCHAR})
+		#{rezSeatQty},
+		#{rezRequest, jdbcType=VARCHAR})
 
 	</insert>
 
@@ -33,17 +37,21 @@
 
 	<!-- 회원별 예약 리스트 -->
 <select id="rezList" resultType="ReservationListDto">
+    <![CDATA[
     SELECT * FROM (
         SELECT rownum AS RN, A.*
         FROM (
-            SELECT rl.*, p.payment_status
+            SELECT rl.*, p.payment_status, r.review_no AS review_number, r.review_rez_no
             FROM RESERVATION_LIST rl
             JOIN payment p ON rl.REZ_NO = p.payment_rez_no
+            LEFT JOIN review r ON rl.REZ_NO = r.review_rez_no
             ORDER BY rl.REZ_NO DESC
         ) A
     )
     WHERE RN BETWEEN #{startRow} AND #{finishRow}
+    ]]>
 </select>
+
 
 
 
@@ -78,7 +86,8 @@
 		select count(*) from
 		reservation
 		where rez_customer_id = #{rezResNo}
-		and rez_clock_no = #{rezClockNo}
+		and rez_clock_no =
+		#{rezClockNo}
 		and
 		rez_seat_no = #{rezSeatNo}
 	</select>
