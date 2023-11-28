@@ -311,7 +311,9 @@ public class ReservationController {
 		
 		session.removeAttribute("approve");
 		
+		
 		int rezNo = (int) session.getAttribute("rezNo");
+		
 		
 		request.setPgToken(pg_token);  //토큰설정
 		KakaoPayApproveResponseVO response = kakaoPayService.approve(request); //승인요청
@@ -338,16 +340,23 @@ public class ReservationController {
 	}
 	
 	@RequestMapping("/successResult")
-	public String paymentSuccessResult() {
+	public String paymentSuccessResult(HttpSession session) {
 		return "reservation/successResult";
 	}
 	
-//	@RequestMapping("/payment/list")  //사용자가 보는 구매목록
+	
+	
+	@RequestMapping("/payment/list")  //사용자가 보는 구매목록
 	public String paymentList(Model model, HttpSession session) {
+		
+		int rezNo = (int) session.getAttribute("rezNo");
+		session.setAttribute("rezNo", rezNo);
 		
 		String customerId = (String) session.getAttribute("name");
 		model.addAttribute("list", paymentDao.listByCustomer(customerId));
-		return "reservation/listByCustomer";
+		
+		
+		return "reservation/paymentList";
 	}
 	
 	

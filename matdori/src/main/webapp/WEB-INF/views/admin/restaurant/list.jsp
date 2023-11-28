@@ -22,7 +22,7 @@
 		            <div class="input-group-prepend">
 		                <span class="input-group-text">매장이름</span>
 		            </div>
-		            <input type="text" name="resName" value="${restaurantAdminListDto.resName}" class="form-control">
+		            <input type="text" name="resName" value="${restaurantAdminListDto.resName}" class="form-control"  autocomplete="off">
 	        	</div>
 				
 	        	

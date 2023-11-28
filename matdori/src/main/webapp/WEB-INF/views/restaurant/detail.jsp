@@ -153,12 +153,15 @@
 
 
 		<!-- 예약 버튼 -->
-		<div class="row justify-content-center mb-3 mt-4">
-			<div class="row justify-content-center">
-				<a href="/reservation/insert?rezResNo=${resDto.resNo}"
-					class="btn btn-warning w-50 text-black"> 예약하기 </a>
+		
+<%-- 		<c:if test="${sessionSope.name != null}"> --%>
+			<div class="row justify-content-center mb-3 mt-4">
+				<div class="row justify-content-center">
+					<a href="/reservation/insert?rezResNo=${resDto.resNo}"
+						class="btn btn-warning w-50 text-black"> 예약하기 </a>
+				</div>
 			</div>
-		</div>
+<%-- 		</c:if> --%>
 
 
 

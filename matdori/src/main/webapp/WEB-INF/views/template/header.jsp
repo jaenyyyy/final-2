@@ -67,97 +67,97 @@
 
 <div class="container-fluid">
 
+	<!-- 헤더 위 -->
+	<div class="row mt-3 ms-4">
+		<div class="col ms-4" style="margin-top: 70px;">
 
-    <!-- 헤더 위 -->
-    <div class="row mt-3 ms-4">
-        <div class="col ms-4" style="margin-top: 70px;">
-        
-        
-       <!-- 사업자 홈페이지 가는 주소 -->
-       <div class="icon-container">
-    <c:if test="${sessionScope.name == null}">
-        <a href="#사업자 홈페이지 가는 주소" class="me-4">
-            <i class="fa-solid fa-user-tie fa-3x" style="color: #ffb416;"></i>
-        </a>
-   
-    </c:if>
-</div>
-           
-        </div>
-        
-        
-        <div class="col text-center">
-            <a href="/">
-                <img src="/images/logo.png" style="width:250px;" alt="맛도리 홈">
-            </a>
-        </div>
-        <div class="col text-end me-4" style="margin-top: 70px;">
-            <c:choose>
-                <c:when test="${sessionScope.name != null}">
-                    <div class="dropdown">
-                        <a href="#" id="iconLink">
-                            <i class="fa-solid fa-circle-user fa-3x" style="color: #ffb416;"></i>
-                        </a>
-                        <ul class="dropdown-menu" id="subMenu" style="position: absolute; top: 100%; right: 0;">
-                            <li class="dropdown-item"><a href="/customer/mypage">마이페이지</a></li>
-                            <li class="dropdown-item"><a href="/customer/pick">북마크</a></li>
-                            <li class="dropdown-item"><a href="#">추가</a></li>
-                            <div class="dropdown-divider"></div>
-                            <li class="dropdown-item"><a href="http://localhost:8080/customer/logout">로그아웃</a></li>
-                        </ul>
-                    </div>
-                </c:when>
-                <c:otherwise>
-                    <a href="/customer/login">
-                       <i class="fa-solid fa-right-to-bracket fa-3x" style="color: #ffb416;"></i>
-                    </a>
-                </c:otherwise>
-            </c:choose>
-        </div>
-    </div>
 
-    <!-- 메뉴바 -->
-    <div class="row">
-        <div class="col-md-12 offset mt-4">
-            <nav class="navbar navbar-expand-lg bg-warning" data-bs-theme="light">
-                <div class="container-fluid">
-                    <button class="navbar-toggler mb-2" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor03" aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <div class="collapse navbar-collapse justify-content-center" style="margin-left: 400px;" id="navbarColor03">
-                        <ul class="navbar-nav">
-                            <li class="nav-item">
-                                <a class="nav-link me-3" href="/reservation/insert">예약</a>
-                            </li>
-                            <c:if test="${sessionScope.level == '관리자'}">
-                            <li class="nav-item">
-                                <a class="nav-link me-3" href="/admin/">관리자</a>
-                            </li>
-                            </c:if>
-                            <li class="nav-item">
-                                <a class="nav-link me-3" href="/notice/list">공지사항</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link me-3" href="/qna/list">Q&A</a>
-                            </li>
-                          
-                        </ul>
-                    </div>
-                    <div class="d-flex ms-auto">
-                        <form class="form-inline">
-                            <div class="col-auto">
-                                <div class="input-group">
-                                    <input class="form-control" type="search" placeholder="검색어를 입력하세요">
-                                    <button class="btn btn-secondary" type="submit">Search</button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </nav>
-        </div>
-    </div>
+			<!-- 사업자 홈페이지 가는 주소 -->
+			<div class="icon-container">
+				<c:if test="${sessionScope.name == null}">
+					<a href="http://localhost:3000/" class="me-4"> <i
+						class="fa-solid fa-user-tie fa-3x" style="color: #ffb416;"></i>
+					</a>
+				</c:if>
+			</div>
 
+		</div>
+
+
+		<div class="col text-center">
+			<a href="/"> <img src="/images/logo.png" style="width: 250px;"
+				alt="맛도리 홈">
+			</a>
+		</div>
+		<div class="col text-end me-4" style="margin-top: 70px;">
+			<c:choose>
+				<c:when test="${sessionScope.name != null}">
+					<div class="dropdown">
+						<a href="#" id="iconLink"> <i
+							class="fa-solid fa-circle-user fa-3x" style="color: #ffb416;"></i>
+						</a>
+						<ul class="dropdown-menu" id="subMenu"
+							style="position: absolute; top: 100%; right: 0;">
+							<li class="dropdown-item"><a href="/customer/mypage">마이페이지</a></li>
+							<li class="dropdown-item"><a href="/customer/pick">북마크</a></li>
+							<div class="dropdown-divider"></div>
+							<li class="dropdown-item"><a
+								href="http://localhost:8080/customer/logout">로그아웃</a></li>
+						</ul>
+					</div>
+				</c:when>
+				<c:otherwise>
+					<a href="/customer/login"> <i
+						class="fa-solid fa-right-to-bracket fa-3x" style="color: #ffb416;"></i>
+					</a>
+				</c:otherwise>
+			</c:choose>
+		</div>
+	</div>
+
+	<!-- 메뉴바 -->
+	<div class="row">
+		<div class="col-md-12 offset mt-4">
+			<nav class="navbar navbar-expand-lg bg-warning" data-bs-theme="light">
+				<div class="container-fluid">
+					<button class="navbar-toggler mb-2" type="button"
+						data-bs-toggle="collapse" data-bs-target="#navbarColor03"
+						aria-controls="navbarColor03" aria-expanded="false"
+						aria-label="Toggle navigation">
+						<span class="navbar-toggler-icon"></span>
+					</button>
+					<div class="collapse navbar-collapse justify-content-center"
+						style="margin-left: 400px;" id="navbarColor03">
+						<ul class="navbar-nav">
+							<li class="nav-item"><a class="nav-link me-3"
+								href="/reservation/insert">예약</a></li>
+							<c:if test="${sessionScope.level == '관리자'}">
+								<li class="nav-item"><a class="nav-link me-3"
+									href="/admin/">관리자</a></li>
+							</c:if>
+							<li class="nav-item"><a class="nav-link me-3"
+								href="/notice/list">공지사항</a></li>
+							<li class="nav-item"><a class="nav-link me-3"
+								href="/qna/list">Q&A</a></li>
+
+						</ul>
+					</div>
+					<div class="d-flex ms-auto">
+						<form class="form-inline" id="searchForm"
+							action="/restaurant/resSearchList" method="GET">
+							<div class="col-auto">
+								<div class="input-group">
+									<input name="hashComment" class="form-control" type="search"
+										placeholder="검색어를 입력하세요"  autocomplete="off"> 
+									<button id="searchBtn" class="btn btn-secondary" type="submit">Search</button>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</nav>
+		</div>
+	</div>
 </div>
 
 <script>
