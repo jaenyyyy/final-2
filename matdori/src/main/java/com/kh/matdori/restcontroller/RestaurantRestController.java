@@ -157,17 +157,17 @@ public class RestaurantRestController {
 	public ResponseEntity<?> getImagesByRes(@PathVariable int resNo) {
 		try {
 			List<Integer> imagesNo = restaurantDao.findImageNoByRes(resNo);
-//			List<AttachDto> image = new ArrayList<>();
+			List<AttachDto> image = new ArrayList<>();
 
-//			for (Integer imageNo : imagesNo) {
-//				AttachDto attachDto = attachDao.selectOne(imageNo);
-//				if (attachDto != null) {
-//					image.add(attachDto);
-//				}
-//			}
+			for (Integer imageNo : imagesNo) {
+				AttachDto attachDto = attachDao.selectOne(imageNo);
+				if (attachDto != null) {
+					image.add(attachDto);
+				}
+			}
 
 			if (!imagesNo.isEmpty()) {
-				return ResponseEntity.ok(imagesNo);
+				return ResponseEntity.ok( image);
 			} else {
 				return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No images found.");
 			}
