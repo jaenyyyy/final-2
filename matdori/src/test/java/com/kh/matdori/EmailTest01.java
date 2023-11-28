@@ -1,4 +1,4 @@
-package matdori;
+package com.kh.matdori;
 
 import java.util.Properties;
 

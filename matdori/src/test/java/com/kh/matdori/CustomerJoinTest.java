@@ -1,4 +1,4 @@
-package matdori;
+package com.kh.matdori;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -5,39 +5,39 @@
     "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
     
 <mapper namespace ="clock">
-	<insert id ="add">
-		insert into clock(clock_no, clock_res_no, clock_select) 
-			values(clock_seq.nextval, #{clockResNo}, #{clockSelect})
-	</insert>
-	
-	<select id= "oneOfClock" resultType="ClockDto">
-		select * from clock where clock_no = #{clockNo}
-	</select>
-	
-	<select id= "clockList" resultType="ClockDto">
-<!-- 		select * from clock  -->
-		select * from clock where clock_res_no = #{clockResNo}
-	</select>
-	<!-- 매장별 시간 조회 -->
-<!-- 	<select id="getClockListByResNo" resultType="ClockDto" parameterType="int"> -->
-<!-- 	    SELECT * FROM clock WHERE clockResNo = #{clockResNo} -->
-<!-- 	</select> -->
+   <insert id ="add">
+      insert into clock(clock_no, clock_res_no, clock_select) 
+         values(clock_seq.nextval, #{clockResNo}, #{clockSelect})
+   </insert>
+   
+   <select id= "oneOfClock" resultType="ClockDto">
+      select * from clock where clock_no = #{clockNo}
+   </select>
+   
+   <select id= "clockList" resultType="ClockDto">
+<!--       select * from clock  -->
+      select * from clock where clock_res_no = #{clockResNo}
+   </select>
+   <!-- 매장별 시간 조회 -->
+<!--    <select id="getClockListByResNo" resultType="ClockDto" parameterType="int"> -->
+<!--        SELECT * FROM clock WHERE clockResNo = #{clockResNo} -->
+<!--    </select> -->
 
 
 
 
 <!-- 영업요일 추가 -->
-	<insert id="addWorkday">
-	insert into workday(workday_no, workday_name, not_workday, work_res_no) 
-	values(workday_seq.nextval, #{workdayName}, #{notWorkday}, #{workResNo})	
-	</insert>
+   <insert id="addWorkday">
+   insert into workday(workday_no, workday_name, not_workday, work_res_no) 
+   values(workday_seq.nextval, #{workdayName}, #{notWorkday}, #{workResNo})   
+   </insert>
 
 <!--휴일 추가
-	<insert id="addHoliday">
-	insert into holiday(holiday_no, holiday_begin, holiday_end, holiday_name, holi_res_no) 
-	values(holiday_seq.nextval, #{holidayBegin}, #{holidayEnd}, #{holidayName}, #{holiResNo})
-	</insert> -->
-	
+   <insert id="addHoliday">
+   insert into holiday(holiday_no, holiday_begin, holiday_end, holiday_name, holi_res_no) 
+   values(holiday_seq.nextval, #{holidayBegin}, #{holidayEnd}, #{holidayName}, #{holiResNo})
+   </insert> -->
+   
 <!--  매장별 시간 조회 -->
 <select id="selectByResNo" resultType="ClockByResVO">
    SELECT * FROM clock
@@ -68,4 +68,4 @@
 
 
 
-</mapper>
+</mapper> 
