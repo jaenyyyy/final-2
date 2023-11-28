@@ -134,6 +134,7 @@ public class ReservationController {
 	        reservationDto.setRezSeatNo(selectedSeat.getSeatNo());
 	    }
 	    log.debug("reservationDto={}", reservationDto);
+	    log.debug("selectedClock={}", selectedClock);
 	    
 	    reservationDao.insert(reservationDto);
 	 // MenuByReservationDto를 사용하여 여러 메뉴를 데이터베이스에 등록
@@ -186,16 +187,6 @@ public class ReservationController {
 						 ) {
 		List<Integer> selectedMenuNos = (List<Integer>) session.getAttribute("selectedMenuNos");
 		List<Integer> selectedQtys = (List<Integer>) session.getAttribute("selectedQtys");
-//		ReservationDto rezDto = reservationDao.selectOne(rezNo);
-//		List<MenuByReservationDto> mbrDtoList = menuByReservationDao.selectList(rezNo);
-//		List<MenuWithImagesVO> menuVOs = new ArrayList<>();
-//		for (MenuByReservationDto mbrDto : mbrDtoList) {
-//		    int menuNo = mbrDto.getMenuNo();
-//		    MenuWithImagesVO menuVO = menuDao.selectOne(menuNo);
-//		    if (menuVO != null) {
-//		        menuVOs.add(menuVO);
-//		    }
-//		}
 		
 		String rezCustomerId = (String)session.getAttribute("name");
 		// 예약 정보 조회
@@ -221,8 +212,6 @@ public class ReservationController {
 	        if (index != -1) {
 	            int qty = selectedQtys.get(index);
 	            menuByReservationDto.setMenuQty(qty);
-//	            float menuPrice = menuVO.getMenuDto().getMenuPrice();
-//	            float menuTotalPrice = menuPrice * qty;
 	        }
 	    }
 	    
@@ -254,7 +243,6 @@ public class ReservationController {
 	    model.addAttribute("selectedClock", selectedClock);
 	    model.addAttribute("selectedSeat", selectedSeat);
 	    model.addAttribute("menuInfo", menuInfo);
-//	    model.addAttribute("menuVOs", confirmedMenuVOs);
 	    model.addAttribute("menuList", menuList);
 	    model.addAttribute("sumTotal", sumTotal);
 

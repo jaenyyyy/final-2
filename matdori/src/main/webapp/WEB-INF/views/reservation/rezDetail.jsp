@@ -99,7 +99,7 @@
 							</tr>
 							<tr>
 								<th>예약 시간</th>
-								<td>${fn:substring(selectedClock.clockSelect, 11, 16)}</td>
+								<td>${fn:substring(selectedClock.clockSelect, 11, 12)}</td>
 							</tr>
 							<tr>
 						    <th>예약 메뉴</th>
@@ -149,7 +149,7 @@
 					    <th>포인트 사용</th>
 					    <td>
 					        <input type="number" class="form-control w-50" id="inputPoint" name="inputPoint" oninput="updatePaymentTotal()" value="${inputPoint}">
-					        <span id="customerPoint">보유 포인트: <fmt:formatNumber value="${CustomerDto.customerPoint}" pattern="#,##0"/> pt </span>
+					        <span id="customerPoint">보유 포인트: <fmt:formatNumber value="${customerDto.customerPoint}" pattern="#,##0"/> pt </span>
 					    </td>
 					</tr>
 					<tr>
