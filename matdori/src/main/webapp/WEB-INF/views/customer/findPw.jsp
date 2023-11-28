@@ -265,11 +265,28 @@
 							status.birth = isValid;
 						});
 
-		//페이지 이탈 방지
-		//- window에 beforeunload 이벤트 설정
-		$(window).on("beforeunload", function() {
-			return false;
-		});
+		 //페이지 이탈 방지
+	    //- window에 beforeunload 이벤트 설정
+	    $(window).on("beforeunload", function(){
+	        return false;
+	    });
+
+	    //-form 전송할 때는 beforeunload 이벤트를 제거
+	    $(".join-form").submit(function(e){
+	        $(".form-input").blur();
+	        
+	     
+	        
+	        
+	        if(!status.ok()){
+	            e.preventDefault();
+	        }
+	        else{
+	            $(window).off("beforeunload");
+	        }
+	    });
+
+	 });
 
 		//-form 전송할 때는 beforeunload 이벤트를 제거
 		$(".join-form").submit(function(e) {
@@ -365,7 +382,7 @@
 
 			<div class="row mt-4">
 			 <input type="text" class="form-control cert-input" placeholder="인증번호 입력">
-			<br>인증번호를 입력해주세요 
+			<br><span style="font-weight: bold;">인증번호를 입력해주세요 </span>
 				<div class="cert-wrapper right row mv-30 mt-4">
 				
 					<button type="button" class="btn btn-cert btn-warning"

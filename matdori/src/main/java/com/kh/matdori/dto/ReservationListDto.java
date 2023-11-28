@@ -15,11 +15,12 @@ public class ReservationListDto {
 	private String customerLevel;
 	private String resName, menuName;
 	private int  menuPrice;
-	private String clockSelect, seatName;
+	private String clock2Select, seatName;
 	private int rezMenuQty, rezCustomerCount, rezSeatQty;
 	private String rezRequest;
+	private String paymentStatus;
 	
-	private boolean reviewWritten; // 리뷰 작성 여부를 나타내는 필드 추가
+	//private boolean reviewWritten; // 리뷰 작성 여부를 나타내는 필드 추가
 //	private Date rezDay;
 	
 	

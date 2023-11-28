@@ -3,54 +3,83 @@
 <!DOCTYPE mapper
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
-    
+
 <mapper namespace="reservation">
 
 	<select id="sequence" resultType="int">
-        select reservation_seq.nextval from dual
-    </select>
-    
+		select reservation_seq.nextval from dual
+	</select>
+
 	<!-- 예약 등록 -->
 	<insert id="booking">
 		insert into reservation
-		(rez_no, rez_customer_id, rez_res_no, 
-		 rez_clock_no, rez_seat_no,
-		 rez_customer_count, rez_seat_qty, rez_request) 
+		(rez_no, rez_customer_id,
+		rez_res_no,
+		rez_clock_no, rez_seat_no,
+		rez_customer_count, rez_seat_qty, rez_request)
 		values
-         (#{rezNo}, #{rezCustomerId}, #{rezResNo}, #{rezClockNo},
-         #{rezSeatNo}, #{rezCustomerCount},
-         #{rezSeatQty}, #{rezRequest, jdbcType=VARCHAR})
-    	
+		(#{rezNo}, #{rezCustomerId}, #{rezResNo}, #{rezClockNo},
+		#{rezSeatNo}, #{rezCustomerCount},
+		#{rezSeatQty}, #{rezRequest, jdbcType=VARCHAR})
+
 	</insert>
-	
-	
+
+
 	<select id="detail" resultType="ReservationDto">
-		select * from reservation where rez_no = #{rezNo}
+		select * from reservation where
+		rez_no = #{rezNo}
 	</select>
-	
-	
+
+
 	<!-- 회원별 예약 리스트 -->
-	<select id="rezList" resultType="ReservationListDto">
-		select * from reservation_list where rez_customer_id = #{rezCustomerId}
+<select id="rezList" resultType="ReservationListDto">
+    SELECT * FROM (
+        SELECT rownum AS RN, A.*
+        FROM (
+            SELECT rl.*, p.payment_status
+            FROM RESERVATION_LIST rl
+            JOIN payment p ON rl.REZ_NO = p.payment_rez_no
+            ORDER BY rl.REZ_NO DESC
+        ) A
+    )
+    WHERE RN BETWEEN #{startRow} AND #{finishRow}
+</select>
+
+
+
+
+
+	<!-- 예약카운트 조회 -->
+	<select id="rezCount" resultType="int">
+    <![CDATA[
+        SELECT COUNT(*)
+        FROM reservation r
+        INNER JOIN payment p ON r.rez_no = p.payment_rez_no
+        WHERE r.rez_customer_id = #{rezCustomerId}
+    ]]>
 	</select>
-	
+
+
 	<!-- 회원별 예약 상세조회 -->
 	<select id="rezDetailList" resultType="ReservationVO">
-		select 
-		from reservation 
+		select
+		from reservation
 		where rez_no = #{reservationVO.rezNo}
 	</select>
-	
+
 	<!-- 다수의 메뉴를 위한 조회 -->
 	<select id="menuListByRez" resultType="ReservationDto">
-		select * from menu_list_by_rez where rez_no = #{rezNo}
+		select * from
+		menu_list_by_rez where rez_no = #{rezNo}
 	</select>
-	
+
 	<!-- 예약 중복 방지 조회 -->
 	<select id="isInReservation" resultType="ReservationDto">
-		select count(*) from reservation 
+		select count(*) from
+		reservation
 		where rez_customer_id = #{rezResNo}
 		and rez_clock_no = #{rezClockNo}
-		and rez_seat_no = #{rezSeatNo}
+		and
+		rez_seat_no = #{rezSeatNo}
 	</select>
 </mapper>
