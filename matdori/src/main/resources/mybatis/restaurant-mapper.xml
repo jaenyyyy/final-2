@@ -141,6 +141,7 @@
 	</update>
 
 
+
 <!-- 	<select id="searchResList" parameterType="map"
 		resultType="ResSearchListDto">
 		SELECT * FROM res_search_list
