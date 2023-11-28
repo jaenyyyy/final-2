@@ -88,19 +88,30 @@
 		<!-- 테이블 -->
 		<div class="row justify-content-center mt-4">
 			<div class="col-md-5 col-sm-12">
-				<c:forEach var="resSearchList" items="${resSearchList}">
-					<div class="row border mt-4"
-						onClick="goToDetail(${resSearchList.resNo})"
-						style="cursor: pointer;">
-						<div class="col p-4">
-							<h5>${resSearchList.resName}</h5>
-							<span>${resSearchList.regionName}</span>
-						</div>
-						<div class="col">
-							<div class="row"></div>
-						</div>
-					</div>
-				</c:forEach>
+				<c:choose>
+					<c:when test="${empty resSearchList}">
+						<div class="row mt-4 text-center"></div>
+						<h5 class="text-center">
+							<i class="fa-solid fa-magnifying-glass" style="color: #ffb416;"></i>
+							검색 결과가 없습니다. 검색어를 입력해주세요.
+						</h5>
+					</c:when>
+					<c:otherwise>
+						<c:forEach var="resSearchList" items="${resSearchList}">
+							<div class="row border mt-4"
+								onClick="goToDetail(${resSearchList.resNo})"
+								style="cursor: pointer;">
+								<div class="col p-4">
+									<h5>${resSearchList.resName}</h5>
+									<span>${resSearchList.regionName}</span>
+								</div>
+								<div class="col">
+									<div class="row"></div>
+								</div>
+							</div>
+						</c:forEach>
+					</c:otherwise>
+				</c:choose>
 			</div>
 		</div>
 
