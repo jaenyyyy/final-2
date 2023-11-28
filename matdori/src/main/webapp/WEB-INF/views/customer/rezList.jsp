@@ -95,7 +95,7 @@
                 
                 <div class="row res-line p-4" style="margin-left: 100px;">
                       <div class="col-3">
-                        사진자리${reservationListDto.rezNo}
+                        사진자리
                     </div>
                     <div class="col-7">
                         <div class="row modal-title">
