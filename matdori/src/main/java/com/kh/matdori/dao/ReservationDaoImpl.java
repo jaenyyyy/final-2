@@ -4,13 +4,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.kh.matdori.dto.ReservationDto;
 import com.kh.matdori.dto.ReservationListDto;
-
+import com.kh.matdori.vo.CusPaginationVO;
 import com.kh.matdori.vo.MenuWithImagesVO;
 
 import com.kh.matdori.dto.ReviewDto;
@@ -59,11 +60,21 @@ public class ReservationDaoImpl implements ReservationDao{
       return rezList;
    }
    
+   //회원별 예약내역 조회(페이지네이션)
+   @Override
+   public List<ReservationListDto> rezList(CusPaginationVO vo) {
+       RowBounds rowBounds = new RowBounds(vo.getStartRow() - 1, vo.getSize());
+       return sqlSession.selectList("rezList", vo.getRezCustomerId(), rowBounds);
+   }
+
+   
    //다수의 메뉴
    @Override
 	public List<MenuWithImagesVO> menuList(int rezNo) {
 		return sqlSession.selectList("reservation.menuListByRez", rezNo);
 	}
+
+
 
 }
 

@@ -8,6 +8,7 @@ import com.kh.matdori.vo.KakaoPayCancelRequestVO;
 import com.kh.matdori.vo.KakaoPayCancelResponseVO;
 import com.kh.matdori.vo.KakaoPayReadyRequestVO;
 import com.kh.matdori.vo.KakaoPayReadyResponseVO;
+import com.kh.matdori.vo.PaymentSumVO;
 
 public interface KakaoPayService {
 	
@@ -18,6 +19,6 @@ public interface KakaoPayService {
 	
 	
 	
-	//
-//	KakaoPayReadyRequestVO convert(PurchaseListVO listVO);
+	
+//	KakaoPayReadyRequestVO convert(PaymentSumVO sumVO);
 }

@@ -10,13 +10,13 @@ public class ReservationVO {
 	private int rezNo;
 	private String customerId;
 	private String resName, menuName;
-	private Float menuPrice;
+	private int menuPrice;
 	private String clockSelect, seatName;
 	private int rezMenuQty, rezCustomerCount, rezSeatQty;
 //	private Date rezDay;
 	
 //	private List<MenuDto> menuList;
-	public Float getTotal() {
+	public int getTotal() {
 		return menuPrice * rezMenuQty;
 	}
 }

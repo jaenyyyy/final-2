@@ -6,11 +6,11 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data @NoArgsConstructor @AllArgsConstructor @Builder
-public class resSearchListVO {
-	private Integer resNo;
-	private String resName;
-    private String regionName;
-    private String hashComment;
-    private String keyword;
+public class MenuInfoVO {
+	private int menuNo;
+	private int resNo;
+	private String menuName;
+	private int menuQty;
+	private int menuPrice;
 
 }
