@@ -95,6 +95,16 @@ public class AdminDaoImpl implements AdminDao{
 			return list;
 		}
 		
+		//매장목록 페이징
+		@Override
+		public int countList(ResAdminVO vo) {
+			return sqlSession.selectOne("admin.resAdminListCount", vo);
+		}
+		@Override
+		public List<RestaurantAdminListDto> resAdminListPaging(ResAdminVO vo) {
+			return sqlSession.selectList("admin.resAdminListPaging", vo);
+		}
+		
 		//상세
 		@Override
 		public RestaurantAdminListDto resAdminOne(int resNo) {
