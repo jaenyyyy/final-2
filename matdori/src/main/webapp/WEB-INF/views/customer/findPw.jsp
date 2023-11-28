@@ -377,6 +377,12 @@
 					<div class="row flex-container">
    
 </div>
+<c:if test="${param.error != null}">
+				<div class="row important">
+					<span class="text-danger">입력하신 인증번호가 일치하지 않습니다</span>
+				</div>
+			</c:if>
+
 				</div>
 			</div>
 		</div>

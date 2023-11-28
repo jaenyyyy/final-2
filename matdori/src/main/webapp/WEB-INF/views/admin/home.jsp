@@ -5,7 +5,8 @@
 <div class="row text-center" style="margin-left : 10%; margin-right:10%">
 	<div class="mt-5">
 		<div class="mb-5">
-    		<h1><i class="fa-solid fa-house" style="color: #ffb416;"></i> 관리자 HOME</h1>
+    		<h1><i class="fa-solid fa-house" style="color: #ffb416;"></i><span
+					style="font-weight: bold;"> 관리자 HOME</span>
     	</div>
 	</div>
     <div class="col-6">

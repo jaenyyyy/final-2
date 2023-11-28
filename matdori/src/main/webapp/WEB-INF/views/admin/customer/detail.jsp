@@ -83,93 +83,83 @@ checkboxes.forEach(checkbox => {
 </div>
 
 <div class="row justify-content-center">
-		<div class="card border-warning mb-3 " style="max-width: 50rem;">
-			<div
-				class="card-header mt-3 d-flex justify-content-between align-items-center">
-				<div>
-		<label class="form-label mt-4" for="readOnlyInput">아이디</label> <input
-			class="form-control" id="readOnlyInput1" type="text"
-			value="${customerAdminListDto.customerId}" disabled> <label
-			class="form-label mt-4" for="readOnlyInput">생년월일</label> <input
-			class="form-control" id="readOnlyInput2" type="text"
-			value="${customerAdminListDto.customerBirth}" disabled> <label
-			class="form-label mt-4" for="readOnlyInput">연락처</label> <input
-			class="form-control" id="readOnlyInput3" type="text"
-			value="${customerAdminListDto.customerContact}" disabled> <label
-			class="form-label mt-4" for="readOnlyInput">이메일</label> <input
-			class="form-control" id="readOnlyInput4" type="text"
-			value="${customerAdminListDto.customerEmail}" disabled> <label
-			class="form-label mt-4" for="readOnlyInput">성별</label> <input
-			class="form-control" id="readOnlyInput5" type="text"
-			value="${customerAdminListDto.customerGender}" disabled>
-			
-			
-			 <label
-			class="form-label mt-4">등급</label>
-			
-			<br>
-			<input
-			class="form-control" id="readOnlyInput6" type="text"
-			value="${customerAdminListDto.customerLevel}" disabled>
-			<br> 
-
-		<div class="form-check">
-			<input class="form-check-input" type="radio" name="customerLevel"
-				value="나무수저" id="customerLevel1"> <label
-				class="form-check-label" for="customerLevel1">나무수저</label>
-		</div>
+	<div class="card border-warning mb-3 " style="max-width: 50rem;">
+	
+			<div>
+				<div class="card-body">
+					<label class="form-label mt-4" for="readOnlyInput">아이디</label> <input
+						class="form-control" id="readOnlyInput1" type="text"
+						value="${customerAdminListDto.customerId}" disabled> <label
+						class="form-label mt-4" for="readOnlyInput">생년월일</label> <input
+						class="form-control" id="readOnlyInput2" type="text"
+						value="${customerAdminListDto.customerBirth}" disabled> <label
+						class="form-label mt-4" for="readOnlyInput">연락처</label> <input
+						class="form-control" id="readOnlyInput3" type="text"
+						value="${customerAdminListDto.customerContact}" disabled>
+					<label class="form-label mt-4" for="readOnlyInput">이메일</label> <input
+						class="form-control" id="readOnlyInput4" type="text"
+						value="${customerAdminListDto.customerEmail}" disabled> <label
+						class="form-label mt-4" for="readOnlyInput">성별</label> <input
+						class="form-control" id="readOnlyInput5" type="text"
+						value="${customerAdminListDto.customerGender}" disabled> <label
+						class="form-label mt-4">등급</label> <br> <input
+						class="form-control" id="readOnlyInput6" type="text"
+						value="${customerAdminListDto.customerLevel}" disabled> <br>
+				</div>
+				<div class="form-check">
+					<input class="form-check-input" type="radio" name="customerLevel"
+						value="나무수저" id="customerLevel1"> <label
+						class="form-check-label" for="customerLevel1">나무수저</label>
+				</div>
 
 
-		<div class="form-check">
-			<input class="form-check-input" type="radio" name="customerLevel"
-				value="은수저" id="customerLevel2"> <label
-				class="form-check-label" for="customerLevel2">은수저</label>
-		</div>
+				<div class="form-check">
+					<input class="form-check-input" type="radio" name="customerLevel"
+						value="은수저" id="customerLevel2"> <label
+						class="form-check-label" for="customerLevel2">은수저</label>
+				</div>
 
 
-		<div class="form-check">
-			<input class="form-check-input" type="radio" name="customerLevel"
-				value="금수저" id="customerLevel3"> <label
-				class="form-check-label" for="customerLevel3">금수저</label>
-		</div>
+				<div class="form-check">
+					<input class="form-check-input" type="radio" name="customerLevel"
+						value="금수저" id="customerLevel3"> <label
+						class="form-check-label" for="customerLevel3">금수저</label>
+				</div>
 
 
-		<div class="form-check">
-			<input class="form-check-input" type="radio" name="customerLevel"
-				value="다이아수저" id="customerLevel4"> <label
-				class="form-check-label" for="customerLevel4">다이아수저</label>
-		</div>
+				<div class="form-check">
+					<input class="form-check-input" type="radio" name="customerLevel"
+						value="다이아수저" id="customerLevel4"> <label
+						class="form-check-label" for="customerLevel4">다이아수저</label>
+				</div>
 
 
 
-		<div class="form-check">
-			<input class="form-check-input" type="radio" name="customerLevel"
-				value="맛도리수저" id="customerLevel5"> <label
-				class="form-check-label" for="customerLevel5">맛도리수저</label>
-		</div>
+				<div class="form-check">
+					<input class="form-check-input" type="radio" name="customerLevel"
+						value="맛도리수저" id="customerLevel5"> <label
+						class="form-check-label" for="customerLevel5">맛도리수저</label>
+				</div>
 
-		<br>
+				<br>
 
-		<button type="button" class="btn btn-warning"
+				<button type="button" class="btn btn-warning"
 					onClick="updateCustomerLevelBtn()">변경</button>
-					
-			<br>
-			 <label
-			class="form-label mt-4" for="readOnlyInput8">회원 포인트 ${customerAdminListDto.customerPoint} pt</label> 
-				<input class="form-control" id="readOnlyInput8" type="number" placeholder="새로운 포인트 입력">
-				<button type="button" class="btn btn-secondary" onClick="updateUpdatePointBtn()">포인트 변경</button>
-			
-			<br>
-			
-			<label
-			class="form-label mt-4" for="readOnlyInput">차단일</label> <input
-			class="form-control mb-4" id="readOnlyInput3" type="text"
-			value="${customerAdminListDto.customerBlockTime}" disabled>
-	</div>
-</div>
-</div>
 
-</div>
+				<br> <label class="form-label mt-4" for="readOnlyInput8">회원
+					포인트 ${customerAdminListDto.customerPoint} pt</label> <input
+					class="form-control" id="readOnlyInput8" type="number"
+					placeholder="새로운 포인트 입력">
+				<button type="button" class="btn btn-secondary"
+					onClick="updateUpdatePointBtn()">포인트 변경</button>
+
+				<br> <label class="form-label mt-4" for="readOnlyInput">차단일</label>
+				<input class="form-control mb-4" id="readOnlyInput3" type="text"
+					value="${customerAdminListDto.customerBlockTime}" disabled>
+			</div>
+		</div>
+	</div>
+
 
 
 <!-- 차단 된 회원일 시 차단 사유 보이는 칸 -->
@@ -272,6 +262,7 @@ function updateCustomerLevelBtn() {
                 // 변경 버튼의 텍스트를 '변경 완료'로 수정
                 var updateBtn = document.querySelector('.btn-warning');
                 updateBtn.textContent = '변경 완료';
+                alert('등급 변경이 완료되었습니다.');
             },
             error: function(xhr, status, error) {
                 console.error("등급 변경에 실패했습니다.");
@@ -281,7 +272,6 @@ function updateCustomerLevelBtn() {
         console.log("등급을 선택하세요.");
     }
 };
-
 function updateUpdatePointBtn() {
     var customerId = document.getElementById("customerId").value;
     var customerPointInput = document.getElementById("readOnlyInput8");
@@ -305,12 +295,18 @@ function updateUpdatePointBtn() {
 
                 // 변경된 포인트 값을 가져와서 input에 반영
                 var updatedPoint = document.getElementById('readOnlyInput8');
-                updatedPoint.value = customerPoint;
+                updatedPoint.value = customerPoint.value;
 
                 // 포인트 변경 버튼 텍스트를 '포인트 수정 완료'로 변경
                 var updateBtn = document.querySelector('.btn-secondary');
                 updateBtn.textContent = "수정 완료";
-              
+                
+                // Display an alert message after successful point change
+                alert('포인트 변경이 완료되었습니다.');
+
+                // Update the displayed point value directly in the label
+                var pointLabel = document.querySelector('#readOnlyInput8 + label');
+                pointLabel.innerHTML = `회원 포인트 ${customerPoint} pt`;
             },
             error: function(xhr, status, error) {
                 console.error("포인트 변경에 실패했습니다.");
@@ -320,6 +316,7 @@ function updateUpdatePointBtn() {
         console.log("포인트를 변경하세요.");
     }
 }
+
 
 
 

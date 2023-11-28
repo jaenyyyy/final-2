@@ -1,4 +1,5 @@
 
+
 package com.kh.matdori.vo;
 
 import com.kh.matdori.dto.CustomerDto;
@@ -17,16 +18,34 @@ public class PaymentSumVO {
 	private CustomerDto customerDto; 
 	private MenuDto menuDto;
 	private MenuByReservationDto mbrDto;
-	
-	private int rezNo;
-	private int qty;
 	private int inputPoint;
-	private int paymentTotal;
 }
+//	private float getSumTotal;
+//	private float getPaymentTotal;
+//	private float getLevelByPayback;
+	
+	
+
+//	//합계 금액 (메뉴가격 * 메뉴개수)
+//	public Float getSumTotal() {
+//		return menuDto.getMenuPrice() 
+//				* mbrDto.getMenuQty();
+//	}
 
 	
+
+	
+//	//합계 금액 (메뉴가격 * 메뉴개수)
+//	public Float getSumTotal() {
+//		return menuDto.getMenuPrice() 
+//				* reservationDto.getRezMenuQty();
+//	}
 //	
-	//결제 금액 (합계 금액 - 포인트 사용)
+//	
+//	//결제 금액 (합계 금액 - 포인트 사용)
+//	public Float getPaymentTotal() {
+//		return getSumTotal() - inputPoint;
+//	}
 //	
 //	
 

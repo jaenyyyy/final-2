@@ -1,3 +1,4 @@
+Qna write
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -13,7 +14,8 @@
 				<div class="mt-4">
                     <h1 class="text-start">
                         <i class="fa-solid fa-pen-to-square" style="color: #ffb416;"></i>
-                        Q & A 작성
+                       <span
+					style="font-weight: bold;"> Q & A 작성</span><br><br>
                     </h1>
                 </div>
 	                

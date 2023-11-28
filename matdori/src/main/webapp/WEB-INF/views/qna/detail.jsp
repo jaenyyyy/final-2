@@ -15,7 +15,8 @@
 			<div class="col-md-6 mt-4">
 		        <h1 class="text-center"> 
 		             <i class="fa-regular fa-circle-question" style="color: #ffb416;"></i>
-		             Q & A
+		            <span
+					style="font-weight: bold;"> Q & A</span><br><br>
 		        </h1>
 		    </div>
 		</div>

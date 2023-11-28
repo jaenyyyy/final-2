@@ -42,6 +42,8 @@
 
 
 <script>
+
+
 	$(function() {
 
 		$("[name=join]").click(function() {
@@ -136,6 +138,7 @@
 								},
 							});
 				});
+		
 
 		$("[name=customerId]").blur(function(e) {
 			var regex = /^[a-z][a-z0-9-_]{4,14}$/;
@@ -303,7 +306,7 @@
 			</h1>
 		</div>
 	<br>
-<span class="bold-text">matdori 사이트의 다양한 서비스와 혜택을 누리세요.</span>
+<span class="bold-text">matdori 사이트의 <br><br>다양한 서비스와 혜택을 누리세요.</span>
 <br>
 
 		<br>

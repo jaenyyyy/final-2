@@ -1,3 +1,4 @@
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -45,6 +46,11 @@
     .nav-item a {
         font-weight: bold;
     }
+    .icon-container {
+    display: flex; /* Flexbox를 사용하여 요소들을 행으로 배치합니다 */
+    gap: 20px; /* 아이콘 간의 간격을 조정합니다 */
+    align-items: center; /* 수직 가운데 정렬을 위해 아이콘들을 수직으로 정렬합니다 */
+}
 </style>
 
 
@@ -56,11 +62,16 @@
         
         
        <!-- 사업자 홈페이지 가는 주소 -->
-          <c:if test="${sessionScope.name == null}">
-              <a href="#사업자 홈페이지 가는 주소 " class="me-4">
-                   <i class="fa-solid fa-user-tie fa-3x" style="color: #ffb416;"></i>
-               </a>
-           </c:if>
+       <div class="icon-container">
+    <c:if test="${sessionScope.name == null}">
+        <a href="#사업자 홈페이지 가는 주소" class="me-4">
+            <i class="fa-solid fa-user-tie fa-3x" style="color: #ffb416;"></i>
+        </a>
+        <a href="#북마크 주소" class="me-4">
+            <i class="fa-regular fa-bookmark fa-3x" style="color: #ffb416;"></i>
+        </a>
+    </c:if>
+</div>
            
         </div>
         

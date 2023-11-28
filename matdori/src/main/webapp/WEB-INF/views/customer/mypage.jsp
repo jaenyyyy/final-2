@@ -1,3 +1,4 @@
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -84,9 +85,11 @@
 
 		<!-- 주 내용 -->
 		<div class="col-8 border-line ms-4">
-			<div class="row ms-4 mt-4">
+		<br>
+			<div class="row ms-4 mt-4"><br><br><br>
 				<h1>
-					[ ${customerDto.customerId}
+					<span
+					style="font-weight: bold;">	[ ${customerDto.customerId}</span>
 					<c:choose>
 						<c:when test="${sessionScope.level == '나무수저'}">
 							<i class="fa-solid fa-spoon " style="color: #7b4b23;"></i>
@@ -104,7 +107,8 @@
 							<i class="fa-solid fa-spoon" style="color: #ff4d4d;"></i>
 						</c:when>
 					</c:choose>
-					] 님 반갑습니다.
+				<span
+					style="font-weight: bold;">	] 님 반갑습니다.</span>
 				</h1>
 			</div>
 
