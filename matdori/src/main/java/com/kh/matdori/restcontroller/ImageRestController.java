@@ -2,8 +2,9 @@ package com.kh.matdori.restcontroller;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -85,29 +86,32 @@ public class ImageRestController {
 	            .body(resource);
 	   }
 	   
-	   @GetMapping("/restaurant/image/{resNo}")
-	   public ResponseEntity<List<byte[]>> downloadRestaurantImages(@PathVariable int resNo) throws IOException {
-	       List<Integer> attachNos = restaurantDao.findImageNoByRes(resNo);
-
+	   @GetMapping("/restaurant/image/first/{resNo}")
+	   public ResponseEntity<ByteArrayResource> getFirstImage(@PathVariable int resNo) throws IOException {
+	       List<Integer> attachNos = restaurantDao.findImageNoByRes(resNo); // resNo에 해당하는 모든 이미지 번호 조회
 	       if (attachNos == null || attachNos.isEmpty()) {
 	           return ResponseEntity.notFound().build();
 	       }
 
-	       List<byte[]> imageDataList = new ArrayList<>();
-	       for (int attachNo : attachNos) {
-	           AttachDto attachDto = restaurantDao.findImageByNo(attachNo);
-
-	           if (attachDto != null) {
-	               File target = new File(dir, String.valueOf(attachDto.getAttachNo()));
-	               byte[] data = FileUtils.readFileToByteArray(target);
-	               imageDataList.add(data);
-	           }
+	       Integer minAttachNo = Collections.min(attachNos); // 가장 낮은 attachNo 찾기
+	       AttachDto attachDto = attachDao.selectOne(minAttachNo);
+	       if (attachDto == null) {
+	           return ResponseEntity.notFound().build();
 	       }
 
+	       File target = new File(dir, String.valueOf(minAttachNo));
+	       byte[] data = FileUtils.readFileToByteArray(target); // 실제 파일 정보 불러오기
+	       ByteArrayResource resource = new ByteArrayResource(data);
+
 	       return ResponseEntity.ok()
-	               .contentType(MediaType.APPLICATION_JSON)
-	               .body(imageDataList);
+	               .header(HttpHeaders.CONTENT_ENCODING, StandardCharsets.UTF_8.name())
+	               .contentLength(attachDto.getAttachSize())
+	               .header(HttpHeaders.CONTENT_TYPE, attachDto.getAttachType())
+	               .contentType(MediaType.parseMediaType(attachDto.getAttachType()))
+	               .header("Content-Disposition", "inline;filename=" + URLEncoder.encode(attachDto.getAttachName(), StandardCharsets.UTF_8.name()))
+	               .body(resource);
 	   }
+
 
 	   
 //	   @GetMapping("/movieMain/{movieNo}")

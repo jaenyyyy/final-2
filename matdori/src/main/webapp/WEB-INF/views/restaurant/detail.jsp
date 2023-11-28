@@ -136,7 +136,7 @@
       <div class="row justify-content-center mb-3 mt-4">
          <!-- 메인 이미지 -->
          <div class="col-6">
-            <img src="/images/dummy.png" class="main-images">
+            <img src="/restaurant/image/first/${resDto.resNo}" alt="Restaurant Image">
          </div>
          <!-- 서브 이미지 : 반복문? 써야하나 / 그리고 이미지 누르면 크게 띄우는 스크립트 추가 -->
          <div class="col-6">

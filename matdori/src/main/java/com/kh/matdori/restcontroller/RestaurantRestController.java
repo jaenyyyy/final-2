@@ -157,7 +157,7 @@ public class RestaurantRestController {
 	public ResponseEntity<?> getImagesByRes(@PathVariable int resNo) {
 		try {
 			List<Integer> imagesNo = restaurantDao.findImageNoByRes(resNo);
-			List<AttachDto> image = new ArrayList<>();
+//			List<AttachDto> image = new ArrayList<>();
 
 //			for (Integer imageNo : imagesNo) {
 //				AttachDto attachDto = attachDao.selectOne(imageNo);
