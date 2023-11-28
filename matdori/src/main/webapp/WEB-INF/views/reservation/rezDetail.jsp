@@ -99,7 +99,7 @@
 							</tr>
 							<tr>
 								<th>예약 시간</th>
-								<td>${fn:substring(selectedClock.clockSelect, 11, 16)}</td>
+								<td>${fn:substring(selectedClock.clockSelect, 11, 12)}</td>
 							</tr>
 							<tr>
 						    <th>예약 메뉴</th>

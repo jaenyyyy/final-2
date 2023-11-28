@@ -137,6 +137,7 @@ public class ReservationController {
 	        reservationDto.setRezSeatNo(selectedSeat.getSeatNo());
 	    }
 	    log.debug("reservationDto={}", reservationDto);
+	    log.debug("selectedClock={}", selectedClock);
 	    
 	    reservationDao.insert(reservationDto);
 	 // MenuByReservationDto를 사용하여 여러 메뉴를 데이터베이스에 등록
@@ -251,6 +252,7 @@ public class ReservationController {
 	       
 	       return "reservation/rezDetail";
 	   }
+
 	
 	
 	

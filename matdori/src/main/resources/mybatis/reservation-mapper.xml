@@ -19,7 +19,7 @@
 		values
          (#{rezNo}, #{rezCustomerId}, #{rezResNo}, #{rezClockNo},
          #{rezSeatNo}, #{rezCustomerCount},
-         #{rezSeatQty}, #{rezRequest})
+         #{rezSeatQty}, #{rezRequest, jdbcType=VARCHAR})
     	
 	</insert>
 	
