@@ -117,12 +117,12 @@ public class ReservationController {
 		
 		
 	    // 선택한 시간,좌석 값으로 시간,좌석 정보 조회
-	    ClockDto selectedClock = clock2Dao.selectOne(clockNo);
+	    Clock2Dto selectedClock = clock2Dao.selectOneClock2(clockNo);
 	    SeatDto selectedSeat = seatDao.selectOne(seatNo);
 //	    List<MenuWithImagesVO> selectedMenus = reservationDao.menuList(rezNo); 
 //	     시간 정보를 ReservationDto에 설정
 	    if (selectedClock != null && selectedSeat != null) {
-	        reservationDto.setRezClockNo(selectedClock.getClockNo());
+	        reservationDto.setRezClock2No(selectedClock.getClock2No());
 	        reservationDto.setRezSeatNo(selectedSeat.getSeatNo());
 	    }
 	    log.debug("reservationDto={}", reservationDto);
@@ -185,7 +185,7 @@ public class ReservationController {
 	       ReservationDto reservationDto = reservationDao.selectOne(rezNo);
 	       CustomerDto customerDto = customerDao.selectOne(rezCustomerId);
 	       // 매장 정보, 이용자 아이디, 시간, 좌석 정보를 조회 및 model에 추가
-	       ClockDto selectedClock = clockDao.selectOne(reservationDto.getRezClockNo());
+	       Clock2Dto selectedClock = clock2Dao.selectOneClock2(reservationDto.getRezClock2No());
 	       SeatDto selectedSeat = seatDao.selectOne(reservationDto.getRezSeatNo());
 	       
 	       List<MenuInfoVO> menuInfo = menuByReservationDao.menuInfo(rezNo);

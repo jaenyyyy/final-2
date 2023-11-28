@@ -66,7 +66,7 @@ $(function() {
 					<input type="date" name="selectedDate">
 	    			<select class="form-control" name="selectedClock">
 				        <option>선택하세요</option>
-				        <c:forEach var="clockDto" items="${clockList}">				        	
+				        <c:forEach var="clock2Dto" items="${clock2List}">				        	
 				            <option value="${clock2Dto.clock2No}">
 				            <fmt:formatDate value="${clock2Dto.clock2Select}" pattern="yyyy-MM-dd HH:mm"/>
 				            </option>
