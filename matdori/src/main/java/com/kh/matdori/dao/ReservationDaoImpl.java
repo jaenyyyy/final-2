@@ -78,6 +78,12 @@ public class ReservationDaoImpl implements ReservationDao {
 	public RezDetailListDto selectDetail(int rezNo) {
 		return sqlSession.selectOne("reservation.rezDetail", rezNo);
 	}
+
+	@Override
+	public List<ReservationListDto> rezList(String rezCustomerId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 
 }
