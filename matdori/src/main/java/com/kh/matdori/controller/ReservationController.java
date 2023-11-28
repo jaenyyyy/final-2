@@ -289,6 +289,7 @@ public class ReservationController {
 				.tid(response.getTid())
 				.build());
 		session.setAttribute("sumVO", sumVO);
+		session.setAttribute("rezNo", rezNo);
 		
 		return "redirect:"+response.getNextRedirectPcUrl();
 	}
@@ -304,17 +305,17 @@ public class ReservationController {
 	//결제  --재은 구역--
 	@GetMapping("/detail/success")
 	public String paymentSuccess(HttpSession session,
-//								@RequestParam int rezNo,
 								@RequestParam String pg_token) throws URISyntaxException {
 		 
 		KakaoPayApproveRequestVO request = (KakaoPayApproveRequestVO)session.getAttribute("approve");
 		
 		session.removeAttribute("approve");
 		
+		int rezNo = (int) session.getAttribute("rezNo");
+		
 		request.setPgToken(pg_token);  //토큰설정
 		KakaoPayApproveResponseVO response = kakaoPayService.approve(request); //승인요청
 			
-		log.debug("요청 값 = {}", response);
 		
 		//[1] 결제번호 생성
 		int paymentNo = Integer.parseInt(response.getPartnerOrderId());
@@ -323,14 +324,13 @@ public class ReservationController {
 		//[2] 결제정보 등록
 		paymentDao.insert(PaymentDto.builder()
 				.paymentNo(paymentNo)
-//				.paymentRezNo(rezNo)
+				.paymentRezNo(rezNo)
 				.paymentCustomer(response.getPartnerUserId())
 				.paymentTid(response.getTid())
 				.paymentName(response.getItemName())
 				.paymentPrice(response.getAmount().getTotal())
 				.paymentRemain(response.getAmount().getTotal())
 				.build());
-		
 		
 		return "redirect:/reservation/successResult";
 		
