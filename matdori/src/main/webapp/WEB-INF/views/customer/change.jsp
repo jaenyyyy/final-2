@@ -237,7 +237,6 @@
 							$(this).addClass(isValid ? "success" : "fail");
 							status.birth = isValid;
 						});
-
 		//페이지 이탈 방지
 		//- window에 beforeunload 이벤트 설정
 		$(window).on("beforeunload", function() {
@@ -256,14 +255,25 @@
 		});
 
 	});
+		 //페이지 이탈 방지
+	    //- window에 beforeunload 이벤트 설정
+	    $(window).on("beforeunload", function(){
+	        return false;
+	    });
 
-	$(function() {
-		// 이메일 수정 버튼 클릭 시 해당 폼 표시
-		$(".edit-btn").click(function() {
-			var target = $(this).data("target");
-			$("#" + target + "-form").toggle();
-		});
-	});
+	    //-form 전송할 때는 beforeunload 이벤트를 제거
+	    $(".join-form").submit(function(e){
+	        $(".form-input").blur();
+	        
+	     
+	        
+	        
+	        if(!status.ok()){
+	            e.preventDefault();
+	        }
+	        else{
+	            $(window).off("beforeunload");
+	        }
 </script>
 
 

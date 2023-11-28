@@ -85,7 +85,17 @@
 					        <td>${restaurantAdminListDto.resRegDate}</td>
 					        <th>${restaurantAdminListDto.resName}</th>
 					        <td>${restaurantAdminListDto.resJudgeStatus}</td>
-					        <td>${restaurantAdminListDto.resBlock}</td>
+					        <td>
+    <c:choose>
+        <c:when test="${restaurantAdminListDto.resBlock eq 'Y'}">
+            <span style="color: red;">${restaurantAdminListDto.resBlock}</span>
+        </c:when>
+        <c:otherwise>
+            ${restaurantAdminListDto.resBlock}
+        </c:otherwise>
+    </c:choose>
+</td>
+
 					    </tr>
 					</c:forEach>
 					</tbody>

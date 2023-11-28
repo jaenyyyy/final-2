@@ -67,9 +67,7 @@
         <a href="#사업자 홈페이지 가는 주소" class="me-4">
             <i class="fa-solid fa-user-tie fa-3x" style="color: #ffb416;"></i>
         </a>
-        <a href="#북마크 주소" class="me-4">
-            <i class="fa-regular fa-bookmark fa-3x" style="color: #ffb416;"></i>
-        </a>
+   
     </c:if>
 </div>
            
