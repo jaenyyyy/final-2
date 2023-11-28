@@ -19,6 +19,7 @@ public class MenuWithImagesVO {
 	  private int menuPrice;
 	  private String menuContent;
 	  private MultipartFile menuImage;
+	  private int menuTypeNo;
 	  
 	  @JsonIgnore
 	   public MenuDto getMenuDto() {
@@ -27,6 +28,7 @@ public class MenuWithImagesVO {
 	            .menuName(menuName)
 	            .menuPrice(menuPrice)
 	            .menuContent(menuContent)
+	            .menuTypeNo(menuTypeNo)
 	            .build();
 	   }
 	}

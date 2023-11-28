@@ -43,6 +43,11 @@ public class MenuTypeDaoImpl implements MenuTypeDao {
 	    return sqlSession.selectList("menuType.selectListByResNo", paramMap);
 	}
 
+	@Override
+	public List<MenuTypeDto> selectListByResNo(int resNo) {
+		return sqlSession.selectList("menuType.selectListByResNo",resNo);
+	}
+
 //	@Override
 //	public List<MenuTypeDto> selectList(Integer menuTypeNo) {
 //		return sqlSession.selectList("menuType.menuTypeList", menuTypeNo);

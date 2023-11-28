@@ -85,4 +85,14 @@ public class MenuDaoImpl implements MenuDao {
 	public List<MenuWithImagesVO> selectList(List<Integer> menuNos) {
 		return sqlSession.selectList("menu.selectListByMenuNos", menuNos);
 	}
+	
+	@Override
+	public List<MenuWithImagesVO> selectMenuByRes(int resNo){
+		return sqlSession.selectList("menu.selectMenuByRes", resNo);
+	}
+
+	@Override
+	public List<MenuWithImagesVO> selectMenuByType(int menuTypeNo) {
+		return sqlSession.selectList("menu.selectMenuWithImages", menuTypeNo);
+	}
 }

@@ -14,4 +14,6 @@ public interface MenuTypeDao {
 
 	List<MenuTypeDto> selectListByResNo(String resNo);
 
+	List<MenuTypeDto> selectListByResNo(int resNo);
+
 }
