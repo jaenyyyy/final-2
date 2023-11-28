@@ -30,8 +30,31 @@
 	
 	
 	<!-- 회원별 예약 리스트 -->
-	<select id="rezList" resultType="ReservationListDto">
+ 	<select id="rezList" resultType="ReservationListDto">
 		select * from reservation_list where rez_customer_id = #{rezCustomerId}
+	</select> 
+	
+	
+<!--  	<select id="rezList" resultType="ReservationListDto" parameterType="map">
+    SELECT *
+    FROM (
+        SELECT ROWNUM AS RN, A.*
+        FROM (
+            SELECT *
+            FROM reservation_list
+            WHERE rez_customer_id = #{rezCustomerId}
+        ) A
+        WHERE ROWNUM &lt;= #{endRow}
+    )
+    WHERE RN &gt;= #{startRow}
+</select>  -->
+	
+	
+	<!-- 예약카운트 조회 -->
+	<select id="rezCount" resultType="int">
+	            <![CDATA[
+	                select count(*) from reservation where rez_customer_id = #{rezCustomerId}
+	            ]]>
 	</select>
 	
 	<!-- 회원별 예약 상세조회 -->
