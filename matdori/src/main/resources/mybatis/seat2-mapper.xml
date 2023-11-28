@@ -7,28 +7,26 @@
     
 <mapper namespace="seat2">
 
-    <select id = "sequence2" resultType="int">
+    <select id = "sequence" resultType="int">
     select seat2_seq.nextval from dual
     </select>
 
 
 	<!-- 좌석 등록 -->
-	<insert id = "insert2">
+	<insert id = "insertSeat2">
 		insert into seat2
-		(seat2_no, seat2_name) 
-		values(seat2_seq.nextval, #{seat2Name})
+		(seat2_no, seat2_res_no, seat2_name, seat2_count)  
+		values(#{seat2No}, #{seat2ResNo}, #{seat2Name}, #{seat2Count})
 	</insert>
 	
-	<insert id = "resSeat2Insert">
-	insert into res_seat2 values(#{seat2No}, #{resNo})
-	</insert>
+	
 	<!-- 좌석 삭제 -->
-	<delete id="remove2">
+	<delete id="deleteSeat2">
 		delete seat2 where seat2_no = #{seat2No}
 	</delete>
 	
 	<!-- 좌석 수정 -->
-	<update id="edit2">
+	<update id="editSeat2">
 		update seat2
 		set 
 		<if test="seat2Dto.seat2No > 0">
@@ -48,14 +46,10 @@
 		select * from seat2 where seat2_no = #{seat2No}
 	</select>
 	
-	<!-- 전체 좌석 조회 -->
+	<!-- 매장별 전체 좌석 조회 -->
 	   <select id="seat2List" resultType="seat2Dto">
-      select * from seat2 order by seat2_no asc
+      select * from seat2 where seat_res_no=#{seatResNo} 
    </select>
 	
-	<!-- 매장별 좌석 조회 -->
-	<select id="resSeat2List" resultType="ResSeat2Dto">
-<!-- 		select * from seat  -->
-		select * from seat2 where res_no = #{resNo}
-	</select>
+	
 </mapper>

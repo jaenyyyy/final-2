@@ -18,26 +18,26 @@ public class Seat2DaoImpl implements Seat2Dao{
 	private SqlSession sqlSession;
 
 	@Override
-	public void insert2(Seat2Dto seat2Dto) {
-		sqlSession.insert("seat2.insert2", seat2Dto);
+	public void insertSeat2(Seat2Dto seat2Dto) {
+		sqlSession.insert("seat2.insertSeat2", seat2Dto);
 	}
 
 	@Override
-	public void edit2(int seat2No, Seat2Dto seat2Dto) {
+	public void editSeat2(int seat2No, Seat2Dto seat2Dto) {
 		Map<String, Object> param = Map.of("seat2No", seat2No, "seat2Dto", seat2Dto);
-		int result = sqlSession.update("seat.edit2", param);
+		int result = sqlSession.update("seat.editSeat2", param);
 		if(result == 0) throw new NoTargetException();
 	}
 
 	@Override
-	public void delete2(int seat2No) {
-		int result = sqlSession.delete("seat2.remove2", seat2No);
+	public void deleteSeat2(int seat2No) {
+		int result = sqlSession.delete("seat2.deleteSeat2", seat2No);
 		if(result == 0) throw new NoTargetException();
 	}
 	
 	@Override
-	public List<SeatListDto> resSeatList(int resNo) {
-		return sqlSession.selectList("seat2.resSeat2List",resNo);
+	public List<Seat2Dto> seat2List(int seatResNo) {
+		return sqlSession.selectList("seat2.resSeat2List",seatResNo);
 	}
 	
 	@Override
@@ -45,18 +45,10 @@ public class Seat2DaoImpl implements Seat2Dao{
 		return sqlSession.selectOne("seat2.oneOfSeat2", seat2No);
 	}
 
-	@Override
-	public void insert2(ResSeat2Dto resSeat2Dto) {
-		sqlSession.insert("seat2.resSeat22Insert", resSeat2Dto);
-	}
+
 
 	@Override
-	public List<Seat2Dto> seat2List() {
-		return sqlSession.selectList("seat2.seat2List");
-	}
-
-	@Override
-	public int sequence2() {
-		return sqlSession.selectOne("seat2.sequence2");
+	public int sequence() {
+		return sqlSession.selectOne("seat2.sequence");
 	}
 }

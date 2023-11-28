@@ -9,18 +9,16 @@ import com.kh.matdori.dto.SeatListDto;
 
 public interface Seat2Dao {
 
-	int sequence2();
+	int sequence();
 	
-	List<Seat2Dto> seat2List(); 
+	List<Seat2Dto> seat2List(int seatResNo); 
 	
-	void insert2(Seat2Dto seat2Dto);
+	void insertSeat2(Seat2Dto seat2Dto);
 
-	void edit2(int seat2No, Seat2Dto seat2Dto);
+	void editSeat2(int seat2No, Seat2Dto seat2Dto);
 
-	void delete2(int seatNo);
+	void deleteSeat2(int seatNo);
 
-	void insert2(ResSeat2Dto resSeat2Dto);
-	List<SeatListDto> resSeatList(int resNo);
 	
 	Seat2Dto selectOne2(int seat2No);
 	
