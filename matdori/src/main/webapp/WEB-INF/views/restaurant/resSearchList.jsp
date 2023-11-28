@@ -98,15 +98,18 @@
 					</c:when>
 					<c:otherwise>
 						<c:forEach var="resSearchList" items="${resSearchList}">
-							<div class="row border mt-4"
+							<div class="row border border-warning mt-4"
 								onClick="goToDetail(${resSearchList.resNo})"
 								style="cursor: pointer;">
-								<div class="col p-4">
+								<div class="col-3 p-4">
+									매장 이미지 자리
+								</div>
+								<div class="col-4 p-4">
 									<h5>${resSearchList.resName}</h5>
 									<span>${resSearchList.regionName}</span>
 								</div>
-								<div class="col">
-									<div class="row"></div>
+								<div class="col-4 text-end p-4">
+									<span>매장상세보기 ></span>
 								</div>
 							</div>
 						</c:forEach>

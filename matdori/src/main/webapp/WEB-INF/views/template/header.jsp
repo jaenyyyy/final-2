@@ -78,9 +78,6 @@
 					<a href="http://localhost:3000/" class="me-4"> <i
 						class="fa-solid fa-user-tie fa-3x" style="color: #ffb416;"></i>
 					</a>
-					<a href="#북마크 주소" class="me-4"> <i
-						class="fa-regular fa-bookmark fa-3x" style="color: #ffb416;"></i>
-					</a>
 				</c:if>
 			</div>
 
@@ -103,7 +100,6 @@
 							style="position: absolute; top: 100%; right: 0;">
 							<li class="dropdown-item"><a href="/customer/mypage">마이페이지</a></li>
 							<li class="dropdown-item"><a href="/customer/pick">북마크</a></li>
-							<li class="dropdown-item"><a href="#">추가</a></li>
 							<div class="dropdown-divider"></div>
 							<li class="dropdown-item"><a
 								href="http://localhost:8080/customer/logout">로그아웃</a></li>
@@ -152,7 +148,7 @@
 							<div class="col-auto">
 								<div class="input-group">
 									<input name="hashComment" class="form-control" type="search"
-										placeholder="검색어를 입력하세요"> 
+										placeholder="검색어를 입력하세요"  autocomplete="off"> 
 									<button id="searchBtn" class="btn btn-secondary" type="submit">Search</button>
 								</div>
 							</div>

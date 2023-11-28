@@ -89,7 +89,7 @@
 			</div>
 		</div>
 
-		<div class="row text-start">
+		<div class="row text-start ">
 			<div class="row">
 				<div class="col">
 					<c:choose>

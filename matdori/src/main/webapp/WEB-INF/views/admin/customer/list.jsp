@@ -30,7 +30,7 @@
 							<span class="input-group-text">회원아이디</span>
 						</div>
 						<input type="text" name="customerId" value="${vo.customerId}"
-							class="form-control">
+							class="form-control"  autocomplete="off">
 					</div>
 
 					<div class="input-group mb-3">
@@ -38,7 +38,7 @@
 							<span class="input-group-text">회원이름</span>
 						</div>
 						<input type="text" name="customerName" value="${vo.customerName}"
-							class="form-control">
+							class="form-control"  autocomplete="off">
 					</div>
 
 					<div class="input-group mb-3">
