@@ -75,7 +75,7 @@ public class AdminController {
    	int count = adminDao.countList(vo);
    	vo.setCount(count);
    	
-   	List <RestaurantAdminListDto> list = adminDao.resAdminList(vo);
+   	List <RestaurantAdminListDto> list = adminDao.resAdminListPaging(vo);
    	model.addAttribute("list", list);
    	return "/admin/restaurant/list";
    }

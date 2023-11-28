@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.kh.matdori.dao.ClockDao;
+import com.kh.matdori.dao.Clock2Dao;
 import com.kh.matdori.dao.CustomerDao;
 import com.kh.matdori.dao.MenuByReservationDao;
 import com.kh.matdori.dao.MenuDao;
@@ -23,6 +23,7 @@ import com.kh.matdori.dao.PaymentDao;
 import com.kh.matdori.dao.ReservationDao;
 import com.kh.matdori.dao.RestaurantDao;
 import com.kh.matdori.dao.SeatDao;
+import com.kh.matdori.dto.Clock2Dto;
 import com.kh.matdori.dto.ClockDto;
 import com.kh.matdori.dto.CustomerDto;
 import com.kh.matdori.dto.MenuByReservationDto;
@@ -56,7 +57,7 @@ public class ReservationController {
 	@Autowired
 	private CustomerDao customerDao;
 	@Autowired
-	private ClockDao clockDao;
+	private Clock2Dao clock2Dao;
 	@Autowired
 	private SeatDao seatDao;
 	@Autowired
@@ -68,18 +69,6 @@ public class ReservationController {
 	@Autowired
 	private MenuByReservationDao menuByReservationDao;
 	
-//	    List<PurchaseVO> list = listVO.getProduct();
-//		for(PurchaseVO vo : list) {
-//			ProductDto productDto = productDao.selectOne(vo.getProductNo());//상품정보 조회
-//			paymentDao.insertDetail(PaymentDetailDto.builder()
-//							.paymentDetailOrigin(paymentNo)//상위결제번호
-//							.paymentDetailProduct(vo.getProductNo())//상품번호(vo, productDto)
-//							.paymentDetailProductName(productDto.getProductName())//상품명(productDto)
-//							.paymentDetailProductPrice(productDto.getProductPrice())//상품가격(productDto)
-//							.paymentDetailProductQty(vo.getQty())//구매수량(vo)
-//						.build());
-//		}
-	
 	@GetMapping("/insert")
 	public String insert(Model model
 						 ,HttpSession session
@@ -87,7 +76,7 @@ public class ReservationController {
 						) {
 		// clockList, seatList를 데이터베이스에서 조회
 		RestaurantDto resDto = restaurantDao.selectOne(rezResNo);
-		List<ClockDto> clockList = clockDao.clockList(rezResNo);
+		List<Clock2Dto> clockList = clock2Dao.clock2List(rezResNo);
 		List<SeatDto> seatList = seatDao.seatList(rezResNo);
 		List<MenuWithImagesVO> menuList = menuDao.getMenuByRes(rezResNo);
 		
@@ -129,7 +118,7 @@ public class ReservationController {
 		
 		
 	    // 선택한 시간,좌석 값으로 시간,좌석 정보 조회
-	    ClockDto selectedClock = clockDao.selectOne(clockNo);
+	    ClockDto selectedClock = clock2Dao.selectOne(clockNo);
 	    SeatDto selectedSeat = seatDao.selectOne(seatNo);
 //	    List<MenuWithImagesVO> selectedMenus = reservationDao.menuList(rezNo); 
 //	     시간 정보를 ReservationDto에 설정
@@ -334,16 +323,26 @@ public class ReservationController {
 				.paymentPrice(response.getAmount().getTotal())
 				.paymentRemain(response.getAmount().getTotal())
 				.build());
-		
+
 		return "redirect:/reservation/successResult";
 		
 		
 	}
 	
 	@RequestMapping("/successResult")
-	public String paymentSuccessResult(HttpSession session) {
+
+	public String paymentSuccessResult() {
 		return "reservation/successResult";
 	}
+	
+//	@RequestMapping("/payment/list")  //사용자가 보는 구매목록
+//	public String paymentList(Model model, HttpSession session) {
+//		
+//		String customerId = (String) session.getAttribute("name");
+//		model.addAttribute("list", paymentDao.listByCustomer(customerId));
+//		return "reservation/listByCustomer";
+//	}
+
 	
 	
 	
@@ -360,6 +359,7 @@ public class ReservationController {
 		
 		return "reservation/paymentList";
 	}
+
 	
 	
 	

@@ -97,4 +97,11 @@
 	<select id="rezDetail" resultType="RezDetailListDto">
 		select * from rez_detail_list where rez_no=#{rezNo}
 	</select>
+	
+	<!-- 예약 시간 조회 -->
+	<select id="checkDate" resultType="String">
+		select work_name from workday 
+		where workday_name 
+		= to_char(to_date(#{inputDate}, 'YYYY-MM-DD'), 'DY');
+	</select>
 </mapper>
