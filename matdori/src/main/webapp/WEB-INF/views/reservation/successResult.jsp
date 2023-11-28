@@ -44,7 +44,8 @@
 		<div class="row mt-4" style="margin-bottom:100px;">
 			<div class="col">
 				<a href="/customer/rezList" class="btn btn-secondary">목록으로</a>
-				<a href="/paymentList" class="btn btn-warning">예약상세</a>
+				<a href="/reservation/payment/list?rezNo=${rezNo}" class="btn btn-warning">예약상세</a>
+				
 			</div>
 		</div>
 

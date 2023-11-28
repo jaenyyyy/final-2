@@ -82,4 +82,10 @@
 		and
 		rez_seat_no = #{rezSeatNo}
 	</select>
+	
+	
+	<!-- 예약 상세 뷰 리스트 -->
+	<select id="rezDetail" resultType="RezDetailListDto">
+		select * from rez_detail_list where rez_no=#{rezNo}
+	</select>
 </mapper>

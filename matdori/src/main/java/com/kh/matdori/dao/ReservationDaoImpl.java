@@ -15,6 +15,7 @@ import com.kh.matdori.vo.CusPaginationVO;
 import com.kh.matdori.vo.MenuWithImagesVO;
 
 import com.kh.matdori.dto.ReviewDto;
+import com.kh.matdori.dto.RezDetailListDto;
 
 @Repository
 public class ReservationDaoImpl implements ReservationDao {
@@ -67,6 +68,10 @@ public class ReservationDaoImpl implements ReservationDao {
 		return sqlSession.selectList("reservation.menuListByRez", rezNo);
 	}
 
-
+	@Override
+	public RezDetailListDto selectDetail(int rezNo) {
+		return sqlSession.selectOne("reservation.rezDetail", rezNo);
+	}
+	
 
 }

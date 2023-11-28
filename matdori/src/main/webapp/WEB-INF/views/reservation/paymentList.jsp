@@ -33,7 +33,7 @@
 		<div class="row justify-content-center mb-4">
 			<div class="col-md-6 mt-4">
 				<h1 class="text-center ">
-					<i class="fa-solid fa-check" style="color: #ffb416;"></i>예약완료
+					<i class="fa-solid fa-check" style="color: #ffb416;"></i> 예약완료
 				</h1>
 			</div>
 		</div>
@@ -48,39 +48,35 @@
 					<h5 class="h-title">예약내역</h5>
 				</div>
 				<div>
+				
 					<table class="table table-border table-stripe">
 						<tr>
-							<th>예약자</th>
-							<td>${customerDto.customerName}</td>
+							<th>매장이름</th>
+							<td>${rezDetailListDto.resName}</td>
 						</tr>
 						<tr>
-							<th>예약인원</th>
-							<td>${reservationDto.rezCustomerCount}명</td>
+							<th>예약자</th>
+							<td>${rezDetailListDto.customerName}</td>
 						</tr>
+						<tr>
+							<TH>예약자 번호</TH>
+							<TD>${rezDetailListDto.customerContact}</TD>
+						</TR>
 						<tr>
 							<th>예약 일자</th>
-							<td>${fn:substring(selectedClock.clockSelect, 0, 10)}</td>
+							<td>${rezDetailListDto.paymentTime}</td>
 						</tr>
 						<tr>
 							<th>예약 시간</th>
-							<td>${fn:substring(selectedClock.clockSelect, 11, 12)}</td>
+							<td>${rezDetailListDto.paymentTime}</td>
 						</tr>
 						<tr>
-							<th>예약 메뉴</th>
-							<td colspan="2">
-								<table style="margin: 0 auto; text-align: center;">
-									<!-- 스타일 추가 -->
-									<c:forEach var="menuInfo" items="${menuInfo}">
-										<tr>
-											<td>${menuInfo.menuName}(${menuInfo.menuQty}개)</td>
-										</tr>
-									</c:forEach>
-								</table>
-							</td>
+							<th>결제 금액</th>
+							<td>${rezDetailListDto.paymentPrice}</td>
 						</tr>
 						<tr>
-							<th>요청사항</th>
-							<td>${reservationDto.rezRequest}</td>
+							<th>예약 상태</th>
+							<td>${rezDetailListDto.paymentStatus}</td>
 						</tr>
 					</table>
 				</div>
@@ -89,7 +85,14 @@
 
 		<div class="row mt-4">
 			<div class="col">
-				<button class="btn btn-warning">예약취소</button>
+				<c:choose>
+					<c:when test="${rezDetailListDto.rezNo != null}">
+						<a href="cancel?paymentNo=${rezDetailListDto.paymentNo}" class="btn btn-warning">예약취소</a>
+					</c:when>
+					<c:otherwise>
+						<button class="btn btn-warning" disabled>취소완료</button>>
+					</c:otherwise>
+				</c:choose>
 				<button class="btn btn-secondary">목록으로</button>
 			</div>
 		</div>
