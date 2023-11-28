@@ -30,7 +30,7 @@ input[type="text"], input[type="password"], input[type="tel"], input[type="date"
 .container {
     border: 3px solid #ffb416; /* 테두리 스타일 및 색상 설정 */
     border-radius: 20px; /* 테두리 모서리를 둥글게 만듭니다 */
-    padding: 80px 120px 60px; /* 내부 여백 설정 - 여기서 첫 번째 값은 상단 패딩입니다 */
+    padding: 50px 35px 60px; /* 내부 여백 설정 - 여기서 첫 번째 값은 상단 패딩입니다 */
 
     margin: 0 auto 20px; /*
 }
@@ -58,17 +58,14 @@ input[type="text"], input[type="password"], input[type="tel"], input[type="date"
 		<div class="row mt-4">
 			아이디 <br> <br> <input class="form-control" type="text"
 				name="customerId" placeholder="영문 소문자, 숫자 4~19자">
-			<div class="success-feedback">올바른 아이디 형식입니다.</div>
-			<div class="fail-feedback">아이디를 형식에 맞게 입력해주세요.</div>
-			<div class="fail2-feedback">이미 사용중인 아이디입니다.</div>
+			
 		</div>
 
 
 		<div class="row mt-4">
 			비밀번호 <br> <br> <input class="form-control" type="text"
 				name="customerPw" placeholder="영문,숫자,특수문자 반드시 1개 이상 포함">
-			<div class="success-feedback">올바른 비밀번호 형식입니다.</div>
-			<div class="fail-feedback">비밀번호를 형식에 맞게 입력해주세요.</div>
+		
 		</div>
 
 
@@ -390,11 +387,28 @@ input[type="text"], input[type="password"], input[type="tel"], input[type="date"
 							status.birth = isValid;
 						});
 
-		//페이지 이탈 방지
-		//- window에 beforeunload 이벤트 설정
-		$(window).on("beforeunload", function() {
-			return false;
-		});
+		 //페이지 이탈 방지
+	    //- window에 beforeunload 이벤트 설정
+	    $(window).on("beforeunload", function(){
+	        return false;
+	    });
+
+	    //-form 전송할 때는 beforeunload 이벤트를 제거
+	    $(".join-form").submit(function(e){
+	        $(".form-input").blur();
+	        
+	     
+	        
+	        
+	        if(!status.ok()){
+	            e.preventDefault();
+	        }
+	        else{
+	            $(window).off("beforeunload");
+	        }
+	    });
+
+	 });
 
 		//-form 전송할 때는 beforeunload 이벤트를 제거
 		$(".join-form").submit(function(e) {

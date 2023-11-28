@@ -1,33 +1,35 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-    
+
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 
 <style>
-	.h-title{
-		font-weight: bold;
-		color: #ffb416;
-	}
-	.list-border{
-		border: 2px solid #ffb416;
-		border-radius: 10px;
-		padding : 20px;
-	}
-	.res-line{
-		border-top: 2px solid #ffb416;
-		border-bottom: 2px solid #ffb416;
-		width: 100%;
-	}
+.h-title {
+	font-weight: bold;
+	color: #ffb416;
+}
+
+.list-border {
+	border: 2px solid #ffb416;
+	border-radius: 10px;
+	padding: 20px;
+}
+
+.res-line {
+	border-top: 2px solid #ffb416;
+	border-bottom: 2px solid #ffb416;
+	width: 100%;
+}
 </style>
 
 
 
 <div class="container">
-    <div class="col-md-8 mx-auto">
-	
+	<div class="col-md-8 mx-auto">
+
 		<!-- 이름 -->
 		<div class="row justify-content-center">
 			<div class="col-md-6 mt-4">
@@ -36,33 +38,28 @@
 				</h1>
 			</div>
 		</div>
-		
-		
-		
-		<!-- 주내용 -->		
+
+
+
+		<!-- 주내용 -->
 		<div class="row justify-content-center text-center">
-		
+
 			<!-- 매장정보 -->
 			<div class="row ms-4 mt-4 mb-4">
-				
+
 				<div class="row res-line p-3">
-				        <div class="col-3">
-				            사진자리
-				        </div>
-				        <div class="col-7">
-				            <input type="hidden" class="resNoInput" value="${reservaitonDto.resNo}">
-				            <div class="row">
-				                ${restaurantDto.resName}
-				            </div>
-				            <div class="row">
-				                예약일 : ${fn:substring(selectedClock.clockSelect, 0, 10)}
-				            </div>
-				            <div class="row">
-				                예약시간 : ${fn:substring(selectedClock.clockSelect, 11, 16)}
-				            </div>
-				        </div>
-				        
-				    </div>
+					<div class="col-3">사진자리</div>
+					<div class="col-7">
+						<input type="hidden" class="resNoInput"
+							value="${reservaitonDto.resNo}">
+						<div class="row">${restaurantDto.resName}</div>
+						<div class="row">예약일 :
+							${fn:substring(selectedClock.clockSelect, 0, 10)}</div>
+						<div class="row">예약시간 :
+							${fn:substring(selectedClock.clockSelect, 11, 16)}</div>
+					</div>
+
+				</div>
 			</div>
 
 			<div class="col">
@@ -73,16 +70,13 @@
 					</div>
 					<div class="row">
 						<div class="col" style="font-weight: bold;">
-							${customerDto.customerName} 
-						</div>
-						<div class="col">
-							${customerDto.customerContact}
-						</div>
+							${customerDto.customerName}</div>
+						<div class="col">${customerDto.customerContact}</div>
 					</div>
-					
+
 				</div>
 				<!-- 예약내역 -->
-				
+
 				<div class="list-border">
 					<div>
 						<h5 class="h-title">예약내역</h5>
@@ -91,7 +85,7 @@
 						<table class="table table-border table-stripe">
 							<tr>
 								<th>인원수</th>
-								<td>${reservationDto.rezCustomerCount} 명</td>
+								<td>${reservationDto.rezCustomerCount}명</td>
 							</tr>
 							<tr>
 								<th>예약 일자</th>
@@ -102,17 +96,17 @@
 								<td>${fn:substring(selectedClock.clockSelect, 11, 12)}</td>
 							</tr>
 							<tr>
-						    <th>예약 메뉴</th>
-							    <c:forEach var="menuInfo" items="${menuInfo}">
-								    <tr>
-								        <th>메뉴 이름</th>
-								        <td>${menuInfo.menuName}</td>
-								    </tr>
-								    <tr>
-								        <th>메뉴 수량</th>
-								        <td>${menuInfo.menuQty}</td>
-								    </tr>
-								</c:forEach>
+								<th>예약 메뉴</th>
+								<td colspan="2">
+									<table style="margin: 0 auto; text-align: center;">
+										<!-- 스타일 추가 -->
+										<c:forEach var="menuInfo" items="${menuInfo}">
+											<tr>
+												<td>${menuInfo.menuName}(${menuInfo.menuQty} 개 )</td>
+											</tr>
+										</c:forEach>
+									</table>
+								</td>
 							</tr>
 							<tr>
 								<th>요청사항</th>
@@ -122,124 +116,119 @@
 					</div>
 				</div>
 			</div>
-			
-			
-			
-			
+
+
+
+
 			<!-- 결제정보 -->
-			
+
 			<div class="col list-border mb-4 ms-4">
 				<div>
-					<h5 class="h-title">결제정보</h5>
+					<h5 class="h-title" style="margin-top: 20px;">결제정보</h5>
 				</div>
 				<div>
 					<table class="table table-border table-stripe">
 						<tr>
 							<th>합계 금액</th>
-							<td>
-								<fmt:formatNumber value="${sumTotal}" pattern="#,##0"/> 원
-							</td>
+							<td><fmt:formatNumber value="${sumTotal}" pattern="#,##0" />
+								원</td>
 						</tr>
 					</table>
 				</div>
-				
+
 				<div>
 					<table class="table table-border table-stripe">
 						<tr>
-					    <th>포인트 사용</th>
-					    <td>
-					        <input type="number" class="form-control w-50" id="inputPoint" name="inputPoint" oninput="updatePaymentTotal()" value="${inputPoint}">
-					        <span id="customerPoint">보유 포인트: <fmt:formatNumber value="${customerDto.customerPoint}" pattern="#,##0"/> pt </span>
-					    </td>
-					</tr>
-					<tr>
-					    <th>결제금액</th>
-					    <td id="paymentTotal">
-					        <fmt:formatNumber value="${sumTotal}" pattern="#,##0"/> 원
-					    </td>
-					</tr>
+							<th>포인트 사용</th>
+							<td><input type="number" class="form-control w-50"
+								id="inputPoint" name="inputPoint" oninput="updatePaymentTotal()"
+								value="${inputPoint}"> <span id="customerPoint">보유
+									포인트: <fmt:formatNumber value="${customerDto.customerPoint}"
+										pattern="#,##0" /> pt
+							</span></td>
+						</tr>
+						<tr>
+							<th>결제금액</th>
+							<td id="paymentTotal"><fmt:formatNumber
+									value="${paymentTotal}" pattern="#,##0" /> 원</td>
+						</tr>
 					</table>
 				</div>
-				
+
 				<div class="row">
 					<div class="col mt-2" style="font-weight: bold;">결제방식</div>
-					<div class="col"><img src="/images/kakao.png" width="80px"></div>
+					<div class="col">
+						<img src="/images/kakao.png" width="80px">
+					</div>
 				</div>
 				<div>
-					<input type="checkbox"> 동의하나요 <br>
-					<input type="checkbox"> 동의하나요
-				</div>
-				<div>
-				    <form id="paymentForm" method="post">
-				    	<input type="hidden" name="rezNo" id="hiddenRezNo">
-				        <input type="hidden" name="paymentTotal" id="hiddenPaymentTotal"> 
-				        
-				        <button type="button" class="btn btn-warning w-100" onclick="submitForm()">결제하기</button>
-				    </form>
+					<form id="paymentForm" method="post">
+						<input type="hidden" name="rezNo" id="hiddenRezNo"> <input
+							type="hidden" name="paymentTotal" id="hiddenPaymentTotal">
+
+						<button type="button" class="btn btn-warning w-100"
+							style="margin-top: 70px;" onclick="submitForm()">결제하기</button>
+					</form>
 				</div>
 			</div>
-			
-			
+
+
 		</div>
-		
+
 	</div>
 </div>
-		
-		
-		
-							<th>좌석</th>
-							<td>${SeatDto.seatName}</td>
-						
-							<th>좌석수</th>
-							<td>${rezDto.rezSeatQty}</td>
-							
-							
+
+
+
+
 <script>
 	//JavaScript
 	function updatePaymentTotal() {
-    var inputPoint = parseInt(document.getElementById("inputPoint").value); // 사용자가 입력한 포인트 값
-    var sumTotal = parseInt("${sumTotal}"); // VO에서 전달된 총 금액
-    var paymentAmountElement = document.getElementById("paymentAmount");
-    var customerPoint = parseInt("${rezDto.customerPoint}");
-    
-    var paymentTotal = sumTotal - inputPoint; // 결제금액 계산
-    if (isNaN(inputPoint)) {
-        paymentTotal = sumTotal; // 입력값이 없을 경우 총 금액으로 설정
-    } else {
-        paymentTotal = sumTotal - inputPoint; // 입력값이 있을 경우 결제금액 계산
-        
-        if (inputPoint > customerPoint) {
-            alert("보유 포인트를 초과할 수 없습니다.");
-            document.getElementById("inputPoint").value = customerPoint;
-            inputPoint = customerPoint;
-            paymentTotal = sumTotal - inputPoint; // 초과한 경우 다시 계산
-        }
-        
-        if (paymentTotal < 0) {
-            paymentTotal = 0;
-        }
-    }
+		var inputPoint = parseInt(document.getElementById("inputPoint").value); // 사용자가 입력한 포인트 값
+		var sumTotal = parseInt("${sumTotal}"); // VO에서 전달된 총 금액
+		var paymentAmountElement = document.getElementById("paymentAmount");
+		var customerPoint = parseInt("${rezDto.customerPoint}");
 
-	    
-	    // 결제금액을 화면에 업데이트
-	    
-    var paymentAmountElement = document.getElementById("paymentTotal");
-    paymentAmountElement.textContent = paymentTotal.toLocaleString('ko-KR') + " 원";
-}
+		var paymentTotal = sumTotal - inputPoint; // 결제금액 계산
+		if (isNaN(inputPoint)) {
+			paymentTotal = sumTotal; // 입력값이 없을 경우 총 금액으로 설정
+		} else {
+			paymentTotal = sumTotal - inputPoint; // 입력값이 있을 경우 결제금액 계산
 
-function submitForm() {
-	
-    var paymentTotal = parseInt("${sumTotal}") - parseInt(document.getElementById("inputPoint").value);
-    
-    document.getElementById("hiddenPaymentTotal").value = paymentTotal;
+			if (inputPoint > customerPoint) {
+			    alert("보유 포인트를 초과할 수 없습니다.");
+			    document.getElementById("inputPoint").value = customerPoint;
+			    inputPoint = customerPoint;
+			    paymentTotal = sumTotal - inputPoint; // 초과한 경우 다시 계산
 
-    // 폼 제출
-    document.getElementById("paymentForm").submit();
-}
+			    // 여기서 결제금액을 다시 업데이트
+			    var paymentAmountElement = document.getElementById("paymentTotal");
+			    paymentAmountElement.textContent = paymentTotal.toLocaleString('ko-KR') + " 원";
+			}
 
+			if (paymentTotal < 0) {
+				paymentTotal = 0;
+			}
+		}
 
+		// 결제금액을 화면에 업데이트
+
+		var paymentAmountElement = document.getElementById("paymentTotal");
+		paymentAmountElement.textContent = paymentTotal.toLocaleString('ko-KR')
+				+ " 원";
+	}
+
+	function submitForm() {
+
+		var paymentTotal = parseInt("${sumTotal}") - parseInt(document.getElementById("inputPoint").value);
+
+		document.getElementById("hiddenPaymentTotal").value;
+
+		// 폼 제출
+		document.getElementById("paymentForm").submit();
+	}
 </script>
-		
-		
+
+
 
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>

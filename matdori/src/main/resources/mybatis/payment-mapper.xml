@@ -43,7 +43,8 @@
 	<!-- 전췌 취소 -->
 	<update id="cancelPayment">
 		update payment
-		set payment_status = '결제취소'
+		set payment_status = '예약취소',
+		payment_price=#{paymentPrice}
 		where payment_no = #{paymentNo}
 	</update>
 	

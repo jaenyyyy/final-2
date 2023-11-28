@@ -57,20 +57,37 @@ $(function(){
         }
     });
 
-    $(window).on("beforeunload",function(){
-        return false;
-    });
+   //페이지 이탈 방지
+	    //- window에 beforeunload 이벤트 설정
+	    $(window).on("beforeunload", function(){
+	        return false;
+	    });
 
-    $(".password-form").submit(function(e){
-        $(".form-input").blur();
+	    //-form 전송할 때는 beforeunload 이벤트를 제거
+	    $(".join-form").submit(function(e){
+	        $(".form-input").blur();
+	        
+	     
+	        
+	        
+	        if(!status.ok()){
+	            e.preventDefault();
+	        }
+	        else{
+	            $(window).off("beforeunload");
+	        }
+	    });
 
-        if(!status.ok()){
-            e.preventDefault();
-        }
-        else{
-            $(window).off("beforeunload");
-        }
+	 });
 
-    });
+		//-form 전송할 때는 beforeunload 이벤트를 제거
+		$(".join-form").submit(function(e) {
+			$(".form-input").blur();
 
-});
+			if (!status.ok()) {
+				e.preventDefault();
+			} else {
+				$(window).off("beforeunload");
+			}
+		});
+
