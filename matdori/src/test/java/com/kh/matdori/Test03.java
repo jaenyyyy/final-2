@@ -1,4 +1,4 @@
-package matdori;
+package com.kh.matdori;
 
 import org.apache.commons.codec.digest.DigestUtils;
 import org.junit.jupiter.api.Test;

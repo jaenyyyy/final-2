@@ -4,7 +4,14 @@
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
     
+    
 <mapper namespace="seat">
+
+    <select id = "sequence" resultType="int">
+    select seat_seq.nextval from dual
+    </select>
+
+
 	<!-- 좌석 등록 -->
 	<insert id = "insert">
 		insert into seat
@@ -12,6 +19,9 @@
 		values(seat_seq.nextval, #{seatResNo}, #{seatName}, #{seatCount})
 	</insert>
 	
+	<insert id = "resSeatInsert">
+	insert into res_seat values(#{seatNo}, #{resNo})
+	</insert>
 	<!-- 좌석 삭제 -->
 	<delete id="remove">
 		delete seat where seat_no = #{seatNo}
@@ -38,9 +48,13 @@
 		select * from seat where seat_no = #{seatNo}
 	</select>
 	
+	<!-- 전체 좌석 조회 -->
+	   <select id="seatList" resultType="seatDto">
+      select * from seat order by seat_no asc
+   </select>
 	
 	<!-- 매장별 좌석 조회 -->
-	<select id="seatList" resultType="SeatDto">
+	<select id="resSeatList" resultType="seatDto">
 <!-- 		select * from seat  -->
 		select * from seat where seat_res_no = #{seatResNo}
 	</select>

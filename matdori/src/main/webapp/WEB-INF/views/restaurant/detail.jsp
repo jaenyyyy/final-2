@@ -81,10 +81,12 @@
 		<!-- 제목 틀 -->
 		<div class="row justify-content-center mb-3" style="margin-top: 70px;">
 			<div class="col-6 text-start">
+
 				<!— 매장이름 —>
 				<div class="row">
 					<h1 class="text-left title" style="font-weight: bold;">${resDto.resName}</h1>
 				</div>
+
 
 
 				<!-- 별점 -->

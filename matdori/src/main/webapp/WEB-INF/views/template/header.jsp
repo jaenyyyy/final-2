@@ -1,60 +1,72 @@
 
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <!doctype html>
 <html lang="ko">
 
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <br>
-    <title>matdori</title>
-         <!-- 아이콘 사용을 위한 Font Awesome 6 CDN -->
-    <link rel="stylesheet" type="text/css"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-        
-   <link rel="stylesheet" type="text/css" href="/css/test/.css">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<br>
+<title>matdori</title>
+<!-- 아이콘 사용을 위한 Font Awesome 6 CDN -->
+<link rel="stylesheet" type="text/css"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 
-    <!-- 구글 웹 폰트 사용을 위한 CDN -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">
-     
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/5.3.2/united/bootstrap.min.css" rel="stylesheet">
-   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-   <!-- swiper cdn -->
-   <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
-   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
-   	
-   <!--  css  -->
-   <link rel="stylesheet" type="text/css" href="/css/commons.css">
-   <!-- jquery cdn -->
-   <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-   
-   
+<link rel="stylesheet" type="text/css" href="/css/test/.css">
+
+<!-- 구글 웹 폰트 사용을 위한 CDN -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link
+	href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap"
+	rel="stylesheet">
+
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+	rel="stylesheet">
+<link
+	href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/5.3.2/united/bootstrap.min.css"
+	rel="stylesheet">
+<script
+	src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<!-- swiper cdn -->
+<script
+	src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
+
+<!--  css  -->
+<link rel="stylesheet" type="text/css" href="/css/commons.css">
+<!-- jquery cdn -->
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+
 </head>
 
 <style>
-   /*a태그 밑줄제거*/
-   .dropdown-item a {
-       text-decoration: none;
-       color: black;
-   }   
-    .nav-item a {
-        font-weight: bold;
-    }
-    .icon-container {
-    display: flex; /* Flexbox를 사용하여 요소들을 행으로 배치합니다 */
-    gap: 20px; /* 아이콘 간의 간격을 조정합니다 */
-    align-items: center; /* 수직 가운데 정렬을 위해 아이콘들을 수직으로 정렬합니다 */
+/*a태그 밑줄제거*/
+.dropdown-item a {
+	text-decoration: none;
+	color: black;
+}
+
+.nav-item a {
+	font-weight: bold;
+}
+
+.icon-container {
+	display: flex; /* Flexbox를 사용하여 요소들을 행으로 배치합니다 */
+	gap: 20px; /* 아이콘 간의 간격을 조정합니다 */
+	align-items: center; /* 수직 가운데 정렬을 위해 아이콘들을 수직으로 정렬합니다 */
 }
 </style>
 
 
 <div class="container-fluid">
+
 
     <!-- 헤더 위 -->
     <div class="row mt-3 ms-4">
@@ -145,25 +157,27 @@
             </nav>
         </div>
     </div>
+
 </div>
 
 <script>
-document.addEventListener("DOMContentLoaded", function() {
-    const iconLink = document.getElementById("iconLink");
-    const subMenu = document.getElementById("subMenu");
+	document.addEventListener("DOMContentLoaded", function() {
+		const iconLink = document.getElementById("iconLink");
+		const subMenu = document.getElementById("subMenu");
 
-    iconLink.addEventListener("click", function(event) {
-        event.preventDefault();
-        subMenu.classList.toggle("show");
-    });
+		iconLink.addEventListener("click", function(event) {
+			event.preventDefault();
+			subMenu.classList.toggle("show");
+		});
 
-    document.addEventListener("click", function(event) {
-        const isClickInside = iconLink.contains(event.target) || subMenu.contains(event.target);
-        if (!isClickInside) {
-            subMenu.classList.remove("show");
-        }
-    });
-});
+		document.addEventListener("click", function(event) {
+			const isClickInside = iconLink.contains(event.target)
+					|| subMenu.contains(event.target);
+			if (!isClickInside) {
+				subMenu.classList.remove("show");
+			}
+		});
+	});
 </script>
 
 <section>

@@ -24,7 +24,7 @@
 				        <option>선택하세요</option>
 				        <c:forEach var="clockDto" items="${clockList}">				        	
 				            <option value="${clockDto.clockNo}">
-				            <fmt:formatDate value="${clockDto.clockSelect}" pattern="yyyy-MM-dd HH"/>
+				            <fmt:formatDate value="${clockDto.clockSelect}" pattern="yyyy-MM-dd HH:mm"/>
 				            </option>
 				        </c:forEach>
 				   	</select>

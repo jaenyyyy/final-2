@@ -7,9 +7,10 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.kh.matdori.dto.ResSeatDto;
 import com.kh.matdori.dto.SeatDto;
+import com.kh.matdori.dto.SeatListDto;
 import com.kh.matdori.error.NoTargetException;
-import com.kh.matdori.vo.SeatListByResVO;
 
 @Repository
 public class SeatDaoImpl implements SeatDao{
@@ -35,13 +36,29 @@ public class SeatDaoImpl implements SeatDao{
 	}
 	
 	@Override
-	public List<SeatDto> seatList(int seatResNo) {
-		return sqlSession.selectList("seat.seatList", seatResNo);
+	public List<SeatListDto> resSeatList(int resNo) {
+		return sqlSession.selectList("seat.resSeatList",resNo);
 	}
 	
 	@Override
 	public SeatDto selectOne(int seatNo) {
 		return sqlSession.selectOne("seat.oneOfSeat", seatNo);
+	}
+
+	@Override
+	public void insert(ResSeatDto resSeatDto) {
+		sqlSession.insert("seat.resSeatInsert", resSeatDto);
+	}
+
+
+	@Override
+	public List<SeatDto> seatList() {
+		return sqlSession.selectList("seat.seatList");
+	}
+
+	@Override
+	public List<SeatDto> seatList(int resNo) {
+		return sqlSession.selectList("seat.resSeatList", resNo);
 	}
 
 }

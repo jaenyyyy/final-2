@@ -137,6 +137,7 @@ public class ReservationController {
 	        reservationDto.setRezSeatNo(selectedSeat.getSeatNo());
 	    }
 	    log.debug("reservationDto={}", reservationDto);
+	    log.debug("selectedClock={}", selectedClock);
 	    
 	    reservationDao.insert(reservationDto);
 	 // MenuByReservationDto를 사용하여 여러 메뉴를 데이터베이스에 등록
@@ -251,6 +252,7 @@ public class ReservationController {
 	       
 	       return "reservation/rezDetail";
 	   }
+
 	
 	
 	
@@ -302,7 +304,7 @@ public class ReservationController {
 	//결제  --재은 구역--
 	@GetMapping("/detail/success")
 	public String paymentSuccess(HttpSession session,
-								@RequestParam int rezNo,
+//								@RequestParam int rezNo,
 								@RequestParam String pg_token) throws URISyntaxException {
 		 
 		KakaoPayApproveRequestVO request = (KakaoPayApproveRequestVO)session.getAttribute("approve");
@@ -321,7 +323,7 @@ public class ReservationController {
 		//[2] 결제정보 등록
 		paymentDao.insert(PaymentDto.builder()
 				.paymentNo(paymentNo)
-				.paymentRezNo(rezNo)
+//				.paymentRezNo(rezNo)
 				.paymentCustomer(response.getPartnerUserId())
 				.paymentTid(response.getTid())
 				.paymentName(response.getItemName())
@@ -330,12 +332,12 @@ public class ReservationController {
 				.build());
 		
 		
-		return "redirect:/successResult";
+		return "redirect:/reservation/successResult";
 		
 		
 	}
 	
-	@RequestMapping("/payment/successResult")
+	@RequestMapping("/successResult")
 	public String paymentSuccessResult() {
 		return "reservation/successResult";
 	}
@@ -350,7 +352,7 @@ public class ReservationController {
 	
 	
 	
-	@RequestMapping("payment/cancel")
+	@RequestMapping("/cancel")
 	public String paymentCancel(@RequestParam int paymentNo) throws URISyntaxException {
 		//1
 		PaymentDto paymentDto = paymentDao.selectOne(paymentNo);

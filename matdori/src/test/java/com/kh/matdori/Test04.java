@@ -1,4 +1,4 @@
-package matdori;
+package com.kh.matdori;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
