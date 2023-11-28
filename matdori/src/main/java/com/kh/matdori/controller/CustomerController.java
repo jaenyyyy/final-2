@@ -269,24 +269,16 @@ public class CustomerController {
 	// 마이페이지에서 보는 예약 내역
 	@RequestMapping("/rezList")
 	public String list(Model model, HttpSession session, CusPaginationVO vo) {
-	    String customerId = (String) session.getAttribute("name");
-	    
+	    String customerId = (String) session.getAttribute("name");    
 	    vo.setRezCustomerId(customerId);
-
 	    // 예약 리스트 조회
 	    List<ReservationListDto> rezList = reservationDao.rezList(vo);
-	    
 	    // 예약 카운트 조회
-	    int count = reservationDao.rezCount(vo);
-
-	    System.out.print(count);
-	    
+	    int count = reservationDao.rezCount(vo); 
 	    vo.setCount(count);
 	    vo.calculatePageInfo();
-
 	    model.addAttribute("vo", vo);
 	    model.addAttribute("rezList", rezList);
-
 	    return "customer/rezList";
 	}
 
@@ -307,15 +299,23 @@ public class CustomerController {
 
 	// 리뷰 목록 가져오기
 		@RequestMapping("/reviewListByCus")
-		public String reviewList(Model model, HttpSession session) {
+		public String reviewList(Model model, HttpSession session, CusPaginationVO vo) {
 		    String customerId = (String) session.getAttribute("name");
-
-		    List<ReviewDto> reviewList = reviewDao.selectListByCus(customerId);
-
+		    vo.setRezCustomerId(customerId);
+		    
+		    // 리뷰 리스트 조회
+		    List<ReviewDto> reviewList = reviewDao.selectListByCus(customerId); //기존
+		    //List<ReviewDto> reviewList = reviewDao.selectListByCuspage(vo); //페이지네이션
+		    // 리뷰 카운트 조회
+		    //int count = reviewDao.reviewCount(vo); 
+		    //vo.setCount(count);
+		    vo.calculatePageInfo();
+		    model.addAttribute("vo", vo);
 		    model.addAttribute("reviewList", reviewList);
 
 		    return "review/reviewListByCus";
 		}
+
 
 
 		@GetMapping("/reviewWrite")

@@ -54,21 +54,6 @@ public class ReservationDaoImpl implements ReservationDao {
 	public List<ReservationListDto> rezList(CusPaginationVO vo) {
 	    return sqlSession.selectList("reservation.rezList", vo);
 	}
-//	@Override
-//	public List<ReservationListDto> rezList(CusPaginationVO vo) {
-//	    vo.calculatePageInfo(); // 페이지 정보 계산
-//
-//	    int startRow = (vo.getPage() - 1) * vo.getSize() + 1;
-//	    int endRow = startRow + vo.getSize() - 1;
-//
-//	    Map<String, Object> params = new HashMap<>();
-//	    params.put("rezCustomerId", vo.getRezCustomerId());
-//	    params.put("startRow", startRow);
-//	    params.put("endRow", endRow);
-//
-//	    return sqlSession.selectList("reservation.rezList", params);
-//	}
-
 	
 	//페이지네이션용 카운트?
 	@Override
@@ -76,9 +61,6 @@ public class ReservationDaoImpl implements ReservationDao {
 	    return sqlSession.selectOne("reservation.rezCount", vo);
 	}
 	
-
-
-
 	// 다수의 메뉴
 	@Override
 	public List<MenuWithImagesVO> menuList(int rezNo) {

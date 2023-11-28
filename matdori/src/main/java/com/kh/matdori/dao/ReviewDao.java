@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.kh.matdori.dto.AttachDto;
 import com.kh.matdori.dto.ReviewDto;
+import com.kh.matdori.vo.CusPaginationVO;
 
 public interface ReviewDao {
 	
@@ -14,6 +15,10 @@ public interface ReviewDao {
 	
 	List<ReviewDto> selectListByRes(int resNo); //리뷰 리스트 (매장)
 	List<ReviewDto> selectListByCus(String reviewWriter); //리뷰 리스트 (이용자)
+	List<ReviewDto> selectListByCuspage(CusPaginationVO vo);//리뷰리스트 (이용자) 페이지네이션용
+	int reviewCount(CusPaginationVO vo);//리뷰 페이지네이션용 카운트
+	
+	//리뷰 리스트 (이용자,페이지네이션)
 	ReviewDto selectOne(int reviewNo); //상세
 	ReviewDto selectOneInfo(int reviewNo); // 작성
 	
@@ -27,6 +32,9 @@ public interface ReviewDao {
 	double getAverageRatingByRes(int resNo);
 
 	int getCountOfReviewsByCustomerId(String customerId);
+	
+	
+	
 
 	
 }

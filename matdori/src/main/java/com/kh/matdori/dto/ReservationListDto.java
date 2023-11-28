@@ -19,7 +19,7 @@ public class ReservationListDto {
 	private int rezMenuQty, rezCustomerCount, rezSeatQty;
 	private String rezRequest;
 	
-	private boolean reviewWritten; // 리뷰 작성 여부를 나타내는 필드 추가
+	//private boolean reviewWritten; // 리뷰 작성 여부를 나타내는 필드 추가
 //	private Date rezDay;
 	
 	
