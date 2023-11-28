@@ -15,12 +15,12 @@
 	<!-- 결제 등록 -->
 	<insert id="insert">
 		insert into payment(
-			payment_no, payment_rez_no, payment_customer,
+			payment_no, payment_customer,
 			payment_tid, payment_name, payment_price,
 			payment_remain
 		)
 		values (
-			#{paymentNo}, #{paymentRezNo}, #{paymentCustomer},
+			#{paymentNo}, #{paymentCustomer},
 			#{paymentTid}, #{paymentName}, #{paymentPrice},
 			#{paymentRemain}	
 		)

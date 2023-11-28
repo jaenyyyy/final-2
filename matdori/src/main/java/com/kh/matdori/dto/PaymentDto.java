@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Data @AllArgsConstructor @NoArgsConstructor @Builder
 public class PaymentDto {
 	private int paymentNo;
-	private int paymentRezNo;
+//	private int paymentRezNo;
 	private String paymentCustomer;
 	private String paymentTid;
 	private String paymentName;
