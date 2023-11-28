@@ -332,12 +332,12 @@ public class ReservationController {
 				.build());
 		
 		
-		return "redirect:/successResult";
+		return "redirect:/reservation/successResult";
 		
 		
 	}
 	
-	@RequestMapping("/payment/successResult")
+	@RequestMapping("/successResult")
 	public String paymentSuccessResult() {
 		return "reservation/successResult";
 	}
@@ -352,7 +352,7 @@ public class ReservationController {
 	
 	
 	
-	@RequestMapping("payment/cancel")
+	@RequestMapping("/cancel")
 	public String paymentCancel(@RequestParam int paymentNo) throws URISyntaxException {
 		//1
 		PaymentDto paymentDto = paymentDao.selectOne(paymentNo);
