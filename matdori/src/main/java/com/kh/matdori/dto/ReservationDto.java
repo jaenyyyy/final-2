@@ -12,7 +12,7 @@ public class ReservationDto {
 	private int rezResNo;
 	private int rezClockNo;
 	private int rezSeatNo;
-	private int rezCustomerCount, rezSeatQty;
+	private int rezCustomerCount;
 	private String rezRequest;
 	private String rezStatus;
 //	private String inputDate;

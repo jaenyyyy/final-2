@@ -119,8 +119,8 @@ $(function() {
 					
 					<div id="warningMessage" style="color: red;"></div>
 	    			
-					<label class="form-label mt-4" for="readOnlyInput">좌석수</label>
-	    			<input class="form-control" type="number" name="rezSeatQty">
+<!-- 					<label class="form-label mt-4" for="readOnlyInput">좌석수</label> -->
+<!-- 	    			<input class="form-control" type="number" name="rezSeatQty"> -->
 	    			
 					<label class="form-label mt-4" for="readOnlyInput">메뉴</label><br>
 			        <c:forEach var="MenuWithImagesVO" items="${menuList}">

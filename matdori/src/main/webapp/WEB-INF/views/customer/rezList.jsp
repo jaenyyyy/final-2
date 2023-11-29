@@ -102,10 +102,10 @@
                             ${reservationListDto.resName}
                         </div>
                         <div class="row">
-                            예약일 : ${fn:substring(reservationListDto.clock2Select, 0, 10)}
+                            예약일 : <fmt:formatDate value="${clockDto.clockSelect}" pattern="yyyy-MM-dd HH:mm"/>
                         </div>
                         <div class="row">
-                            예약시간 : ${fn:substring(reservationListDto.clock2Select, 11, 16)}
+                            예약시간 : ${fn:substring(reservationListDto.clockSelect, 11, 16)}
                         </div>
                         <div class="row">
                             예약상태 : ${reservationListDto.paymentStatus}
