@@ -63,7 +63,7 @@ input[type="text"], input[type="password"], input[type="tel"], input[type="date"
 
 
 		<div class="row mt-4">
-			비밀번호 <br> <br> <input class="form-control" type="text"
+			비밀번호 <br> <br> <input class="form-control" type="password"
 				name="customerPw" placeholder="영문,숫자,특수문자 반드시 1개 이상 포함">
 		
 		</div>
