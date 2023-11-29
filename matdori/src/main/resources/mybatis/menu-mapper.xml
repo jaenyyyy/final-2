@@ -83,6 +83,24 @@
     m.res_no = #{resNo}
 </select>
 
+   <!--  매장별 메뉴 한개 조회 -->
+   <select id="selectOneMenuByRes" resultType="MenuWithImagesVO">
+  SELECT * FROM (
+    SELECT
+      m.menu_no,
+      m.menu_name,
+      m.menu_price,
+      m.menu_content,
+      mi.attach_no
+    FROM
+      menu m
+      LEFT JOIN menu_images mi ON m.menu_no = mi.menu_no
+    WHERE
+      m.res_no = #{resNo}
+    ORDER BY m.menu_no
+  ) WHERE ROWNUM = 1
+</select>
+   
    
    <!--  단일메뉴 조회-->
   <select id="menuByMenuNo" resultType="MenuWithImagesVO">

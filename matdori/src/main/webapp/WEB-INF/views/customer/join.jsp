@@ -1,3 +1,6 @@
+Join
+
+Join
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 
@@ -5,10 +8,7 @@
 
 
 <style>
-.container {
-	max-width: 500px; /* 변경 가능한 폭 설정 */
-	margin: 0 auto; /* 가운데 정렬 */
-}
+
 
 .tag-none {
 	text-decoration: none;
@@ -27,45 +27,52 @@ input[type="text"], input[type="password"], input[type="tel"], input[type="date"
 	{
 	border-color: #F7B731 !important; /* Change the border color */
 }
-.container {
-    border: 3px solid #ffb416; /* 테두리 스타일 및 색상 설정 */
-    border-radius: 20px; /* 테두리 모서리를 둥글게 만듭니다 */
-    padding: 50px 35px 60px; /* 내부 여백 설정 - 여기서 첫 번째 값은 상단 패딩입니다 */
 
-    margin: 0 auto 20px; /*
-}
+ .container {
+        max-width: 500px; /* 변경 가능한 폭 설정 */
+        margin: 0 auto; /* 가운데 정렬 */
+        border: 3px solid #ffb416; /* 테두리 스타일 및 색상 설정 */
+        border-radius: 20px; /* 테두리 모서리를 둥글게 만듭니다 */
+        padding: 80px 120px 60px; /* 내부 여백 설정 - 여기서 첫 번째 값은 상단 패딩입니다 */
+        margin-bottom: 20px;
+    }
 
 </style>
 
 
 <form action="join" method="post" autocomplete="off">
-<br><br><br>
+	<br>
+	<br>
+	<br>
 	<div class="container justify-content-center"
 		style="margin-bottom: 20%;">
 
 		<!-- 제목 -->
-		<div class="row" style="margin-top: 15%;">
+		<div class="row" style="margin-top: 20%;">
 			<h1>
-				<i class="fa-solid fa-circle-user" style="color: #ffb416;"></i> 
-<span style="font-weight: bold;">Join</span>
+				<i class="fa-solid fa-circle-user" style="color: #ffb416;"></i> <span
+					style="font-weight: bold;">Join</span>
 			</h1>
 		</div>
 		<br>
 		<div class="row line"></div>
 
-		
+
 		<br>
 		<div class="row mt-4">
 			아이디 <br> <br> <input class="form-control" type="text"
 				name="customerId" placeholder="영문 소문자, 숫자 4~19자">
-			
+			<div class="success-feedback">올바른 아이디 형식입니다.</div>
+			<div class="fail-feedback">아이디를 형식에 맞게 입력해주세요.</div>
+			<div class="fail2-feedback">이미 사용중인 아이디입니다.</div>
 		</div>
 
 
 		<div class="row mt-4">
-			비밀번호 <br> <br> <input class="form-control" type="text"
+			비밀번호 <br> <br> <input class="form-control" type="password"
 				name="customerPw" placeholder="영문,숫자,특수문자 반드시 1개 이상 포함">
-		
+			<div class="success-feedback">올바른 비밀번호 형식입니다.</div>
+			<div class="fail-feedback">비밀번호를 형식에 맞게 입력해주세요.</div>
 		</div>
 
 
@@ -88,8 +95,8 @@ input[type="text"], input[type="password"], input[type="tel"], input[type="date"
 
 			</div>
 
-			<div class="row mv-30 mt-4">
-				<div class="w-50">
+			<div class="row mt-2">
+				<div class="w-100">
 					<button type="button" class="btn btn-send btn-warning"
 						onclick="sendCertNumber()">
 						<i class="fa-solid fa-spinner fa-spin"></i> <span>인증번호 보내기</span>
@@ -98,19 +105,21 @@ input[type="text"], input[type="password"], input[type="tel"], input[type="date"
 			</div>
 
 
-			<div class="row mt-4">
+			<div class="row mt-2">
 				<input type="text" class="form-control cert-input"
 					placeholder="인증번호 입력">
-				<div class="cert-wrapper right">
-					<button type="button" class="btn btn-cert btn-warning"
-						onclick="checkCertNumber()">확인</button>
+				<div class="row mt-2">
+					<div class="cert-wrapper right">
 
-					<div class="fail2-feedback">인증번호를 입력해주세요</div>
-					<div class="fail-feedback">인증번호 잘못 입력하셨습니다</div>
-					<div class="success-feedback">인증 성공!</div>
-					<div class="row flex-container"></div>
+						<button type="button" class="btn btn-cert btn-warning"
+							onclick="checkCertNumber()">확인</button>
 
+						<div class="fail2-feedback">인증번호를 입력해주세요</div>
+						<div class="fail-feedback">인증번호 잘못 입력하셨습니다</div>
+						<div class="success-feedback">인증 성공!</div>
+						<div class="row flex-container"></div>
 
+					</div>
 					<div class="row mt-4">
 						연락처 <br> <br> <input class="form-control" type="tel"
 							name="customerContact" placeholder="010******** (-없이)">
@@ -387,28 +396,11 @@ input[type="text"], input[type="password"], input[type="tel"], input[type="date"
 							status.birth = isValid;
 						});
 
-		 //페이지 이탈 방지
-	    //- window에 beforeunload 이벤트 설정
-	    $(window).on("beforeunload", function(){
-	        return false;
-	    });
-
-	    //-form 전송할 때는 beforeunload 이벤트를 제거
-	    $(".join-form").submit(function(e){
-	        $(".form-input").blur();
-	        
-	     
-	        
-	        
-	        if(!status.ok()){
-	            e.preventDefault();
-	        }
-	        else{
-	            $(window).off("beforeunload");
-	        }
-	    });
-
-	 });
+		//페이지 이탈 방지
+		//- window에 beforeunload 이벤트 설정
+		$(window).on("beforeunload", function() {
+			return false;
+		});
 
 		//-form 전송할 때는 beforeunload 이벤트를 제거
 		$(".join-form").submit(function(e) {

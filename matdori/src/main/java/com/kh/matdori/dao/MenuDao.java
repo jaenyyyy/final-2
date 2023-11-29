@@ -26,6 +26,8 @@ public interface MenuDao {
 	void insertMenuImage(int menuNo, int attachNo);
 
 	MenuWithImagesVO selectOne(int menuNo);
+	
+	MenuWithImagesVO selectOneByRes(int resNo);
 
 	AttachDto findMenuImage(int menuNo);
 
