@@ -136,18 +136,27 @@
       <div class="row justify-content-center mb-3 mt-4">
          <!-- 메인 이미지 -->
          <div class="col-6">
-            <img src="/images/dummy.png" class="main-images">
+            <img src="/image/restaurant/image/first/${resDto.resNo}" alt="Restaurant Image">
          </div>
          <!-- 서브 이미지 : 반복문? 써야하나 / 그리고 이미지 누르면 크게 띄우는 스크립트 추가 -->
          <div class="col-6">
             <div class="row mb-3">
-               <img src="/images/dummy.png" class="sub-images"> <img
-                  src="/images/dummy.png" class="sub-images">
-            </div>
-            <div class="row">
-               <img src="/images/dummy.png" class="sub-images"> <img
-                  src="/images/dummy.png" class="sub-images">
-            </div>
+            <c:forEach var="index" begin="1" end="4">
+    <%-- 현재 이미지의 attachNo를 계산합니다. 가장 낮은 attachNo에서 index를 더한 값입니다. --%>
+    <c:set var="currentAttachNo" value="${minAttachNo + index}" />
+    
+    <%-- 현재 이미지의 URL을 생성합니다. --%>
+    <c:set var="imageURL" value="/restaurant/image/${currentAttachNo}" />
+    
+    <%-- 2행 2열 형태로 이미지를 배치합니다. 홀수 번째 이미지는 새로운 행을 시작합니다. --%>
+    <div class="col-6">
+        <img src="/image/restaurant/image/first/${resDto.resNo}" alt="Restaurant Image">
+    </div>
+    <c:if test="${index % 2 == 0}">
+        <div class="w-100"></div> <%-- 홀수 번째 이미지 뒤에는 새로운 행을 시작합니다. --%>
+    </c:if>
+</c:forEach>
+             
          </div>
       </div>
 
@@ -316,7 +325,7 @@
       <!-- 상세로 가는 a태그 -->
       <div class="row mt-4">
          <h5>
-            <a href="" class="under-line text-badge"> 메뉴 더보기<i
+            <a href="/restaurant/menuList?resNo=${resDto.resNo}" class="under-line text-badge"> 메뉴 더보기<i
                class="fa-solid fa-angles-right" style="color: #000000;"></i>
             </a>
          </h5>
