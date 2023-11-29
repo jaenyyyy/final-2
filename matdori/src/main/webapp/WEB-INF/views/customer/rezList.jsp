@@ -80,7 +80,6 @@
 		</div>
 
 
-<<<<<<< HEAD
       
       
       <!-- 주 내용 -->
@@ -145,68 +144,7 @@
                 </a>
             </li>
         </c:if>
-=======
->>>>>>> branch 'main' of https://github.com/jaenyyyy/final-2.git
 
-
-		<!-- 주 내용 -->
-		<div class="col-9">
-			<div class="row">
-
-				<br> <br>
-				<h4 class="bold">예약 내역</h4>
-				<c:forEach var="reservationListDto" items="${rezList}">
-					<div>
-						<br>
-					</div>
-
-					<div class="row res-line p-4" style="margin-left: 100px;">
-						<div class="col-3">사진자리</div>
-						<div class="col-7">
-							<div class="row modal-title">${reservationListDto.resName}
-							</div>
-							<div class="row">예약일 :
-								${fn:substring(reservationListDto.clock2Select, 0, 10)}</div>
-							<div class="row">예약시간 :
-								${fn:substring(reservationListDto.clock2Select, 11, 16)}</div>
-							<div class="row">예약상태 : ${reservationListDto.paymentStatus}
-							</div>
-							<div class="row">예약인원 :
-								${reservationListDto.rezCustomerCount}</div>
-						</div>
-						<div class="col-2 text-end">
-							<div class="row mb-3">
-								<a
-									href="/reservation/payment/list?rezNo=${reservationListDto.rezNo}"
-									class="menu-tag">예약상세 ></a>
-							</div>
-							<div class="row">
-								<c:choose>
-									<c:when
-										test="${reservationListDto.rezNo eq reservationListDto.reviewRezNo}">
-										<!-- 리뷰 작성 버튼을 안 보이도록 처리 -->
-									</c:when>
-									<c:otherwise>
-										<a class="btn btn-warning btn-sm open-modal-review"
-											href="/customer/reviewWrite?resNo=${reservationListDto.rezResNo}&reviewRezNo=${reservationListDto.rezNo}">리뷰작성</a>
-									</c:otherwise>
-								</c:choose>
-							</div>
-						</div>
-					</div>
-				</c:forEach>
-			</div>
-		</div>
-
-		<!-- 페이지네이션 -->
-		<ul class="pagination justify-content-center">
-			<!-- 이전 버튼 -->
-			<c:if test="${!vo.first}">
-				<li class="page-item"><a class="page-link"
-					href="?${vo.prevQueryString}" aria-label="Previous"> <span
-						aria-hidden="true" style="color: #FFB416;">&laquo;</span>
-				</a></li>
-			</c:if>
 
 			<!-- 숫자 버튼 -->
 			<c:forEach var="i" begin="${vo.begin}" end="${vo.end}" step="1">

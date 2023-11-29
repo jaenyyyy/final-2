@@ -273,6 +273,8 @@ public class CustomerController {
 	    vo.setRezCustomerId(customerId);
 	    // 예약 리스트 조회
 	    List<ReservationListDto> rezList = reservationDao.rezList(vo);
+	    
+	    
 	    // 예약 카운트 조회
 	    int count = reservationDao.rezCount(vo); 
 	    vo.setCount(count);
