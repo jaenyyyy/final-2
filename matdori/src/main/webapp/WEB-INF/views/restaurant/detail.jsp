@@ -89,20 +89,20 @@
 
 
 
-            <!-- 별점 -->
+<!--             별점 -->
             <div class="row">
-               <span class="star-avg"> <span
-                  class="rating__star ${averageRating >= 1 ? 'fas' : 'far'} fa-star"></span>
-                  <span
-                  class="rating__star ${averageRating >= 2 ? 'fas' : 'far'} fa-star"></span>
-                  <span
-                  class="rating__star ${averageRating >= 3 ? 'fas' : 'far'} fa-star"></span>
-                  <span
-                  class="rating__star ${averageRating >= 4 ? 'fas' : 'far'} fa-star"></span>
-                  <span
-                  class="rating__star ${averageRating >= 5 ? 'fas' : 'far'} fa-star"></span>
-                  ${String.format("%.1f", averageRating)}점 식당
-               </span>
+<!--                <span class="star-avg"> <span -->
+<%--                   class="rating__star ${averageRating >= 1 ? 'fas' : 'far'} fa-star"></span> --%>
+<!--                   <span -->
+<%--                   class="rating__star ${averageRating >= 2 ? 'fas' : 'far'} fa-star"></span> --%>
+<!--                   <span -->
+<%--                   class="rating__star ${averageRating >= 3 ? 'fas' : 'far'} fa-star"></span> --%>
+<!--                   <span -->
+<%--                   class="rating__star ${averageRating >= 4 ? 'fas' : 'far'} fa-star"></span> --%>
+<!--                   <span -->
+<%--                   class="rating__star ${averageRating >= 5 ? 'fas' : 'far'} fa-star"></span> --%>
+<%--                   ${String.format("%.1f", averageRating)}점 식당 --%>
+<!--                </span> -->
             </div>
          </div>
 
@@ -216,14 +216,14 @@
             </h3>
          </div>
          <!-- 매장설명 -->
-         <div class="col-6 text-start">
-            <div class="row">매장위치 : ${resDto.resAddr1} ${resDto.resAddr2}</div>
-            <div class="row">영업 시간 : ${resDto.resOpenTime}</div>
-            <div class="row">매장번호 : ${resDto.resTel}</div>
-         </div>
-         <!-- 매장지도 : 지도 api 가져와서 대체 -->
-         <div class="col-6 text-start">
-            <img src="/images/dummy.png" class="sub-images">
+         <div class="col-8 text-start">
+            <div class="row text-start">
+            	<h5>
+            	매장위치 : ${resDto.resAddr1} ${resDto.resAddr2} <i class="fa-solid fa-grip-lines-vertical"></i>  
+            	영업 시간 : ${resDto.resOpenTime} <i class="fa-solid fa-grip-lines-vertical"></i>
+            	매장번호 : ${resDto.resTel}
+            	</h5>
+           	</div>
          </div>
          <!-- 해시태그 : 이거도 해시태그 불러와서 forEach 써야함 -->
          <div class="row justify-content-center mt-4 text-center">
@@ -411,7 +411,7 @@
 
    </div>
 </div>
-
+</div>
 
 
 <script>

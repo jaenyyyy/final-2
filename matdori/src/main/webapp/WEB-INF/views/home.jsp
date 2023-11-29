@@ -164,47 +164,47 @@
       </div>
       
       
-      <!-- 매장 목록 -->
-      <div class="row justify-content-center" style="margin-top: 70px;">
-          <div class="col" style="margin: 0 250px;">
-              <hr style="border-color: #FFB416; border-width: 5px;">
-              <div class="d-flex justify-content-between">
-                  <h2 class="text-start m-0 mb-2" style="display: inline;">BEST 맛집</h2>
-                  <a class="detail-tag" href="#detail 들어가는 링크" style="display: inline;"> 
-                      전체보기  <i class="fa-solid fa-angles-right" style="color: #000000;"></i>
-                  </a>
-              </div>
+<!--       매장 목록 -->
+<!--       <div class="row justify-content-center" style="margin-top: 70px;"> -->
+<!--           <div class="col" style="margin: 0 250px;"> -->
+<!--               <hr style="border-color: #FFB416; border-width: 5px;"> -->
+<!--               <div class="d-flex justify-content-between"> -->
+<!--                   <h2 class="text-start m-0 mb-2" style="display: inline;">BEST 맛집</h2> -->
+<!--                   <a class="detail-tag" href="#detail 들어가는 링크" style="display: inline;">  -->
+<!--                       전체보기  <i class="fa-solid fa-angles-right" style="color: #000000;"></i> -->
+<!--                   </a> -->
+<!--               </div> -->
       
       
-            <!-- 이거 나중에는 반복문으로 처리해야함 -->
-              <div class="row justify-content-center">
-                  <div class="col">
-                      <a class="detail-tag" href="#res 들어가는 링크">
-                          <img src="/images/dummy.png" width="200px" height="200px">
-                      </a>
-                  </div>
+<!--             이거 나중에는 반복문으로 처리해야함 -->
+<!--               <div class="row justify-content-center"> -->
+<!--                   <div class="col"> -->
+<!--                       <a class="detail-tag" href="#res 들어가는 링크"> -->
+<!--                           <img src="/images/dummy.png" width="200px" height="200px"> -->
+<!--                       </a> -->
+<!--                   </div> -->
       
-                  <div class="col">
-                      <a class="detail-tag" href="#res 들어가는 링크">
-                          <img src="/images/dummy.png" width="200px" height="200px">
-                      </a>
-                  </div>
+<!--                   <div class="col"> -->
+<!--                       <a class="detail-tag" href="#res 들어가는 링크"> -->
+<!--                           <img src="/images/dummy.png" width="200px" height="200px"> -->
+<!--                       </a> -->
+<!--                   </div> -->
       
-                  <div class="col">
-                      <a class="detail-tag" href="#res 들어가는 링크">
-                          <img src="/images/dummy.png" width="200px" height="200px">
-                      </a>
-                  </div>
+<!--                   <div class="col"> -->
+<!--                       <a class="detail-tag" href="#res 들어가는 링크"> -->
+<!--                           <img src="/images/dummy.png" width="200px" height="200px"> -->
+<!--                       </a> -->
+<!--                   </div> -->
                   
-                  <div class="col">
-                      <a class="detail-tag" href="#res 들어가는 링크">
-                          <img src="/images/dummy.png" width="200px" height="200px">
-                      </a>
-                  </div>
-              </div>
+<!--                   <div class="col"> -->
+<!--                       <a class="detail-tag" href="#res 들어가는 링크"> -->
+<!--                           <img src="/images/dummy.png" width="200px" height="200px"> -->
+<!--                       </a> -->
+<!--                   </div> -->
+<!--               </div> -->
       
-          </div>
-      </div>
+<!--           </div> -->
+<!--       </div> -->
       
       </div>
       </div>
