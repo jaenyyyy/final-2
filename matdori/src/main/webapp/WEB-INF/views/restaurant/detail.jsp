@@ -257,7 +257,7 @@
 
 
 
-   <!-- 메뉴 -->
+    <!-- 메뉴 -->
    <div
       class="row justify-content-center text-center list-border info-margin"
       id="menuSection">
@@ -268,75 +268,33 @@
          </h3>
       </div>
       <!-- 메뉴리스트 : list [0]~[3] 번쨰만 꺼내야할듯 -->
-      <div class="container">
-         <div class="row">
-            
-            
-            
-            <!-- 첫 번째 : 나중에 반복문으로처리 / 위치 잡으려고 네개 해놓음 -->
+      <!-- 메뉴 리스트 -->
+    <div class="container">
+    <div class="row">
+        <c:forEach items="${menuListByRes}" var="menu" varStatus="loop">
+        <c:if test="${loop.index < 4}">
             <div class="col-md-6">
-               <div class="row">
-                  <div class="col-6">
-                     <img src="/images/dummy.png" class="sub-images">
-                  </div>
-                  <div class="col-6">
-                     <div class="row text-badge text-start">
-                        <h5 class="text-badge">메뉴이름</h5>
-                     </div>
-                     <div class="row">메뉴설명</div>
-                     <div class="row" style="color: red;">가격</div>
-                  </div>
-               </div>
+                <div class="row">
+                    <div class="col-6">
+                        <!-- 메뉴 이미지 -->
+                        <img src="/image/menu/${menu.menuNo}" class="sub-images" alt="${menu.menuName}">
+                    </div>
+                    <div class="col-6">
+                        <div class="row text-badge text-start">
+                            <!-- 메뉴 이름 -->
+                            <h5 class="text-badge">${menu.menuName}</h5>
+                        </div>
+                        <!-- 메뉴 설명 -->
+                        <div class="row">${menu.menuContent}</div>
+                        <!-- 메뉴 가격 -->
+                        <div class="row" style="color: red;">${menu.menuPrice}</div>
+                    </div>
+                </div>
             </div>
-            <!-- 두 번째 : 나중에 반복문으로처리 / 위치 잡으려고 네개 해놓음 -->
-            <div class="col-md-6">
-               <div class="row">
-                  <div class="col-6">
-                     <img src="/images/dummy.png" class="sub-images">
-                  </div>
-                  <div class="col-6">
-                     <div class="row text-badge text-start">
-                        <h5 class="text-badge">메뉴이름</h5>
-                     </div>
-                     <div class="row">메뉴설명</div>
-                     <div class="row" style="color: red;">가격</div>
-                  </div>
-               </div>
-            </div>
-         </div>
-         <div class="row">
-            <!-- 세 번째 : 나중에 반복문으로처리 / 위치 잡으려고 네개 해놓음 -->
-            <div class="col-md-6">
-               <div class="row">
-                  <div class="col-6">
-                     <img src="/images/dummy.png" class="sub-images">
-                  </div>
-                  <div class="col-6">
-                     <div class="row text-badge text-start">
-                        <h5 class="text-badge">메뉴이름</h5>
-                     </div>
-                     <div class="row">메뉴설명</div>
-                     <div class="row" style="color: red;">가격</div>
-                  </div>
-               </div>
-            </div>
-            <!-- 네 번째 : 나중에 반복문으로처리 / 위치 잡으려고 네개 해놓음 -->
-            <div class="col-md-6">
-               <div class="row">
-                  <div class="col-6">
-                     <img src="/images/dummy.png" class="sub-images">
-                  </div>
-                  <div class="col-6">
-                     <div class="row text-badge text-start">
-                        <h5 class="text-badge">메뉴이름</h5>
-                     </div>
-                     <div class="row">메뉴설명</div>
-                     <div class="row" style="color: red;">가격</div>
-                  </div>
-               </div>
-            </div>
-         </div>
-      </div>
+                </c:if>
+        </c:forEach>
+    </div>
+</div>
 
       <!-- 상세로 가는 a태그 -->
       <div class="row mt-4">
