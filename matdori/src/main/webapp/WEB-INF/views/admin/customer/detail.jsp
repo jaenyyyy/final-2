@@ -93,13 +93,17 @@ checkboxes.forEach(checkbox => {
 						class="form-label mt-4" for="readOnlyInput">생년월일</label> <input
 						class="form-control" id="readOnlyInput2" type="text"
 						value="${customerAdminListDto.customerBirth}" disabled> <label
-						class="form-label mt-4" for="readOnlyInput">연락처</label> <input
+						class="form-label mt-4" for="readOnlyInput">연락처</label> 
+						<input
 						class="form-control" id="readOnlyInput3" type="text"
 						value="${customerAdminListDto.customerContact}" disabled>
-					<label class="form-label mt-4" for="readOnlyInput">이메일</label> <input
+					<label class="form-label mt-4" for="readOnlyInput">이메일</label> 
+					<input
 						class="form-control" id="readOnlyInput4" type="text"
-						value="${customerAdminListDto.customerEmail}" disabled> <label
-						class="form-label mt-4" for="readOnlyInput">성별</label> <input
+						value="${customerAdminListDto.customerEmail}" disabled> 
+						<label
+						class="form-label mt-4" for="readOnlyInput">성별</label> 
+						<input
 						class="form-control" id="readOnlyInput5" type="text"
 						value="${customerAdminListDto.customerGender}" disabled>
 				</div>
@@ -361,6 +365,7 @@ function sendCancelRequest() {
         }
     });
 }
+
 
 		</script>
 
