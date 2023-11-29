@@ -4,15 +4,16 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
-<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script> 
+<!-- <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script> 
 <script>
 $(function() {
     $("[name=selectedDate]").on("change", function(e) {
         var selectedDate = $(this).val();
         var rezResNo = $("[name=rezResNo]").val();
+        var workdayNo = workdayVO.workdayNo;
 
         $.ajax({
-            url: "http://localhost:8080/rest/reservation/checkDate",
+            url: "http://localhost:8080/rest/reservation/checkDate/"+ workdayNo,
             method: "post",
             data: {
                 selectedDate: selectedDate,
@@ -46,6 +47,36 @@ $(function() {
         $("[name=selectedClock]").hide();
     }
 });
+
+
+</script>-->
+
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script>
+    $(document).ready(function() {
+    	
+        // 좌석이나 인원수가 변경될 때 이벤트 리스너 추가
+        $("#selectedSeat, #rezCustomerCount").change(function() {
+            // 선택된 좌석의 가용인원 문자열을 가져옴
+            var nameString = $("#selectedSeat").find(":selected").data("name");
+
+            // 가용인원 문자열에서 숫자만 추출
+            var name = parseInt(nameString.match(/\d+/)[0]);
+
+            // 현재 입력된 인원수를 가져옴
+            var rezCustomerCount = $("#rezCustomerCount").val();
+
+            // 가용인원수를 초과하는지 확인
+            if (parseInt(rezCustomerCount) > name) {
+                $("#warningMessage").text("인원수가 가용인원수를 초과합니다.");
+            } else {
+                $("#warningMessage").text("");
+            }
+
+            // 추출된 숫자를 출력하거나 다른 용도로 사용할 수 있음
+            console.log("가용인원수 숫자: " + name);
+        });
+    });
 </script>
 
 
@@ -63,28 +94,30 @@ $(function() {
 	    			<input type="hidden" name="rezResNo" value="${rezResNo}">
 	    			
 					<label class="form-label mt-4" for="readOnlyInput">시간</label>
-					<input type="date" name="selectedDate">
+<!-- 					<input type="date" name="selectedDate"> -->
 	    			<select class="form-control" name="selectedClock">
 				        <option>선택하세요</option>
-				        <c:forEach var="clock2Dto" items="${clock2List}">				        	
-				            <option value="${clock2Dto.clock2No}">
-				            <fmt:formatDate value="${clock2Dto.clock2Select}" pattern="yyyy-MM-dd HH:mm"/>
+				        <c:forEach var="clockDto" items="${clockList}">				        	
+				            <option value="${clockDto.clockNo}">
+				            <fmt:formatDate value="${clockDto.clockSelect}" pattern="yyyy-MM-dd HH:mm"/>
 				            </option>
 				        </c:forEach>
 				   	</select>
 	    			
 					<label class="form-label mt-4" for="readOnlyInput">좌석</label>
-	    			<select class="form-control" name="selectedSeat">
-	    				<option>선택하세요</option>
-				        <c:forEach var="seatDto" items="${seatList}">
-				            <option value="${seatDto.seatNo}">
-				            ${seatDto.seatName}
-				            </option>
-				        </c:forEach>
-				   	</select>
-	    			
+					<select class="form-control" name="selectedSeat" id="selectedSeat">
+					    <option>선택하세요</option>
+					    <c:forEach var="seatDto" items="${seatList}">
+					        <option value="${seatDto.seatNo}" data-name="${seatDto.seatName}">
+					            ${seatDto.seatName}
+					        </option>
+					    </c:forEach>
+					</select>
+					
 					<label class="form-label mt-4" for="readOnlyInput">인원수</label>
-	    			<input class="form-control" type="number" name="rezCustomerCount">
+					<input class="form-control" type="number" name="rezCustomerCount" id="rezCustomerCount">
+					
+					<div id="warningMessage" style="color: red;"></div>
 	    			
 					<label class="form-label mt-4" for="readOnlyInput">좌석수</label>
 	    			<input class="form-control" type="number" name="rezSeatQty">

@@ -2,6 +2,7 @@ package com.kh.matdori.restcontroller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -27,19 +28,22 @@ public class ReservationRestController {
 	@Autowired
 	private ReservationDao reservationDao;
 	
-	@PostMapping("/checkDate")
+	
+	
+	@PostMapping("/checkDate/{workdayNo}")
 	public String checkDate(
-							@RequestParam int workdayNo,
+							@PathVariable int workdayNo,
 							@RequestParam String selectedDate,
 							@RequestParam int rezResNo
 							) {
+		log.debug("workdayNo={}",workdayNo);
 		WorkdayDto workdayDto = workdayDao.selectOne(workdayNo);
 		WorkdayVO workdayVO = reservationDao.selectDate(selectedDate);
 		
-		if(workdayDto.getWorkdayName().equals(workdayVO.getWorkdayName()) 
+		if(workdayDto.getWorkdayName().equals(workdayVO.getDayName()) 
 				&& rezResNo == workdayVO.getRezResNo()) {
 			ReservationDto reservationDto = new ReservationDto();
-			reservationDto.setInputDate(selectedDate);
+//			reservationDto.setInputDate(selectedDate);
 			return workdayDto.getNotWorkday();
 		}
 		else {

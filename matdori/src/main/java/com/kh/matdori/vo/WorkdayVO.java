@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 public class WorkdayVO {
 	private int rezNo, workdayNo;
 	private int rezResNo, workdayResNo;
-	private String inputDate, workdayName;
+	private String inputDate, dayName;
 	private String inputTime, notWorkday;
 
 }

@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.kh.matdori.dao.Clock2Dao;
+import com.kh.matdori.dao.ClockDao;
 import com.kh.matdori.dao.CustomerDao;
 import com.kh.matdori.dao.MenuByReservationDao;
 import com.kh.matdori.dao.MenuDao;
@@ -32,7 +32,6 @@ import com.kh.matdori.dto.ReservationDto;
 import com.kh.matdori.dto.RestaurantDto;
 import com.kh.matdori.dto.RezDetailListDto;
 import com.kh.matdori.dto.SeatDto;
-import com.kh.matdori.error.NoTargetException;
 import com.kh.matdori.service.KakaoPayService;
 import com.kh.matdori.vo.KakaoPayApproveRequestVO;
 import com.kh.matdori.vo.KakaoPayApproveResponseVO;
@@ -57,7 +56,7 @@ public class ReservationController {
 	@Autowired
 	private CustomerDao customerDao;
 	@Autowired
-	private Clock2Dao clock2Dao;
+	private ClockDao clockDao;
 	@Autowired
 	private SeatDao seatDao;
 	@Autowired
@@ -76,7 +75,7 @@ public class ReservationController {
 						) {
 		// clockList, seatList를 데이터베이스에서 조회
 		RestaurantDto resDto = restaurantDao.selectOne(rezResNo);
-		List<Clock2Dto> clockList = clock2Dao.clock2List(rezResNo);
+		List<ClockDto> clockList = clockDao.clockList(rezResNo);
 		List<SeatDto> seatList = seatDao.seatList(rezResNo);
 		List<MenuWithImagesVO> menuList = menuDao.getMenuByRes(rezResNo);
 		
@@ -118,12 +117,12 @@ public class ReservationController {
 		
 		
 	    // 선택한 시간,좌석 값으로 시간,좌석 정보 조회
-	    Clock2Dto selectedClock = clock2Dao.selectOneClock2(clockNo);
+	    ClockDto selectedClock = clockDao.selectOne(clockNo);
 	    SeatDto selectedSeat = seatDao.selectOne(seatNo);
 //	    List<MenuWithImagesVO> selectedMenus = reservationDao.menuList(rezNo); 
 //	     시간 정보를 ReservationDto에 설정
 	    if (selectedClock != null && selectedSeat != null) {
-	        reservationDto.setRezClock2No(selectedClock.getClock2No());
+	        reservationDto.setRezClockNo(selectedClock.getClockNo());
 	        reservationDto.setRezSeatNo(selectedSeat.getSeatNo());
 	    }
 	    log.debug("reservationDto={}", reservationDto);
@@ -140,24 +139,7 @@ public class ReservationController {
 		     int qty = selectedQtys.get(i);
 	
 		     menuList.add(MenuByReservationDto.mbrDto(rezNo, menuNo, qty));
-		     // 메뉴 정보를 조회하고 MenuByReservationDto에 추가
-//		     MenuWithImagesVO menuWithImagesVO = menuDao.selectOne(menuNo);
-//		     if (menuWithImagesVO != null) {
-//		         MenuDto menuDto = menuWithImagesVO.getMenuDto();
-//	
-//		         // MenuByReservationDto를 새로 생성하여 초기화
-//		         MenuByReservationDto menuByReservationDto = new MenuByReservationDto();
-//		         menuByReservationDto.setRezNo(rezNo);
-//		         menuByReservationDto.getMenuNos().add(menuDto.getMenuNo());
-//		         menuByReservationDto.getMenuQtys().add(qty);
-//	
-//		         // 각 메뉴 번호와 예약 번호의 조합을 데이터베이스에 등록
-//		         menuByReservationDao.insert(menuByReservationDto);
-//		         
-//		         // 생성된 객체를 리스트에 추가
-//		         menuList.add(menuByReservationDto);
-//		     }
-//		     log.debug("menuList={}", menuList);
+		     
 		 }
 		 
 		// 예약 번호와 선택한 메뉴 정보를 세션에 저장
@@ -186,7 +168,7 @@ public class ReservationController {
 	       ReservationDto reservationDto = reservationDao.selectOne(rezNo);
 	       CustomerDto customerDto = customerDao.selectOne(rezCustomerId);
 	       // 매장 정보, 이용자 아이디, 시간, 좌석 정보를 조회 및 model에 추가
-	       Clock2Dto selectedClock = clock2Dao.selectOneClock2(reservationDto.getRezClock2No());
+	       ClockDto selectedClock = clockDao.selectOne(reservationDto.getRezClockNo());
 	       SeatDto selectedSeat = seatDao.selectOne(reservationDto.getRezSeatNo());
 	       
 	       List<MenuInfoVO> menuInfo = menuByReservationDao.menuInfo(rezNo);
