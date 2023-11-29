@@ -33,7 +33,7 @@
 		<div class="row justify-content-center mb-4">
 			<div class="col-md-6 mt-4">
 				<h1 class="text-center ">
-					<i class="fa-solid fa-check" style="color: #ffb416;"></i> 예약완료
+					<i class="fa-solid fa-check" style="color: #ffb416;"></i> 예약내역
 				</h1>
 			</div>
 		</div>
@@ -45,10 +45,10 @@
 
 			<div class="col-md-8 list-border">
 				<div>
-					<h5 class="h-title">예약내역</h5>
+					<h5 class="h-title">예약정보</h5>
 				</div>
 				<div>
-				
+
 					<table class="table table-border table-stripe">
 						<tr>
 							<th>매장이름</th>
@@ -76,7 +76,14 @@
 						</tr>
 						<tr>
 							<th>예약 상태</th>
-							<td>${rezDetailListDto.paymentStatus}</td>
+							<c:choose>
+								<c:when test="${rezDetailListDto.paymentStatus == '예약취소'}">
+									<td style="color: red;">${rezDetailListDto.paymentStatus}</td>
+								</c:when>
+								<c:otherwise>
+									<td>${rezDetailListDto.paymentStatus}</td>
+								</c:otherwise>
+							</c:choose>
 						</tr>
 					</table>
 				</div>
@@ -86,14 +93,16 @@
 		<div class="row mt-4">
 			<div class="col">
 				<c:choose>
-					<c:when test="${rezDetailListDto.rezNo != null}">
-						<a href="cancel?paymentNo=${rezDetailListDto.paymentNo}" class="btn btn-warning">예약취소</a>
+					<c:when test="${rezDetailListDto.paymentStatus == '예약완료'}">
+						<a href="cancel?paymentNo=${rezDetailListDto.paymentNo}"
+							class="btn btn-warning"
+							onclick="return confirm('예약을 취소하시겠습니까?')">예약취소</a>
 					</c:when>
 					<c:otherwise>
-						<button class="btn btn-warning" disabled>취소완료</button>>
+						<button class="btn btn-warning" disabled>취소완료</button>
 					</c:otherwise>
 				</c:choose>
-				<button class="btn btn-secondary">목록으로</button>
+				<a href="/customer/rezList" class="btn btn-secondary">목록으로</a>
 			</div>
 		</div>
 

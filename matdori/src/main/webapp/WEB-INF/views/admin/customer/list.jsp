@@ -22,8 +22,6 @@
 			<div class="row justify-content-center">
 				<div class="col-md-4">
 
-					<br> <br>
-					<h2>회원 관리</h2>
 
 					<div class="input-group mb-3">
 						<div class="input-group-prepend">

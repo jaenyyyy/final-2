@@ -8,7 +8,7 @@
 
 <style>
    .swiper {
-      width: 70%; 
+      width: 50%; 
       height: 400px;
       margin: 0 auto; 
       border-radius: 15px;
@@ -59,10 +59,13 @@
             <div class="swiper-wrapper">
                <!-- Slides -->
                <div class="swiper-slide">
-                  <img src="/images/dummy.png" width="100%" height="100%">
+                  <img src="/images/mainA.png" width="100%" height="100%">
                </div>
                <div class="swiper-slide">
-                  <img src="/images/dummy.png" width="100%" height="100%">
+                  <img src="/images/mainB.png" width="100%" height="100%">
+               </div>
+               <div class="swiper-slide">
+                  <img src="/images/mainC.png" width="100%" height="100%">
                </div>
             </div>
             <!-- If we need pagination -->

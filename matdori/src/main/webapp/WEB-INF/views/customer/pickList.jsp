@@ -91,21 +91,24 @@
 					<div>
 						<br>
 					</div>
-					<div class="row res-line p-2" style="margin-left: 100px;">
+					<div class="row res-line p-4" style="margin-left: 100px;">
 						<div class="col">
-							<div class="row modal-title">식당이름 :
-								${RestaurantDto.resName}</div>
-							<div class="row">전화 번호 : ${RestaurantDto.resTel}</div>
-							<div class="row">위치 : ${RestaurantDto.resAddr1} ,
+							<div class="row modal-title text-start">
+							<h5 class="bold">
+								${RestaurantDto.resName}
+							</h5>
+							</div>
+							<div class="row ms-2">매장 번호 : ${RestaurantDto.resTel}</div>
+							<div class="row ms-2">위치 : [${RestaurantDto.resPost}]  ${RestaurantDto.resAddr1} 
 								${RestaurantDto.resAddr2}</div>
 						</div>
 						<div class="col-2 text-center">
 							<div class="row mb-3">
 								<a href="/restaurant/detail?resNo=${RestaurantDto.resNo}"
-									class="menu-tag">상세정보 <br>보러가기</a>
+									class="menu-tag">매장상세 ></a>
 							</div>
 							<div class="row">
-								<a class="btn btn-danger btn-sm open-modal-review delete-bookmark" data-resNo="${RestaurantDto.resNo}">북마크 삭제</a>
+								<a class="btn btn-danger btn-sm open-modal-review delete-bookmark" data-resNo="${RestaurantDto.resNo}">삭제</a>
 							</div>
 						</div>
 					</div>

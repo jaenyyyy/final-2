@@ -101,61 +101,8 @@ checkboxes.forEach(checkbox => {
 						value="${customerAdminListDto.customerEmail}" disabled> <label
 						class="form-label mt-4" for="readOnlyInput">성별</label> <input
 						class="form-control" id="readOnlyInput5" type="text"
-						value="${customerAdminListDto.customerGender}" disabled> <label
-						class="form-label mt-4">등급</label> <br> <input
-						class="form-control" id="readOnlyInput6" type="text"
-						value="${customerAdminListDto.customerLevel}" disabled> <br>
+						value="${customerAdminListDto.customerGender}" disabled>
 				</div>
-				<div class="form-check">
-					<input class="form-check-input" type="radio" name="customerLevel"
-						value="나무수저" id="customerLevel1"> <label
-						class="form-check-label" for="customerLevel1">나무수저</label>
-				</div>
-
-
-				<div class="form-check">
-					<input class="form-check-input" type="radio" name="customerLevel"
-						value="은수저" id="customerLevel2"> <label
-						class="form-check-label" for="customerLevel2">은수저</label>
-				</div>
-
-
-				<div class="form-check">
-					<input class="form-check-input" type="radio" name="customerLevel"
-						value="금수저" id="customerLevel3"> <label
-						class="form-check-label" for="customerLevel3">금수저</label>
-				</div>
-
-
-				<div class="form-check">
-					<input class="form-check-input" type="radio" name="customerLevel"
-						value="다이아수저" id="customerLevel4"> <label
-						class="form-check-label" for="customerLevel4">다이아수저</label>
-				</div>
-
-
-
-				<div class="form-check">
-					<input class="form-check-input" type="radio" name="customerLevel"
-						value="맛도리수저" id="customerLevel5"> <label
-						class="form-check-label" for="customerLevel5">맛도리수저</label>
-				</div>
-
-				<br>
-
-				<button type="button" class="btn btn-warning"
-					onClick="updateCustomerLevelBtn()">변경</button>
-
-				<br> <label class="form-label mt-4" for="readOnlyInput8">회원
-					포인트 ${customerAdminListDto.customerPoint} pt</label> <input
-					class="form-control" id="readOnlyInput8" type="number"
-					placeholder="새로운 포인트 입력">
-				<button type="button" class="btn btn-secondary"
-					onClick="updateUpdatePointBtn()">포인트 변경</button>
-
-				<br> <label class="form-label mt-4" for="readOnlyInput">차단일</label>
-				<input class="form-control mb-4" id="readOnlyInput3" type="text"
-					value="${customerAdminListDto.customerBlockTime}" disabled>
 			</div>
 		</div>
 	</div>

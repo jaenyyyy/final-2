@@ -4,13 +4,18 @@
 
  <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 
-<div class="container row">
 
-<h3 style="color:red;">오류 페이지 수정 예정</h3>
-<h3 style="color:red;">대상이 존재하지 않습니다</h3>
-<h3 style="color:red;">다시 확인 후 이용해주세요</h3>
-
+ <div class="container row mt-4" style="margin-top:50px;">
+	<div class="col">
+		<h1 style="margin-top:100px; margin-bottom:100px;">
+		<i class="fa-solid fa-triangle-exclamation" style="color: #ffb416;"></i>
+		대상이 존재하지 않습니다. <i class="fa-solid fa-triangle-exclamation" style="color: #ffb416;"></i>
+		<br>
+		다시 확인 후 이용해주세요
+		</h1>
+	</div>
 </div>
+
 
  <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
 

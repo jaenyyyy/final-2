@@ -139,15 +139,6 @@
 				<div>
 					<table class="table table-border table-stripe">
 						<tr>
-							<th>포인트 사용</th>
-							<td><input type="number" class="form-control w-50"
-								id="inputPoint" name="inputPoint" oninput="updatePaymentTotal()"
-								value="${inputPoint}"> <span id="customerPoint">보유
-									포인트: <fmt:formatNumber value="${customerDto.customerPoint}"
-										pattern="#,##0" /> pt
-							</span></td>
-						</tr>
-						<tr>
 							<th>결제금액</th>
 							<td id="paymentTotal"><fmt:formatNumber
 									value="${paymentTotal}" pattern="#,##0" /> 원</td>

@@ -22,10 +22,10 @@
     </div>
     <div class="col-3">
         <div class="list-group">
-            <a href="#" class="list-group-item list-group-item-action border-0">서비스 이용안지키기</a>
-            <a href="#" class="list-group-item list-group-item-action border-0">개인정보 털기</a>
-            <a href="#" class="list-group-item list-group-item-action border-0">위치정보 털기</a>
-            <a href="#" class="list-group-item list-group-item-action border-0">입점안하기문의</a>
+            <a href="#" class="list-group-item list-group-item-action border-0">서비스 이용</a>
+            <a href="#" class="list-group-item list-group-item-action border-0">개인정보 규약</a>
+            <a href="#" class="list-group-item list-group-item-action border-0">위치정보 문의</a>
+            <a href="#" class="list-group-item list-group-item-action border-0">입점문의</a>
         </div>
     </div>
 </div>

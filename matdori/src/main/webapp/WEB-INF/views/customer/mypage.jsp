@@ -90,23 +90,7 @@
 				<h1>
 					<span
 					style="font-weight: bold;">	[ ${customerDto.customerId}</span>
-					<c:choose>
-						<c:when test="${sessionScope.level == '나무수저'}">
-							<i class="fa-solid fa-spoon " style="color: #7b4b23;"></i>
-						</c:when>
-						<c:when test="${sessionScope.level == '은수저'}">
-							<i class="fa-solid fa-spoon" style="color: #adadad;"></i>
-						</c:when>
-						<c:when test="${sessionScope.level == '금수저'}">
-							<i class="fa-solid fa-spoon" style="color: #f1b83b;"></i>
-						</c:when>
-						<c:when test="${sessionScope.level == '다이아수저'}">
-							<i class="fa-solid fa-spoon" style="color: #5fecbd;"></i>
-						</c:when>
-						<c:when test="${sessionScope.level == '맛도리수저'}">
-							<i class="fa-solid fa-spoon" style="color: #ff4d4d;"></i>
-						</c:when>
-					</c:choose>
+					
 				<span
 					style="font-weight: bold;">	] 님 반갑습니다.</span>
 				</h1>
@@ -132,10 +116,6 @@
 							<td>${customerDto.customerBirth}</td>
 						</tr>
 
-						<tr>
-							<th>등급</th>
-							<td>${customerDto.customerLevel}</td>
-						</tr>
 					</table>
 
 				</div>

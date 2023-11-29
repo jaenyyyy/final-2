@@ -4,11 +4,10 @@ import java.util.List;
 
 import com.kh.matdori.dto.ReservationDto;
 import com.kh.matdori.dto.ReservationListDto;
+import com.kh.matdori.dto.RezDetailListDto;
 import com.kh.matdori.vo.CusPaginationVO;
 import com.kh.matdori.vo.MenuWithImagesVO;
 import com.kh.matdori.vo.WorkdayVO;
-import com.kh.matdori.dto.ReviewDto;
-import com.kh.matdori.dto.RezDetailListDto;
 
 public interface ReservationDao {
 	int sequence();

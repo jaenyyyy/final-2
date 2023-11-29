@@ -381,7 +381,7 @@ public class ReservationController {
 	             .paymentPrice(0)
 	             .build());
 		
-		return "redirect:reservation/payment/list";
+		return "redirect:/reservation/paymentList";
 	}
 
 
