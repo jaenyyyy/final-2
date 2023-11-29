@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 
 @Data @NoArgsConstructor @AllArgsConstructor @Builder
 public class ReservationListDto {
-	private int rezNo, rezResNo, menuNo, clockNo, seatNo;// resNo사용 안되는듯?
+	private int rezNo, resNo, menuNo, clockNo, seatNo;
 	private String rezCustomerId;
 	private String customerName;
 	private String customerContact;
@@ -15,7 +15,7 @@ public class ReservationListDto {
 	private String customerLevel;
 	private String resName, menuName;
 	private int  menuPrice;
-	private String clock2Select, seatName;
+	private String clockSelect, seatName;
 	private int rezMenuQty, rezCustomerCount, rezSeatQty;
 	private String rezRequest;
 	private String paymentStatus;
