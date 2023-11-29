@@ -17,13 +17,12 @@
 		(rez_no, rez_customer_id,
 		rez_res_no,
 		rez_clock_no, rez_seat_no,
-		rez_customer_count, rez_seat_qty,
+		rez_customer_count,
 		rez_request)
 		values
 		(#{rezNo}, #{rezCustomerId}, #{rezResNo},
 		#{rezClockNo},
 		#{rezSeatNo}, #{rezCustomerCount},
-		#{rezSeatQty},
 		#{rezRequest, jdbcType=VARCHAR})
 
 	</insert>

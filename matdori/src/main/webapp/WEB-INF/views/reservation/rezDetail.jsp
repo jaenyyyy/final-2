@@ -55,8 +55,10 @@
 						<div class="row">${restaurantDto.resName}</div>
 						<div class="row">예약일 :
 							${fn:substring(selectedClock.clockSelect, 0, 10)}</div>
-						<div class="row">예약시간 :
-							${fn:substring(selectedClock.clockSelect, 11, 16)}</div>
+						<div class="row">예약시간 : 
+						18 : 00
+<%-- 							${fn:substring(selectedClock.clockSelect, 11, 16)} --%>
+							</div>
 					</div>
 
 				</div>
@@ -89,11 +91,14 @@
 							</tr>
 							<tr>
 								<th>예약 일자</th>
-								<td>${fn:substring(selectedClock.clockSelect, 0, 10)}</td>
+								<td>${fn:substring(selectedClock.clockSelect, 0, 12)}</td>
 							</tr>
 							<tr>
 								<th>예약 시간</th>
-								<td>${fn:substring(selectedClock.clockSelect, 11, 12)}</td>
+								<td>
+								18시 00분
+<%-- 								${fn:substring(selectedClock.clockSelect, 11, 12)} --%>
+								</td>
 							</tr>
 							<tr>
 								<th>예약 메뉴</th>
