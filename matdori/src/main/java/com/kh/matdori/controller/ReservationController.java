@@ -363,7 +363,7 @@ public class ReservationController {
 	             .paymentPrice(0)
 	             .build());
 		
-		return "redirect:/reservation/paymentList";
+		return "reservation/successCancel";
 	}
 
 

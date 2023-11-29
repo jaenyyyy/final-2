@@ -136,16 +136,6 @@
 					</table>
 				</div>
 
-				<div>
-					<table class="table table-border table-stripe">
-						<tr>
-							<th>결제금액</th>
-							<td id="paymentTotal"><fmt:formatNumber
-									value="${paymentTotal}" pattern="#,##0" /> 원</td>
-						</tr>
-					</table>
-				</div>
-
 				<div class="row">
 					<div class="col mt-2" style="font-weight: bold;">결제방식</div>
 					<div class="col">
@@ -157,8 +147,8 @@
 						<input type="hidden" name="rezNo" id="hiddenRezNo"> <input
 							type="hidden" name="paymentTotal" id="hiddenPaymentTotal">
 
-						<button type="button" class="btn btn-warning w-100"
-							style="margin-top: 70px;" onclick="submitForm()">결제하기</button>
+						<button type="submit" class="btn btn-warning w-100"
+							style="margin-top: 70px;">결제하기</button>
 					</form>
 				</div>
 			</div>
@@ -169,56 +159,6 @@
 	</div>
 </div>
 
-
-
-
-<script>
-	//JavaScript
-	function updatePaymentTotal() {
-		var inputPoint = parseInt(document.getElementById("inputPoint").value); // 사용자가 입력한 포인트 값
-		var sumTotal = parseInt("${sumTotal}"); // VO에서 전달된 총 금액
-		var paymentAmountElement = document.getElementById("paymentAmount");
-		var customerPoint = parseInt("${rezDto.customerPoint}");
-
-		var paymentTotal = sumTotal - inputPoint; // 결제금액 계산
-		if (isNaN(inputPoint)) {
-			paymentTotal = sumTotal; // 입력값이 없을 경우 총 금액으로 설정
-		} else {
-			paymentTotal = sumTotal - inputPoint; // 입력값이 있을 경우 결제금액 계산
-
-			if (inputPoint > customerPoint) {
-			    alert("보유 포인트를 초과할 수 없습니다.");
-			    document.getElementById("inputPoint").value = customerPoint;
-			    inputPoint = customerPoint;
-			    paymentTotal = sumTotal - inputPoint; // 초과한 경우 다시 계산
-
-			    // 여기서 결제금액을 다시 업데이트
-			    var paymentAmountElement = document.getElementById("paymentTotal");
-			    paymentAmountElement.textContent = paymentTotal.toLocaleString('ko-KR') + " 원";
-			}
-
-			if (paymentTotal < 0) {
-				paymentTotal = 0;
-			}
-		}
-
-		// 결제금액을 화면에 업데이트
-
-		var paymentAmountElement = document.getElementById("paymentTotal");
-		paymentAmountElement.textContent = paymentTotal.toLocaleString('ko-KR')
-				+ " 원";
-	}
-
-	function submitForm() {
-
-		var paymentTotal = parseInt("${sumTotal}") - parseInt(document.getElementById("inputPoint").value);
-
-		document.getElementById("hiddenPaymentTotal").value;
-
-		// 폼 제출
-		document.getElementById("paymentForm").submit();
-	}
-</script>
 
 
 

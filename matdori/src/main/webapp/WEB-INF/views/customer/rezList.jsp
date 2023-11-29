@@ -135,7 +135,7 @@
       </div>
       
       		<!-- 페이지네이션 -->
-    <ul class="pagination justify-content-center">
+    <ul class="pagination justify-content-center mt-4">
         <!-- 이전 버튼 -->
         <c:if test="${!vo.first}">
             <li class="page-item">
