@@ -50,7 +50,6 @@ public class RestaurantController {
 		List<HashtagListDto> resHashDto = hashtagDao.resHashList(resNo);
 		
 
-
 		model.addAttribute("resDto", resDto);
 		model.addAttribute("menuListByRes", menuListByRes);
 		model.addAttribute("reviewByRes", reviewByRes);		

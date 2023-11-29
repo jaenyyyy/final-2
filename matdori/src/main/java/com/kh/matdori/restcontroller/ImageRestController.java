@@ -27,7 +27,7 @@ import com.kh.matdori.dao.AttachDao;
 import com.kh.matdori.dao.MenuDao;
 import com.kh.matdori.dao.RestaurantDao;
 import com.kh.matdori.dto.AttachDto;
-import com.kh.matdori.vo.MenuWithImagesVO;
+import com.kh.matdori.dto.MenuDto;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -61,32 +61,36 @@ public class ImageRestController {
 	            dir.mkdirs();
 	         }
 	         
+	         @GetMapping("/details/{menuNo}")
+	         public String getMenuDetails(@PathVariable int menuNo, Model model) {
+	             AttachDto menuDto = menuDao.findMenuImage(menuNo); // 가정된 메소드
+	             if (menuDto == null) {
+	                 return "errorPage"; // 적절한 에러 페이지로 리다이렉트
+	             }
+	             model.addAttribute("menu", menuDto);
+	             return "detail"; // 메뉴 상세 정보를 보여주는 JSP 페이지
+	         }
 	         
-	   @GetMapping("/menu/{menuNo}")
-	   public ResponseEntity<ByteArrayResource>downloadMenuImage(@PathVariable int menuNo) throws IOException{
-	      log.debug("menuNo={}",menuNo);
-	      
-	      AttachDto attachDto = menuDao.findMenuImage(menuNo);
-	      log.debug("attachDto={}",attachDto);
-	      
-	      if (attachDto == null) {
-	          // 이미지가 존재하지 않는 경우, 적절한 HTTP 상태 코드 반환
-	          return ResponseEntity.notFound().build();
-	      }
-	      
-	      File target = new File(dir,String.valueOf(attachDto.getAttachNo()));
-	      byte[] data=FileUtils.readFileToByteArray(target);//실제파일정보 불러오기
-	      ByteArrayResource resource=new ByteArrayResource(data);
-	      
-	      return ResponseEntity.ok()
-	            .header(HttpHeaders.CONTENT_ENCODING, StandardCharsets.UTF_8.name())
-	            .contentLength(attachDto.getAttachSize())
-	            .header(HttpHeaders.CONTENT_TYPE,attachDto.getAttachType())
-	            .contentType(MediaType.APPLICATION_OCTET_STREAM)
-	            .header("Content-Disposition","attachment;filename="+attachDto.getAttachName())
+	         @GetMapping("/menu/{menuNo}")
+	         public ResponseEntity<ByteArrayResource> downloadMenuImage(@PathVariable int menuNo) throws IOException {
+	             log.debug("menuNo={}", menuNo);
 
-	            .body(resource);
-	   }
+	             AttachDto attachDto = menuDao.findMenuImage(menuNo);
+	             log.debug("attachDto={}", attachDto);
+
+	             if (attachDto == null) {
+	                 return ResponseEntity.notFound().build();
+	             }
+
+	             File target = new File(dir, String.valueOf(attachDto.getAttachNo()));
+	             byte[] data = FileUtils.readFileToByteArray(target); // 실제 파일 정보 불러오기
+	             ByteArrayResource resource = new ByteArrayResource(data);
+
+	             return ResponseEntity.ok()
+	                     .contentLength(attachDto.getAttachSize())
+	                     .contentType(MediaType.parseMediaType(attachDto.getAttachType()))
+	                     .body(resource);
+	         }
 	      
 	   
 	   @GetMapping("/restaurant/image/{attachNo}")
@@ -301,12 +305,10 @@ public class ImageRestController {
 	           // 나머지 이미지 번호 리스트를 모델에 추가합니다.
 	           model.addAttribute("imageNos", attachNos);
 	       }
-
 	       // JSP 페이지 이름을 반환합니다. 예를 들어, 'restaurantImages.jsp' 페이지가 있을 경우:
 	       return "menuList";
 	   }
-	   
-	   
+
 //	   @GetMapping("/movieMain/{movieNo}")
 //	   public ResponseEntity<ByteArrayResource>downloadMovieMainImage(@PathVariable int movieNo) throws IOException{
 //	      

@@ -218,7 +218,7 @@ public class MenuRestController {
 	}
 	
 	@GetMapping("/menu/first/{resNo}")
-	public ResponseEntity<MenuWithImagesVO> getFirstMenuByRes(@PathVariable int resNo) {
+	public ResponseEntity<MenuWithImagesVO> selectOneByRes(@PathVariable int resNo) {
 	    try {
 	        List<MenuWithImagesVO> menus = menuDao.getMenuByRes(resNo); // 모든 메뉴를 조회
 	        if (menus != null && !menus.isEmpty()) {
