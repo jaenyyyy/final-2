@@ -134,31 +134,44 @@
 
       <!-- 사진 틀-->
       <div class="row justify-content-center mb-3 mt-4">
-         <!-- 메인 이미지 -->
-         <div class="col-6">
-            <img src="/image/restaurant/image/first/${resDto.resNo}" alt="Restaurant Image">
-         </div>
-         <!-- 서브 이미지 : 반복문? 써야하나 / 그리고 이미지 누르면 크게 띄우는 스크립트 추가 -->
-         <div class="col-6">
+<div class="container">
+    <div class="row">
+        <!-- Main Image (Left) -->
+        <div class="col-md-6 mb-3">
             <div class="row mb-3">
-            <c:forEach var="index" begin="1" end="4">
-    <%-- 현재 이미지의 attachNo를 계산합니다. 가장 낮은 attachNo에서 index를 더한 값입니다. --%>
-    <c:set var="currentAttachNo" value="${minAttachNo + index}" />
-    
-    <%-- 현재 이미지의 URL을 생성합니다. --%>
-    <c:set var="imageURL" value="/restaurant/image/${currentAttachNo}" />
-    
-    <%-- 2행 2열 형태로 이미지를 배치합니다. 홀수 번째 이미지는 새로운 행을 시작합니다. --%>
-    <div class="col-6">
-        <img src="/image/restaurant/image/first/${resDto.resNo}" alt="Restaurant Image">
+                <img src="/image/restaurant/image/first/${resDto.resNo}" alt="Main Restaurant Image" style="max-width: 600px; height: 600px;">
+            </div>
+        </div>
+        <!-- Sub Images (Right) -->
+        <div class="col-md-6 mb-3">
+            <div class="row">
+                <div class="col-6">
+                    <div class="row mb-3">
+                        <img src="/image/restaurant/image/second/${resDto.resNo}" alt="Sub Restaurant Image" style="max-width: 100%; height: 300px;">
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="row mb-3">
+                        <img src="/image/restaurant/image/third/${resDto.resNo}" alt="Sub Restaurant Image" style="max-width: 100%; height: 300px;">
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="row mb-3">
+                        <img src="/image/restaurant/image/fourth/${resDto.resNo}" alt="Sub Restaurant Image" style="max-width: 100%; height: 300px;">
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="row mb-3">
+                        <img src="/image/restaurant/image/fifth/${resDto.resNo}" alt="Sub Restaurant Image" style="max-width: 100%; height: 300px;">
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    <c:if test="${index % 2 == 0}">
-        <div class="w-100"></div> <%-- 홀수 번째 이미지 뒤에는 새로운 행을 시작합니다. --%>
-    </c:if>
-</c:forEach>
-             
-         </div>
-      </div>
+</div>
+
+        
+      
 
 
       <!-- 예약 버튼 -->
@@ -257,6 +270,9 @@
       <!-- 메뉴리스트 : list [0]~[3] 번쨰만 꺼내야할듯 -->
       <div class="container">
          <div class="row">
+            
+            
+            
             <!-- 첫 번째 : 나중에 반복문으로처리 / 위치 잡으려고 네개 해놓음 -->
             <div class="col-md-6">
                <div class="row">

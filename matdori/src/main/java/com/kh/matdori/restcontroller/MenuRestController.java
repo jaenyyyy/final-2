@@ -216,5 +216,21 @@ public class MenuRestController {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 		}
 	}
+	
+	@GetMapping("/menu/first/{resNo}")
+	public ResponseEntity<MenuWithImagesVO> getFirstMenuByRes(@PathVariable int resNo) {
+	    try {
+	        List<MenuWithImagesVO> menus = menuDao.getMenuByRes(resNo); // 모든 메뉴를 조회
+	        if (menus != null && !menus.isEmpty()) {
+	            MenuWithImagesVO firstMenu = menus.get(0); // 첫 번째 메뉴를 선택
+	            return ResponseEntity.ok(firstMenu);
+	        } else {
+	            return ResponseEntity.notFound().build();
+	        }
+	    } catch (Exception e) {
+	        log.error("Error getting first menu with image by resNo", e);
+	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+	    }
+	}
 
 }

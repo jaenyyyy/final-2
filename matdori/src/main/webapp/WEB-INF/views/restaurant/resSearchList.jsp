@@ -102,7 +102,7 @@
 								onClick="goToDetail(${resSearchList.resNo})"
 								style="cursor: pointer;">
 								<div class="col-3 p-4">
-									매장 이미지 자리
+									<img src="/image/restaurant/image/first/${resSearchList.resNo}" alt="Restaurant Image">
 								</div>
 								<div class="col-4 p-4">
 									<h5>${resSearchList.resName}</h5>

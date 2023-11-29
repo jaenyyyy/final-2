@@ -27,6 +27,7 @@ import com.kh.matdori.dao.AttachDao;
 import com.kh.matdori.dao.MenuDao;
 import com.kh.matdori.dao.RestaurantDao;
 import com.kh.matdori.dto.AttachDto;
+import com.kh.matdori.vo.MenuWithImagesVO;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -86,6 +87,7 @@ public class ImageRestController {
 
 	            .body(resource);
 	   }
+	      
 	   
 	   @GetMapping("/restaurant/image/{attachNo}")
 	   public ResponseEntity<ByteArrayResource> getImage(@PathVariable int attachNo) throws IOException {
@@ -132,6 +134,162 @@ public class ImageRestController {
 	               .header("Content-Disposition", "inline;filename=" + URLEncoder.encode(attachDto.getAttachName(), StandardCharsets.UTF_8.name()))
 	               .body(resource);
 	   }
+	   
+	   @GetMapping("/restaurant/image/second/{resNo}")
+	   public ResponseEntity<ByteArrayResource> getSecondImage(@PathVariable int resNo) throws IOException {
+	       List<Integer> attachNos = restaurantDao.findImageNoByRes(resNo); // resNo에 해당하는 모든 이미지 번호 조회
+	       if (attachNos == null || attachNos.isEmpty() || attachNos.size() < 3) {
+	           return ResponseEntity.notFound().build();
+	       }
+
+	       // 두 번째로 낮은 attachNo 찾기
+	       Integer secondMinAttachNo = attachNos.stream()
+	               .filter(attachNo -> !attachNo.equals(Collections.min(attachNos)))
+	               .min(Integer::compareTo)
+	               .orElse(null);
+
+	       if (secondMinAttachNo == null) {
+	           return ResponseEntity.notFound().build();
+	       }
+
+	       AttachDto attachDto = attachDao.selectOne(secondMinAttachNo);
+	       if (attachDto == null) {
+	           return ResponseEntity.notFound().build();
+	       }
+
+	       File target = new File(dir, String.valueOf(secondMinAttachNo));
+	       byte[] data = FileUtils.readFileToByteArray(target); // 실제 파일 정보 불러오기
+	       ByteArrayResource resource = new ByteArrayResource(data);
+
+	       return ResponseEntity.ok()
+	               .header(HttpHeaders.CONTENT_ENCODING, StandardCharsets.UTF_8.name())
+	               .contentLength(attachDto.getAttachSize())
+	               .header(HttpHeaders.CONTENT_TYPE, attachDto.getAttachType())
+	               .contentType(MediaType.parseMediaType(attachDto.getAttachType()))
+	               .header("Content-Disposition", "inline;filename=" + URLEncoder.encode(attachDto.getAttachName(), StandardCharsets.UTF_8.name()))
+	               .body(resource);
+	   }
+	   
+	   @GetMapping("/restaurant/image/fourth/{resNo}")
+	   public ResponseEntity<ByteArrayResource> getFourthImage(@PathVariable int resNo) throws IOException {
+	       List<Integer> attachNos = restaurantDao.findImageNoByRes(resNo); // resNo에 해당하는 모든 이미지 번호 조회
+	       if (attachNos == null || attachNos.isEmpty() || attachNos.size() < 4) {
+	           // 4번째 사진이 없거나 이미지 번호가 충분하지 않으면 다음 사진을 조회할 수 없음
+	           return ResponseEntity.notFound().build();
+	       }
+
+	       // 네 번째로 낮은 attachNo 찾기
+	       Integer fourthMinAttachNo = attachNos.stream()
+	               .filter(attachNo -> !attachNo.equals(Collections.min(attachNos)))
+	               .filter(attachNo -> !attachNo.equals(attachNos.get(1))) // 이미 조회한 두 번째 사진 제외
+	               .filter(attachNo -> !attachNo.equals(attachNos.get(2))) // 이미 조회한 세 번째 사진 제외
+	               .min(Integer::compareTo)
+	               .orElse(null);
+
+	       if (fourthMinAttachNo == null) {
+	           // 4번째 사진이 없을 경우
+	           return ResponseEntity.notFound().build();
+	       }
+
+	       AttachDto attachDto = attachDao.selectOne(fourthMinAttachNo);
+	       if (attachDto == null) {
+	           // AttachDto를 찾을 수 없을 경우
+	           return ResponseEntity.notFound().build();
+	       }
+
+	       File target = new File(dir, String.valueOf(fourthMinAttachNo));
+	       byte[] data = FileUtils.readFileToByteArray(target); // 실제 파일 정보 불러오기
+	       ByteArrayResource resource = new ByteArrayResource(data);
+
+	       return ResponseEntity.ok()
+	               .header(HttpHeaders.CONTENT_ENCODING, StandardCharsets.UTF_8.name())
+	               .contentLength(attachDto.getAttachSize())
+	               .header(HttpHeaders.CONTENT_TYPE, attachDto.getAttachType())
+	               .contentType(MediaType.parseMediaType(attachDto.getAttachType()))
+	               .header("Content-Disposition", "inline;filename=" + URLEncoder.encode(attachDto.getAttachName(), StandardCharsets.UTF_8.name()))
+	               .body(resource);
+	   }
+	   @GetMapping("/restaurant/image/third/{resNo}")
+	   public ResponseEntity<ByteArrayResource> getThirdImage(@PathVariable int resNo) throws IOException {
+	       List<Integer> attachNos = restaurantDao.findImageNoByRes(resNo); // resNo에 해당하는 모든 이미지 번호 조회
+	       if (attachNos == null || attachNos.isEmpty() || attachNos.size() < 3) {
+	           // 3번째 사진이 없거나 이미지 번호가 충분하지 않으면 다음 사진을 조회할 수 없음
+	           return ResponseEntity.notFound().build();
+	       }
+
+	       // 세 번째로 낮은 attachNo 찾기
+	       Integer thirdMinAttachNo = attachNos.stream()
+	               .filter(attachNo -> !attachNo.equals(Collections.min(attachNos)))
+	               .filter(attachNo -> !attachNo.equals(attachNos.get(0))) // 이미 조회한 첫 번째 사진 제외
+	               .filter(attachNo -> !attachNo.equals(attachNos.get(1))) // 이미 조회한 두 번째 사진 제외
+	               .min(Integer::compareTo)
+	               .orElse(null);
+
+	       if (thirdMinAttachNo == null) {
+	           // 3번째 사진이 없을 경우
+	           return ResponseEntity.notFound().build();
+	       }
+
+	       AttachDto attachDto = attachDao.selectOne(thirdMinAttachNo);
+	       if (attachDto == null) {
+	           // AttachDto를 찾을 수 없을 경우
+	           return ResponseEntity.notFound().build();
+	       }
+
+	       File target = new File(dir, String.valueOf(thirdMinAttachNo));
+	       byte[] data = FileUtils.readFileToByteArray(target); // 실제 파일 정보 불러오기
+	       ByteArrayResource resource = new ByteArrayResource(data);
+
+	       return ResponseEntity.ok()
+	               .header(HttpHeaders.CONTENT_ENCODING, StandardCharsets.UTF_8.name())
+	               .contentLength(attachDto.getAttachSize())
+	               .header(HttpHeaders.CONTENT_TYPE, attachDto.getAttachType())
+	               .contentType(MediaType.parseMediaType(attachDto.getAttachType()))
+	               .header("Content-Disposition", "inline;filename=" + URLEncoder.encode(attachDto.getAttachName(), StandardCharsets.UTF_8.name()))
+	               .body(resource);
+	   }
+
+	   @GetMapping("/restaurant/image/fifth/{resNo}")
+	   public ResponseEntity<ByteArrayResource> getFifthImage(@PathVariable int resNo) throws IOException {
+	       List<Integer> attachNos = restaurantDao.findImageNoByRes(resNo); // resNo에 해당하는 모든 이미지 번호 조회
+	       if (attachNos == null || attachNos.isEmpty() || attachNos.size() < 5) {
+	           // 5번째 사진이 없거나 이미지 번호가 충분하지 않으면 다음 사진을 조회할 수 없음
+	           return ResponseEntity.notFound().build();
+	       }
+
+	       // 다섯 번째로 낮은 attachNo 찾기
+	       Integer fifthMinAttachNo = attachNos.stream()
+	               .filter(attachNo -> !attachNo.equals(Collections.min(attachNos)))
+	               .filter(attachNo -> !attachNo.equals(attachNos.get(1))) // 이미 조회한 두 번째 사진 제외
+	               .filter(attachNo -> !attachNo.equals(attachNos.get(2))) // 이미 조회한 세 번째 사진 제외
+	               .filter(attachNo -> !attachNo.equals(attachNos.get(3))) // 이미 조회한 네 번째 사진 제외
+	               .min(Integer::compareTo)
+	               .orElse(null);
+
+	       if (fifthMinAttachNo == null) {
+	           // 5번째 사진이 없을 경우
+	           return ResponseEntity.notFound().build();
+	       }
+
+	       AttachDto attachDto = attachDao.selectOne(fifthMinAttachNo);
+	       if (attachDto == null) {
+	           // AttachDto를 찾을 수 없을 경우
+	           return ResponseEntity.notFound().build();
+	       }
+
+	       File target = new File(dir, String.valueOf(fifthMinAttachNo));
+	       byte[] data = FileUtils.readFileToByteArray(target); // 실제 파일 정보 불러오기
+	       ByteArrayResource resource = new ByteArrayResource(data);
+
+	       return ResponseEntity.ok()
+	               .header(HttpHeaders.CONTENT_ENCODING, StandardCharsets.UTF_8.name())
+	               .contentLength(attachDto.getAttachSize())
+	               .header(HttpHeaders.CONTENT_TYPE, attachDto.getAttachType())
+	               .contentType(MediaType.parseMediaType(attachDto.getAttachType()))
+	               .header("Content-Disposition", "inline;filename=" + URLEncoder.encode(attachDto.getAttachName(), StandardCharsets.UTF_8.name()))
+	               .body(resource);
+	   }
+
 	   @GetMapping("/restaurant/images/{resNo}")
 	   public String getImages(@PathVariable int resNo, Model model) {
 	       // resNo에 해당하는 모든 이미지 번호 조회
@@ -147,6 +305,7 @@ public class ImageRestController {
 	       // JSP 페이지 이름을 반환합니다. 예를 들어, 'restaurantImages.jsp' 페이지가 있을 경우:
 	       return "menuList";
 	   }
+	   
 	   
 //	   @GetMapping("/movieMain/{movieNo}")
 //	   public ResponseEntity<ByteArrayResource>downloadMovieMainImage(@PathVariable int movieNo) throws IOException{
