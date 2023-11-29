@@ -10,13 +10,13 @@ public class ReservationDto {
 	private int rezNo;
 	private String rezCustomerId;
 	private int rezResNo;
-	private int rezClock2No;
+	private int rezClockNo;
 	private int rezSeatNo;
 	private int rezCustomerCount, rezSeatQty;
 	private String rezRequest;
 	private String rezStatus;
-	private String inputDate;
-	private String inputTime;
+//	private String inputDate;
+//	private String inputTime;
 	
 //	private List<MenuWithImagesVO> rezMenuList;
 
