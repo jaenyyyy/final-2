@@ -97,10 +97,6 @@ public class ReservationController {
 	                     @RequestParam("selectedMenus") ArrayList<Integer> selectedMenuNos,
 	                     @RequestParam("selectedQtys") ArrayList<Integer> selectedQtys) 
 	{
-//		log.debug("clockNo={}",clockNo);
-//		log.debug("seatNo={}",seatNo);
-//		log.debug("selectedMenuNos={}",selectedMenuNos);
-//		log.debug("selectedQtys={}",selectedQtys);
 	    
 		
 		int rezNo = reservationDao.sequence();
