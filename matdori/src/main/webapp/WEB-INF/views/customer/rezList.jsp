@@ -145,7 +145,7 @@
          <c:forEach var="i" begin="${vo.begin}" end="${vo.end}" step="1">
             <li class="page-item ${vo.page == i ? 'active' : ''}"><c:choose>
                   <c:when test="${vo.page == i}">
-                     <span class="page-link"
+                     <span class="page-link
                         style="background-color: #FFB416; border-color: #FFB416">${i}</span>
                   </c:when>
                   <c:otherwise>
