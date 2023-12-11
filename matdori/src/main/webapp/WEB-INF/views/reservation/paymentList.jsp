@@ -102,7 +102,7 @@
 						<button class="btn btn-warning" disabled>취소완료</button>
 					</c:otherwise>
 				</c:choose>
-				<a href="/customer/rezList" class="btn btn-secondary">목록으로</a>
+				<a href="${pageContext.request.contextPath}/customer/rezList" class="btn btn-secondary">목록으로</a>
 			</div>
 		</div>
 

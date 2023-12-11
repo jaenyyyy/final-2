@@ -36,7 +36,6 @@ public class ReservationRestController {
 							@RequestParam String selectedDate,
 							@RequestParam int rezResNo
 							) {
-		log.debug("workdayNo={}",workdayNo);
 		WorkdayDto workdayDto = workdayDao.selectOne(workdayNo);
 		WorkdayVO workdayVO = reservationDao.selectDate(selectedDate);
 		

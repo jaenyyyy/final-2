@@ -42,7 +42,7 @@
 
 
 <script>
-
+window.contextPath = "${pageContext.request.contextPath}";
 
 	$(function() {
 
@@ -86,7 +86,7 @@
 			$(".btn-send").find("span").text("이메일로 보내는 중 입니다");
 
 			$.ajax({
-				url : "http://localhost:8080/rest/cert/send",
+				url : window.contextPath+"//www.sysout.co.kr/rest/cert/send",
 				method : "post",
 				data : {
 					certEmail : email
@@ -111,7 +111,7 @@
 
 					$
 							.ajax({
-								url : "http://localhost:8080/rest/cert/check",
+								url : window.contextPath+"//www.sysout.co.kr/rest/cert/check",
 								method : "post",
 								data : {
 									certEmail : email,
@@ -149,7 +149,7 @@
 			$(e.target).removeClass("success fail fail2");
 			if (isValid) {//형식이 유효하다면
 				$.ajax({
-					url : "http://localhost:8080/rest/customer/idCheck",
+					url : window.contextPath+"//www.sysout.co.kr/rest/customer/idCheck",
 					method : "post",
 					// data : {customerId : e.target.value},
 					data : {
@@ -232,7 +232,7 @@
 			$(e.target).removeClass("success fail fail2");
 			if (isValid) {
 				$.ajax({
-					url : "http://localhost:8080/rest/customer/emailCheck",
+					url : window.contextPath+"//www.sysout.co.kr/rest/customer/emailCheck",
 					method : "post",
 					data : {
 						customerEmail : $(e.target).val()
@@ -356,11 +356,11 @@
 		<!-- 링크 -->
 		<div class="row text-center mt-4">
 			<div class="col">
-				<a href="/customer/join" class="tag-none" style="font-weight: bold;">회원가입
+				<a href="${pageContext.request.contextPath}/customer/join" class="tag-none" style="font-weight: bold;">회원가입
 					하기</a> <br>
 			</div>
 			<div class="col">
-				<a href="/customer/findPw" class="tag-none"
+				<a href="${pageContext.request.contextPath}/customer/findPw" class="tag-none"
 					style="font-weight: bold;">비밀번호 찾기</a>
 			</div>
 		</div>

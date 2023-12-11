@@ -109,7 +109,7 @@
                   <div class="col-2 text-end">
                      <div class="row mb-3">
                         <a
-                           href="/reservation/payment/list?rezNo=${reservationListDto.rezNo}"
+                           href="${pageContext.request.contextPath}/reservation/payment/list?rezNo=${reservationListDto.rezNo}"
                            class="menu-tag">예약상세 ></a>
                      </div>
                      <div class="row">
@@ -121,7 +121,7 @@
                            </c:when>
                            <c:otherwise>
                               <a class="btn btn-warning btn-sm open-modal-review"
-                                 href="/customer/reviewWrite?resNo=${reservationListDto.resNo}&reviewRezNo=${reservationListDto.rezNo}">리뷰작성</a>
+                                 href="${pageContext.request.contextPath}/customer/reviewWrite?resNo=${reservationListDto.resNo}&reviewRezNo=${reservationListDto.rezNo}">리뷰작성</a>
                            </c:otherwise>
                         </c:choose>
                      </div>

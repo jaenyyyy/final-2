@@ -38,7 +38,7 @@ Qna write
               	</div>
              
 				<div class="text-end mt-4">
-                	<a class="btn btn-secondary" href="/qna/list">목록</a>
+                	<a class="btn btn-secondary" href="${pageContext.request.contextPath}/qna/list">목록</a>
                     <button class="btn btn-warning">작성</button>
                	</div>
                 

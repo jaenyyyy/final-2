@@ -5,8 +5,9 @@
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 
 <script>
+window.contextPath = "${pageContext.request.contextPath}";
 	function goToDetail(customerId) {
-	    window.location = 'detail?customerId=' + customerId;
+	    window.location = window.contextPath+'detail?customerId=' + customerId;
 	}
 </script>
 
@@ -104,7 +105,7 @@
             </c:choose>
         </td>
         
-        <td><a href="/admin/customer/detail?customerId=${customerAdminListDto.customerId}" class="btn btn-warning btn-sm">상세보기</a></td>
+        <td><a href="${pageContext.request.contextPath}/admin/customer/detail?customerId=${customerAdminListDto.customerId}" class="btn btn-warning btn-sm">상세보기</a></td>
     </tr>
 </c:forEach>
 

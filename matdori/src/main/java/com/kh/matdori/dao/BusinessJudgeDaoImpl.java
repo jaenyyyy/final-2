@@ -33,8 +33,6 @@ public class BusinessJudgeDaoImpl implements BusinessJudgeDao {
         params.put("judgeStatus", judgeDto.getBusJudgeStatus());
         params.put("busId", judgeDto.getBusId());
         
-        //System.out.print("코맨트"+judgeDto.getBusJudgeComment());
-        //System.out.print("상태"+judgeDto.getBusJudgeStatus());
         
         // 만약 해당 ID에 대한 레코드가 없다면, 삽입 작업을 수행할 수 있도록 DAO 메서드를 수정
         int count = sqlSession.selectOne("admin.checkIfBusJudgeExists", judgeDto.getBusId());

@@ -274,6 +274,7 @@
 
 
 <script>
+window.contextPath = "${pageContext.request.contextPath}";
 	//매장 차단
 	$(".open-modal-block").click(function() {
 		$("#blockModal").modal('show');
@@ -290,7 +291,7 @@
 		};
 
 		$.ajax({
-			url : '/rest/admin/restaurant/block', // 요청을 보낼 URL
+			url : window.contextPath+'/rest/admin/restaurant/block', // 요청을 보낼 URL
 			method : 'POST',
 			contentType : 'application/json; charset=utf-8',
 			data : JSON.stringify(data), // 데이터 전송
@@ -318,7 +319,7 @@
 		};
 
 		$.ajax({
-			url : '/rest/admin/restaurant/cancel', // 차단 해제 요청을 보낼 URL
+			url : window.contextPath+'/rest/admin/restaurant/cancel', // 차단 해제 요청을 보낼 URL
 			method : 'POST',
 			contentType : 'application/json; charset=utf-8',
 			data : JSON.stringify(data), // 데이터 전송
@@ -352,7 +353,7 @@
 		 console.log(data);
 
 		$.ajax({
-			url : '/rest/admin/restaurant/judge', // 심사 
+			url : window.contextPath+'/rest/admin/restaurant/judge', // 심사 
 			method : 'POST',
 			contentType : 'application/json; charset=utf-8',
 			data : JSON.stringify(data), // 데이터 전송

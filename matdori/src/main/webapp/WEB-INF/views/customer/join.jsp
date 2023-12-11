@@ -1,6 +1,4 @@
-Join
-
-Join
+Join Join
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 
@@ -8,8 +6,6 @@ Join
 
 
 <style>
-
-
 .tag-none {
 	text-decoration: none;
 	color: black;
@@ -28,22 +24,19 @@ input[type="text"], input[type="password"], input[type="tel"], input[type="date"
 	border-color: #F7B731 !important; /* Change the border color */
 }
 
- .container {
-        max-width: 500px; /* 변경 가능한 폭 설정 */
-        margin: 0 auto; /* 가운데 정렬 */
-        border: 3px solid #ffb416; /* 테두리 스타일 및 색상 설정 */
-        border-radius: 20px; /* 테두리 모서리를 둥글게 만듭니다 */
-        padding: 80px 120px 60px; /* 내부 여백 설정 - 여기서 첫 번째 값은 상단 패딩입니다 */
-        margin-bottom: 20px;
-    }
-
+.container {
+	max-width: 500px; /* 변경 가능한 폭 설정 */
+	margin: 0 auto; /* 가운데 정렬 */
+	border: 3px solid #ffb416; /* 테두리 스타일 및 색상 설정 */
+	border-radius: 20px; /* 테두리 모서리를 둥글게 만듭니다 */
+	padding: 80px 120px 60px; /* 내부 여백 설정 - 여기서 첫 번째 값은 상단 패딩입니다 */
+	margin-bottom: 20px;
+}
 </style>
 
 
 <form action="join" method="post" autocomplete="off">
-	<br>
-	<br>
-	<br>
+	<br> <br> <br>
 	<div class="container justify-content-center"
 		style="margin-bottom: 20%;">
 
@@ -164,6 +157,7 @@ input[type="text"], input[type="password"], input[type="tel"], input[type="date"
 </form>
 
 <script>
+window.contextPath = "${pageContext.request.contextPath}";
 	$(function() {
 
 		$("[name=join]").click(function() {
@@ -206,7 +200,7 @@ input[type="text"], input[type="password"], input[type="tel"], input[type="date"
 			$(".btn-send").find("span").text("이메일로 보내는 중 입니다");
 
 			$.ajax({
-				url : "http://localhost:8080/rest/cert/send",
+				url : window.contextPath+"//www.sysout.co.kr/rest/cert/send",
 				method : "post",
 				data : {
 					certEmail : email
@@ -231,7 +225,7 @@ input[type="text"], input[type="password"], input[type="tel"], input[type="date"
 
 					$
 							.ajax({
-								url : "http://localhost:8080/rest/cert/check",
+								url : window.contextPath+"//www.sysout.co.kr/rest/cert/check",
 								method : "post",
 								data : {
 									certEmail : email,
@@ -268,7 +262,7 @@ input[type="text"], input[type="password"], input[type="tel"], input[type="date"
 			$(e.target).removeClass("success fail fail2");
 			if (isValid) {//형식이 유효하다면
 				$.ajax({
-					url : "http://localhost:8080/rest/customer/idCheck",
+					url : window.contextPath+"//www.sysout.co.kr/rest/customer/idCheck",
 					method : "post",
 					// data : {customerId : e.target.value},
 					data : {
@@ -357,7 +351,7 @@ input[type="text"], input[type="password"], input[type="tel"], input[type="date"
 			$(e.target).removeClass("success fail fail2");
 			if (isValid) {
 				$.ajax({
-					url : "http://localhost:8080/rest/customer/emailCheck",
+					url : window.contextPath+"//www.sysout.co.kr/rest/customer/emailCheck",
 					method : "post",
 					data : {
 						customerEmail : $(e.target).val()

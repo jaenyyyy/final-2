@@ -6,6 +6,7 @@
 
 
 <script>
+window.contextPath = "${pageContext.request.contextPath}";
 	$(function() {
 
 		$("[name=join]").click(function() {
@@ -48,7 +49,7 @@
 			$(".btn-send").find("span").text("이메일로 보내는 중 입니다");
 
 			$.ajax({
-				url : "http://localhost:8080/rest/cert/send",
+				url : window.contextPath+"//www.sysout.co.kr/rest/cert/send",
 				method : "post",
 				data : {
 					certEmail : email
@@ -75,7 +76,7 @@
 
 					$
 							.ajax({
-								url : "http://localhost:8080/rest/cert/check",
+								url : window.contextPath+"//www.sysout.co.kr/rest/cert/check",
 								method : "post",
 								data : {
 									certEmail : email,
@@ -112,7 +113,7 @@
 			$(e.target).removeClass("success fail fail2");
 			if (isValid) {//형식이 유효하다면
 				$.ajax({
-					url : "http://localhost:8080/rest/customer/idCheck",
+					url : window.contextPath+"//www.sysout.co.kr/rest/customer/idCheck",
 					method : "post",
 					// data : {customerId : e.target.value},
 					data : {
@@ -153,7 +154,7 @@
             var number = $(".cert-input").val();
 
             $.ajax({
-                url: "http://localhost:8080/rest/cert/check",
+                url: window.contextPath+"//www.sysout.co.kr/rest/cert/check",
                 method: "post",
                 data: {
                     certEmail: email,
@@ -227,7 +228,7 @@
 			$(e.target).removeClass("success fail fail2");
 			if (isValid) {
 				$.ajax({
-					url : "http://localhost:8080/rest/customer/emailCheck",
+					url : window.contextPath+"//www.sysout.co.kr/rest/customer/emailCheck",
 					method : "post",
 					data : {
 						customerEmail : $(e.target).val()
@@ -320,13 +321,15 @@
 .tag-none:hover {
 	color: #FF3300; /* 원하는 호버 시 색상으로 변경 */
 }
+
 .container {
-    border: 3px solid #ffb416; /* 테두리 스타일 및 색상 설정 */
-    border-radius: 20px; /* 테두리 모서리를 둥글게 만듭니다 */
-    padding: 80px 60px 60px; /* 내부 여백 설정 - 여기서 첫 번째 값은 상단 패딩입니다 */
+	border: 3px solid #ffb416; /* 테두리 스타일 및 색상 설정 */
+	border-radius: 20px; /* 테두리 모서리를 둥글게 만듭니다 */
+	padding: 80px 60px 60px; /* 내부 여백 설정 - 여기서 첫 번째 값은 상단 패딩입니다 */
 }
-  .bold-text {
-    font-weight: bold;
+
+.bold-text {
+	font-weight: bold;
 }
 </style>
 
@@ -335,21 +338,23 @@
 
 <form action="findPw" method="post" autocomplete="off">
 
-<br><br><br>
+	<br>
+	<br>
+	<br>
 	<div class="container justify-content-center"
 		style="margin-bottom: 20%;">
 		<div class="row" style="margin-top: 10%;">
 			<h1>
-				<i class="fa-solid fa-circle-user" style="color: #ffb416;"></i>  <span style="font-weight: bold;">Find
-				Pw</span>
+				<i class="fa-solid fa-circle-user" style="color: #ffb416;"></i> <span
+					style="font-weight: bold;">Find Pw</span>
 			</h1>
 		</div>
-		
-		
-		<span class="bold-text">계정의 이메일 주소를 입력해주세요  <br> 비밀번호 재설정을 위해 이메일의 인증번호를 확인해주세요 <br>
-		인증번호는 계정의 이메일 주소로 발송됩니다 <br> </span>
-		
-		<br><br>
+
+
+		<span class="bold-text">계정의 이메일 주소를 입력해주세요 <br> 비밀번호 재설정을
+			위해 이메일의 인증번호를 확인해주세요 <br> 인증번호는 계정의 이메일 주소로 발송됩니다 <br>
+		</span> <br>
+		<br>
 		<div class="row line"></div>
 
 
@@ -358,51 +363,48 @@
 				name="customerEmail" placeholder="test@kh.com">
 			<div class="fail-feedback">이메일 형식이 잘못되었습니다</div>
 			<div class="fail2-feedback">이미 이 이메일로 아이디를 만드셨습니다</div>
-			<div class="success-feedback"> 올바른 이메일 형식입니다 </div>
-		
+			<div class="success-feedback">올바른 이메일 형식입니다</div>
+
 		</div>
 
 
 		<div class="row mv-30 mt-4">
-		
-				<button type="button" class="btn btn-send btn-warning "
-					onclick="sendCertNumber()">
-					<i class="fa-solid fa-spinner fa-spin"></i> <span>인증번호 보내기</span>
-				</button>
-			</div>
 
-			<br> <br>
+			<button type="button" class="btn btn-send btn-warning "
+				onclick="sendCertNumber()">
+				<i class="fa-solid fa-spinner fa-spin"></i> <span>인증번호 보내기</span>
+			</button>
+		</div>
 
-			<br>
-			
-			<!-- 기존 코드에 버튼을 추가합니다 -->
+		<br> <br> <br>
 
-			
+		<!-- 기존 코드에 버튼을 추가합니다 -->
 
 
-			<div class="row mt-4">
-			 <input type="text" class="form-control cert-input" placeholder="인증번호 입력">
-			<br><span style="font-weight: bold;">인증번호를 입력해주세요 </span>
-				<div class="cert-wrapper right row mv-30 mt-4">
-				
-					<button type="button" class="btn btn-cert btn-warning"
-						onclick="checkCertNumber()">확인</button>
 
-					<div class="fail2-feedback">인증번호를 입력해주세요</div>
-					<div class="fail-feedback">인증번호 잘못 입력하셨습니다</div>
-					<div class="success-feedback">인증 성공!</div>
-					<div class="row flex-container">
-   
-</div>
-<c:if test="${param.error != null}">
-				<div class="row important">
-					<span class="text-danger">입력하신 인증번호가 일치하지 않습니다</span>
-				</div>
-			</c:if>
 
-				</div>
+		<div class="row mt-4">
+			<input type="text" class="form-control cert-input"
+				placeholder="인증번호 입력"> <br>
+			<span style="font-weight: bold;">인증번호를 입력해주세요 </span>
+			<div class="cert-wrapper right row mv-30 mt-4">
+
+				<button type="button" class="btn btn-cert btn-warning"
+					onclick="checkCertNumber()">확인</button>
+
+				<div class="fail2-feedback">인증번호를 입력해주세요</div>
+				<div class="fail-feedback">인증번호 잘못 입력하셨습니다</div>
+				<div class="success-feedback">인증 성공!</div>
+				<div class="row flex-container"></div>
+				<c:if test="${param.error != null}">
+					<div class="row important">
+						<span class="text-danger">입력하신 인증번호가 일치하지 않습니다</span>
+					</div>
+				</c:if>
+
 			</div>
 		</div>
+	</div>
 
 </form>
 

@@ -67,7 +67,7 @@
                     <div class="col-12">
                         <button type="submit" name="blockStatus" value="Y" class="btn btn-danger">차단</button>
                         <button type="submit" name="blockStatus" value="N" class="btn btn-success">해제</button>
-                        <a href="/admin/business/blockManager/list" class="btn btn-primary">목록으로</a>
+                        <a href="${pageContext.request.contextPath}/admin/business/blockManager/list" class="btn btn-primary">목록으로</a>
                     </div>
                 </div>
             </form>

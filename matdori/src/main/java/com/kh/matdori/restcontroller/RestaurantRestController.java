@@ -51,13 +51,10 @@ public class RestaurantRestController {
 
 	@PostMapping("/")
 	public ResponseEntity<?> insert(@RequestBody RestaurantJudgeVO vo) {
-		// 디버그 로그 출력
-		log.debug("Received busId: {}", vo.getRestaurantDto().getBusId());
 		// 시퀀스 꺼냄
 		int resNo = restaurantDao.sequence();
 		int judgeNo = adminDao.sequence();
 
-		log.debug("Generated resNo: {}, judgeNo: {}", resNo, judgeNo);
 
 		vo.getRestaurantDto().setResNo(resNo);
 

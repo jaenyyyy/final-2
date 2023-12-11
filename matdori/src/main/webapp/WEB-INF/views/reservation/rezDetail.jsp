@@ -45,26 +45,25 @@
 		<div class="row justify-content-center text-center">
 
 			<!-- 매장정보 -->
-			<div class="row ms-4 mt-4 mb-4">
+<!-- 			<div class="row ms-4 mt-4 mb-4"> -->
 
-				<div class="row res-line p-3">
-					<div class="col-3">사진자리</div>
-					<div class="col-7">
-						<input type="hidden" class="resNoInput"
-							value="${reservaitonDto.resNo}">
-						<div class="row">${restaurantDto.resName}</div>
-						<div class="row">예약일 :
-							${fn:substring(selectedClock.clockSelect, 0, 10)}</div>
-						<div class="row">예약시간 : 
-						18 : 00
-<%-- 							${fn:substring(selectedClock.clockSelect, 11, 16)} --%>
-							</div>
-					</div>
+<!-- 				<div class="row res-line p-3"> -->
+<!-- 					<div class="col-7"> -->
+<!-- 						<input type="hidden" class="resNoInput" -->
+<%-- 							value="${reservaitonDto.resNo}"> --%>
+<%-- 						<div class="row">${restaurantDto.resName}</div> --%>
+<!-- 						<div class="row">예약일 : -->
+<%-- 							${fn:substring(selectedClock.clockSelect, 0, 10)}</div> --%>
+<!-- 						<div class="row"> -->
+<!-- 							예약시간 : 18 : 00 -->
+<%-- 														${fn:substring(selectedClock.clockSelect, 11, 16)} --%>
+<!-- 						</div> -->
+<!-- 					</div> -->
 
-				</div>
-			</div>
+<!-- 				</div> -->
+<!-- 			</div> -->
 
-			<div class="col">
+			<div class="col mt-4">
 				<!-- 예약자 정보 -->
 				<div class="list-border mb-4">
 					<div>
@@ -95,9 +94,7 @@
 							</tr>
 							<tr>
 								<th>예약 시간</th>
-								<td>
-								18시 00분
-<%-- 								${fn:substring(selectedClock.clockSelect, 11, 12)} --%>
+								<td>18시 00분 <%-- 								${fn:substring(selectedClock.clockSelect, 11, 12)} --%>
 								</td>
 							</tr>
 							<tr>
@@ -107,7 +104,7 @@
 										<!-- 스타일 추가 -->
 										<c:forEach var="menuInfo" items="${menuInfo}">
 											<tr>
-												<td>${menuInfo.menuName}(${menuInfo.menuQty} 개 )</td>
+												<td>${menuInfo.menuName}(${menuInfo.menuQty}개 )</td>
 											</tr>
 										</c:forEach>
 									</table>
@@ -127,7 +124,7 @@
 
 			<!-- 결제정보 -->
 
-			<div class="col list-border mb-4 ms-4">
+			<div class="col list-border mb-4 ms-4 mt-4">
 				<div>
 					<h5 class="h-title" style="margin-top: 20px;">결제정보</h5>
 				</div>
@@ -144,7 +141,7 @@
 				<div class="row">
 					<div class="col mt-2" style="font-weight: bold;">결제방식</div>
 					<div class="col">
-						<img src="/images/kakao.png" width="80px">
+						<img src="${pageContext.request.contextPath}/images/kakao.png" width="80px">
 					</div>
 				</div>
 				<div>

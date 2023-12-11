@@ -82,28 +82,12 @@
       <div class="row justify-content-center mb-3" style="margin-top: 70px;">
          <div class="col-6 text-start">
 
-            <!— 매장이름 —>
             <div class="row">
                <h1 class="text-left title" style="font-weight: bold;">${resDto.resName}</h1>
             </div>
 
 
 
-<!--             별점 -->
-            <div class="row">
-<!--                <span class="star-avg"> <span -->
-<%--                   class="rating__star ${averageRating >= 1 ? 'fas' : 'far'} fa-star"></span> --%>
-<!--                   <span -->
-<%--                   class="rating__star ${averageRating >= 2 ? 'fas' : 'far'} fa-star"></span> --%>
-<!--                   <span -->
-<%--                   class="rating__star ${averageRating >= 3 ? 'fas' : 'far'} fa-star"></span> --%>
-<!--                   <span -->
-<%--                   class="rating__star ${averageRating >= 4 ? 'fas' : 'far'} fa-star"></span> --%>
-<!--                   <span -->
-<%--                   class="rating__star ${averageRating >= 5 ? 'fas' : 'far'} fa-star"></span> --%>
-<%--                   ${String.format("%.1f", averageRating)}점 식당 --%>
-<!--                </span> -->
-            </div>
          </div>
 
 
@@ -139,7 +123,7 @@
         <!-- Main Image (Left) -->
         <div class="col-md-6 mb-3">
             <div class="row mb-3">
-                <img src="/image/restaurant/image/first/${resDto.resNo}" alt="Main Restaurant Image" style="max-width: 600px; height: 600px;">
+                <img src="${pageContext.request.contextPath}/image/restaurant/image/first/${resDto.resNo}" alt="Main Restaurant Image" style="max-width: 600px; height: 600px;">
             </div>
         </div>
         <!-- Sub Images (Right) -->
@@ -147,22 +131,22 @@
             <div class="row">
                 <div class="col-6">
                     <div class="row mb-3">
-                        <img src="/image/restaurant/image/second/${resDto.resNo}" alt="Sub Restaurant Image" style="max-width: 100%; height: 300px;">
+                        <img src="${pageContext.request.contextPath}/image/restaurant/image/second/${resDto.resNo}" alt="Sub Restaurant Image" style="max-width: 100%; height: 300px;">
                     </div>
                 </div>
                 <div class="col-6">
                     <div class="row mb-3">
-                        <img src="/image/restaurant/image/third/${resDto.resNo}" alt="Sub Restaurant Image" style="max-width: 100%; height: 300px;">
+                        <img src="${pageContext.request.contextPath}/image/restaurant/image/third/${resDto.resNo}" alt="Sub Restaurant Image" style="max-width: 100%; height: 300px;">
                     </div>
                 </div>
                 <div class="col-6">
                     <div class="row mb-3">
-                        <img src="/image/restaurant/image/fourth/${resDto.resNo}" alt="Sub Restaurant Image" style="max-width: 100%; height: 300px;">
+                        <img src="${pageContext.request.contextPath}/image/restaurant/image/fourth/${resDto.resNo}" alt="Sub Restaurant Image" style="max-width: 100%; height: 300px;">
                     </div>
                 </div>
                 <div class="col-6">
                     <div class="row mb-3">
-                        <img src="/image/restaurant/image/fifth/${resDto.resNo}" alt="Sub Restaurant Image" style="max-width: 100%; height: 300px;">
+                        <img src="${pageContext.request.contextPath}/image/restaurant/image/fifth/${resDto.resNo}" alt="Sub Restaurant Image" style="max-width: 100%; height: 300px;">
                     </div>
                 </div>
             </div>
@@ -179,7 +163,7 @@
 <%--       <c:if test="${sessionSope.name != null}"> --%>
          <div class="row justify-content-center mb-3 mt-4">
             <div class="row justify-content-center">
-               <a href="/reservation/insert?rezResNo=${resDto.resNo}"
+               <a href="${pageContext.request.contextPath}/reservation/insert?rezResNo=${resDto.resNo}"
                   class="btn btn-warning w-50 text-black"> 예약하기 </a>
             </div>
          </div>
@@ -277,7 +261,7 @@
                 <div class="row">
                     <div class="col-6">
                         <!-- 메뉴 이미지 -->
-                        <img src="/image/menu/${menu.menuNo}" class="sub-images" alt="${menu.menuName}">
+                        <img src="${pageContext.request.contextPath}/image/menu/${menu.menuNo}" class="sub-images" alt="${menu.menuName}">
                     </div>
                     <div class="col-6">
                         <div class="row text-badge text-start">
@@ -299,7 +283,7 @@
       <!-- 상세로 가는 a태그 -->
       <div class="row mt-4">
          <h5>
-            <a href="/restaurant/menuList?resNo=${resDto.resNo}" class="under-line text-badge"> 메뉴 더보기<i
+            <a href="${pageContext.request.contextPath}/restaurant/menuList?resNo=${resDto.resNo}" class="under-line text-badge"> 메뉴 더보기<i
                class="fa-solid fa-angles-right" style="color: #000000;"></i>
             </a>
          </h5>
@@ -334,7 +318,7 @@
                <c:if test="${loop.index < 3}">
                   <div class="col-2 mt-2">
                      <img
-                        src="http://localhost:8080/customer/image?reviewNo=${ReviewDto.reviewNo}"
+                        src="${pageContext.request.contextPath}//www.sysout.co.kr/customer/image?reviewNo=${ReviewDto.reviewNo}"
                         width="100" height="100" class="">
                   </div>
                   <div class="col-10 text-left mt-2">
@@ -359,7 +343,7 @@
       <!-- 리뷰 더보기 버튼 -->
       <div class="row mt-4">
          <h5>
-            <a href="/restaurant/reviewList?resNo=${resDto.resNo}"
+            <a href="${pageContext.request.contextPath}/restaurant/reviewList?resNo=${resDto.resNo}"
                class="under-line text-badge">리뷰 더보기<i
                class="fa-solid fa-angles-right" style="color: #000000;"></i>
             </a>
@@ -404,39 +388,14 @@ window.addEventListener('scroll', function() {
     }
 });
 
-<!-- 메뉴 선택이다 임마 하 다 쓸모가 없어 졋구나 제기럴-->
-// $(function(){
-//     $(".menuSelect").click(function(e){
-//        e.preventDefault();
-        
-//         // 상품 번호 가져오기
-//         var menuNo = $(this).data("menu-no");
-        
-//         $.ajax({
-//             url: "/rest/reservation/add",
-//             method: "post",
-//             data: { menuNo: menuNo },
-//             success: function(response) {
-//                     $("#modalMessage").text(response.message);
-// //                     openModal(); // 모달 열기
 
-//             },
-//             error: function (xhr) {
-//                 // 에러 처리
-//                 console.log(arguments);
-//                 $("#modalMessage").text(xhr.responseJSON.message);
-// //                 openModal(); // 모달 열기
-//             },
-            
-//         });
-//     });
-//  });
 </script>
 
 
 <!-- 북마크 설정/해제를 위한 -->
 <c:if test="${sessionScope.name != null}">
    <script>
+   window.contextPath = "${pageContext.request.contextPath}";
         $(function() {
            var params = new URLSearchParams(location.search);
            var resNo = params.get("resNo");
@@ -444,7 +403,7 @@ window.addEventListener('scroll', function() {
            /* console.log("resNo:", resNo); */
 
             $.ajax({
-                url: "/rest/pick/check",
+                url: window.contextPath+"/rest/pick/check",
                 method: "post",
                 data: { resNo: resNo },
                 success: function(response) {
@@ -461,7 +420,7 @@ window.addEventListener('scroll', function() {
             $(".fa-bookmark").click(function() {
                console.log("북마크 클릭됨");
                 $.ajax({
-                    url: "/rest/pick/action",
+                    url: window.contextPath+"/rest/pick/action",
                     method: "post",
                     data: { resNo: resNo },
                     success: function(response) {

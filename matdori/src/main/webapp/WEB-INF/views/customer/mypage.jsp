@@ -46,7 +46,7 @@
 	<div class="row" style="margin-top: 5%">
 
 
-	
+
 		<!-- 마이페이지 탭 -->
 		<div class="col-3 page-line">
 			<div class="row">
@@ -59,12 +59,8 @@
 						</a>
 					</h2>
 				</div>
-				<br>
-				<br>
-				<br>	<br>
-				<br>
-				<br>
-		
+				<br> <br> <br> <br> <br> <br>
+
 				<h4 class="bold">
 					<a class="menu-tag" href="pick">북마크</a>
 				</h4>
@@ -85,14 +81,13 @@
 
 		<!-- 주 내용 -->
 		<div class="col-8 border-line ms-4">
-		<br>
-			<div class="row ms-4 mt-4"><br><br><br>
+			<br>
+			<div class="row ms-4 mt-4">
+				<br> <br> <br>
 				<h1>
-					<span
-					style="font-weight: bold;">	[ ${customerDto.customerId}</span>
-					
-				<span
-					style="font-weight: bold;">	] 님 반갑습니다.</span>
+					<span style="font-weight: bold;"> [
+						${customerDto.customerId}</span> <span style="font-weight: bold;">
+						] 님 반갑습니다.</span>
 				</h1>
 			</div>
 
@@ -133,14 +128,6 @@
 
 
 			</div>
-
-
-
-
-
-
-
-
 
 		</div>
 

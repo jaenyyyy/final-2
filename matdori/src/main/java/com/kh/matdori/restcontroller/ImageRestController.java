@@ -73,10 +73,8 @@ public class ImageRestController {
 	         
 	         @GetMapping("/menu/{menuNo}")
 	         public ResponseEntity<ByteArrayResource> downloadMenuImage(@PathVariable int menuNo) throws IOException {
-	             log.debug("menuNo={}", menuNo);
 
 	             AttachDto attachDto = menuDao.findMenuImage(menuNo);
-	             log.debug("attachDto={}", attachDto);
 
 	             if (attachDto == null) {
 	                 return ResponseEntity.notFound().build();
@@ -309,46 +307,6 @@ public class ImageRestController {
 	       return "menuList";
 	   }
 
-//	   @GetMapping("/movieMain/{movieNo}")
-//	   public ResponseEntity<ByteArrayResource>downloadMovieMainImage(@PathVariable int movieNo) throws IOException{
-//	      
-//	      log.debug("movieNo={}",movieNo);
-//	      
-//	      ImageDto movieMainImageDto = movieDao.findMainImage(movieNo);
-//	      
-//	      log.debug("movieMainImageDto={}",movieMainImageDto);
-//	      
-//	      File target = new File(dir,String.valueOf(movieMainImageDto.getImageNo()));
-//	      byte[] data=FileUtils.readFileToByteArray(target);//실제파일정보 불러오기
-//	      ByteArrayResource resource=new ByteArrayResource(data);
-//	      
-//	      return ResponseEntity.ok()
-//	            .header(HttpHeaders.CONTENT_ENCODING, StandardCharsets.UTF_8.name())
-//	            .contentLength(movieMainImageDto.getImageSize())
-//	            .header(HttpHeaders.CONTENT_TYPE,movieMainImageDto.getImageType())
-//	            .contentType(MediaType.APPLICATION_OCTET_STREAM)
-//	            .header("Content-Disposition","attachment;filename="+movieMainImageDto.getImageName())
-//	            
-//	            .body(resource);
-//	   }
-//	   
-//	   @GetMapping("/{imageNo}")
-//	   public ResponseEntity<ByteArrayResource>downloadImage(@PathVariable int attachNo) throws IOException{
-//	      
-//	      AttachDto attachDto = attachDao.selectOne(attachNo);
-//	      
-//	      File target = new File(dir,String.valueOf(attachNo));
-//	      byte[] data=FileUtils.readFileToByteArray(target);
-//	      ByteArrayResource resource=new ByteArrayResource(data);
-//	      return ResponseEntity.ok()
-//	            .header(HttpHeaders.CONTENT_ENCODING, StandardCharsets.UTF_8.name())
-//	            .contentLength(attachDto.getImageSize())
-//	            .header(HttpHeaders.CONTENT_TYPE,attachDto.getImageType())
-//	            .contentType(MediaType.APPLICATION_OCTET_STREAM)
-//	            .header("Content-Disposition","attachment;filename="+attachDto.getImageName())
-//	            
-//	            .body(resource);
-//	   }
   
 	}
 	

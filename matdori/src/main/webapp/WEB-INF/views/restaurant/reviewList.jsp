@@ -85,7 +85,7 @@
 				</h3>
 			</div>
 			<div class="col-6 text-end">
-				<a href="http://localhost:8080/restaurant/detail?resNo=${param.resNo}" class="btn btn-primary">매장으로</a>
+				<a href="${pageContext.request.contextPath}/restaurant/detail?resNo=${param.resNo}" class="btn btn-primary">매장으로</a>
 			</div>
 		</div>
 
@@ -104,7 +104,7 @@
 				<c:forEach var="review" items="${reviewListByRes}">
 					<div class="col-2">
 						<img
-							src="http://localhost:8080/customer/image?reviewNo=${review.reviewNo}"
+							src="${pageContext.request.contextPath}//www.sysout.co.kr/customer/image?reviewNo=${review.reviewNo}"
 							width="100" height="100" class="">
 					</div>
 					<div class="col-10 text-left">

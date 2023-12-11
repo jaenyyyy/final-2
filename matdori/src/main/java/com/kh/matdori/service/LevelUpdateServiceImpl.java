@@ -31,13 +31,10 @@ public class LevelUpdateServiceImpl implements LevelUpdateService{
 		            String newCustomerLevel = levelUpStandard(paymentSuccess);
 		            boolean updated = customerDao.updateCustomerLevel(customerId, newCustomerLevel);
 		            if (updated) {
-		                System.out.println(customerId + "레벨 업데트 성공");
 		                customer.resetPaymentSuccess();
 		            } else {
-		                System.out.println(customerId + "레벨 업데이트 실패");
 		            }
 		        } else {
-		            System.out.println(customerId + "관리자");
 		        }
 		    }
 		}

@@ -141,7 +141,6 @@ public class MenuRestController {
 	@PutMapping("/{menuNo}")
 	public ResponseEntity<String> edit(@PathVariable int menuNo, @RequestBody MenuDto menuDto) {
 		boolean result = menuDao.edit(menuNo, menuDto);
-		log.debug("menuDto={}", menuDto);
 		return result ? ResponseEntity.ok().build() : ResponseEntity.notFound().build();
 	}
 
@@ -150,7 +149,6 @@ public class MenuRestController {
 	    MenuDto menuDto = vo.getMenuDto();
 
 	    boolean result = menuDao.edit(menuNo, menuDto);
-//	    log.debug("menuDto={}", menuDto);
 
 	    // 메뉴 이미지 처리 
 	    MultipartFile menuImage = vo.getMenuImage();
@@ -192,7 +190,6 @@ public class MenuRestController {
 //				return ResponseEntity.notFound().build();
 //			}
 //		} catch (Exception e) {
-//			log.error("Error getting menus with images by type", e);
 //			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 //		}
 //	}
@@ -212,7 +209,6 @@ public class MenuRestController {
 				return ResponseEntity.notFound().build();
 			}
 		} catch (Exception e) {
-			log.error("Error getting menus with images by resNo", e);
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 		}
 	}
@@ -228,7 +224,6 @@ public class MenuRestController {
 	            return ResponseEntity.notFound().build();
 	        }
 	    } catch (Exception e) {
-	        log.error("Error getting first menu with image by resNo", e);
 	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 	    }
 	}

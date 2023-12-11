@@ -341,8 +341,6 @@ public class CustomerController {
 			reviewDto.setReviewWriter(customerId);
 			reviewDto.setReviewRezNo(reviewRezNo);
 			
-			System.out.println("rezNo = "+resNo);
-			System.out.println("ResNo = "+reviewRezNo);
 			reviewDao.insert(reviewDto);
 
 			if (!attach.isEmpty()) {
@@ -361,9 +359,7 @@ public class CustomerController {
 				attachDto.setAttachType(attach.getContentType());	
 				attachDao.insert(attachDto);
 				reviewDao.connect(ReviewNo2, attachNo);	
-				//System.out.println("첨부파일번호 = "+reviewDto.getReviewAttachNo());
 			}
-			//System.out.println("첨부파일번호 첨부 안할시 = "+reviewDto.getReviewAttachNo());
 		    // 리뷰 작성 후 리뷰 리스트 페이지로 이동
 		    return "redirect:/customer/reviewListByCus";
 		}

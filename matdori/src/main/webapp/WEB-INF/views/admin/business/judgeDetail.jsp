@@ -5,6 +5,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
+
 <div class="row justify-content-center">
 			<div class="col-md-6 mt-4">
 			<br><br>
@@ -61,7 +62,7 @@
                 </div>
                 <button type="submit" name="judgeStatus" class="btn btn-success" value="심사승인">승인</button>
                 <button type="submit" name="judgeStatus" class="btn btn-danger ml-2" value="심사거절">거절</button>
-                <a href="/admin/business/judge/list" class="btn btn-primary">목록으로</a>
+                <a href="${pageContext.request.contextPath}/admin/business/judge/list" class="btn btn-primary">목록으로</a>
             </form>
         </div>
     </div>
