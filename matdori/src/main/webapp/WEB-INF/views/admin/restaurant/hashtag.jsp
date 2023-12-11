@@ -7,13 +7,14 @@
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 
 <script>
+window.contextPath = "${pageContext.request.contextPath}";
 	$(function() {
 		$(".hash-insert-form").submit(function(e) {
 			e.preventDefault();
 			var commentData = $(this).serialize();
 
 			$.ajax({
-				url : "/rest/admin/hashtag/insert",
+				url : window.contextPath+"/rest/admin/hashtag/insert",
 				method : "post",
 				data : commentData,
 				success : function(response) {
@@ -37,7 +38,7 @@
 		function sendCancelRequest(hashNo) {
 			// 삭제 요청 보내기
 			$.ajax({
-				url : "/rest/admin/hashtag/delete",
+				url : window.contextPath+"/rest/admin/hashtag/delete",
 				method : "post",
 				data : {
 					hashNo : hashNo
@@ -101,7 +102,7 @@
 
 
 
-<!-- 차단 해제 모달-->
+<!-- 해시태그 삭제 모달-->
 <div class="modal fade" id="cancelModal" tabindex="-1"
 	data-bs-backdrop="static">
 	<div class="modal-dialog modal-dialog-centered">

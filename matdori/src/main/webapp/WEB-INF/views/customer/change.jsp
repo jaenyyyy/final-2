@@ -12,6 +12,7 @@
 </style>
 
 <script>
+window.contextPath = "${pageContext.request.contextPath}";
 	$(function() {
 
 		$("[name=join]").click(function() {
@@ -54,7 +55,7 @@
 			$(".btn-send").find("span").text("이메일로 보내는 중 입니다");
 
 			$.ajax({
-				url : "http://localhost:8080/rest/cert/send",
+				url : window.contextPath+"//www.sysout.co.kr/rest/cert/send",
 				method : "post",
 				data : {
 					certEmail : email
@@ -82,7 +83,7 @@
 						return;
 
 					$.ajax({
-						url : "http://localhost:8080/rest/cert/check",
+						url : window.contextPath+"//www.sysout.co.kr/rest/cert/check",
 						method : "post",
 						data : {
 							certEmail : email,
@@ -112,7 +113,7 @@
 			$(e.target).removeClass("success fail fail2");
 			if (isValid) {//형식이 유효하다면
 				$.ajax({
-					url : "http://localhost:8080/rest/customer/idCheck",
+					url : window.contextPath+"//www.sysout.co.kr/rest/customer/idCheck",
 					method : "post",
 					// data : {customerId : e.target.value},
 					data : {
@@ -200,7 +201,7 @@
 			$(e.target).removeClass("success fail fail2");
 			if (isValid) {
 				$.ajax({
-					url : "http://localhost:8080/rest/customer/emailCheck",
+					url : window.contextPath+"//www.sysout.co.kr/rest/customer/emailCheck",
 					method : "post",
 					data : {
 						customerEmail : $(e.target).val()

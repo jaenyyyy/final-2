@@ -4,8 +4,9 @@
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 
 <script>
+window.contextPath = "${pageContext.request.contextPath}";
     function goToDetail(noticeNo) {
-        window.location = 'detail?noticeNo=' + noticeNo;
+        window.location = window.contextPath+'detail?noticeNo=' + noticeNo;
     }
 </script>
 

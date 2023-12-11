@@ -15,7 +15,8 @@
 			<div class="col-md-6 mt-4">
 				<h1 class="text-center">
 					<i class="fa-solid fa-bullhorn" style="color: #ffb416;"></i> <span
-					style="font-weight: bold;">공지사항</span><br><br>
+						style="font-weight: bold;">공지사항</span><br>
+					<br>
 				</h1>
 			</div>
 		</div>
@@ -63,15 +64,16 @@
 
 
 <script type="text/javascript">
+window.contextPath = "${pageContext.request.contextPath}";
 	function confirmDelete() {
 		if (confirm("정말 삭제하시겠습니까?")) {
-			window.location.href = "delete?noticeNo=${noticeDto.noticeNo}";
+			window.location.href = window.contextPath+"delete?noticeNo=${noticeDto.noticeNo}";
 		}
 	}
 
 	function confirmEdit() {
 		if (confirm("이 글을 수정하시겠습니까?")) {
-			window.location.href = "edit?noticeNo=${noticeDto.noticeNo}";
+			window.location.href = window.contextPath+"edit?noticeNo=${noticeDto.noticeNo}";
 		}
 	}
 

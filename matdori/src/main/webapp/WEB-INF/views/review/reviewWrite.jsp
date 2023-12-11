@@ -105,7 +105,7 @@
 
 				<div class="text-end mt-4">
 					<a class="btn btn-secondary btn-list"
-						href="/customer/reviewListByCus">목록</a>
+						href="${pageContext.request.contextPath}/customer/reviewListByCus">목록</a>
 					<button class="btn btn-warning">작성</button>
 				</div>
 			</form>

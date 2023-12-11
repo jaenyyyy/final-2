@@ -46,7 +46,7 @@
 						</c:otherwise>
 					</c:choose>
 
-					<td><a href="/admin/business/details/${businessJudge.busId}">상세보기</a></td>
+					<td><a href="${pageContext.request.contextPath}/admin/business/details/${businessJudge.busId}">상세보기</a></td>
 				</tr>
 			</c:forEach>
 		</tbody>

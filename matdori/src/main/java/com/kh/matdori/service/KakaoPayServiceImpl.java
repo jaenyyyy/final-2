@@ -49,6 +49,10 @@ public class KakaoPayServiceImpl implements KakaoPayService{
 		//주소 설정
 		URI uri = new URI("https://kapi.kakao.com/v1/payment/ready");
 		
+//		String approval_url = ServletUriComponentsBuilder.fromCurrentRequestUri().path("/success").toUriString();
+//		String cancel_url = ServletUriComponentsBuilder.fromCurrentRequestUri().path("/cancel").toUriString();
+//		String fail_url = ServletUriComponentsBuilder.fromCurrentRequestUri().path("/fail").toUriString();
+		
 		//바디 설정
 		MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
 		body.add("cid", kakaoPayProperties.getCid());
@@ -58,7 +62,10 @@ public class KakaoPayServiceImpl implements KakaoPayService{
 		body.add("quantity", "1");
 		body.add("total_amount", String.valueOf(request.getItemPrice()));
 		body.add("tax_free_amount", "0");
-		
+//		body.add("approval_url", approval_url);
+//		body.add("cancel_url", cancel_url);
+//		body.add("fail_url", fail_url);
+//		
 		//현재 페이지 주소 계산
 		String path = ServletUriComponentsBuilder.fromCurrentRequestUri().toUriString();
 		body.add("approval_url", path+"/success");
@@ -90,7 +97,6 @@ public class KakaoPayServiceImpl implements KakaoPayService{
 		KakaoPayApproveResponseVO response = 
 				template.postForObject(uri, entity, KakaoPayApproveResponseVO.class);
 		
-		log.debug("결제 승인 완료 = {}", response.getTid());
 		
 		return response;
 	}

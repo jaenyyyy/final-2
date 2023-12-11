@@ -13,7 +13,6 @@ public class ExceptionControllerAdvice {
 
 	@ExceptionHandler(Exception.class)
 	public String error(Exception e) {
-		log.error("오류", e);
 		return "error/500";
 	}
 	

@@ -28,7 +28,7 @@
  					</div>
 	                
 	                <div class="text-end mt-4">
-	                	<a class="btn btn-secondary btn-list" href="/notice/list">목록</a>
+	                	<a class="btn btn-secondary btn-list" href="${pageContext.request.contextPath}/notice/list">목록</a>
 	                    <button class="btn btn-warning">수정</button>
 	                </div>
 	                
@@ -39,9 +39,10 @@
  </form>
  
  <script type="text/javascript">
+ window.contextPath = "${pageContext.request.contextPath}";
 	function confirmList() {
 	    if (confirm("수정을 중단하고 목록으로 이동하시겠습니까?")) {
-	        window.location.href = "/notice/list";
+	        window.location.href = window.contextPath+"/notice/list";
 	    }
 	}
 	

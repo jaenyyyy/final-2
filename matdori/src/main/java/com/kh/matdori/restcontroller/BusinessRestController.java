@@ -66,7 +66,6 @@ public class BusinessRestController {
 	    businessDto.setBusPw(encodedPassword);
 	    
 	    businessDao.insert(businessDto);
-	    // emailService.sendCelebration(businessDto.getBusEmail());
 	}
 
 
@@ -118,9 +117,6 @@ public class BusinessRestController {
     @PutMapping("/changeInfo/busId/{busId}")
     public ResponseEntity<String> edit(
             @PathVariable String busId, @RequestBody BusinessDto businessDto) {
-        // 비밀번호 암호화
-    	System.out.println(businessDto.getBusPw());
-    	System.out.println(businessDto.getBusId());
     	
         String encryptedPassword = encoder.encode(businessDto.getBusPw());
         businessDto.setBusPw(encryptedPassword);
@@ -177,16 +173,12 @@ public class BusinessRestController {
 	//아이디 찾기(사업자번호와 비밀번호
 	@PostMapping("/findId/busregno/{busRegNo}/buspw/{busPw}")
 	public ResponseEntity<String> findIdByRegNoAndPw(@PathVariable String busRegNo, @PathVariable String busPw) {
-	    System.out.println("busRegNo: " + busRegNo);
-	    System.out.println("busPw: " + busPw);
 	    
 	    BusinessDto foundBusiness = businessDao.findByRegNo(busRegNo);
 	    
 	    if (foundBusiness != null && busPw.equals(foundBusiness.getBusPw())) {
-	        System.out.println("일치");
 	        return ResponseEntity.ok(foundBusiness.getBusId());
 	    } else {
-	        System.out.println("불일치");
 	        return ResponseEntity.notFound().build();
 	    }
 	}
@@ -216,7 +208,6 @@ public class BusinessRestController {
 	            message.setSubject("임시 비밀번호 발급");
 	            message.setText("임시 비밀번호: " + temporaryPassword);
 	            
-	            System.out.print(temporaryPassword);
 	            sender.send(message);
 
 	            return ResponseEntity.ok("임시 비밀번호를 이메일로 전송하였습니다.");
@@ -272,8 +263,6 @@ public class BusinessRestController {
 	public ResponseEntity<String> withdrawBusiness(@PathVariable String busId, @RequestParam String password) {
 	    // 사용자가 입력한 비밀번호를 암호화하여 DB에 저장된 암호화된 비밀번호와 비교합니다.
 	    BusinessDto business = businessDao.findByBusId(busId);
-	    System.out.println(business.getBusPw());
-	    System.out.println(password);
 	    
 	    if (business != null && encoder.matches(password, business.getBusPw())) {
 	        // 비밀번호가 일치할 때 회원 탈퇴 수행

@@ -28,7 +28,6 @@
 				<div class="card-header mt-3 d-flex justify-content-between align-items-center">
 				    <div>
 				        <h4 style="font-weight: bold;"> [${qnaDto.qnaCategory}] ${qnaDto.qnaTitle} </h4>
-				        
 				    </div>
 				</div>
 				<div class="card-body">
@@ -71,15 +70,16 @@
 
     
 <script type="text/javascript">
+window.contextPath = "${pageContext.request.contextPath}";
 	function confirmDelete() {
 	    if (confirm("정말 삭제하시겠습니까?")) {
-	        window.location.href = "delete?qnaNo=${qnaDto.qnaNo}";
+	        window.location.href = window.contextPath+"delete?qnaNo=${qnaDto.qnaNo}";
 	    }
 	}
 	
 	function confirmEdit() {
 	    if (confirm("이 글을 수정하시겠습니까?")) {
-	        window.location.href = "edit?qnaNo=${qnaDto.qnaNo}";
+	        window.location.href = window.contextPath+"edit?qnaNo=${qnaDto.qnaNo}";
 	    }
 	}
 	

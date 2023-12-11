@@ -6,8 +6,9 @@
 
 
 <script>
+window.contextPath = "${pageContext.request.contextPath}";
 	function goToDetail(resNo) {
-	    window.location = '/restaurant/detail?resNo=' + resNo;
+	    window.location = window.contextPath+'/restaurant/detail?resNo=' + resNo;
 	}
 </script>
 
@@ -102,7 +103,7 @@
 								onClick="goToDetail(${resSearchList.resNo})"
 								style="cursor: pointer;">
 								<div class="col-3 p-4">
-									<img src="/image/restaurant/image/first/${resSearchList.resNo}" alt="Restaurant Image" style="width:100px; height:100px;">
+									<img src="${pageContext.request.contextPath}/image/restaurant/image/first/${resSearchList.resNo}" alt="Restaurant Image" style="width:100px; height:100px;">
 								</div>
 								<div class="col-4 p-4">
 									<h5>${resSearchList.resName}</h5>

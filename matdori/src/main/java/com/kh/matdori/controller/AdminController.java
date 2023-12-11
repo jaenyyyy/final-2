@@ -148,7 +148,6 @@ public class AdminController {
 
         // businessJudgeDao를 직접 호출하여 업데이트
         businessJudgeDao.updateBusinessJudge(judgeDto);
-        //System.out.println("BusJudgeComment: " + judgeDto.getBusJudgeComment());
         return "redirect:/admin/business/judge/list";
     }
     
@@ -162,8 +161,6 @@ public class AdminController {
     public String businessBlockManagerList(Model model, @ModelAttribute(name = "vo") BusBlockPaginationVO vo) {
         int count = adminDao.countBlockList(vo);
         vo.setCount(count);
-        System.out.println("페이지 카운트 : " + vo.getPageCount());
-        System.out.println("전체페이지 카운트 : " + vo.getCount());
        // 페이징 정보 계산
        vo.calculatePageInfo(); 
        

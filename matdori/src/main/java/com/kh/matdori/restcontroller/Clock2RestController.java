@@ -28,22 +28,11 @@ public class Clock2RestController {
 	@Autowired
 	private Clock2Dao clock2Dao;
 	
-//	@GetMapping("/list")
-//	public List<Clock2Dto> clock2List(){
-//	    return clock2Dao.clock2List();
-//	@GetMapping("/list")
-//	public List<Clock2Dto> clock2List() {
-//	    List<Clock2Dto> list = clock2Dao.clock2List();
-//	    // 로그에 결과 출력
-//	    list.forEach(item -> System.out.println(item.getClock2No() + " " + item.getClock2_time()));
-//	    return list;
-//	}
 	
 	@PostMapping("/insert")
 	public void insert(@RequestBody Clock2Dto clock2Dto) {
 		int  no = clock2Dao.sequence();
 		clock2Dto.setClock2No(no);
-		log.debug("dto = {}",clock2Dto);
 		
 		clock2Dao.insertClock2(clock2Dto);
 	}

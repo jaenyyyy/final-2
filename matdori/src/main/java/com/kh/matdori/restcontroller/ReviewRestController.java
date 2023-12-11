@@ -59,8 +59,6 @@
 ////	    reviewDto.setResNo(resNo);
 ////	    reviewDto.setReviewWriter(customerId);
 ////	    
-////	    System.out.print(reviewDto.getResNo());
-////	    System.out.print(reviewDto.getReviewContent());
 ////	    
 ////	    reviewDao.insert(reviewDto);
 ////	    

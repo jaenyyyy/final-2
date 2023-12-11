@@ -6,7 +6,6 @@
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 
 <script>
-//체크박스가 변경될 때 실행되는 함수
 function handleLevelChange() {
     const levels = [];
     const checkboxes = document.querySelectorAll('.form-check-input:checked');
@@ -15,15 +14,10 @@ function handleLevelChange() {
         levels.push(checkbox.value);
     });
 
-    // levels 배열에는 선택된 등급이 들어 있습니다. 이 값을 서버로 보내면 됩니다.
-    // 예를 들어, AJAX 요청을 이용하여 서버에 전송할 수 있습니다.
-    // 여기서는 간단히 콘솔에 출력하는 것으로 대체하겠습니다.
     console.log('선택된 등급:', levels);
 
-    // 실제로 서버로 전송하는 로직을 구현해야 합니다.
 }
 
-// 체크박스의 변경을 감지하는 이벤트 리스너 등록
 const checkboxes = document.querySelectorAll('.form-check-input');
 checkboxes.forEach(checkbox => {
     checkbox.addEventListener('change', handleLevelChange);
@@ -185,6 +179,7 @@ checkboxes.forEach(checkbox => {
 </div>
 
 <script>
+window.contextPath = "${pageContext.request.contextPath}";
 //등급 변경 라디오 버튼
 function updateCustomerLevelBtn() {
     var customerId = document.getElementById("customerId").value;
@@ -201,7 +196,7 @@ function updateCustomerLevelBtn() {
 
         $.ajax({
             type: "POST",
-            url: '/rest/customer/levelEdit',
+            url: window.contextPath+'/rest/customer/levelEdit',
             data: data,
             success: function(response) {
                 console.log("등급 변경이 완료되었습니다.");
@@ -239,7 +234,7 @@ function updateUpdatePointBtn() {
 
         $.ajax({
             type: "POST",
-            url: '/rest/customer/pointEdit',
+            url: window.contextPath+'/rest/customer/pointEdit',
             data: data,
             success: function(response) {
                 console.log("포인트 변경이 완료되었습니다.");
@@ -291,7 +286,7 @@ function savePoint() {
     // AJAX를 사용하여 수정된 포인트 서버에 전송
     $.ajax({
         type: "POST",
-        url: '/rest/customer/pointEdit',
+        url: window.contextPath+'/rest/customer/pointEdit',
         data: JSON.stringify(data),
         contentType: "application/json; charset=utf-8",
         dataType: "json",
@@ -322,7 +317,7 @@ function sendBlockRequest() {
     };
 
     $.ajax({
-        url: '/rest/customer/block',
+        url: window.contextPath+'/rest/customer/block',
         method: 'POST',
         contentType: 'application/json; charset=utf-8',
         data: JSON.stringify(data),
@@ -351,7 +346,7 @@ function sendCancelRequest() {
     };
 
     $.ajax({
-        url: '/rest/customer/cancel',
+        url: window.contextPath+'/rest/customer/cancel',
         method: 'POST',
         contentType: 'application/json; charset=utf-8',
         data: JSON.stringify(data),

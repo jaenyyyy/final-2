@@ -3,9 +3,6 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-<!doctype html>
-<html lang="ko">
-
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -74,19 +71,18 @@
 
 			<!-- 사업자 홈페이지 가는 주소 -->
 			<div class="icon-container">
-				<c:if test="${sessionScope.name == null}">
-					<a href="http://localhost:3000/" class="me-4"> <i
-						class="fa-solid fa-user-tie fa-3x" style="color: #ffb416;"></i>
-					</a>
-				</c:if>
+				<a href="${pageContext.request.contextPath}/busHome" class="me-4"> <i
+					class="fa-solid fa-user-tie fa-3x" style="color: #ffb416;"></i>
+				</a>
 			</div>
 
 		</div>
 
 
 		<div class="col text-center">
-			<a href="/"> <img src="/images/logo.png" style="width: 250px;"
-				alt="맛도리 홈">
+			<a href="${pageContext.request.contextPath}/"> <img
+				src="${pageContext.request.contextPath}/images/logo.png"
+				style="width: 250px;" alt="맛도리 홈">
 			</a>
 		</div>
 		<div class="col text-end me-4" style="margin-top: 70px;">
@@ -101,8 +97,7 @@
 							<li class="dropdown-item"><a href="/customer/mypage">마이페이지</a></li>
 							<li class="dropdown-item"><a href="/customer/pick">북마크</a></li>
 							<div class="dropdown-divider"></div>
-							<li class="dropdown-item"><a
-								href="http://localhost:8080/customer/logout">로그아웃</a></li>
+							<li class="dropdown-item"><a href="/customer/logout">로그아웃</a></li>
 						</ul>
 					</div>
 				</c:when>
@@ -131,12 +126,12 @@
 						<ul class="navbar-nav">
 							<c:if test="${sessionScope.level == '관리자'}">
 								<li class="nav-item"><a class="nav-link me-3"
-									href="/admin/">관리자</a></li>
+									href="${pageContext.request.contextPath}/admin/">관리자</a></li>
 							</c:if>
 							<li class="nav-item"><a class="nav-link me-3"
-								href="/notice/list">공지사항</a></li>
+								href="${pageContext.request.contextPath}/notice/list">공지사항</a></li>
 							<li class="nav-item"><a class="nav-link me-3"
-								href="/qna/list">Q&A</a></li>
+								href="${pageContext.request.contextPath}/qna/list">Q&A</a></li>
 
 						</ul>
 					</div>
@@ -146,7 +141,7 @@
 							<div class="col-auto">
 								<div class="input-group">
 									<input name="hashComment" class="form-control" type="search"
-										placeholder="검색어를 입력하세요"  autocomplete="off"> 
+										placeholder="검색어를 입력하세요" autocomplete="off">
 									<button id="searchBtn" class="btn btn-secondary" type="submit">Search</button>
 								</div>
 							</div>

@@ -96,9 +96,9 @@
 						<div class="col-3">
 							<!-- 사진자리 -->
 
-									<img id="reviewImage${reviewDto.reviewNo}"
-										src="image?reviewNo=${reviewDto.reviewNo}" width="100"
-										height="100">
+							<img id="reviewImage${reviewDto.reviewNo}"
+								src="${pageContext.request.contextPath}/image?reviewNo=${reviewDto.reviewNo}" width="100"
+								height="100">
 
 
 						</div>
@@ -121,18 +121,17 @@
 						</div>
 						<div class="col-2 text-end">
 							<div class="row mb-3">
-								<a href="/restaurant/detail?resNo=${reviewDto.resNo}"
+								<a href="${pageContext.request.contextPath}/restaurant/detail?resNo=${reviewDto.resNo}"
 									class="menu-tag">매장가기 ></a>
 								<form action="/customer/delete" method="post">
 									<input type="hidden" name="reviewNo"
 										value="${reviewDto.reviewNo}">
-									<button type="submit" class="btn btn-danger mt-4">
-										삭제</button>
+									<button type="submit" class="btn btn-danger mt-4">삭제</button>
 								</form>
 							</div>
 						</div>
-						
-						
+
+
 
 					</div>
 				</c:forEach>

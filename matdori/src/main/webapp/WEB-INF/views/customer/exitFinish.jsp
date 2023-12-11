@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 
 
@@ -31,17 +31,21 @@
 		<!-- 제목 -->
 		<div class="row" style="margin-top: 20%;">
 			<h1>
-				<i class="fa-solid fa-circle-user" style="color: #ffb416;"></i> 회원탈퇴가 <br>완료되었습니다. 
+				<i class="fa-solid fa-circle-user" style="color: #ffb416;"></i>
+				회원탈퇴가 <br>완료되었습니다.
 			</h1>
 		</div>
-		
-		그동안 맛도리 사이트를 이용해주셔서 감사합니다. <br><br><br>
+
+		그동안 맛도리 사이트를 이용해주셔서 감사합니다. <br>
+		<br>
+		<br>
 		<div class="row line"></div>
-<br><br>
-<h5><a href="/">main page</a></h5>
-<h5><a href="https://www.google.com">google</a></h5>
-<h5><a href="https://www.naver.com">naver</a></h5>
-</div>
+		<br>
+		<br>
+		<h5>
+			<a href="${pageContext.request.contextPath}/">main page</a>
+		</h5>
+	</div>
 </form>
 
 
